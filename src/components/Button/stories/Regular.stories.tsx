@@ -14,6 +14,6 @@ Default.args = {
   text: '',
   loading: true,
   onClick: () => {
-    return 1
+    console.log(1)
   },
 }

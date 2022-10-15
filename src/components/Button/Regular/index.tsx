@@ -12,7 +12,7 @@ const Regular = (props: Props) => {
   }`
 
   return (
-    <button onClick={onClick} className={className}>
+    <button onClick={onClick} className={className} disabled={loading}>
       {icon?.position && icon.src}
       {text || 'BUTTON'}
       {icon?.position && icon.src}
