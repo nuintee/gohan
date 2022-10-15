@@ -5,7 +5,7 @@ import Image from 'next/image'
 const Home: NextPage = () => {
   return (
     <div>
-      <h1 className=''>Home</h1>
+      <h1 className="">Home</h1>
     </div>
   )
 }
