@@ -1,3 +1,4 @@
+// import Silver from '../../components/Button/assets/silver.svg'
 import Silver from '@/components/Button/assets/silver.svg'
 
 const dictionary = {
