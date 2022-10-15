@@ -1,6 +1,6 @@
 export type Props = {
   text: string
-  icon: {
+  icon?: {
     position: 'before' | 'after'
     src: React.ReactElement
   }

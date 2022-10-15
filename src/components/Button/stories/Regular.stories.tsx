@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import Regular from '../Regular'
+import Regular from '../Regular/index'
 
 export default {
   title: 'Regular',
@@ -11,5 +11,9 @@ const Template: ComponentStory<typeof Regular> = (args) => <Regular {...args} />
 export const Default = Template.bind({})
 
 Default.args = {
-  text: 'IT',
+  text: '',
+  loading: true,
+  onClick: () => {
+    return 1
+  },
 }
