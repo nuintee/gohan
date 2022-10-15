@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import Regular from '../Regular/index'
+import { Regular } from '../index'
 
 export default {
   title: 'Regular',

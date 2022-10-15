@@ -1,3 +1,4 @@
 import Regular from './Regular'
+import Action from './Action'
 
-export { Regular }
+export { Regular, Action }

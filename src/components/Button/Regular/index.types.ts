@@ -6,5 +6,5 @@ export type Props = {
   }
   loading: boolean
   danger?: boolean
-  onClick: () => {}
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
