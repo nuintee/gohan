@@ -11,7 +11,8 @@ const Template: ComponentStory<typeof Action> = (args) => <Action {...args} />
 export const Default = Template.bind({})
 
 Default.args = {
-  icon: 'silver',
+  type: 'hero',
+  icon: 'close',
   loading: false,
   onClick: () => {
     console.log(1)

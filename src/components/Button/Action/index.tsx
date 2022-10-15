@@ -10,7 +10,7 @@ import { dictionary } from './constants'
 import { Props } from './index.types'
 
 const Action = (props: Props) => {
-  const { icon, loading, onClick, type } = props
+  const { mode, loading, onClick, type } = props
 
   const size = type === 'hero' ? 5 : 3.5
 
@@ -30,7 +30,7 @@ const Action = (props: Props) => {
         <PulseLoader color={`white`} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
         <Image
-          src={dictionary.icons[icon].src}
+          src={dictionary.modes[mode].src}
           alt={'action'}
           height={`${size * 3}em`}
           width={`${size * 3}em`}

@@ -1,11 +1,22 @@
-// import Silver from '../../components/Button/assets/silver.svg'
-import Silver from '@/components/Button/assets/silver.svg'
+import Search from '@/components/Button/assets/search.svg'
+import Close from '@/components/Button/assets/close.svg'
+
+// Types
+import { Props } from '../index.types'
 
 const dictionary = {
-  icons: {
-    silver: Silver,
+  modes: {
+    search: Search,
+    close: Close,
   } as const,
   type: ['hero', 'support'] as const,
 }
 
-export { dictionary }
+const initialStates: Props = {
+  mode: 'search',
+  loading: false,
+  onClick: () => {},
+  type: 'hero',
+}
+
+export { dictionary, initialStates }

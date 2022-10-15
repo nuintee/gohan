@@ -1,7 +1,7 @@
 import { dictionary } from './constants/index'
 
 export type Props = {
-  icon: keyof typeof dictionary.icons
+  mode: keyof typeof dictionary.modes
   loading: boolean
   onClick: React.MouseEventHandler<HTMLButtonElement>
   type: typeof dictionary.type[number]
