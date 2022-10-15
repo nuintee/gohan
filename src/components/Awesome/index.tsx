@@ -9,7 +9,7 @@ type Props = {
 const Awesome = (props: Props) => {
   const { text } = props
 
-  return <button data-testid="awesome">{text}</button>
+  return <button data-testid='awesome'>{text}</button>
 }
 
 export default Awesome
