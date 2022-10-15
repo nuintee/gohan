@@ -11,6 +11,6 @@ const Template: ComponentStory<typeof Awesome> = (args) => <Awesome {...args} />
 export const Default = Template.bind({})
 
 Default.args = {
-  text: 'IT',
+  text: 'ITE',
   int: 100,
 }
