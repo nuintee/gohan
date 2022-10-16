@@ -11,7 +11,7 @@ import { states } from './constants/index'
 
 type Props = {
   state: typeof states[number]
-  onClick: Function
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 // Constans
@@ -28,7 +28,7 @@ const Like = (props: Props) => {
 
   return (
     <button
-      className='bg-gh-l-orange w-12 rounded-full flex items-center justify-center'
+      className='bg-gh-l-orange w-12 h-12 shrink-0 rounded-full flex items-center justify-center'
       onClick={onClick}
       disabled={state === 'LOCKED'}
     >

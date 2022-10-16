@@ -1,37 +1,32 @@
 import Image from 'next/image'
 
 import { Regular } from '../Button'
+import Texts from './Texts'
+import Label from './Label'
 import { Like, states } from './Like/index'
 
 type Props = {
   state: typeof states[number]
-  onLike: Function
+  onClick: React.MouseEventHandler<HTMLDivElement>
+  onLike: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const Restaurant = (props: Props) => {
-  const { state, onLike } = props
+const Large = (props: Props) => {
+  const { state, onLike, onClick } = props
 
   return (
-    <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white'>
+    <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white' onClick={onClick}>
       {/* <Image src='' alt='image' height={100} width={100} /> */}
-      <div>
-        <img
-          src={
-            'https://4.bp.blogspot.com/--9DwhZnX-l0/WNDaG628QkI/AAAAAAAAEFc/BhChqS3-qKYOi5dWkSjoh_wCByYZOBGCgCLcB/s1600/table-791167_1920.jpg'
-          }
-          className='select-none'
-          draggable={false}
-        />
-      </div>
+      <img
+        src={
+          'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
+        }
+        className='select-none max-h-52 w-full object-cover'
+        draggable={false}
+      />
       <div className='p-4 flex flex-col gap-4'>
-        <span className='bg-gh-gray w-fit px-2 py-1 rounded-md text-white'>
-          {/* Indicator */}
-          2km
-        </span>
-        <div>
-          <h1 className='text-xl font-bold'>Shakeshack</h1>
-          <p className='text-gh-l-gray'>Spanish・Italian</p>
-        </div>
+        <Label distance={2} />
+        <Texts main='Shakshack' sub='Italian・Spanish' />
         <p className='bg-gh-l-orange text-center p-4 rounded-md'>
           Checkout more info from{' '}
           <a href='' className='text-gh-orange font-semibold'>
@@ -46,6 +41,35 @@ const Restaurant = (props: Props) => {
       </div>
     </div>
   )
+}
+
+const Small = (props: Props) => {
+  const { state, onClick, onLike } = props
+
+  return (
+    <div
+      className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill'
+      onClick={onClick}
+    >
+      <img
+        src='https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
+        className='max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md'
+        alt={'image'}
+      />
+      <div className='flex flex-1 gap-4 items-start'>
+        <div className='flex flex-col gap-2'>
+          <Texts main='' sub='' size='small' />
+          <Label distance={2} />
+        </div>
+        <Like onClick={onLike} state={state} />
+      </div>
+    </div>
+  )
+}
+
+const Restaurant = {
+  Large,
+  Small,
 }
 
 export { Restaurant, Like }
