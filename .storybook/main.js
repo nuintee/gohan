@@ -16,6 +16,7 @@ module.exports = {
   core: {
     builder: '@storybook/builder-webpack5',
   },
+  staticDirs: ['../src/assets'],
   webpackFinal: async (config, { configType }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -34,12 +35,6 @@ module.exports = {
       }
 
       return rule
-    })
-
-    // use svgr for svg files
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack', 'url-loader'],
     })
 
     return config
