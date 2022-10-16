@@ -1,23 +1,25 @@
 // Components
 import Texts from '../Restaurant/Texts'
 
-const modes = ['success', 'error']
+// Constans
+import { colors } from '@/../config/tailwind/index'
+const modes = ['success', 'error'] as const
 
 const themes = {
-  success: {
+  error: {
+    text: 'Error',
     border: 'border-gh-red',
     badge: {
-      bg: '',
-      icon: '',
+      bg: 'border-gh-l-red',
+      icon: colors['gh-red'],
     },
-    main: '#00D160',
-    sub: '#ACE5C7',
   },
-  error: {
+  success: {
+    text: 'Success',
     border: 'border-gh-green',
     badge: {
       bg: 'bg-gh-l-green',
-      icon: '',
+      icon: colors['gh-green'],
     },
   },
 }
@@ -35,9 +37,13 @@ const Toast = (props: Props) => {
   const { mode, main, sub, onClose, infinite, timeout } = props
 
   return (
-    <div className='bg-white p-4 rounded-md border-l-8  flex gap-4'>
-      <span className='h-10 w-10 bg-red-200 flex items-center justify-center rounded-full'>X</span>
-      <Texts main='Error' sub='Message' size='small' />
+    <div className={`bg-white p-4 rounded-md border-l-8 ${themes[mode].border} flex gap-4`}>
+      <span
+        className={`h-10 w-10 ${themes[mode].badge.bg} flex items-center justify-center rounded-full`}
+      >
+        X
+      </span>
+      <Texts main={main || themes[mode].text} sub={mode} size='small' />
       <button className='ml-auto' onClick={onClose}>
         X
       </button>

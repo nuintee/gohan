@@ -3,6 +3,7 @@ module.exports = {
     'gh-white': '#F4F4F4',
     'gh-orange': '#FF7315',
     'gh-l-orange': '#FFEEE3',
+    'gh-l-red': '#F7C8C8',
     'gh-red': '#ef5d5d',
     'gh-dark': '#232020',
     'gh-brown': '#3A3535',
