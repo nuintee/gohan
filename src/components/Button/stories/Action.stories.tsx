@@ -12,7 +12,7 @@ export const Default = Template.bind({})
 
 Default.args = {
   type: 'hero',
-  icon: 'close',
+  mode: 'close',
   loading: false,
   onClick: () => {
     console.log(1)
