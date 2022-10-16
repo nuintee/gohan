@@ -11,10 +11,10 @@ const Template: ComponentStory<typeof Toast> = (args) => <Toast {...args} />
 export const Default = Template.bind({})
 
 Default.args = {
-  type: 'hero',
-  mode: 'close',
-  loading: false,
-  onClick: () => {
-    console.log(1)
-  },
+  mode: 'success',
+  main: '',
+  sub: '',
+  onClose: () => {},
+  infinite: false,
+  timeout: 6000, // Millisecond
 }
