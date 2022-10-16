@@ -12,6 +12,7 @@ const Template: ComponentStory<typeof User> = (args) => <User {...args} />
 export const Default = Template.bind({})
 
 Default.args = {
+  user: {},
   loading: false,
   onClick: () => {
     console.log(1)
