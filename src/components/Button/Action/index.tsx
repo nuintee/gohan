@@ -31,7 +31,7 @@ const Action = (props: Props) => {
       {loading ? (
         <PulseLoader color={`white`} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
-        <ICON fill='' />
+        <ICON fill='white' />
       )}
     </button>
   )
