@@ -1,3 +1,7 @@
+// Icons
+import Close from '../icons/Close'
+import Check from '../icons/Check'
+
 // Components
 import Texts from '../Restaurant/Texts'
 
@@ -10,8 +14,8 @@ const themes = {
     text: 'Error',
     border: 'border-gh-red',
     badge: {
-      bg: 'border-gh-l-red',
-      icon: colors['gh-red'],
+      bg: 'bg-gh-l-red',
+      icon: <Close fill='' />,
     },
   },
   success: {
@@ -19,7 +23,7 @@ const themes = {
     border: 'border-gh-green',
     badge: {
       bg: 'bg-gh-l-green',
-      icon: colors['gh-green'],
+      icon: <Check fill='' />,
     },
   },
 }
@@ -39,13 +43,13 @@ const Toast = (props: Props) => {
   return (
     <div className={`bg-white p-4 rounded-md border-l-8 ${themes[mode].border} flex gap-4`}>
       <span
-        className={`h-10 w-10 ${themes[mode].badge.bg} flex items-center justify-center rounded-full`}
+        className={`h-10 w-10 flex items-center justify-center rounded-full ${themes[mode].badge.bg}`}
       >
-        X
+        {themes[mode].badge.icon}
       </span>
       <Texts main={main || themes[mode].text} sub={mode} size='small' />
       <button className='ml-auto' onClick={onClose}>
-        X
+        <Close fill={colors['gh-dark']} />
       </button>
     </div>
   )
