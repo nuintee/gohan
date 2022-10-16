@@ -7,7 +7,7 @@ import { Props } from './index.types'
 const Regular = (props: Props) => {
   const { text, icon, loading, danger, onClick } = props
 
-  const className = `bg-gh-dark text-white px-4 py-2 rounded-md flex gap-2 items-center active:bg-opacity-90 ${
+  const className = `bg-gh-dark text-white px-4 py-2 rounded-md flex gap-2 items-center justify-center active:bg-opacity-90 w-full ${
     danger && 'ring-2 ring-gh-red bg-transparent text-gh-red'
   }`
 

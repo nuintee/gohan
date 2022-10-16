@@ -6,6 +6,7 @@ import Image from 'next/image'
 // Components
 import MapBox from '@/components/MapBox'
 import { Action } from '@/components/Button'
+import { Restaurant } from '@/components/Restaurant'
 
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
