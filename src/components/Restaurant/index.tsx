@@ -1,10 +1,10 @@
 import Image from 'next/image'
 
 import { Regular } from '../Button'
-import Like from './Like/index'
+import { Like, states } from './Like/index'
 
 type Props = {
-  state: 'LIKED' | 'UNLIKED' | 'LOCKED'
+  state: typeof states[number]
   onLike: Function
 }
 

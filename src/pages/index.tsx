@@ -26,7 +26,6 @@ const Home: NextPage = () => {
 
   return (
     <div className='relative'>
-      <Restaurant state={'UNLIKED'} onLike={() => {}} />
       <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
         <button className='bg-gh-white px-4 py-2 rounded-md'>Auth</button>
         <button className='bg-gh-white px-4 py-2 rounded-md'>Lib</button>

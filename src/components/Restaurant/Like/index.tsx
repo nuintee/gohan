@@ -3,8 +3,11 @@ import Filled from './assets/like-filled.svg'
 import Locked from './assets/like-locked.svg'
 import Outline from './assets/like-outline.svg'
 
+// Constants
+import { states } from './constants/index'
+
 type Props = {
-  state: 'LIKED' | 'UNLIKED' | 'LOCKED'
+  state: typeof states[number]
   onClick: Function
 }
 
@@ -29,4 +32,4 @@ const Like = (props: Props) => {
   )
 }
 
-export default Like
+export { Like, states }
