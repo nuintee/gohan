@@ -22,6 +22,7 @@ module.exports = {
       ...config.resolve.alias,
       '@/components': path.resolve(__dirname, '../src/components'),
       '@/assets': path.resolve(__dirname, '../src/assets'),
+      '@/icons': path.resolve(__dirname, '../src/icons'),
     }
 
     config.resolve.modules = [...(config.resolve.modules || []), path.resolve('./')] // 絶対パスでimportできるようにする

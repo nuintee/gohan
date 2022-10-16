@@ -1,6 +1,6 @@
 // Icons
-import Close from '../icons/Close'
-import Check from '../icons/Check'
+import Close from '../../icons/Close'
+import Check from '../../icons/Check'
 
 // Components
 import Texts from '../Restaurant/Texts'

@@ -16,7 +16,7 @@ const Action = (props: Props) => {
 
   const className = `bg-gh-dark text-white rounded-full flex gap-2 items-center justify-center active:bg-opacity-90`
 
-  const Icon = dictionary.modes[mode]
+  const ICON = dictionary.modes[mode]
 
   return (
     <button
@@ -31,7 +31,7 @@ const Action = (props: Props) => {
       {loading ? (
         <PulseLoader color={`white`} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
-        <Icon />
+        <ICON fill='' />
       )}
     </button>
   )
