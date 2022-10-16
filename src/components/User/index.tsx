@@ -58,7 +58,7 @@ const User = (props: Props) => {
           />
         </button>
         <p className='select-none font-medium'>{user.username}</p>
-        <button className='mx-4'>
+        <button className='mx-4 outline-none'>
           <UserIcon.Signout width={15} height={15} />
         </button>
       </div>
