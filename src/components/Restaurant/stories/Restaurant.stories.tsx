@@ -20,4 +20,6 @@ Large.args = {
   state: 'LIKED',
 }
 
-Small.args = {}
+Small.args = {
+  state: 'LIKED',
+}
