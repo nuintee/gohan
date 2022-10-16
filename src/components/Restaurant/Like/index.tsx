@@ -11,7 +11,7 @@ import { states } from './constants/index'
 
 type Props = {
   state: typeof states[number]
-  onClick: Function
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 // Constans
