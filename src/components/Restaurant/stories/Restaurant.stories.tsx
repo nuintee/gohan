@@ -3,13 +3,21 @@ import { Restaurant } from '../index'
 
 export default {
   title: 'Restaurant',
-  component: Restaurant,
-} as ComponentMeta<typeof Restaurant>
+  component: Restaurant.Large,
+} as ComponentMeta<typeof Restaurant.Large>
 
-const Template: ComponentStory<typeof Restaurant> = (args) => <Restaurant {...args} />
+const LargeTemplate: ComponentStory<typeof Restaurant.Large> = (args) => (
+  <Restaurant.Large {...args} />
+)
+const SmallTemplate: ComponentStory<typeof Restaurant.Small> = (args) => (
+  <Restaurant.Small {...args} />
+)
 
-export const Default = Template.bind({})
+export const Large = LargeTemplate.bind({})
+export const Small = SmallTemplate.bind({})
 
-Default.args = {
+Large.args = {
   state: 'LIKED',
 }
+
+Small.args = {}

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import { Regular } from '../Button'
+import Texts from './Texts'
 import { Like, states } from './Like/index'
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
   onLike: Function
 }
 
-const Restaurant = (props: Props) => {
+const Large = (props: Props) => {
   const { state, onLike } = props
 
   return (
@@ -28,10 +29,7 @@ const Restaurant = (props: Props) => {
           {/* Indicator */}
           2km
         </span>
-        <div>
-          <h1 className='text-xl font-bold'>Shakeshack</h1>
-          <p className='text-gh-l-gray'>Spanish・Italian</p>
-        </div>
+        <Texts main='Shakshack' sub='Italian・Spanish' />
         <p className='bg-gh-l-orange text-center p-4 rounded-md'>
           Checkout more info from{' '}
           <a href='' className='text-gh-orange font-semibold'>
@@ -46,6 +44,30 @@ const Restaurant = (props: Props) => {
       </div>
     </div>
   )
+}
+
+const Small = (props: Props) => {
+  return (
+    <div>
+      <div>
+        <img src='' />
+      </div>
+      <div>
+        <div>
+          <div>
+            <h1></h1>
+          </div>
+          <span></span>
+        </div>
+        <Like onClick={() => {}} state='LIKED' />
+      </div>
+    </div>
+  )
+}
+
+const Restaurant = {
+  Large,
+  Small,
 }
 
 export { Restaurant, Like }
