@@ -20,8 +20,6 @@ const icon = {
 const Like = (props: Props) => {
   const { state, onClick } = props
 
-  const Icon = icon[state]
-
   return (
     <button
       className='bg-gh-l-orange w-12 h-12 shrink-0 rounded-full flex items-center justify-center'

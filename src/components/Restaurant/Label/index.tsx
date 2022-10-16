@@ -1,5 +1,5 @@
-// Resources
-import Route from './assets/route.svg'
+// Icons
+import Route from './icons/Route'
 
 type Props = {
   distance: number
