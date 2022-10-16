@@ -1,12 +1,28 @@
+import { useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 
 // Components
 import MapBox from '@/components/MapBox'
-import { Regular } from '@/components/Button'
+import { Action } from '@/components/Button'
+
+// InitialValues
+import { initialStates } from '@/components/Button/Action/constants'
 
 const Home: NextPage = () => {
+  const [searchButton, setSearchButton] = useState(initialStates)
+
+  const clickHandle = () => {
+    if (searchButton.mode === 'search') {
+      setSearchButton((prev) => ({ ...prev, loading: true }))
+      setTimeout(() => {
+        setSearchButton((prev) => ({ ...prev, loading: false }))
+      }, 1000)
+    } else if (searchButton.mode === 'close') {
+    }
+  }
+
   return (
     <div className='relative'>
       <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
@@ -15,10 +31,12 @@ const Home: NextPage = () => {
       </header>
       <MapBox />
       <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
-        {/* <button className='bg-gh-dark text-gh-white px-4 py-2 rounded-md active:bg-opacity-90'>
-          Find
-        </button> */}
-        <Regular />
+        <Action
+          mode={searchButton.mode}
+          type={searchButton.type}
+          onClick={clickHandle}
+          loading={searchButton.loading}
+        />
       </footer>
     </div>
   )
