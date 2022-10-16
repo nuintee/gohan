@@ -1,6 +1,5 @@
-// Resources
-import Locked from './assets/activity-locked.svg'
-import Regular from './assets/activity.svg'
+// Icons
+import { Locked, Regular } from './icons/index'
 
 type Props = {
   locked: boolean
