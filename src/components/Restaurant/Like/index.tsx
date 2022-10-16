@@ -1,10 +1,6 @@
 import Image from 'next/image'
 
-// Resources
-import Filled from './assets/like-filled.svg'
-import Locked from './assets/like-locked.svg'
-import Outline from './assets/like-outline.svg'
-import Fi from 'public/like-filled.svg'
+import { Like as LikeIcon } from '@/icons'
 
 // Constants
 import { states } from './constants/index'
@@ -16,9 +12,9 @@ type Props = {
 
 // Constans
 const icon = {
-  LIKED: Filled,
-  UNLIKED: Outline,
-  LOCKED: Locked,
+  LIKED: <LikeIcon.Filled />,
+  UNLIKED: <LikeIcon.Outline />,
+  LOCKED: <LikeIcon.Locked />,
 }
 
 const Like = (props: Props) => {
@@ -32,7 +28,7 @@ const Like = (props: Props) => {
       onClick={onClick}
       disabled={state === 'LOCKED'}
     >
-      {<Icon />}
+      {icon[state]}
     </button>
   )
 }

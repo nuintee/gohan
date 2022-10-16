@@ -1,5 +1,6 @@
 import Check from './Check'
 import Close from './Close'
 import Search from './Search'
+import Like from './Like'
 
-export { Check, Close, Search }
+export { Check, Close, Search, Like }
