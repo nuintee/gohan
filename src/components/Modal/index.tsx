@@ -17,15 +17,17 @@ const Confirm = (props: Props) => {
         isOpen ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <div className={`bg-gh-white duration-700 rounded-md ${isOpen ? 'scale-100' : 'scale-0'}`}>
-        <div className='p-4'>
-          <Texts size='small' />
+      {children || (
+        <div className={`bg-gh-white duration-700 rounded-md ${isOpen ? 'scale-100' : 'scale-0'}`}>
+          <div className='p-4'>
+            <Texts size='small' />
+          </div>
+          <footer className='flex p-4 gap-2'>
+            <Regular outline />
+            <Regular />
+          </footer>
         </div>
-        <footer className='flex p-4 gap-2'>
-          <Regular outline />
-          <Regular />
-        </footer>
-      </div>
+      )}
     </div>
   )
 }
