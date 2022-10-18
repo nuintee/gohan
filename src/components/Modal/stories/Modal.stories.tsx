@@ -11,6 +11,7 @@ const Template: ComponentStory<typeof Modal.Confirm> = (args) => <Modal.Confirm 
 export const Confirm = Template.bind({})
 
 Confirm.args = {
+  type: 'like',
   isOpen: true,
   onClose: () => {
     console.log(1)
