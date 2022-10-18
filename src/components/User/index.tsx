@@ -39,6 +39,7 @@ const User = (props: Props) => {
         !loading && 'active:bg-opacity-90'
       }`}
       disabled={loading}
+      onClick={onClick}
     >
       <span
         className={`h-10 w-10 rounded-full flex items-center justify-center bg-gh-l-gray ${
