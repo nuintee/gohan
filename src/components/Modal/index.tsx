@@ -4,7 +4,11 @@ type Props = {
   children: React.ReactNode
 }
 
-const Modal = (props: Props) => {
+// Component
+import Texts from '../Restaurant/Texts'
+import { Regular } from '@/components/Button/index'
+
+const Confirm = (props: Props) => {
   const { isOpen, onClose, children } = props
 
   return (
@@ -13,15 +17,29 @@ const Modal = (props: Props) => {
         isOpen ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <div className={`bg-gh-white duration-500 rounded-md ${isOpen ? 'scale-100' : 'scale-0'}`}>
-        <header className='flex gap-4'>
+      <div className={`bg-gh-white duration-700 rounded-md ${isOpen ? 'scale-100' : 'scale-0'}`}>
+        {/* <header className='flex gap-2 p-4 w-full justify-between'>
           <p>HEADER</p>
           <button>X</button>
-        </header>
-        {children}
+        </header> */}
+        <div className='p-4'>
+          <Texts size='small' />
+        </div>
+        <footer className='flex p-4 gap-2'>
+          <Regular />
+          <Regular />
+        </footer>
       </div>
     </div>
   )
+}
+
+const Details = () => {}
+
+const Actions = () => {}
+
+const Modal = {
+  Confirm,
 }
 
 export default Modal

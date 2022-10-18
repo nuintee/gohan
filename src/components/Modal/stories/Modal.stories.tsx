@@ -3,14 +3,14 @@ import Modal from '..'
 
 export default {
   title: 'Modal',
-  component: Modal,
-} as ComponentMeta<typeof Modal>
+  component: Modal.Confirm,
+} as ComponentMeta<typeof Modal.Confirm>
 
-const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} />
+const Template: ComponentStory<typeof Modal.Confirm> = (args) => <Modal.Confirm {...args} />
 
-export const Default = Template.bind({})
+export const Confirm = Template.bind({})
 
-Default.args = {
+Confirm.args = {
   isOpen: true,
   onClose: () => {
     console.log(1)
