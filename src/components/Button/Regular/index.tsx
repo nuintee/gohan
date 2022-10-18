@@ -12,8 +12,8 @@ const Regular = (props: Props) => {
 
   const theme = {
     className: danger
-      ? 'ring-gh-red ring-2 text-gh-red bg-transparent'
-      : outline && 'ring-gh-l-gray ring-2 text-gh-l-gray bg-transparent',
+      ? 'ring-gh-red ring-1 text-gh-red bg-transparent'
+      : outline && 'ring-gh-l-gray ring-1 text-gh-l-gray bg-transparent',
     icon: danger ? 'gh-red' : outline ? 'gh-l-gray' : 'gh-white',
   }
 

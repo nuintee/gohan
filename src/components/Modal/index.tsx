@@ -18,15 +18,11 @@ const Confirm = (props: Props) => {
       }`}
     >
       <div className={`bg-gh-white duration-700 rounded-md ${isOpen ? 'scale-100' : 'scale-0'}`}>
-        {/* <header className='flex gap-2 p-4 w-full justify-between'>
-          <p>HEADER</p>
-          <button>X</button>
-        </header> */}
         <div className='p-4'>
           <Texts size='small' />
         </div>
         <footer className='flex p-4 gap-2'>
-          <Regular />
+          <Regular outline />
           <Regular />
         </footer>
       </div>
