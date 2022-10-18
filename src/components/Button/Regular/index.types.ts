@@ -6,5 +6,6 @@ export type Props = {
   }
   loading: boolean
   danger?: boolean
+  outline?: boolean
   onClick: React.MouseEventHandler<HTMLButtonElement>
 }
