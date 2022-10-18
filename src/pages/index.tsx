@@ -28,7 +28,7 @@ const Home: NextPage = () => {
   return (
     <div className='relative'>
       <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-        <User />
+        <User loading={false} onClick={() => {}} />
         <Acitvity locked={true} onClick={() => {}} />
       </header>
       <MapBox />
