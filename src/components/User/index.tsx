@@ -24,6 +24,14 @@ const User = (props: Props) => {
   const { loading, user, onClick } = props
 
   const isAuthed = user && Object.keys(user).length
+  const icon = isAuthed ? (
+    <img
+      className='h-10 w-10 rounded-full bg-gh-l-gray'
+      src={`https://ui-avatars.com/api/?name=${user.username}`}
+    />
+  ) : (
+    <UserIcon.Guest />
+  )
 
   return (
     <button
@@ -37,15 +45,7 @@ const User = (props: Props) => {
           loading && 'animate-pulse'
         }`}
       >
-        {!loading &&
-          (isAuthed ? (
-            <img
-              className='h-10 w-10 rounded-full bg-gh-l-gray'
-              src={`https://ui-avatars.com/api/?name=${user.username}`}
-            />
-          ) : (
-            <UserIcon.Guest />
-          ))}
+        {!loading && icon}
       </span>
       {loading ? (
         <PulseLoader
