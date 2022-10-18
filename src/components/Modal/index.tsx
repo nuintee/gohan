@@ -55,6 +55,7 @@ const Actions = () => {}
 
 const Modal = {
   Confirm,
+  Layout,
 }
 
 export default Modal
