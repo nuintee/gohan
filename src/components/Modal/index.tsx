@@ -24,7 +24,11 @@ const Confirm = (props: Props) => {
       }`}
     >
       {children || (
-        <div className={`bg-gh-white duration-700 rounded-md ${isOpen ? 'scale-100' : 'scale-0'}`}>
+        <div
+          className={`bg-gh-white duration-700 rounded-md min-w-[20rem] ${
+            isOpen ? 'scale-100' : 'scale-0'
+          }`}
+        >
           <div className='p-4'>
             <Texts size='small' main={theme.title} sub={theme.sub} />
           </div>
