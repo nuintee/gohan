@@ -8,11 +8,11 @@ export default {
 
 const ConfirmTemplate: ComponentStory<typeof Modal.Confirm> = (args) => <Modal.Confirm {...args} />
 const DetailsTemplate: ComponentStory<typeof Modal.Details> = (args) => <Modal.Details {...args} />
-const ActionsTemplate: ComponentStory<typeof Modal.Actions> = (args) => <Modal.Actions {...args} />
+const UserTemplate: ComponentStory<typeof Modal.User> = (args) => <Modal.User {...args} />
 
 export const Confirm = ConfirmTemplate.bind({})
 export const Details = DetailsTemplate.bind({})
-export const Actions = ActionsTemplate.bind({})
+export const User = UserTemplate.bind({})
 
 Confirm.args = {
   type: 'like',
@@ -30,7 +30,7 @@ Details.args = {
   },
 }
 
-Actions.args = {
+User.args = {
   state: 'LIKED',
   isOpen: true,
   onClose: () => {
