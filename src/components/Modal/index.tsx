@@ -1,6 +1,9 @@
 // Constants
 import { dictionary, placeholders } from './constants/index'
 
+// Components
+import { Restaurant } from '@/components/Restaurant'
+
 type Props = {
   isOpen: boolean
   type?: keyof typeof dictionary.consent
@@ -49,12 +52,27 @@ const Confirm = (props: Props) => {
   )
 }
 
-const Details = () => {}
+const Details = (props) => {
+  const { isOpen, onClose, state } = props
+
+  return (
+    <Layout isOpen={isOpen}>
+      <div
+        className={`bg-gh-white duration-700 rounded-md min-w-[20rem] ${
+          isOpen ? 'scale-100' : 'scale-0'
+        }`}
+      >
+        <Restaurant.Large state={state} />
+      </div>
+    </Layout>
+  )
+}
 
 const Actions = () => {}
 
 const Modal = {
   Confirm,
+  Details,
   Layout,
 }
 
