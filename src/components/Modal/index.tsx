@@ -1,4 +1,5 @@
 // Constants
+import { version } from '@/../package.json'
 import { dictionary, placeholders } from './constants/index'
 
 // Components
@@ -57,22 +58,47 @@ const Details = (props) => {
 
   return (
     <Layout isOpen={isOpen}>
-      <div
+      <section
         className={`bg-gh-white duration-700 rounded-md min-w-[20rem] ${
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
         <Restaurant.Large state={state} />
-      </div>
+      </section>
     </Layout>
   )
 }
 
-const Actions = () => {}
+const Actions = (props) => {
+  const { isOpen, onClose, state } = props
+
+  return (
+    <Layout isOpen={isOpen}>
+      <section
+        className={`bg-gh-white duration-700 rounded-md min-w-[20rem] ${
+          isOpen ? 'scale-100' : 'scale-0'
+        }`}
+      >
+        <header className='p-4 flex gap-2 items-center justify-between border-b-[1px] border-gh-l-gray'>
+          <p>User</p>
+          <button>x</button>
+        </header>
+        <main className='p-4 flex flex-col gap-4'>
+          <Texts size='small' main='Username' sub='Last login at 2022 10 /31' icon={<h1>a</h1>} />
+          <Texts size='small' main='Version' sub={version} />
+        </main>
+        <footer className='p-4'>
+          <Regular danger text='Delete Account' />
+        </footer>
+      </section>
+    </Layout>
+  )
+}
 
 const Modal = {
   Confirm,
   Details,
+  Actions,
   Layout,
 }
 
