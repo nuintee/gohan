@@ -16,7 +16,7 @@ const Sidebar = (props: Props) => {
 
   return (
     <div
-      className={` bg-white flex flex-col overflow-auto max-h-[30rem] min-w-0 w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md ${slideIn}`}
+      className={`absolute top-0 right-0 h-screen bg-white flex flex-col overflow-auto min-w-0 w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md ${slideIn}`}
     >
       <Header title={title || 'Sidebar'} onClose={onClose} />
       <div></div>

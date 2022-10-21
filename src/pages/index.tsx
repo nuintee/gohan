@@ -8,6 +8,7 @@ import MapBox from '@/components/MapBox'
 import { Action } from '@/components/Button'
 import Acitvity from '@/components/Activity'
 import User from '@/components/User'
+import Sidebar from '@/components/Sidebar'
 
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
@@ -31,7 +32,10 @@ const Home: NextPage = () => {
         <User loading={false} onClick={() => {}} />
         <Acitvity locked={true} onClick={() => {}} />
       </header>
-      <MapBox />
+      <div>
+        <MapBox />
+        <Sidebar isOpen={true} />
+      </div>
       <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
         <Action
           mode={searchButton.mode}
