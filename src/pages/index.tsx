@@ -3,6 +3,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 
+// Hooks
+import useModals from '@/hooks/context/Modals'
+
 // Components
 import MapBox from '@/components/MapBox'
 import { Action } from '@/components/Button'
@@ -17,15 +20,22 @@ import { initialStates } from '@/components/Button/Action/constants'
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const [isSidebarOpen, setisSidebarOpen] = useState(true) // to Hook
+  const { modalsState, setModalsState } = useModals()
 
   const clickHandle = () => {
-    if (searchButton.mode === 'search') {
-      setSearchButton((prev) => ({ ...prev, loading: true }))
-      setTimeout(() => {
-        setSearchButton((prev) => ({ ...prev, loading: false }))
-      }, 1000)
-    } else if (searchButton.mode === 'close') {
-    }
+    // if (searchButton.mode === 'search') {
+    //   setSearchButton((prev) => ({ ...prev, loading: true }))
+    //   setTimeout(() => {
+    //     setSearchButton((prev) => ({ ...prev, loading: false }))
+    //   }, 1000)
+    // } else if (searchButton.mode === 'close') {
+    // }
+    setModalsState((prev) => ({
+      ...prev,
+      confirm: {
+        isOpen: true,
+      },
+    }))
   }
 
   return (
