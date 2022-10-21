@@ -4,8 +4,8 @@ export type Props = {
     position: 'before' | 'after'
     src: React.ReactElement
   }
-  loading: boolean
+  loading?: boolean
   danger?: boolean
   outline?: boolean
-  onClick: React.MouseEventHandler<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }

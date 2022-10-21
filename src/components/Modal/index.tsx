@@ -1,6 +1,6 @@
 // Constants
-import { version } from '@/../package.json'
 import { dictionary, placeholders, users } from './constants/index'
+import { states } from '@/components/Restaurant/Like/index'
 
 // Icons
 import { Close, Signout } from '@/icons'
@@ -57,6 +57,12 @@ const Confirm = (props: Props) => {
   )
 }
 
+type Details = {
+  isOpen: boolean
+  onClose: React.MouseEvent<HTMLButtonElement>
+  state: typeof states[number]
+}
+
 const Details = (props) => {
   const { isOpen, onClose, state } = props
 
@@ -67,14 +73,14 @@ const Details = (props) => {
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
-        <Restaurant.Large state={state} />
+        <Restaurant.Large state={state} onClick={() => {}} onLike={() => {}} />
       </section>
     </Layout>
   )
 }
 
-const User = (props) => {
-  const { isOpen, onClose, state } = props
+const User = (props: Props) => {
+  const { isOpen, onClose } = props
 
   return (
     <Layout isOpen={isOpen}>
