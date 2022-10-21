@@ -24,7 +24,12 @@ const Map = () => {
     })
   })
 
-  return <div ref={mapContainer} className='map-container h-screen bg-gh-l-gray' />
+  return (
+    <div
+      ref={mapContainer}
+      className='map-container h-screen bg-gradient-to-t from-white via-gh-l-gray to-gh-dark'
+    />
+  )
 }
 
 export default Map
