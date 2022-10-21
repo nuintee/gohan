@@ -1,6 +1,4 @@
-type Props = {
-  fill: string
-}
+import { Props } from '../index.types'
 
 const Close = (props: Props) => {
   const { fill, ...rest } = props

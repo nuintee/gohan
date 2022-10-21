@@ -3,7 +3,7 @@ import { version } from '@/../package.json'
 import { dictionary, placeholders } from './constants/index'
 
 // Icons
-import { Close } from '@/icons'
+import { Close, Signout } from '@/icons'
 
 // Components
 import { Restaurant } from '@/components/Restaurant'
@@ -83,13 +83,18 @@ const User = (props) => {
         }`}
       >
         <header className='p-4 flex gap-2 items-center justify-between border-b-[1px] border-gh-l-gray'>
-          <p>User</p>
+          <p className='font-bold'>User</p>
           <button>
             <Close fill='black' />
           </button>
         </header>
         <main className='p-4 flex flex-col gap-4'>
-          <Texts size='small' main='Username' sub='Last login at 2022 10 /31' icon={<Close />} />
+          <Texts
+            size='small'
+            main='Username'
+            sub='Last login at 2022 10 /31'
+            icon={<Signout height={20} width={20} />}
+          />
           <Texts size='small' main='Version' sub={version} />
         </main>
         <footer className='p-4'>
