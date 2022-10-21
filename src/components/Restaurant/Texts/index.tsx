@@ -14,17 +14,21 @@ type Props = {
   main: string
   sub?: string
   size?: 'small' | 'normal'
+  icon?: React.ReactNode
 }
 
 const Texts = (props: Props) => {
-  const { main, sub, size } = props
+  const { main, sub, size, icon } = props
 
   const textSize = sizes[size || 'normal']
 
   return (
-    <div>
-      <h1 className={`font-bold ${textSize.main}`}>{main || 'MAIN TEXT'}</h1>
-      <p className={`text-gh-l-gray ${textSize.sub}`}>{sub || 'SUB TEXT'}</p>
+    <div className='flex w-full items-center justify-between rounded-md gap-2'>
+      <div className='flex flex-col'>
+        <h1 className={`font-bold ${textSize.main}`}>{main || 'MAIN TEXT'}</h1>
+        <p className={`text-gh-l-gray ${textSize.sub}`}>{sub || 'SUB TEXT'}</p>
+      </div>
+      {icon}
     </div>
   )
 }

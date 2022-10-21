@@ -1,3 +1,6 @@
+// Consts
+import { colors } from 'config/tailwind'
+
 // Lib
 import PulseLoader from 'react-spinners/PulseLoader'
 
@@ -5,11 +8,17 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import { Props } from './index.types'
 
 const Regular = (props: Props) => {
-  const { text, icon, loading, danger, onClick } = props
+  const { text, icon, loading, danger, outline, onClick } = props
 
-  const className = `bg-gh-dark text-white px-4 py-2 rounded-md flex gap-2 items-center justify-center active:bg-opacity-90 w-full ${
-    danger && 'ring-2 ring-gh-red bg-transparent text-gh-red'
-  }`
+  const theme = {
+    className: danger
+      ? 'ring-gh-red ring-1 text-gh-red bg-opacity-0 bg-gh-red active:bg-opacity-100 active:text-white'
+      : outline &&
+        'ring-gh-l-gray ring-1 text-gh-l-gray bg-opacity-0 bg-gh-l-gray active:bg-gray-200 active:bg-opacity-90',
+    icon: danger ? 'gh-red' : outline ? 'gh-l-gray' : 'gh-white',
+  }
+
+  const className = `bg-gh-dark text-white px-4 py-2 rounded-md flex gap-2 items-center justify-center active:bg-opacity-90 w-full ${theme.className}`
 
   return (
     <button onClick={onClick} className={className} disabled={loading}>
@@ -18,7 +27,7 @@ const Regular = (props: Props) => {
       {icon?.position && icon.src}
       {loading && (
         <PulseLoader
-          color={`${danger ? 'red' : 'white'}`}
+          color={`${colors[theme.icon]}`}
           loading={true}
           size={5}
           speedMultiplier={0.5}
