@@ -32,10 +32,10 @@ const Home: NextPage = () => {
         <User loading={false} onClick={() => {}} />
         <Acitvity locked={true} onClick={() => {}} />
       </header>
-      <div>
+      <main>
         <MapBox />
-        <Sidebar isOpen={true} />
-      </div>
+        <Sidebar isOpen={false} />
+      </main>
       <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
         <Action
           mode={searchButton.mode}

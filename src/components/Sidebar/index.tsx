@@ -12,6 +12,16 @@ type Props = {
 const Sidebar = (props: Props) => {
   const { isOpen, title, onClose } = props
 
+  const tabs = [
+    {
+      label: 'History',
+      id: 0,
+    },
+    {
+      label: 'Favorites',
+      id: 1,
+    },
+  ]
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
   return (
@@ -19,7 +29,18 @@ const Sidebar = (props: Props) => {
       className={`absolute top-0 right-0 h-screen bg-white flex flex-col overflow-auto min-w-0 w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md ${slideIn}`}
     >
       <Header title={title || 'Sidebar'} onClose={onClose} />
-      <div></div>
+      <div className='flex items-center justify-center'>
+        {tabs.map((tab) => (
+          <button
+            className={`flex-1 border-b-2 py-2 text-gh-gray ${
+              tab.id == 0 && 'border-gh-orange text-black font-semibold'
+            }`}
+            key={tab.id}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
       <div className='bg-gh-white overflow-auto flex-1 w-fit flex flex-col gap-2 p-4'>
         {[...Array(20).keys()].map((v) => (
           <Restaurant.Small state='LIKED' />
