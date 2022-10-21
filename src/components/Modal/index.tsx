@@ -72,13 +72,35 @@ const Details = (props) => {
   )
 }
 
+const Input = () => {
+  return (
+    <div className='w-full flex bg-gh-white rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-gh-l-gray'>
+      <input
+        type={'text'}
+        className='flex-1 outline-none px-2 py-1 bg-transparent'
+        placeholder='Text'
+      />
+      <button className='text-sm p-2 text-gh-gray outline-none active:text-black'>Action</button>
+    </div>
+  )
+}
+
+const InputGroup = () => {
+  return (
+    <div className='flex flex-col gap-1'>
+      <label className='text-gh-gray'>Action</label>
+      <Input />
+    </div>
+  )
+}
+
 const User = (props) => {
   const { isOpen, onClose, state } = props
 
   return (
     <Layout isOpen={isOpen}>
       <section
-        className={`bg-gh-white duration-700 rounded-md min-w-[20rem] ${
+        className={`bg-white duration-700 rounded-md min-w-[20rem] ${
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
@@ -89,16 +111,17 @@ const User = (props) => {
           </button>
         </header>
         <main className='p-4 flex flex-col gap-4'>
-          <Texts
-            size='small'
-            main='Username'
-            sub='Last login at 2022 10 /31'
-            icon={<Signout height={20} width={20} />}
-          />
-          <Texts size='small' main='Version' sub={version} />
+          <InputGroup />
+          <details>
+            <summary className='text-gh-gray select-none cursor-pointer'>Advanced</summary>
+            <div className='flex flex-col pt-4 gap-2'>
+              <Regular danger text='Delete account' />
+            </div>
+          </details>
         </main>
-        <footer className='p-4'>
-          <Regular danger text='Delete Account' />
+        <hr></hr>
+        <footer className='p-4 flex flex-col gap-2'>
+          <Regular text='Signout' />
         </footer>
       </section>
     </Layout>
