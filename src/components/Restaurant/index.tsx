@@ -48,7 +48,7 @@ const Small = (props: Props) => {
 
   return (
     <div
-      className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill'
+      className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
       onClick={onClick}
     >
       <img

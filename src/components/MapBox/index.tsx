@@ -19,10 +19,17 @@ const Map = () => {
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [mapBoxState.lng, mapBoxState.lat],
       zoom: mapBoxState.zoom,
+      pitch: 60, // pitch in degrees
+      bearing: -60, // bearing in degrees
     })
   })
 
-  return <div ref={mapContainer} className='map-container h-screen' />
+  return (
+    <div
+      ref={mapContainer}
+      className='map-container h-screen bg-gradient-to-t from-white via-gh-l-gray to-gh-dark'
+    />
+  )
 }
 
 export default Map
