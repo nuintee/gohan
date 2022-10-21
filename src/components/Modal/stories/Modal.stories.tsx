@@ -31,7 +31,6 @@ Details.args = {
 }
 
 User.args = {
-  state: 'LIKED',
   isOpen: true,
   onClose: () => {
     console.log(1)

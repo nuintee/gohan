@@ -1,6 +1,8 @@
+import { forwardRef } from 'react'
+
 type Props = {
   label?: string
-  type: React.HTMLInputTypeAttribute
+  type?: React.HTMLInputTypeAttribute
   action?: {
     label: string
     onClick: React.MouseEventHandler<HTMLButtonElement>
@@ -8,7 +10,7 @@ type Props = {
   placeholder?: string
 }
 
-const Input = (props: Props) => {
+const Input = forwardRef((props: Props) => {
   const { label, type, placeholder, action, ...rest } = props
   return (
     <div className='flex flex-col gap-1'>
@@ -31,6 +33,6 @@ const Input = (props: Props) => {
       </div>
     </div>
   )
-}
+})
 
 export default Input

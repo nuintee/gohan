@@ -74,4 +74,33 @@ const dictionary = {
   },
 }
 
-export { dictionary, placeholders }
+const users = [
+  {
+    label: 'Name',
+    value: '',
+  },
+  {
+    label: 'Email',
+    value: '',
+    action: {
+      label: 'Change',
+      onClick: () => {
+        console.log(1)
+      },
+    },
+  },
+  {
+    label: 'Password',
+    type: 'password',
+    value: 'AAAA',
+    action: {
+      label: 'Change',
+      onClick: () => {
+        console.log(2)
+      },
+    },
+    disabled: true,
+  },
+]
+
+export { dictionary, placeholders, users }

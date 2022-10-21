@@ -1,13 +1,13 @@
 // Constants
 import { version } from '@/../package.json'
-import { dictionary, placeholders } from './constants/index'
+import { dictionary, placeholders, users } from './constants/index'
 
 // Icons
 import { Close, Signout } from '@/icons'
 
 // Components
 import { Restaurant } from '@/components/Restaurant'
-import { InputGroup } from '@/components/Input'
+import Input from '@/components/Input'
 
 type Props = {
   isOpen: boolean
@@ -90,7 +90,9 @@ const User = (props) => {
           </button>
         </header>
         <main className='p-4 flex flex-col gap-4'>
-          <InputGroup />
+          {users.map((conf, index) => (
+            <Input {...conf} label={conf.label} action={conf.action} key={index} />
+          ))}
           <details>
             <summary className='text-gh-gray select-none cursor-pointer'>Advanced</summary>
             <div className='flex flex-col pt-4 gap-2'>
