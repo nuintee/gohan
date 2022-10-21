@@ -8,6 +8,7 @@ import { Close, Signout } from '@/icons'
 // Components
 import { Restaurant } from '@/components/Restaurant'
 import Input from '@/components/Input'
+import Header from './Header/index'
 
 type Props = {
   isOpen: boolean
@@ -89,12 +90,7 @@ const User = (props: Props) => {
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
-        <header className='p-4 flex gap-2 items-center justify-between border-b-[1px] border-gh-l-gray'>
-          <p className='font-bold'>User</p>
-          <button>
-            <Close fill='black' />
-          </button>
-        </header>
+        <Header title='User' onClose={onClose} />
         <main className='p-4 flex flex-col gap-4'>
           {users.map((conf, index) => (
             <Input {...conf} label={conf.label} action={conf.action} key={index} />
