@@ -14,21 +14,6 @@ import { Restaurant } from '@/components/Restaurant'
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
 
-const placeholder_data = Array.from(Array(100).keys()).map((v) => ({
-  state: ['LIKED', 'UNLIKED'][Math.floor(Math.random() * ['LIKED', 'UNLIKED'].length)],
-}))
-
-const Renderer = (props: any) => {
-  const { data } = props
-  return (
-    <div className='overflow-auto px-4'>
-      {data?.map((item) => (
-        <Restaurant.Small state={item.state} />
-      ))}
-    </div>
-  )
-}
-
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const [isSidebarOpen, setisSidebarOpen] = useState(true) // to Hook
@@ -51,12 +36,7 @@ const Home: NextPage = () => {
       </header>
       <main>
         <MapBox />
-        <Sidebar
-          isOpen={isSidebarOpen}
-          onClose={() => setisSidebarOpen(false)}
-          data={placeholder_data}
-          renderer={Renderer}
-        />
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setisSidebarOpen(false)} />
       </main>
       <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
         <Action

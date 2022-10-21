@@ -18,21 +18,33 @@ const tabs = [
   },
 ]
 
+const placeholder_data = Array.from(Array(100).keys()).map((v) => ({
+  state: ['LIKED', 'UNLIKED'][Math.floor(Math.random() * ['LIKED', 'UNLIKED'].length)],
+}))
+
 // Types
 type HeaderProps = React.ComponentProps<typeof Header>
 
 type Props = {
   isOpen: boolean
-  data: []
-  renderer: React.ReactNode
 } & HeaderProps
+
+const Renderer = (props: any) => {
+  const { data } = props
+  return (
+    <div className='overflow-auto px-4'>
+      {data?.map((item) => (
+        <Restaurant.Small state={item.state} />
+      ))}
+    </div>
+  )
+}
 
 const Sidebar = (props: Props) => {
   const [selectedId, setSelectedId] = useState(0)
-  const { isOpen, title, data, renderer, onClose } = props
+  const { isOpen, title, onClose } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
-  const Renderer = renderer
 
   const setTabs = (id: number) => {
     setSelectedId(id)
@@ -44,7 +56,7 @@ const Sidebar = (props: Props) => {
     >
       <Header title={title || 'Sidebar'} onClose={onClose} />
       <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
-      <Renderer data={data} />
+      <Renderer data={placeholder_data} />
     </div>
   )
 }
