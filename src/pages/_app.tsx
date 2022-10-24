@@ -18,7 +18,7 @@ function App({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => {}} />
       <Modal.Details isOpen={modalsState.details.isOpen} />
-      <Modal.Confirm isOpen={!modalsState.confirm.isOpen} type={'like'} onClose={() => {}} />
+      <Modal.Confirm isOpen={modalsState.confirm.isOpen} type={'like'} onClose={() => {}} />
     </Modals.ModalsProvider>
   )
 }
