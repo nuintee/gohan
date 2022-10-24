@@ -10,6 +10,9 @@ import { Restaurant } from '@/components/Restaurant'
 import Input from '@/components/Input'
 import Header from './Header/index'
 
+// Hooks
+import useModals from '@/hooks/context/Modals'
+
 type Props = {
   isOpen: boolean
   type?: keyof typeof dictionary.consent
@@ -50,7 +53,7 @@ const Confirm = (props: Props) => {
           <Texts size='small' main={theme.title} sub={theme.sub} />
         </div>
         <footer className='flex p-4 gap-2'>
-          <Regular outline text={theme.button.cancel.label} onClick={theme.button.cancel.onClick} />
+          <Regular outline text={theme.button.cancel.label} onClick={onClose} />
           <Regular text={theme.button.proceed.label} onClick={theme.button.proceed.onClick} />
         </footer>
       </div>

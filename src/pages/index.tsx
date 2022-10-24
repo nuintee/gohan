@@ -7,6 +7,7 @@ import Image from 'next/image'
 import useModals from '@/hooks/context/Modals'
 
 // Components
+import Modal from '@/components/Modal'
 import MapBox from '@/components/MapBox'
 import { Action } from '@/components/Button'
 import Acitvity from '@/components/Activity'
@@ -22,41 +23,52 @@ const Home: NextPage = () => {
   const [isSidebarOpen, setisSidebarOpen] = useState(true) // to Hook
   const { modalsState, setModalsState } = useModals()
 
-  const clickHandle = () => {
-    // if (searchButton.mode === 'search') {
-    //   setSearchButton((prev) => ({ ...prev, loading: true }))
-    //   setTimeout(() => {
-    //     setSearchButton((prev) => ({ ...prev, loading: false }))
-    //   }, 1000)
-    // } else if (searchButton.mode === 'close') {
-    // }
+  const clickHandle = (key) => {
     setModalsState((prev) => ({
       ...prev,
-      confirm: {
+      [key]: {
         isOpen: true,
       },
     }))
   }
 
+  const onClose = (key) => {
+    setModalsState((prev) => ({
+      ...prev,
+      [key]: {
+        isOpen: false,
+      },
+    }))
+  }
+
   return (
-    <div className='relative'>
-      <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-        <User loading={false} onClick={() => {}} />
-        <Acitvity locked={false} onClick={() => setisSidebarOpen(true)} />
-      </header>
-      <main>
-        <MapBox />
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setisSidebarOpen(false)} />
-      </main>
-      <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
-        <Action
-          mode={searchButton.mode}
-          type={searchButton.type}
-          onClick={clickHandle}
-          loading={searchButton.loading}
-        />
-      </footer>
-    </div>
+    <>
+      <div className='relative'>
+        <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
+          <User loading={false} onClick={() => {}} />
+          <Acitvity locked={false} onClick={() => setisSidebarOpen(true)} />
+        </header>
+        <main>
+          <MapBox />
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setisSidebarOpen(false)} />
+        </main>
+        <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
+          <Action
+            mode={searchButton.mode}
+            type={searchButton.type}
+            onClick={() => clickHandle('confirm')}
+            loading={searchButton.loading}
+          />
+        </footer>
+      </div>
+      <Modal.User isOpen={modalsState.user.isOpen} onClose={() => onClose('user')} />
+      <Modal.Details isOpen={modalsState.details.isOpen} />
+      <Modal.Confirm
+        isOpen={modalsState.confirm.isOpen}
+        type={'like'}
+        onClose={() => onClose('confirm')}
+      />
+    </>
   )
 }
 
