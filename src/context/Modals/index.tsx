@@ -24,14 +24,14 @@ type ModalTypes = keyof InitialValues
 const ModalsContext = createContext({
   modalsState: initialValues,
   setModalsState: () => {},
-  setModal: () => {},
+  manageModal: () => {},
 })
 
 const ModalsProvider = (props: Props) => {
   const { children } = props
   const [modalsState, setModalsState] = useState(initialValues)
 
-  const setModal = (type: ModalTypes, isOpen: boolean) => {
+  const manageModal = (type: ModalTypes, isOpen: boolean) => {
     setModalsState((prev) => ({
       ...prev,
       [type]: {
@@ -43,7 +43,7 @@ const ModalsProvider = (props: Props) => {
   const value = {
     modalsState,
     setModalsState,
-    setModal,
+    manageModal,
   }
 
   return <ModalsContext.Provider value={value}>{children}</ModalsContext.Provider>
