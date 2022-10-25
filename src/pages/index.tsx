@@ -27,11 +27,24 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Toast {...toastState} onClose={() => manageToast('isOpen', false)} />
-      <button onClick={() => manageToast('isOpen', !toastState.isOpen)}>a</button>
+      <Toast
+        {...toastState}
+        onClose={() =>
+          manageToast({
+            isOpen: false,
+          })
+        }
+      />
       <div className='relative'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-          <User loading={false} onClick={() => {}} />
+          <User
+            loading={false}
+            onClick={() =>
+              manageToast({
+                isOpen: true,
+              })
+            }
+          />
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
         <main>

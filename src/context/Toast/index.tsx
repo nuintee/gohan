@@ -16,17 +16,23 @@ type Props = {
 
 const ToastContext = createContext({
   toastState: initialValues,
-  manageToast: (key: keyof InitialValues, value: string | boolean) => {},
+  manageToast: (payload: InitialValues) => {},
 })
 
 const ToastProvider = (props: Props) => {
   const { children } = props
   const [toastState, setToastState] = useState(initialValues)
 
-  const manageToast = (key: keyof InitialValues, value: string) => {
+  // const manageToast = (key: keyof InitialValues, value: string) => {
+  //   setToastState((prev) => ({
+  //     ...prev,
+  //     [key]: value,
+  //   }))
+  // }
+  const manageToast = (payload: InitialValues) => {
     setToastState((prev) => ({
       ...prev,
-      [key]: value,
+      ...payload,
     }))
   }
 

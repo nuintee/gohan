@@ -52,7 +52,7 @@ const Toast = (props: Props) => {
       } flex gap-4 duration-500 ease-in-out ${isOpen ? 'scale-100' : 'scale-0'}`}
     >
       <span
-        className={`h-10 w-10 flex items-center justify-center rounded-full ${themes[mode].badge.bg}`}
+        className={`h-10 w-10 shrink-0 flex items-center justify-center rounded-full ${themes[mode].badge.bg}`}
       >
         {themes[mode].badge.icon}
       </span>
