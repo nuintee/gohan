@@ -35,15 +35,16 @@ const Toast = (props: Props) => {
   const { isOpen, mode, main, sub, onClose, infinite, timeout } = props
 
   useEffect(() => {
-    if (infinite) return
+    if (infinite || !isOpen) return
+
     const init = () => {
-      const time = setTimeout(() => {
+      setTimeout(() => {
         onClose()
       }, timeout || 2000)
     }
 
     init()
-  }, [])
+  }, [isOpen])
 
   return (
     <div
