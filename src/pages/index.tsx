@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 // Hooks
-import { useModals, useSidebar } from '@/hooks/context'
+import { useModals, useSidebar, useToast } from '@/hooks/context'
 
 // Components
 import Modal from '@/components/Modal'
@@ -13,6 +13,7 @@ import { Action } from '@/components/Button'
 import Acitvity from '@/components/Activity'
 import User from '@/components/User'
 import Sidebar from '@/components/Sidebar'
+import Toast from '@/components/Toast'
 import { Restaurant } from '@/components/Restaurant'
 
 // InitialValues
@@ -22,9 +23,12 @@ const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
+  const { toastState, manageToast } = useToast()
 
   return (
     <>
+      <Toast {...toastState} onClose={() => manageToast('isOpen', false)} />
+      <button onClick={() => manageToast('isOpen', !toastState.isOpen)}>a</button>
       <div className='relative'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
           <User loading={false} onClick={() => {}} />

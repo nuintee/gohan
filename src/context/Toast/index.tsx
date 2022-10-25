@@ -1,39 +1,37 @@
 import React, { useState, createContext, ReactNode } from 'react'
 
-const initialValues = {
-  activity: {
-    isOpen: false,
-  },
+// Types
+import { Props as InitialValues } from '@/components/Toast/index.types'
+
+const initialValues: InitialValues = {
+  isOpen: false,
+  mode: 'success',
+  main: 'MODAL',
+  onClose: () => {},
 }
 
 type Props = {
-  children: JSX.Element
+  children: React.ReactNode
 }
-
-type InitialValues = typeof initialValues
-
-type ToastTypes = keyof InitialValues
 
 const ToastContext = createContext({
   toastState: initialValues,
+  manageToast: (key: keyof InitialValues, value: string | boolean) => {},
 })
 
 const ToastProvider = (props: Props) => {
   const { children } = props
   const [toastState, setToastState] = useState(initialValues)
 
-  const manageToast = (type: ToastTypes, isOpen: boolean) => {
+  const manageToast = (key: keyof InitialValues, value: string) => {
     setToastState((prev) => ({
       ...prev,
-      [type]: {
-        isOpen,
-      },
+      [key]: value,
     }))
   }
 
   const value = {
     toastState,
-    setToastState,
     manageToast,
   }
 

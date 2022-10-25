@@ -8,7 +8,9 @@ import Texts from '../Restaurant/Texts'
 // Constans
 import { colors } from '@/../config/tailwind/index'
 import { useEffect } from 'react'
-const modes = ['success', 'error'] as const
+
+// Types
+import { Props } from './index.types'
 
 const themes = {
   error: {
@@ -29,16 +31,6 @@ const themes = {
   },
 }
 
-type Props = {
-  isOpen: boolean
-  mode: typeof modes[number]
-  main: string
-  sub?: string
-  onClose: React.MouseEventHandler<HTMLButtonElement>
-  infinite?: boolean
-  timeout?: number // Millisecond
-}
-
 const Toast = (props: Props) => {
   const { isOpen, mode, main, sub, onClose, infinite, timeout } = props
 
@@ -55,7 +47,7 @@ const Toast = (props: Props) => {
 
   return (
     <div
-      className={`bg-white p-4 rounded-md border-l-8 ${
+      className={`absolute z-[1] top-[2rem] left-1/2 -translate-x-1/2 bg-white p-4 rounded-md border-l-8 ${
         themes[mode].border
       } flex gap-4 duration-500 ease-in-out ${isOpen ? 'scale-100' : 'scale-0'}`}
     >
