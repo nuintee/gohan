@@ -7,6 +7,7 @@ import Texts from '../Restaurant/Texts'
 
 // Constans
 import { colors } from '@/../config/tailwind/index'
+import { useEffect } from 'react'
 const modes = ['success', 'error'] as const
 
 const themes = {
@@ -29,6 +30,7 @@ const themes = {
 }
 
 type Props = {
+  isOpen: boolean
   mode: typeof modes[number]
   main: string
   sub?: string
@@ -38,10 +40,25 @@ type Props = {
 }
 
 const Toast = (props: Props) => {
-  const { mode, main, sub, onClose, infinite, timeout } = props
+  const { isOpen, mode, main, sub, onClose, infinite, timeout } = props
+
+  useEffect(() => {
+    if (infinite) return
+    const init = () => {
+      const time = setTimeout(() => {
+        onClose()
+      }, timeout || 2000)
+    }
+
+    init()
+  }, [])
 
   return (
-    <div className={`bg-white p-4 rounded-md border-l-8 ${themes[mode].border} flex gap-4`}>
+    <div
+      className={`bg-white p-4 rounded-md border-l-8 ${
+        themes[mode].border
+      } flex gap-4 duration-500 ease-in-out ${isOpen ? 'scale-100' : 'scale-0'}`}
+    >
       <span
         className={`h-10 w-10 flex items-center justify-center rounded-full ${themes[mode].badge.bg}`}
       >
