@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 // Hooks
-import useModals from '@/hooks/context/Modals'
+import { useModals, useSidebar } from '@/hooks/context'
 
 // Components
 import Modal from '@/components/Modal'
@@ -20,19 +20,22 @@ import { initialStates } from '@/components/Button/Action/constants'
 
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
-  const [isSidebarOpen, setisSidebarOpen] = useState(true) // to Hook
   const { modalsState, manageModal } = useModals()
+  const { sidebarState, manageSidebar } = useSidebar()
 
   return (
     <>
       <div className='relative'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
           <User loading={false} onClick={() => {}} />
-          <Acitvity locked={false} onClick={() => setisSidebarOpen(true)} />
+          <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
         <main>
           <MapBox />
-          <Sidebar isOpen={isSidebarOpen} onClose={() => setisSidebarOpen(false)} />
+          <Sidebar
+            isOpen={sidebarState.activity.isOpen}
+            onClose={() => manageSidebar('activity', false)}
+          />
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
           <Action

@@ -1,3 +1,4 @@
 import Modals from './Modals'
+import Sidebar from './Sidebar'
 
-export { Modals }
+export { Modals, Sidebar }
