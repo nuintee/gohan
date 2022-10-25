@@ -19,8 +19,8 @@ const Map = () => {
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [mapBoxState.lng, mapBoxState.lat],
       zoom: mapBoxState.zoom,
-      pitch: 60, // pitch in degrees
-      bearing: -60, // bearing in degrees
+      pitch: mapBoxState.pitch, // pitch in degrees
+      bearing: mapBoxState.bearing, // bearing in degrees
     })
   })
 
