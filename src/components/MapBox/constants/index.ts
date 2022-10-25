@@ -1,10 +1,4 @@
-type MapBoxInit = {
-  lng: number
-  lat: number
-  zoom?: number
-  pitch?: number
-  bearing?: number
-}
+import { MapBoxInit } from '../types'
 
 const mapbox: MapBoxInit = {
   lng: 139.64232765917689,

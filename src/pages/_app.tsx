@@ -2,17 +2,19 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 
 // Context
-import { Modals, Sidebar, Toast } from '@/context'
+import { Modals, Sidebar, Toast, GeoLocation } from '@/context'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <Toast.ToastProvider>
-      <Modals.ModalsProvider>
-        <Sidebar.SidebarProvider>
-          <Component {...pageProps} />
-        </Sidebar.SidebarProvider>
-      </Modals.ModalsProvider>
-    </Toast.ToastProvider>
+    <GeoLocation.GeoLocationProvider>
+      <Toast.ToastProvider>
+        <Modals.ModalsProvider>
+          <Sidebar.SidebarProvider>
+            <Component {...pageProps} />
+          </Sidebar.SidebarProvider>
+        </Modals.ModalsProvider>
+      </Toast.ToastProvider>
+    </GeoLocation.GeoLocationProvider>
   )
 }
 
