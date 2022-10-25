@@ -21,25 +21,7 @@ import { initialStates } from '@/components/Button/Action/constants'
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const [isSidebarOpen, setisSidebarOpen] = useState(true) // to Hook
-  const { modalsState, setModalsState } = useModals()
-
-  const clickHandle = (key) => {
-    setModalsState((prev) => ({
-      ...prev,
-      [key]: {
-        isOpen: true,
-      },
-    }))
-  }
-
-  const onClose = (key) => {
-    setModalsState((prev) => ({
-      ...prev,
-      [key]: {
-        isOpen: false,
-      },
-    }))
-  }
+  const { modalsState, setModal } = useModals()
 
   return (
     <>
@@ -56,17 +38,17 @@ const Home: NextPage = () => {
           <Action
             mode={searchButton.mode}
             type={searchButton.type}
-            onClick={() => clickHandle('confirm')}
+            onClick={() => setModal('confirm', true)}
             loading={searchButton.loading}
           />
         </footer>
       </div>
-      <Modal.User isOpen={modalsState.user.isOpen} onClose={() => onClose('user')} />
+      <Modal.User isOpen={modalsState.user.isOpen} onClose={() => setModal('user', false)} />
       <Modal.Details isOpen={modalsState.details.isOpen} />
       <Modal.Confirm
         isOpen={modalsState.confirm.isOpen}
         type={'like'}
-        onClose={() => onClose('confirm')}
+        onClose={() => setModal('confirm', false)}
       />
     </>
   )
