@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 // Hooks
-import { useModals, useSidebar, useToast } from '@/hooks/context'
+import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
 
 // Components
 import Modal from '@/components/Modal'
@@ -24,6 +24,14 @@ const Home: NextPage = () => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
+  const { mapRef } = useGeoLocation()
+
+  const flyTo = () => {
+    mapRef.current.flyTo({
+      center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    })
+  }
 
   return (
     <>
@@ -55,10 +63,16 @@ const Home: NextPage = () => {
           />
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
-          <Action
+          {/* <Action
             mode={searchButton.mode}
             type={searchButton.type}
             onClick={() => manageModal('confirm', true)}
+            loading={searchButton.loading}
+          /> */}
+          <Action
+            mode={searchButton.mode}
+            type={searchButton.type}
+            onClick={flyTo}
             loading={searchButton.loading}
           />
         </footer>

@@ -12,12 +12,11 @@ import useGeoLocation from '@/hooks/context/GeoLocation'
 
 const Map = () => {
   const mapContainer = useRef(null)
-  const map = useRef(null)
-  const { geoState } = useGeoLocation()
+  const { geoState, mapRef } = useGeoLocation()
 
   useEffect(() => {
-    if (map.current) return // initialize map only once
-    map.current = new mapboxgl.Map({
+    if (mapRef.current) return // initialize map only once
+    mapRef.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [geoState?.lng, geoState?.lat],

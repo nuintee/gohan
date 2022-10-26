@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from 'react'
+import React, { useEffect, useState, createContext, useRef } from 'react'
 
 // Types
 import initialValues from '@/components/MapBox/constants'
@@ -6,13 +6,18 @@ import { MapBoxInit } from '@/components/MapBox/types'
 
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
+  mapRef: {
+    current: null,
+  },
 })
 
 const GeoLocationProvider = ({ children }) => {
   const [geoState, setGeoState] = useState<MapBoxInit>(initialValues.mapbox)
+  const mapRef = useRef(null)
 
   const value = {
     geoState,
+    mapRef,
   }
 
   useEffect(() => {
