@@ -54,14 +54,32 @@ const Home: NextPage = () => {
       />
       <div className='relative h-screen w-screen overflow-hidden'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-          <User
-            loading={false}
-            onClick={() =>
-              manageToast({
-                isOpen: true,
-              })
-            }
-          />
+          <div className='flex gap-2 items-center'>
+            <User
+              loading={false}
+              onClick={() =>
+                manageToast({
+                  isOpen: true,
+                })
+              }
+            />
+            {process.env.NODE_ENV === 'development' && (
+              <div className='flex gap-2'>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={flyTo}
+                >
+                  ✈️ FlyTo
+                </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={addMarker}
+                >
+                  AddMarker
+                </button>
+              </div>
+            )}
+          </div>
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
         <main>
