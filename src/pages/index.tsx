@@ -85,7 +85,7 @@ const Home: NextPage = () => {
         <main>
           {isLocationReady && <MapBox />}
           <div
-            className={`bg-gh-dark text-white h-screen w-screen flex items-center justify-center duration-500 ${
+            className={`absolute top-0 left-0 z-[-1] bg-gh-dark text-white h-screen w-screen flex items-center justify-center duration-500 ${
               isLocationReady ? 'scale-0' : 'scale-100'
             }`}
           >
