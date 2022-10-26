@@ -1,25 +1,20 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 
-// Hooks
-import useModals from '@/hooks/context/Modals'
-
-// Component
-import Modal from '@/components/Modal'
-
 // Context
-import { Modals } from '@/context'
+import { Modals, Sidebar, Toast, GeoLocation } from '@/context'
 
 function App({ Component, pageProps }: AppProps) {
-  const { modalsState, setModalsState } = useModals()
-
   return (
-    <Modals.ModalsProvider>
-      <Component {...pageProps} />
-      <Modal.User isOpen={modalsState.user.isOpen} onClose={() => {}} />
-      <Modal.Details isOpen={modalsState.details.isOpen} />
-      <Modal.Confirm isOpen={modalsState.confirm.isOpen} type={'like'} onClose={() => {}} />
-    </Modals.ModalsProvider>
+    <GeoLocation.GeoLocationProvider>
+      <Toast.ToastProvider>
+        <Modals.ModalsProvider>
+          <Sidebar.SidebarProvider>
+            <Component {...pageProps} />
+          </Sidebar.SidebarProvider>
+        </Modals.ModalsProvider>
+      </Toast.ToastProvider>
+    </GeoLocation.GeoLocationProvider>
   )
 }
 

@@ -7,7 +7,10 @@ import Texts from '../Restaurant/Texts'
 
 // Constans
 import { colors } from '@/../config/tailwind/index'
-const modes = ['success', 'error'] as const
+import { useEffect } from 'react'
+
+// Types
+import { Props } from './index.types'
 
 const themes = {
   error: {
@@ -28,22 +31,29 @@ const themes = {
   },
 }
 
-type Props = {
-  mode: typeof modes[number]
-  main: string
-  sub?: string
-  onClose: React.MouseEventHandler<HTMLButtonElement>
-  infinite?: boolean
-  timeout?: number // Millisecond
-}
-
 const Toast = (props: Props) => {
-  const { mode, main, sub, onClose, infinite, timeout } = props
+  const { isOpen, mode, main, sub, onClose, infinite, timeout } = props
+
+  useEffect(() => {
+    if (infinite || !isOpen) return
+
+    const init = () => {
+      setTimeout(() => {
+        onClose()
+      }, timeout || 2000)
+    }
+
+    init()
+  }, [isOpen])
 
   return (
-    <div className={`bg-white p-4 rounded-md border-l-8 ${themes[mode].border} flex gap-4`}>
+    <div
+      className={`absolute z-[1] top-[2rem] left-1/2 -translate-x-1/2 bg-white p-4 rounded-md border-l-8 ${
+        themes[mode].border
+      } flex gap-4 duration-500 ease-in-out ${isOpen ? 'scale-100' : 'scale-0'}`}
+    >
       <span
-        className={`h-10 w-10 flex items-center justify-center rounded-full ${themes[mode].badge.bg}`}
+        className={`h-10 w-10 shrink-0 flex items-center justify-center rounded-full ${themes[mode].badge.bg}`}
       >
         {themes[mode].badge.icon}
       </span>

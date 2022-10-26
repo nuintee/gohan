@@ -7,20 +7,23 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 // Constants
 import initialValues from './constants'
 
+// Hooks
+import useGeoLocation from '@/hooks/context/GeoLocation'
+
 const Map = () => {
   const mapContainer = useRef(null)
   const map = useRef(null)
-  const [mapBoxState, setMapBoxState] = useState(initialValues.mapbox)
+  const { geoState } = useGeoLocation()
 
   useEffect(() => {
     if (map.current) return // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [mapBoxState.lng, mapBoxState.lat],
-      zoom: mapBoxState.zoom,
-      pitch: 60, // pitch in degrees
-      bearing: -60, // bearing in degrees
+      center: [geoState?.lng, geoState?.lat],
+      zoom: geoState?.zoom,
+      pitch: geoState?.pitch, // pitch in degrees
+      bearing: geoState?.bearing, // bearing in degrees
     })
   })
 
