@@ -58,9 +58,11 @@ const Toast = (props: Props) => {
         {themes[mode].badge.icon}
       </span>
       <Texts main={main || themes[mode].text} sub={sub || 'SUB'} size='small' />
-      <button className='ml-auto' onClick={onClose}>
-        <Close fill={colors['gh-dark']} />
-      </button>
+      {!infinite && (
+        <button className='ml-auto' onClick={onClose}>
+          <Close fill={colors['gh-dark']} />
+        </button>
+      )}
     </div>
   )
 }

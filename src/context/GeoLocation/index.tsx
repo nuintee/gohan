@@ -48,6 +48,7 @@ const GeoLocationProvider = ({ children }) => {
             mode: 'error',
             onClose: () => {},
             isOpen: true,
+            infinite: true,
           })
         },
       )

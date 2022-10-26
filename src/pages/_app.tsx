@@ -6,15 +6,15 @@ import { Modals, Sidebar, Toast, GeoLocation } from '@/context'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <GeoLocation.GeoLocationProvider>
-      <Toast.ToastProvider>
+    <Toast.ToastProvider>
+      <GeoLocation.GeoLocationProvider>
         <Modals.ModalsProvider>
           <Sidebar.SidebarProvider>
             <Component {...pageProps} />
           </Sidebar.SidebarProvider>
         </Modals.ModalsProvider>
-      </Toast.ToastProvider>
-    </GeoLocation.GeoLocationProvider>
+      </GeoLocation.GeoLocationProvider>
+    </Toast.ToastProvider>
   )
 }
 
