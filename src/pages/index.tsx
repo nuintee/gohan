@@ -3,6 +3,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 
+// Lib
+import mapboxgl from 'mapbox-gl'
+
 // Hooks
 import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
 
@@ -24,13 +27,17 @@ const Home: NextPage = () => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
-  const { mapRef } = useGeoLocation()
+  const { mapRef, geoState } = useGeoLocation()
 
   const flyTo = () => {
     mapRef.current.flyTo({
       center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     })
+  }
+
+  const addMarker = () => {
+    new mapboxgl.Marker().setLngLat([12.554729, 55.70651]).addTo(mapRef.current)
   }
 
   return (
@@ -56,7 +63,8 @@ const Home: NextPage = () => {
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
         <main>
-          <MapBox />
+          {/* <MapBox /> */}
+          {geoState.lat && geoState.lng ? <MapBox /> : <div>Loading</div>}
           <Sidebar
             isOpen={sidebarState.activity.isOpen}
             onClose={() => manageSidebar('activity', false)}
@@ -72,7 +80,7 @@ const Home: NextPage = () => {
           <Action
             mode={searchButton.mode}
             type={searchButton.type}
-            onClick={flyTo}
+            onClick={addMarker}
             loading={searchButton.loading}
           />
         </footer>

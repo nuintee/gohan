@@ -33,6 +33,7 @@ const GeoLocationProvider = ({ children }) => {
           ...prev,
           lat,
           lng,
+          zoom: 18,
         }))
       })
     }
