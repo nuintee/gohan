@@ -14,7 +14,6 @@ const Map = () => {
   const mapContainer = useRef(null)
   const map = useRef(null)
   const { geoState } = useGeoLocation()
-  const [mapBoxState, setMapBoxState] = useState(initialValues.mapbox)
 
   useEffect(() => {
     if (map.current) return // initialize map only once

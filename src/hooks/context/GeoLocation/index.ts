@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { GeoLocation } from '@/context'
+import { GeoLocation } from '@/context/'
 
 const useGeoLocation = () => {
   return useContext(GeoLocation.GeoLocationContext)
