@@ -25,7 +25,7 @@ const Map = () => {
       pitch: geoState?.pitch, // pitch in degrees
       bearing: geoState?.bearing, // bearing in degrees
     })
-  })
+  }, [])
 
   return (
     <div
