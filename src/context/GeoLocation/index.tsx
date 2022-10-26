@@ -10,6 +10,7 @@ const GeoLocationContext = createContext({
 
 const GeoLocationProvider = ({ children }) => {
   const [geoState, setGeoState] = useState<MapBoxInit>(initialValues.mapbox)
+
   const value = {
     geoState,
   }
