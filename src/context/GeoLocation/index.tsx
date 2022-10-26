@@ -1,5 +1,8 @@
 import React, { useEffect, useState, createContext, useRef } from 'react'
 
+// Hooks
+import { useToast } from '@/hooks/context'
+
 // Types
 import initialValues from '@/components/MapBox/constants'
 import { MapBoxInit } from '@/components/MapBox/types'
@@ -13,6 +16,7 @@ const GeoLocationContext = createContext({
 
 const GeoLocationProvider = ({ children }) => {
   const [geoState, setGeoState] = useState<MapBoxInit>(initialValues.mapbox)
+  const { manageToast, toastState } = useToast()
   const mapRef = useRef(null)
 
   const value = {
@@ -22,20 +26,31 @@ const GeoLocationProvider = ({ children }) => {
 
   useEffect(() => {
     const init = () => {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const { coords } = pos
-        const { latitude: lat, longitude: lng } = coords
-        console.log({
-          lng,
-          lat,
-        })
-        setGeoState((prev) => ({
-          ...prev,
-          lat,
-          lng,
-          zoom: 18,
-        }))
-      })
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { coords } = pos
+          const { latitude: lat, longitude: lng } = coords
+          console.log({
+            lng,
+            lat,
+          })
+          setGeoState((prev) => ({
+            ...prev,
+            lat,
+            lng,
+            zoom: 18,
+          }))
+        },
+        (error) => {
+          manageToast({
+            main: 'Erorr',
+            sub: error.message,
+            mode: 'error',
+            onClose: () => {},
+            isOpen: true,
+          })
+        },
+      )
     }
     init()
   }, [])

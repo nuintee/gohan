@@ -29,6 +29,8 @@ const Home: NextPage = () => {
   const { toastState, manageToast } = useToast()
   const { mapRef, geoState } = useGeoLocation()
 
+  const isLocationReady = geoState.lat && geoState.lng
+
   const flyTo = () => {
     mapRef.current.flyTo({
       center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
@@ -50,7 +52,7 @@ const Home: NextPage = () => {
           })
         }
       />
-      <div className='relative'>
+      <div className='relative h-screen w-screen overflow-hidden'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
           <User
             loading={false}
@@ -63,24 +65,24 @@ const Home: NextPage = () => {
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
         <main>
-          {/* <MapBox /> */}
-          {geoState.lat && geoState.lng ? <MapBox /> : <div>Loading</div>}
+          {isLocationReady && <MapBox />}
+          <div
+            className={`bg-gh-dark text-white h-screen w-screen flex items-center justify-center duration-500 ${
+              isLocationReady ? 'scale-0' : 'scale-100'
+            }`}
+          >
+            Loading...
+          </div>
           <Sidebar
             isOpen={sidebarState.activity.isOpen}
             onClose={() => manageSidebar('activity', false)}
           />
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
-          {/* <Action
-            mode={searchButton.mode}
-            type={searchButton.type}
-            onClick={() => manageModal('confirm', true)}
-            loading={searchButton.loading}
-          /> */}
           <Action
             mode={searchButton.mode}
             type={searchButton.type}
-            onClick={addMarker}
+            onClick={() => manageModal('confirm', true)}
             loading={searchButton.loading}
           />
         </footer>
