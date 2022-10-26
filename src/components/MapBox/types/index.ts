@@ -4,4 +4,8 @@ export type MapBoxInit = {
   zoom?: number | null
   pitch?: number | null
   bearing?: number | null
+  error?: {
+    is: boolean
+    message: string
+  }
 }

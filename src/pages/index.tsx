@@ -22,6 +22,11 @@ import { Restaurant } from '@/components/Restaurant'
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
 
+type Coords = {
+  lat: number
+  lng: number
+}
+
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
@@ -31,9 +36,12 @@ const Home: NextPage = () => {
 
   const isLocationReady = geoState.lat && geoState.lng
 
-  const flyTo = () => {
+  const flyTo = (coords: Coords) => {
     mapRef.current.flyTo({
-      center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
+      center: [
+        coords?.lat || (Math.random() - 0.5) * 360,
+        coords?.lng || (Math.random() - 0.5) * 100,
+      ],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     })
   }
@@ -68,14 +76,23 @@ const Home: NextPage = () => {
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
                   onClick={flyTo}
+                  disabled={!isLocationReady}
                 >
                   ✈️ FlyTo
                 </button>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
                   onClick={addMarker}
+                  disabled={!isLocationReady}
                 >
                   AddMarker
+                </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={() => {}}
+                  disabled={!isLocationReady}
+                >
+                  Origin
                 </button>
               </div>
             )}
@@ -85,11 +102,17 @@ const Home: NextPage = () => {
         <main>
           {isLocationReady && <MapBox />}
           <div
-            className={`absolute top-0 left-0 z-[-1] bg-gh-dark text-white h-screen w-screen flex items-center justify-center duration-500 ${
+            className={`absolute top-0 left-0 z-[-1] bg-gh-white h-screen w-screen flex items-center justify-center duration-500 ${
               isLocationReady ? 'scale-0' : 'scale-100'
             }`}
           >
-            Loading...
+            <p>
+              {!geoState.error?.is
+                ? isLocationReady
+                  ? ''
+                  : 'Loading'
+                : 'Please Allow Geolocation'}
+            </p>
           </div>
           <Sidebar
             isOpen={sidebarState.activity.isOpen}

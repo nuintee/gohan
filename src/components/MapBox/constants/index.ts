@@ -6,6 +6,10 @@ const mapbox: MapBoxInit = {
   zoom: null,
   pitch: null,
   bearing: null,
+  error: {
+    is: false,
+    message: '',
+  },
 }
 
 const initialValues = {

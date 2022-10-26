@@ -50,6 +50,13 @@ const GeoLocationProvider = ({ children }) => {
             isOpen: true,
             infinite: true,
           })
+          setGeoState((prev) => ({
+            ...prev,
+            error: {
+              is: true,
+              message: error.message,
+            },
+          }))
         },
       )
     }
