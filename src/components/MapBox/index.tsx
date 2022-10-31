@@ -37,69 +37,22 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 const MapBox = (props) => {
   const mapRef = useRef(null)
-  const [sources, setSources] = useState([
-    {
-      id: 'route',
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        coordinates: [
-          [
-            [100, 40],
-            [-66.96466, 44.8097],
-          ],
-        ],
-      },
-      layers: [
-        {
-          id: 'start',
-          type: 'circle',
-          source: 'route',
-          paint: {
-            'circle-color': '#4E3FC8',
-          },
-        },
-      ],
-    },
-    {
-      id: 'path',
-      type: 'Feature',
-      geometry: {
-        type: 'MultiLineString',
-        coordinates: [
-          [
-            [100, 40],
-            [100, 50],
-            [100, 60],
-            [-66.96466, 44.8097],
-          ],
-        ],
-      },
-      layers: [
-        {
-          id: 'p',
-          type: 'line',
-          source: 'path',
-          paint: {
-            'line-color': '#15cc09',
-            'line-width': 2,
-          },
-        },
-      ],
-    },
-  ])
+  const [sources, setSources] = useState([])
   const { manageToast } = useToast()
 
-  const start = [100, 40]
+  const start = [-66.96466, 44.8097]
 
   const onLoad = (e) => {}
 
   const onClick = (e) => {
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
+    console.dir(coords)
 
     const getRoute = async (start, end) => {
       try {
-        const base_coordinates = `-74.039865%2C40.713827%3B-74.038526%2C40.717775`
+        // const base_coordinates = `-74.039865%2C40.713827%3B-74.038526%2C40.717775`
+        const base_coordinates = encodeURIComponent(`${start};${end}`)
+        console.log(base_coordinates)
         const profile = `mapbox/walking`
         const query = await fetch(
           `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&access_token=${mapboxAccessToken}`,
@@ -160,7 +113,7 @@ const MapBox = (props) => {
       }
     }
 
-    getRoute()
+    getRoute(start, coords)
   }
 
   return (
