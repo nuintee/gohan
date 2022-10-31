@@ -82,13 +82,6 @@ const Home: NextPage = () => {
                 </button>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={addMarker}
-                  disabled={!isLocationReady}
-                >
-                  AddMarker
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
                   onClick={() => flyTo(geoState)}
                   disabled={!isLocationReady}
                 >

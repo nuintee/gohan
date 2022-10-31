@@ -16,12 +16,15 @@ const GeoLocationContext = createContext({
 
 const GeoLocationProvider = ({ children }) => {
   const [geoState, setGeoState] = useState<MapBoxInit>(initialValues.mapbox)
+  const [sources, setSources] = useState([])
   const { manageToast } = useToast()
   const mapRef = useRef(null)
 
   const value = {
     geoState,
     mapRef,
+    sources,
+    setSources,
   }
 
   useEffect(() => {

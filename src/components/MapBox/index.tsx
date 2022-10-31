@@ -5,41 +5,14 @@ import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-g
 import { colors } from 'config/tailwind'
 
 // Hooks
-import { useModals, useToast } from '@/hooks/context'
-
-const waypoint_structure = [
-  {
-    distance: 6.607,
-    name: '',
-    location: [-74.039788, 40.713818],
-  },
-  {
-    distance: 25.529,
-    name: '',
-    location: [-74.038826, 40.717807],
-  },
-]
-
-const route_structure = [
-  [-74.039788, 40.713818],
-  [-74.038826, 40.717807],
-]
-
-const desired_structure = [
-  [
-    [-74.039788, 40.713818],
-    [-74.038826, 40.717807],
-  ],
-]
+import { useGeoLocation, useModals, useToast } from '@/hooks/context'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 const MapBox = (props) => {
-  const mapRef = useRef(null)
-  const [sources, setSources] = useState([])
+  const { geoState, mapRef, sources, setSources } = useGeoLocation()
   const { manageToast } = useToast()
-  const { manageModal } = useModals()
 
   const start = [-66.96466, 44.8097]
 
