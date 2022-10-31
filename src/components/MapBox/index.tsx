@@ -7,6 +7,31 @@ import { colors } from 'config/tailwind'
 // Hooks
 import { useToast } from '@/hooks/context'
 
+const waypoint_structure = [
+  {
+    distance: 6.607,
+    name: '',
+    location: [-74.039788, 40.713818],
+  },
+  {
+    distance: 25.529,
+    name: '',
+    location: [-74.038826, 40.717807],
+  },
+]
+
+const route_structure = [
+  [-74.039788, 40.713818],
+  [-74.038826, 40.717807],
+]
+
+const desired_structure = [
+  [
+    [-74.039788, 40.713818],
+    [-74.038826, 40.717807],
+  ],
+]
+
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
@@ -71,6 +96,47 @@ const MapBox = (props) => {
 
   const onClick = (e) => {
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
+
+    const getRoute = async (start, end) => {
+      try {
+        const coordinates = `-74.039865%2C40.713827%3B-74.038526%2C40.717775`
+        const profile = `mapbox/walking`
+        const query = await fetch(
+          `https://api.mapbox.com/directions/v5/${profile}/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`,
+        )
+        const json = await query.json()
+        const waypoints = json?.waypoints
+        console.log(waypoints)
+        const routes = waypoints?.map((waypoint) => waypoint?.location)
+        console.log(routes)
+        setSources((prev) => [
+          ...prev,
+          {
+            id: 'base-route',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: routes,
+            },
+            layers: [
+              {
+                id: 'b-start',
+                type: 'circle',
+                source: 'base-route',
+                paint: {
+                  'circle-color': '#4E3FC8',
+                },
+              },
+            ],
+          },
+        ])
+        return json
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    getRoute()
   }
 
   return (
@@ -100,11 +166,6 @@ const MapBox = (props) => {
           <span className='h-4 w-4 bg-gh-orange rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md'></span>
         </div>
       </Marker>
-      {/* <Source id='route' type='geojson' data={geoData}>
-        {layers.map((layer) => (
-          <Layer {...layer} />
-        ))}
-      </Source> */}
       {sources?.map((source) => (
         <Source id={source.id} type='geojson' data={source}>
           {source.layers.map((layer) => (
