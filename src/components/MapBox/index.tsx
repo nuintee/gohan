@@ -124,7 +124,7 @@ const MapBox = (props) => {
   }
 
   return (
-    <div className='w-screen h-screen -z-[1]'>
+    <div className='w-screen h-screen'>
       <Map
         initialViewState={{
           longitude: -100,

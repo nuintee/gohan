@@ -72,7 +72,7 @@ const Home: NextPage = () => {
               }
             />
             {process.env.NODE_ENV === 'development' && (
-              <div className='flex gap-2'>
+              <div className='flex gap-2 z-[1]'>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
                   onClick={flyTo}
