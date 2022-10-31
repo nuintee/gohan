@@ -99,30 +99,54 @@ const MapBox = (props) => {
 
     const getRoute = async (start, end) => {
       try {
-        const coordinates = `-74.039865%2C40.713827%3B-74.038526%2C40.717775`
+        const base_coordinates = `-74.039865%2C40.713827%3B-74.038526%2C40.717775`
         const profile = `mapbox/walking`
         const query = await fetch(
-          `https://api.mapbox.com/directions/v5/${profile}/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`,
+          `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&access_token=${mapboxAccessToken}`,
         )
         const json = await query.json()
+        const routes = json?.routes
         const waypoints = json?.waypoints
-        console.log(waypoints)
-        const routes = waypoints?.map((waypoint) => waypoint?.location)
-        console.log(routes)
+        const endpoint = waypoints.map((waypoint) => waypoint.location)
+        console.log({
+          waypoints,
+          endpoint,
+        })
+        const coordinates = routes?.map((route) => route.geometry.coordinates)
+        console.log(coordinates)
         setSources((prev) => [
           ...prev,
           {
             id: 'base-route',
             type: 'Feature',
             geometry: {
-              type: 'Polygon',
-              coordinates: routes,
+              type: 'MultiLineString',
+              coordinates,
             },
             layers: [
               {
                 id: 'b-start',
-                type: 'circle',
+                type: 'line',
                 source: 'base-route',
+                paint: {
+                  'line-color': '#4E3FC8',
+                  'line-width': 2,
+                },
+              },
+            ],
+          },
+          {
+            id: 'end',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [endpoint],
+            },
+            layers: [
+              {
+                id: 'b-end',
+                type: 'circle',
+                source: 'end',
                 paint: {
                   'circle-color': '#4E3FC8',
                 },
