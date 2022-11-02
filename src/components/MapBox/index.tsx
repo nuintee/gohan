@@ -6,83 +6,27 @@ import { colors } from 'config/tailwind'
 
 // Hooks
 import { useGeoLocation, useModals, useToast } from '@/hooks/context'
-import useGetRoute from './hooks/Directions'
+import useDirections from './hooks/Directions'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 const MapBox = (props) => {
-  const { geoState, mapRef, sources, setSources } = useGeoLocation()
-  const { manageToast } = useToast()
+  const { mapRef, sources } = useGeoLocation()
   const [isFindingRoute, setIsFindingRouting] = useState(false)
+  const { getRoute } = useDirections()
 
   const start_coords = [-66.96466, 44.8097]
 
   const onLoad = (e) => {}
 
-  const onError = (error) => {
-    // ToHook
-    manageToast({
-      isOpen: true,
-      main: 'Error',
-      mode: 'error',
-      sub: error.message,
-    })
-  }
-
-  const onRouteGet = ({ coordinates, endpoint }) => {
-    setSources((prev) => [
-      // ToHook
-      ...prev,
-      {
-        id: 'base-route',
-        type: 'Feature',
-        geometry: {
-          type: 'MultiLineString',
-          coordinates,
-        },
-        layers: [
-          {
-            id: 'b-start',
-            type: 'line',
-            source: 'base-route',
-            paint: {
-              'line-color': '#4E3FC8',
-              'line-width': 2,
-            },
-          },
-        ],
-      },
-      {
-        id: 'end',
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [endpoint],
-        },
-        layers: [
-          {
-            id: 'b-end',
-            type: 'circle',
-            source: 'end',
-            paint: {
-              'circle-color': '#4E3FC8',
-            },
-          },
-        ],
-      },
-    ])
-  }
-
   const onClick = async (e) => {
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
     console.dir(coords)
     setIsFindingRouting(true)
-    await useGetRoute({
+    await getRoute({
       start: start_coords,
       end: coords,
-      onError,
-      onSuccess: onRouteGet,
     })
     setIsFindingRouting(false)
   }
