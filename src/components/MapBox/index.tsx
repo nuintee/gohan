@@ -13,6 +13,7 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 const MapBox = (props) => {
   const { geoState, mapRef, sources, setSources } = useGeoLocation()
   const { manageToast } = useToast()
+  const [isFindingRoute, setIsFindingRouting] = useState(false)
 
   const start_coords = [-66.96466, 44.8097]
 
@@ -89,16 +90,17 @@ const MapBox = (props) => {
     }
   }
 
-  const onClick = (e) => {
+  const onClick = async (e) => {
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
     console.dir(coords)
-
-    getRoute({
+    setIsFindingRouting(true)
+    await getRoute({
       start: start_coords,
       end: coords,
       onError,
       onSuccess: onRouteGet,
     })
+    setIsFindingRouting(false)
   }
 
   return (
