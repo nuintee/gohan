@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+
 import { useGeoLocation } from '@/hooks/context'
 
 // Config
@@ -7,6 +9,7 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 import { useToast } from '@/hooks/context'
 
 const useDirections = () => {
+  const [isFindingRoute, setIsFindingRouting] = useState(false)
   const { manageToast } = useToast()
   const { setSources } = useGeoLocation()
 
@@ -82,7 +85,7 @@ const useDirections = () => {
     }
   }
 
-  return { onError, onSuccess, getRoute }
+  return { onError, onSuccess, getRoute, isFindingRoute, setIsFindingRouting }
 }
 
 export default useDirections
