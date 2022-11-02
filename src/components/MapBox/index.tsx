@@ -6,6 +6,7 @@ import { colors } from 'config/tailwind'
 
 // Hooks
 import { useGeoLocation, useModals, useToast } from '@/hooks/context'
+import useGetRoute from './hooks/Directions'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
@@ -20,6 +21,7 @@ const MapBox = (props) => {
   const onLoad = (e) => {}
 
   const onError = (error) => {
+    // ToHook
     manageToast({
       isOpen: true,
       main: 'Error',
@@ -30,6 +32,7 @@ const MapBox = (props) => {
 
   const onRouteGet = ({ coordinates, endpoint }) => {
     setSources((prev) => [
+      // ToHook
       ...prev,
       {
         id: 'base-route',
@@ -71,30 +74,11 @@ const MapBox = (props) => {
     ])
   }
 
-  const getRoute = async ({ start, end, onSuccess, onError }) => {
-    try {
-      const base_coordinates = encodeURIComponent(`${start};${end}`)
-      const profile = `mapbox/walking`
-      const query = await fetch(
-        `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&access_token=${mapboxAccessToken}`,
-      )
-      const json = await query.json()
-      const routes = json?.routes
-      const waypoints = json?.waypoints
-      const coordinates = routes?.map((route) => route.geometry.coordinates)
-      const endpoint = waypoints.map((waypoint) => waypoint.location)
-      onSuccess({ coordinates, endpoint })
-    } catch (error) {
-      console.error(error)
-      onError(error)
-    }
-  }
-
   const onClick = async (e) => {
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
     console.dir(coords)
     setIsFindingRouting(true)
-    await getRoute({
+    await useGetRoute({
       start: start_coords,
       end: coords,
       onError,

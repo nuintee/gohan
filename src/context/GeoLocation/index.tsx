@@ -1,5 +1,8 @@
 import React, { useEffect, useState, createContext, useRef } from 'react'
 
+// Config
+const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
+
 // Hooks
 import { useToast } from '@/hooks/context'
 
@@ -9,6 +12,7 @@ import { MapBoxInit } from '@/components/MapBox/types'
 
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
+  mapboxAccessToken,
   mapRef: {
     current: null,
   },
@@ -24,6 +28,7 @@ const GeoLocationProvider = ({ children }) => {
     geoState,
     mapRef,
     sources,
+    mapboxAccessToken,
     setSources,
   }
 
