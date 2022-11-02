@@ -24,6 +24,10 @@ type Layer = {
     'line-color'?: string
     'line-width'?: number
     'circle-color'?: string
+    'circle-radius'?: {
+      base: number
+      stops?: number[][]
+    }
   }
 }
 
@@ -97,6 +101,13 @@ const useDirections = () => {
         type: 'circle',
         paint: {
           'circle-color': '#000',
+          'circle-radius': {
+            base: 10,
+            stops: [
+              [9, 9],
+              [9, 9],
+            ],
+          },
         },
       },
     })
