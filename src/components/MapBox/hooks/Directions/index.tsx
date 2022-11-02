@@ -8,10 +8,53 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 // Hooks
 import { useToast } from '@/hooks/context'
 
+// Types
+type Source = {
+  id: string
+  geometry: {
+    type: 'MultiLineString' | 'Polygon'
+    coordinates: number[]
+  }
+}
+
+type Layer = {
+  id: string
+  type: 'line' | 'circle'
+  paint?: {
+    'line-color'?: string
+    'line-width'?: number
+    'circle-color'?: string
+  }
+}
+
+type Data = {
+  source: Source
+  layer: Layer
+}
+
 const useDirections = () => {
   const [isFindingRoute, setIsFindingRouting] = useState(false)
   const { manageToast } = useToast()
   const { setSources } = useGeoLocation()
+
+  const addSource = (payload: Data) => {
+    const { source, layer } = payload
+
+    const data = {
+      id: source.id,
+      type: 'Feature',
+      geometry: source.geometry,
+      layers: [
+        {
+          id: layer.id,
+          type: layer.type,
+          source: source.id,
+          paint: layer.paint,
+        },
+      ],
+    }
+    return data
+  }
 
   const onError = (error) => {
     manageToast({
@@ -23,47 +66,42 @@ const useDirections = () => {
   }
 
   const onSuccess = ({ coordinates, endpoint }) => {
-    setSources((prev) => [
-      // ToHook
-      ...prev,
-      {
+    const route = addSource({
+      source: {
         id: 'base-route',
-        type: 'Feature',
         geometry: {
           type: 'MultiLineString',
           coordinates,
         },
-        layers: [
-          {
-            id: 'b-start',
-            type: 'line',
-            source: 'base-route',
-            paint: {
-              'line-color': '#4E3FC8',
-              'line-width': 2,
-            },
-          },
-        ],
       },
-      {
-        id: 'end',
-        type: 'Feature',
+      layer: {
+        id: 'start',
+        type: 'line',
+        paint: {
+          'line-color': '#000',
+          'line-width': 2,
+        },
+      },
+    })
+
+    const end = addSource({
+      source: {
+        id: 'base-end',
         geometry: {
           type: 'Polygon',
           coordinates: [endpoint],
         },
-        layers: [
-          {
-            id: 'b-end',
-            type: 'circle',
-            source: 'end',
-            paint: {
-              'circle-color': '#4E3FC8',
-            },
-          },
-        ],
       },
-    ])
+      layer: {
+        id: 'end',
+        type: 'circle',
+        paint: {
+          'circle-color': '#000',
+        },
+      },
+    })
+
+    setSources((prev) => [...prev, route, end])
   }
 
   const getRoute = async ({ profileType, start, end }) => {
