@@ -18,82 +18,87 @@ const MapBox = (props) => {
 
   const onLoad = (e) => {}
 
+  const onError = (error) => {
+    manageToast({
+      isOpen: true,
+      main: 'Error',
+      mode: 'error',
+      sub: error.message,
+    })
+  }
+
+  const onRouteGet = ({ coordinates, endpoint }) => {
+    setSources((prev) => [
+      ...prev,
+      {
+        id: 'base-route',
+        type: 'Feature',
+        geometry: {
+          type: 'MultiLineString',
+          coordinates,
+        },
+        layers: [
+          {
+            id: 'b-start',
+            type: 'line',
+            source: 'base-route',
+            paint: {
+              'line-color': '#4E3FC8',
+              'line-width': 2,
+            },
+          },
+        ],
+      },
+      {
+        id: 'end',
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [endpoint],
+        },
+        layers: [
+          {
+            id: 'b-end',
+            type: 'circle',
+            source: 'end',
+            paint: {
+              'circle-color': '#4E3FC8',
+            },
+          },
+        ],
+      },
+    ])
+  }
+
+  const getRoute = async ({ start, end, onSuccess, onError }) => {
+    try {
+      const base_coordinates = encodeURIComponent(`${start};${end}`)
+      const profile = `mapbox/walking`
+      const query = await fetch(
+        `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&access_token=${mapboxAccessToken}`,
+      )
+      const json = await query.json()
+      const routes = json?.routes
+      const waypoints = json?.waypoints
+      const coordinates = routes?.map((route) => route.geometry.coordinates)
+      const endpoint = waypoints.map((waypoint) => waypoint.location)
+      onSuccess({ coordinates, endpoint })
+    } catch (error) {
+      console.error(error)
+      onError(error)
+    }
+  }
+
   const onClick = (e) => {
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
     console.dir(coords)
 
-    const getRoute = async (start, end) => {
-      try {
-        // const base_coordinates = `-74.039865%2C40.713827%3B-74.038526%2C40.717775`
-        const base_coordinates = encodeURIComponent(`${start};${end}`)
-        console.log(base_coordinates)
-        const profile = `mapbox/walking`
-        const query = await fetch(
-          `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&access_token=${mapboxAccessToken}`,
-        )
-        const json = await query.json()
-        const routes = json?.routes
-        const waypoints = json?.waypoints
-        const endpoint = waypoints.map((waypoint) => waypoint.location)
-        console.log({
-          waypoints,
-          endpoint,
-        })
-        const coordinates = routes?.map((route) => route.geometry.coordinates)
-        console.log(coordinates)
-        setSources((prev) => [
-          ...prev,
-          {
-            id: 'base-route',
-            type: 'Feature',
-            geometry: {
-              type: 'MultiLineString',
-              coordinates,
-            },
-            layers: [
-              {
-                id: 'b-start',
-                type: 'line',
-                source: 'base-route',
-                paint: {
-                  'line-color': '#4E3FC8',
-                  'line-width': 2,
-                },
-              },
-            ],
-          },
-          {
-            id: 'end',
-            type: 'Feature',
-            geometry: {
-              type: 'Polygon',
-              coordinates: [endpoint],
-            },
-            layers: [
-              {
-                id: 'b-end',
-                type: 'circle',
-                source: 'end',
-                paint: {
-                  'circle-color': '#4E3FC8',
-                },
-              },
-            ],
-          },
-        ])
-        return json
-      } catch (error) {
-        console.error(error)
-        manageToast({
-          isOpen: true,
-          main: 'Error',
-          mode: 'error',
-          sub: error.message,
-        })
-      }
-    }
-
-    getRoute(start_coords, coords)
+    getRoute({
+      start: start_coords,
+      end: coords,
+      onError,
+      onSuccess: onRouteGet,
+    })
   }
 
   return (
