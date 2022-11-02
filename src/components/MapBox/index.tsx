@@ -14,7 +14,7 @@ const MapBox = (props) => {
   const { geoState, mapRef, sources, setSources } = useGeoLocation()
   const { manageToast } = useToast()
 
-  const start = [-66.96466, 44.8097]
+  const start_coords = [-66.96466, 44.8097]
 
   const onLoad = (e) => {}
 
@@ -93,7 +93,7 @@ const MapBox = (props) => {
       }
     }
 
-    getRoute(start, coords)
+    getRoute(start_coords, coords)
   }
 
   return (
