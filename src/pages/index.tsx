@@ -40,8 +40,8 @@ const Home: NextPage = () => {
     console.log(coords)
     mapRef.current.flyTo({
       center: [
-        coords?.lng || (Math.random() - 0.5) * 100,
-        coords?.lat || (Math.random() - 0.5) * 360,
+        coords?.lng || (Math.random() - 0.5) * 90,
+        coords?.lat || (Math.random() - 0.5) * 90,
       ],
       zoom: 15,
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion

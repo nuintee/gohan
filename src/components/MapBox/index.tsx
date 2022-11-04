@@ -12,7 +12,7 @@ import useDirections from './hooks/Directions'
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 const MapBox = (props) => {
-  const { mapRef, sources } = useGeoLocation()
+  const { mapRef, sources, geoState } = useGeoLocation()
   const { getRoute, isFindingRoute, setIsFindingRouting } = useDirections()
 
   const start_coords = [-66.96466, 44.8097]
@@ -24,7 +24,7 @@ const MapBox = (props) => {
     console.dir(coords)
     setIsFindingRouting(true)
     await getRoute({
-      start: start_coords,
+      start: [geoState.lng, geoState.lat],
       end: coords,
     })
     setIsFindingRouting(false)
