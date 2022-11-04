@@ -112,7 +112,7 @@ const useDirections = () => {
       },
     })
 
-    setSources((prev) => [...prev, route, end])
+    setSources((prev) => [...prev, route])
   }
 
   const getRoute = async ({ profileType, start, end }) => {
