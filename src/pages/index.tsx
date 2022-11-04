@@ -22,11 +22,6 @@ import { Restaurant } from '@/components/Restaurant'
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
 
-type Coords = {
-  lat: number
-  lng: number
-}
-
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()

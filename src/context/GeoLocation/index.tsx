@@ -10,6 +10,11 @@ import { useToast } from '@/hooks/context'
 import initialValues from '@/components/MapBox/constants'
 import { MapBoxInit } from '@/components/MapBox/types'
 
+type Coords = {
+  lat: number
+  lng: number
+}
+
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
   mapboxAccessToken,
