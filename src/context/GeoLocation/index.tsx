@@ -56,13 +56,16 @@ const GeoLocationProvider = ({ children }) => {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const { coords } = pos
-          const { latitude: lat, longitude: lng } = coords
-          console.log({
-            lng,
+          const { latitude: lat, longitude: lng, ...rest } = coords
+          const geo = {
             lat,
-          })
+            lng,
+            ...rest,
+          }
+          console.log(geo)
           setGeoState((prev) => ({
             ...prev,
+            ...rest,
             lat,
             lng,
             zoom: 18,
@@ -84,6 +87,9 @@ const GeoLocationProvider = ({ children }) => {
               message: error.message,
             },
           }))
+        },
+        {
+          enableHighAccuracy: true,
         },
       )
     }
