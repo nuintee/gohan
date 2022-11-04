@@ -37,11 +37,13 @@ const Home: NextPage = () => {
   const isLocationReady = geoState.lat && geoState.lng
 
   const flyTo = (coords: Coords) => {
+    console.log(coords)
     mapRef.current.flyTo({
       center: [
-        coords?.lat || (Math.random() - 0.5) * 360,
         coords?.lng || (Math.random() - 0.5) * 100,
+        coords?.lat || (Math.random() - 0.5) * 360,
       ],
+      zoom: 15,
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     })
   }
