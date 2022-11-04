@@ -48,7 +48,7 @@ const Toast = (props: Props) => {
 
   return (
     <div
-      className={`absolute z-[1] top-[2rem] left-1/2 -translate-x-1/2 bg-white p-4 rounded-md border-l-8 ${
+      className={`absolute z-[2] top-[2rem] left-1/2 -translate-x-1/2 bg-white p-4 rounded-md border-l-8 ${
         themes[mode].border
       } flex gap-4 duration-500 ease-in-out ${isOpen ? 'scale-100' : 'scale-0'}`}
     >

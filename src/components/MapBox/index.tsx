@@ -1,37 +1,87 @@
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-gl'
 
-// Lib
-import mapboxgl from 'mapbox-gl'
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
-
-// Constants
-import initialValues from './constants'
+// Icons
+import { CurrentPostion } from '@/icons'
 
 // Hooks
-import useGeoLocation from '@/hooks/context/GeoLocation'
+import { useGeoLocation, useModals, useToast } from '@/hooks/context'
+import useDirections from './hooks/Directions'
 
-const Map = () => {
-  const mapContainer = useRef(null)
-  const { geoState, mapRef } = useGeoLocation()
+// Config
+const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
-  useEffect(() => {
-    if (mapRef.current) return // initialize map only once
-    mapRef.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [geoState?.lng, geoState?.lat],
-      zoom: geoState?.zoom,
-      pitch: geoState?.pitch, // pitch in degrees
-      bearing: geoState?.bearing, // bearing in degrees
+const MapBox = (props) => {
+  const { mapRef, sources, geoState } = useGeoLocation()
+  const { getRoute, isFindingRoute, setIsFindingRouting } = useDirections()
+  const [destination, setDestination] = useState([])
+
+  const isLocationReady = geoState.lat && geoState.lng
+
+  const onLoad = (e) => {}
+
+  const onClick = async (e) => {
+    const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
+    setDestination(coords)
+    console.dir(coords)
+    setIsFindingRouting(true)
+    await getRoute({
+      start: [geoState.lng, geoState.lat],
+      end: coords,
     })
-  }, [])
+    setIsFindingRouting(false)
+  }
 
   return (
-    <div
-      ref={mapContainer}
-      className='map-container h-screen bg-gradient-to-t from-white via-gh-l-gray to-gh-dark'
-    />
+    <div className='w-screen h-screen'>
+      <Map
+        initialViewState={{
+          longitude: geoState.lng || -100,
+          latitude: geoState.lat || 40,
+          zoom: 17,
+        }}
+        style={{ width: '100vw', height: '100vh' }}
+        mapStyle='mapbox://styles/mapbox/streets-v11'
+        mapboxAccessToken={mapboxAccessToken}
+        ref={mapRef}
+        onClick={onClick}
+        onLoad={onLoad}
+        renderWorldCopies={false}
+      >
+        <GeolocateControl
+          trackUserLocation={true}
+          showUserHeading={true}
+          showUserLocation={true}
+          position={'bottom-right'}
+        />
+        {isLocationReady && (
+          <Marker longitude={geoState.lng} latitude={geoState.lat}>
+            <div className='relative'>
+              <div className='w-8 h-8 bg-white bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
+              <span className='h-6 w-6 bg-white rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md flex items-center justify-center'>
+                <CurrentPostion width={12} height={12} />
+              </span>
+            </div>
+          </Marker>
+        )}
+        {destination.length && (
+          <Marker longitude={destination[0]} latitude={destination[1]}>
+            <div className='relative'>
+              <div className='w-8 h-8 bg-gh-orange bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
+              <span className='h-6 w-6 bg-gh-orange rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md'></span>
+            </div>
+          </Marker>
+        )}
+        {sources?.map((source) => (
+          <Source id={source.id} type='geojson' data={source}>
+            {source.layers.map((layer) => (
+              <Layer {...layer} />
+            ))}
+          </Source>
+        ))}
+      </Map>
+    </div>
   )
 }
 
-export default Map
+export default MapBox

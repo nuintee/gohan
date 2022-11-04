@@ -22,29 +22,14 @@ import { Restaurant } from '@/components/Restaurant'
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
 
-type Coords = {
-  lat: number
-  lng: number
-}
-
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
-  const { mapRef, geoState } = useGeoLocation()
+  const { mapRef, geoState, flyTo } = useGeoLocation()
 
   const isLocationReady = geoState.lat && geoState.lng
-
-  const flyTo = (coords: Coords) => {
-    mapRef.current.flyTo({
-      center: [
-        coords?.lat || (Math.random() - 0.5) * 360,
-        coords?.lng || (Math.random() - 0.5) * 100,
-      ],
-      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-    })
-  }
 
   const addMarker = () => {
     new mapboxgl.Marker().setLngLat([12.554729, 55.70651]).addTo(mapRef.current)
@@ -72,20 +57,13 @@ const Home: NextPage = () => {
               }
             />
             {process.env.NODE_ENV === 'development' && (
-              <div className='flex gap-2'>
+              <div className='flex gap-2 z-[1]'>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
                   onClick={flyTo}
                   disabled={!isLocationReady}
                 >
                   ✈️ FlyTo
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={addMarker}
-                  disabled={!isLocationReady}
-                >
-                  AddMarker
                 </button>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
