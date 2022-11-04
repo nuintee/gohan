@@ -77,7 +77,6 @@ const Home: NextPage = () => {
           </div>
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
-        <h1>{JSON.stringify(geoState)}</h1>
         <main>
           {isLocationReady && <MapBox />}
           <div

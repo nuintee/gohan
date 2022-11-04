@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 
 import { useGeoLocation } from '@/hooks/context'
 
+// Constants
+import { colors } from 'config/tailwind'
+
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
@@ -82,7 +85,7 @@ const useDirections = () => {
         id: 'start',
         type: 'line',
         paint: {
-          'line-color': '#000',
+          'line-color': colors['gh-orange'],
           'line-width': 2,
         },
       },
@@ -100,7 +103,7 @@ const useDirections = () => {
         id: 'end',
         type: 'circle',
         paint: {
-          'circle-color': '#000',
+          'circle-color': colors['gh-orange'],
           'circle-radius': {
             base: 10,
             stops: [
