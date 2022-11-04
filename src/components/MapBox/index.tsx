@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-gl'
 
-// Constants
-import { colors } from 'config/tailwind'
+// Icons
+import { CurrentPostion } from '@/icons'
 
 // Hooks
 import { useGeoLocation, useModals, useToast } from '@/hooks/context'
@@ -57,16 +57,18 @@ const MapBox = (props) => {
         {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
             <div className='relative'>
-              <div className='w-6 h-6 bg-gh-orange bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
-              <span className='h-4 w-4 bg-gh-orange rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md'></span>
+              <div className='w-8 h-8 bg-white bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
+              <span className='h-6 w-6 bg-white rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md flex items-center justify-center'>
+                <CurrentPostion width={12} height={12} />
+              </span>
             </div>
           </Marker>
         )}
         {destination.length && (
           <Marker longitude={destination[0]} latitude={destination[1]}>
             <div className='relative'>
-              <div className='w-6 h-6 bg-gh-orange bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
-              <span className='h-4 w-4 bg-gh-orange rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md'></span>
+              <div className='w-8 h-8 bg-gh-orange bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
+              <span className='h-6 w-6 bg-gh-orange rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md'></span>
             </div>
           </Marker>
         )}
