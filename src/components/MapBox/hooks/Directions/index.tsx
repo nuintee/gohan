@@ -115,7 +115,6 @@ const useDirections = () => {
       },
     })
 
-    // setSources((prev) => [...prev, route])
     setSources((prev) => [route])
   }
 
