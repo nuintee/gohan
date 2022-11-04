@@ -11,7 +11,7 @@ export const handlers = [
     )
   }),
 
-  rest.get('/user', (req, res, ctx) => {
+  rest.get('/api/place', (req, res, ctx) => {
     // Check if the user is authenticated in this session
     const isAuthenticated = sessionStorage.getItem('is-authenticated')
 

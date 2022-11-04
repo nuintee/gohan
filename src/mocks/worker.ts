@@ -8,6 +8,7 @@ const initMocks = async () => {
   } else {
     worker.start()
   }
+  // コールすることで停止可能に
 }
 
 initMocks()

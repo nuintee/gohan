@@ -8,6 +8,7 @@ import mapboxgl from 'mapbox-gl'
 
 // Hooks
 import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
+import usePlaces from '@/hooks/API/Places'
 
 // Components
 import Modal from '@/components/Modal'
@@ -28,11 +29,17 @@ const Home: NextPage = () => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
   const { mapRef, geoState, flyTo } = useGeoLocation()
+  const { get } = usePlaces(geoState)
 
   const isLocationReady = geoState.lat && geoState.lng
 
   const addMarker = () => {
     new mapboxgl.Marker().setLngLat([12.554729, 55.70651]).addTo(mapRef.current)
+  }
+
+  const onGetPlaces = async () => {
+    const place = await get()
+    console.log(place)
   }
 
   return (
@@ -71,6 +78,13 @@ const Home: NextPage = () => {
                   disabled={!isLocationReady}
                 >
                   Origin
+                </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={onGetPlaces}
+                  disabled={!isLocationReady}
+                >
+                  getPlace
                 </button>
               </div>
             )}
