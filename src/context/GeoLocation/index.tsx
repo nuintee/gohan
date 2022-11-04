@@ -16,6 +16,7 @@ const GeoLocationContext = createContext({
   mapRef: {
     current: null,
   },
+  flyTo: () => {},
 })
 
 const GeoLocationProvider = ({ children }) => {
@@ -24,12 +25,25 @@ const GeoLocationProvider = ({ children }) => {
   const { manageToast } = useToast()
   const mapRef = useRef(null)
 
+  const flyTo = (coords: Coords) => {
+    console.log(coords)
+    mapRef.current.flyTo({
+      center: [
+        coords?.lng || (Math.random() - 0.5) * 90,
+        coords?.lat || (Math.random() - 0.5) * 90,
+      ],
+      zoom: 15,
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    })
+  }
+
   const value = {
     geoState,
     mapRef,
     sources,
     mapboxAccessToken,
     setSources,
+    flyTo,
   }
 
   useEffect(() => {

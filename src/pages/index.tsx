@@ -32,21 +32,9 @@ const Home: NextPage = () => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
-  const { mapRef, geoState } = useGeoLocation()
+  const { mapRef, geoState, flyTo } = useGeoLocation()
 
   const isLocationReady = geoState.lat && geoState.lng
-
-  const flyTo = (coords: Coords) => {
-    console.log(coords)
-    mapRef.current.flyTo({
-      center: [
-        coords?.lng || (Math.random() - 0.5) * 90,
-        coords?.lat || (Math.random() - 0.5) * 90,
-      ],
-      zoom: 15,
-      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-    })
-  }
 
   const addMarker = () => {
     new mapboxgl.Marker().setLngLat([12.554729, 55.70651]).addTo(mapRef.current)
