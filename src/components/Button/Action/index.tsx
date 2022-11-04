@@ -14,7 +14,7 @@ const Action = (props: Props) => {
 
   const size = type === 'hero' ? 5 : 3.5
 
-  const className = `bg-gh-dark text-white rounded-full flex gap-2 items-center justify-center active:bg-opacity-90`
+  const className = `bg-gh-dark text-white rounded-full flex gap-2 items-center justify-center active:bg-opacity-90 active:scale-90`
 
   const ICON = dictionary.modes[mode]
 

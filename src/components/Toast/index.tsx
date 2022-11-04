@@ -48,7 +48,7 @@ const Toast = (props: Props) => {
 
   return (
     <div
-      className={`absolute z-[1] top-[2rem] left-1/2 -translate-x-1/2 bg-white p-4 rounded-md border-l-8 ${
+      className={`absolute z-[2] top-[2rem] left-1/2 -translate-x-1/2 bg-white p-4 rounded-md border-l-8 ${
         themes[mode].border
       } flex gap-4 duration-500 ease-in-out ${isOpen ? 'scale-100' : 'scale-0'}`}
     >
@@ -58,9 +58,11 @@ const Toast = (props: Props) => {
         {themes[mode].badge.icon}
       </span>
       <Texts main={main || themes[mode].text} sub={sub || 'SUB'} size='small' />
-      <button className='ml-auto' onClick={onClose}>
-        <Close fill={colors['gh-dark']} />
-      </button>
+      {!infinite && (
+        <button className='ml-auto' onClick={onClose}>
+          <Close fill={colors['gh-dark']} />
+        </button>
+      )}
     </div>
   )
 }

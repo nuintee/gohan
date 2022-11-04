@@ -3,8 +3,11 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 
+// Lib
+import mapboxgl from 'mapbox-gl'
+
 // Hooks
-import { useModals, useSidebar, useToast } from '@/hooks/context'
+import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
 
 // Components
 import Modal from '@/components/Modal'
@@ -24,6 +27,13 @@ const Home: NextPage = () => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
+  const { mapRef, geoState, flyTo } = useGeoLocation()
+
+  const isLocationReady = geoState.lat && geoState.lng
+
+  const addMarker = () => {
+    new mapboxgl.Marker().setLngLat([12.554729, 55.70651]).addTo(mapRef.current)
+  }
 
   return (
     <>
@@ -35,20 +45,53 @@ const Home: NextPage = () => {
           })
         }
       />
-      <div className='relative'>
+      <div className='relative h-screen w-screen overflow-hidden'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-          <User
-            loading={false}
-            onClick={() =>
-              manageToast({
-                isOpen: true,
-              })
-            }
-          />
+          <div className='flex gap-2 items-center'>
+            <User
+              loading={false}
+              onClick={() =>
+                manageToast({
+                  isOpen: true,
+                })
+              }
+            />
+            {process.env.NODE_ENV === 'development' && (
+              <div className='flex gap-2 z-[1]'>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={flyTo}
+                  disabled={!isLocationReady}
+                >
+                  ✈️ FlyTo
+                </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={() => flyTo(geoState)}
+                  disabled={!isLocationReady}
+                >
+                  Origin
+                </button>
+              </div>
+            )}
+          </div>
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
         <main>
-          <MapBox />
+          {isLocationReady && <MapBox />}
+          <div
+            className={`absolute top-0 left-0 z-[-1] bg-gh-white h-screen w-screen flex items-center justify-center duration-500 ${
+              isLocationReady ? 'scale-0' : 'scale-100'
+            }`}
+          >
+            <p>
+              {!geoState.error?.is
+                ? isLocationReady
+                  ? ''
+                  : 'Loading'
+                : 'Please Allow Geolocation'}
+            </p>
+          </div>
           <Sidebar
             isOpen={sidebarState.activity.isOpen}
             onClose={() => manageSidebar('activity', false)}

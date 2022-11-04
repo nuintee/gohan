@@ -35,8 +35,8 @@ const User = (props: Props) => {
 
   return (
     <button
-      className={`flex bg-white rounded-full p-1 items-center gap-4 w-fit ${
-        !loading && 'active:bg-opacity-90'
+      className={`flex bg-white rounded-full p-1 items-center gap-4 w-fit z-[1] ${
+        !loading && 'active:bg-opacity-90 active:scale-90'
       }`}
       disabled={loading}
       onClick={onClick}
