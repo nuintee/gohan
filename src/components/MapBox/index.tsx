@@ -36,9 +36,9 @@ const MapBox = (props) => {
     <div className='w-screen h-screen'>
       <Map
         initialViewState={{
-          longitude: -100,
-          latitude: 40,
-          zoom: 3.5,
+          longitude: geoState.lng || -100,
+          latitude: geoState.lat || 40,
+          zoom: 17,
         }}
         style={{ width: '100vw', height: '100vh' }}
         mapStyle='mapbox://styles/mapbox/streets-v11'
