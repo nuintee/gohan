@@ -38,8 +38,19 @@ const Home: NextPage = () => {
   }
 
   const onGetPlaces = async () => {
+    setSearchButton((prev) => ({
+      ...prev,
+      loading: true,
+    }))
     const place = await get()
     console.log(place)
+    const timeout = setTimeout(() => {
+      setSearchButton((prev) => ({
+        ...prev,
+        loading: false,
+      }))
+      clearTimeout(timeout)
+    }, 1500)
   }
 
   return (
