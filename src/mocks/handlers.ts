@@ -1,5 +1,8 @@
 import { rest } from 'msw'
 
+// Data
+import mapData from '@/hooks/API/Places/res/index.json'
+
 export const handlers = [
   rest.post('/login', (req, res, ctx) => {
     // Persist user's authentication in the session
@@ -13,11 +16,6 @@ export const handlers = [
 
   rest.get('/api/place', (req, res, ctx) => {
     // Check if the user is authenticated in this session
-    return res(
-      ctx.status(200),
-      ctx.json({
-        username: 'admin',
-      }),
-    )
+    return res(ctx.status(200), ctx.json(mapData))
   }),
 ]
