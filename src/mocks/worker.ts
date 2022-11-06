@@ -1,14 +1,13 @@
-import { server } from './server'
-import { worker } from './server'
-export {}
+const IS_BROWSER = typeof window !== 'undefined'
 
-const initMocks = async () => {
-  if (typeof window === 'undefined') {
-    server.listen()
-  } else {
+export const initMocks = async () => {
+  if (IS_BROWSER) {
+    const { worker } = await import('./browser')
     worker.start()
+  } else {
+    const { server } = await import('./server')
+    server.listen()
   }
-  // コールすることで停止可能に
 }
 
-initMocks()
+// initMocks()
