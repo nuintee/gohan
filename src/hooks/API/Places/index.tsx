@@ -9,8 +9,8 @@ const usePlaces = (coords: Coords) => {
   const get = async () => {
     try {
       const url = is_devmode
-        ? `/api/place?location=${coords.lat},${coords.lng}&radius=500`
-        : `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords.lat},${coords.lng}&radius=500&types=food&name=harbour&key=${gcpKey}`
+        ? `/api/place?location=${coords.lat},${coords.lng}&radius=500&opennow=true`
+        : `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords.lat},${coords.lng}&radius=500&types=food&opennow=true&key=${gcpKey}`
       const query = await fetch(url)
       const json = await query.json()
       return json
