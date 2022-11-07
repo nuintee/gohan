@@ -41,21 +41,34 @@ const Home: NextPage = () => {
   const IS_NAVIGATING = destination.length
 
   const onGetPlaces = async () => {
-    setSearchButton((prev) => ({
-      ...prev,
-      loading: true,
-    }))
-    const place = await get()
-    console.log(place)
-    const timeout = setTimeout(() => {
+    try {
+      setSearchButton((prev) => ({
+        ...prev,
+        loading: true,
+      }))
+      const place = await get()
+      console.log(place)
+      const timeout = setTimeout(() => {
+        setSearchButton((prev) => ({
+          ...prev,
+          loading: false,
+        }))
+        manageModal('details', true)
+        setShopDetail(place)
+        clearTimeout(timeout)
+      }, 1000)
+    } catch (error) {
+      manageToast({
+        isOpen: true,
+        mode: 'error',
+        main: 'Error',
+        sub: error.message,
+      })
       setSearchButton((prev) => ({
         ...prev,
         loading: false,
       }))
-      manageModal('details', true)
-      setShopDetail(place)
-      clearTimeout(timeout)
-    }, 1000)
+    }
   }
 
   const routeTo = async (to: Coords) => {
