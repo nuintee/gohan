@@ -68,6 +68,8 @@ const Home: NextPage = () => {
     setDestination(end)
   }
 
+  const onNavigate = () => {}
+
   return (
     <>
       <Toast
@@ -158,7 +160,7 @@ const Home: NextPage = () => {
         state='LIKED'
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
-        onClick={() => routeTo(shopDetail?.geometry?.location)}
+        onNavigate={() => routeTo(shopDetail?.geometry?.location)}
         info={shopDetail}
       />
       <Modal.Confirm

@@ -20,13 +20,13 @@ import { Close } from '@/icons'
 type Props = {
   state: typeof states[number]
   info: ResultsEntity
-  onClick: React.MouseEventHandler<HTMLDivElement>
+  onNavigate: React.MouseEventHandler<HTMLDivElement>
   onClose: React.MouseEventHandler<HTMLDivElement>
   onLike: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Large = (props: Props) => {
-  const { state, onLike, onClick, onClose, info } = props
+  const { state, onLike, onNavigate, onClose, info } = props
   const { geoState, calculateDistance } = useGeoLocation()
   const distance = calculateDistance(info?.geometry?.location, geoState)
 
@@ -57,7 +57,7 @@ const Large = (props: Props) => {
         )}
         <footer className='flex w-full gap-4'>
           {/* Footer */}
-          <Regular text={'Navigate'} loading={false} onClick={onClick} />
+          <Regular text={'Navigate'} loading={false} onClick={onNavigate} />
           <Like state={state} onClick={onLike} />
         </footer>
       </div>
