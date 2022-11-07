@@ -54,6 +54,15 @@ const Home: NextPage = () => {
     }, 1500)
   }
 
+  const routeRandomly = async () => {
+    const end = [geoState.lng + 1, geoState.lat + 1]
+    getRoute({
+      start: [geoState.lng, geoState.lat],
+      end,
+    })
+    setDestination(end)
+  }
+
   return (
     <>
       <Toast
@@ -97,6 +106,13 @@ const Home: NextPage = () => {
                   disabled={!isLocationReady}
                 >
                   getPlace
+                </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={routeRandomly}
+                  disabled={!isLocationReady}
+                >
+                  Random
                 </button>
               </div>
             )}
