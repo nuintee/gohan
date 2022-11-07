@@ -73,6 +73,7 @@ const Home: NextPage = () => {
     await routeTo(to)
     manageModal('details', false)
     setSearchButton((prev) => ({ ...prev, mode: 'close' }))
+    flyTo(geoState)
   }
 
   const onSearchClick = async () => {
