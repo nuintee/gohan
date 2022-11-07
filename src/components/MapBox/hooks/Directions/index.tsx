@@ -137,7 +137,13 @@ const useDirections = () => {
     }
   }
 
-  return { onError, onSuccess, getRoute, isFindingRoute, setIsFindingRouting }
+  return {
+    onError,
+    onSuccess,
+    getRoute,
+    isFindingRoute,
+    setIsFindingRouting,
+  }
 }
 
 export default useDirections

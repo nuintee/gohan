@@ -12,9 +12,8 @@ import useDirections from './hooks/Directions'
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 const MapBox = (props) => {
-  const { mapRef, sources, geoState } = useGeoLocation()
+  const { mapRef, sources, geoState, destination, setDestination } = useGeoLocation()
   const { getRoute, isFindingRoute, setIsFindingRouting } = useDirections()
-  const [destination, setDestination] = useState([])
 
   const isLocationReady = geoState.lat && geoState.lng
 

@@ -14,6 +14,8 @@ import { Coords } from '@/types/GeoLocation/index.types'
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
   mapboxAccessToken,
+  destination: [],
+  setDestination: () => {},
   mapRef: {
     current: null,
   },
@@ -24,6 +26,7 @@ const GeoLocationContext = createContext({
 const GeoLocationProvider = ({ children }) => {
   const [geoState, setGeoState] = useState<MapBoxInit>(initialValues.mapbox)
   const [sources, setSources] = useState([])
+  const [destination, setDestination] = useState([])
   const { manageToast } = useToast()
   const mapRef = useRef(null)
 
@@ -53,6 +56,8 @@ const GeoLocationProvider = ({ children }) => {
     mapRef,
     sources,
     mapboxAccessToken,
+    destination,
+    setDestination,
     setSources,
     flyTo,
     calculateDistance,

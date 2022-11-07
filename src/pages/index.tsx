@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
-  const { mapRef, geoState, flyTo } = useGeoLocation()
+  const { mapRef, geoState, flyTo, setDestination } = useGeoLocation()
   const { getRoute } = useDirections()
   const { get } = usePlaces(geoState)
 
@@ -52,13 +52,6 @@ const Home: NextPage = () => {
       setShopDetail(place)
       clearTimeout(timeout)
     }, 1500)
-  }
-
-  const onGetRoute = async () => {
-    await getRoute({
-      start: [geoState.lng, geoState.lat],
-      end: [geoState.lng + 1, geoState.lat + 5],
-    })
   }
 
   return (
@@ -104,13 +97,6 @@ const Home: NextPage = () => {
                   disabled={!isLocationReady}
                 >
                   getPlace
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={onGetRoute}
-                  disabled={!isLocationReady}
-                >
-                  Random Route
                 </button>
               </div>
             )}
