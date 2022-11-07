@@ -49,6 +49,7 @@ const Home: NextPage = () => {
         ...prev,
         loading: false,
       }))
+      manageModal('details', true)
       clearTimeout(timeout)
     }, 1500)
   }
