@@ -5,6 +5,12 @@ import Texts from './Texts'
 import Label from './Label'
 import { Like, states } from './Like/index'
 
+// Hooks
+import { useGeoLocation } from '@/hooks/context'
+
+// Types
+import { ResultsEntity } from '@/hooks/API/Places/types/index.types'
+
 // Constants
 import { colors } from 'config/tailwind'
 
@@ -13,13 +19,21 @@ import { Close } from '@/icons'
 
 type Props = {
   state: typeof states[number]
+  info: ResultsEntity
   onClick: React.MouseEventHandler<HTMLDivElement>
   onClose: React.MouseEventHandler<HTMLDivElement>
   onLike: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Large = (props: Props) => {
-  const { state, onLike, onClick, onClose } = props
+  const { state, onLike, onClick, onClose, info } = props
+  const { geoState } = useGeoLocation()
+
+  const distance =
+    Math.sqrt(
+      Math.pow(info?.geometry?.location.lat - geoState?.lat, 2) +
+        Math.pow(info?.geometry?.location.lng - geoState?.lng, 2),
+    ) * 100
 
   return (
     <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white'>
@@ -34,14 +48,16 @@ const Large = (props: Props) => {
         draggable={false}
       />
       <div className='p-4 flex flex-col gap-4'>
-        <Label distance={2} />
-        <Texts main='Shakshack' sub='Italian・Spanish' />
-        <p className='bg-gh-l-orange text-center p-4 rounded-md'>
-          Checkout more info from{' '}
-          <a href='' className='text-gh-orange font-semibold'>
-            Here
-          </a>
-        </p>
+        <Label distance={distance} />
+        <Texts main={info?.name || 'NAME'} sub={info?.types?.join('・') || 'Italian・Spanish'} />
+        {info?.url && (
+          <p className='bg-gh-l-orange text-center p-4 rounded-md'>
+            Checkout more info from{' '}
+            <a href='' className='text-gh-orange font-semibold'>
+              Here
+            </a>
+          </p>
+        )}
         <footer className='flex w-full gap-4'>
           {/* Footer */}
           <Regular text={'Navigate'} loading={false} onClick={onClick} />

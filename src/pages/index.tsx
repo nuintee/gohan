@@ -25,6 +25,7 @@ import { initialStates } from '@/components/Button/Action/constants'
 
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
+  const [shopDetail, setShopDetail] = useState({})
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
@@ -50,6 +51,7 @@ const Home: NextPage = () => {
         loading: false,
       }))
       manageModal('details', true)
+      setShopDetail(place)
       clearTimeout(timeout)
     }, 1500)
   }
@@ -136,6 +138,7 @@ const Home: NextPage = () => {
       <Modal.Details
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
+        info={shopDetail}
       />
       <Modal.Confirm
         isOpen={modalsState.confirm.isOpen}

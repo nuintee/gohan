@@ -13,6 +13,9 @@ import Header from './Header/index'
 // Hooks
 import useModals from '@/hooks/context/Modals'
 
+// Types
+import { ResultsEntity } from '@/hooks/API/Places/types/index.types'
+
 type Props = {
   isOpen: boolean
   type?: keyof typeof dictionary.consent
@@ -65,10 +68,11 @@ type DetailsType = {
   isOpen: boolean
   onClose: React.MouseEvent<HTMLButtonElement, MouseEvent>
   state: typeof states[number]
+  info: ResultsEntity
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, state } = props
+  const { isOpen, onClose, state, info } = props
 
   return (
     <Layout isOpen={isOpen}>
@@ -77,7 +81,13 @@ const Details = (props: DetailsType) => {
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
-        <Restaurant.Large state={state} onClick={() => {}} onLike={() => {}} onClose={onClose} />
+        <Restaurant.Large
+          state={state}
+          onClick={() => {}}
+          onLike={() => {}}
+          onClose={onClose}
+          info={info}
+        />
       </section>
     </Layout>
   )

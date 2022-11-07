@@ -31,11 +31,12 @@ const ModalsProvider = (props: Props) => {
   const { children } = props
   const [modalsState, setModalsState] = useState(initialValues)
 
-  const manageModal = (type: ModalTypes, isOpen: boolean) => {
+  const manageModal = (type: ModalTypes, isOpen: boolean, payload) => {
     setModalsState((prev) => ({
       ...prev,
       [type]: {
         isOpen,
+        ...(payload && { ...payload }),
       },
     }))
   }
