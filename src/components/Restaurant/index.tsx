@@ -5,6 +5,12 @@ import Texts from './Texts'
 import Label from './Label'
 import { Like, states } from './Like/index'
 
+// Constants
+import { colors } from 'config/tailwind'
+
+// Icons
+import { Close } from '@/icons'
+
 type Props = {
   state: typeof states[number]
   onClick: React.MouseEventHandler<HTMLDivElement>
@@ -16,7 +22,9 @@ const Large = (props: Props) => {
 
   return (
     <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white' onClick={onClick}>
-      {/* <Image src='' alt='image' height={100} width={100} /> */}
+      <button className='absolute left-[1rem] top-[1rem] outline-none'>
+        <Close fill={colors['gh-white']} />
+      </button>
       <img
         src={
           'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
