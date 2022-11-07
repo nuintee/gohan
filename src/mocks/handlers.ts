@@ -15,7 +15,10 @@ export const handlers = [
   }),
 
   rest.get('/api/place', (req, res, ctx) => {
-    // Check if the user is authenticated in this session
-    return res(ctx.status(200), ctx.json(mapData))
+    const onlyOpenNow = mapData.results.filter((map, index) => map.opening_hours?.open_now)
+    const randomIndex = Math.floor(Math.random() * onlyOpenNow.length)
+    const randomOne = onlyOpenNow[randomIndex]
+
+    return res(ctx.status(200), ctx.json(randomOne))
   }),
 ]
