@@ -136,6 +136,7 @@ const Home: NextPage = () => {
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
       <Modal.Details
+        state='LIKED'
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
         info={shopDetail}

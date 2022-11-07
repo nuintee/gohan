@@ -37,6 +37,7 @@ const Large = (props: Props) => {
       </button>
       <img
         src={
+          `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}` ||
           'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
         }
         className='select-none max-h-52 w-full object-cover'
