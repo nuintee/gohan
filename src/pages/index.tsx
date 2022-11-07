@@ -33,11 +33,12 @@ const Home: NextPage = () => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
-  const { mapRef, geoState, flyTo, setDestination } = useGeoLocation()
+  const { mapRef, geoState, flyTo, setDestination, destination, setSources } = useGeoLocation()
   const { getRoute } = useDirections()
   const { get } = usePlaces(geoState)
 
   const isLocationReady = geoState.lat && geoState.lng
+  const IS_NAVIGATING = destination.length
 
   const onGetPlaces = async () => {
     setSearchButton((prev) => ({
@@ -61,14 +62,30 @@ const Home: NextPage = () => {
     // To Hooks
     if (!to) return
     const end = [to?.lng, to?.lat]
-    getRoute({
+    await getRoute({
       start: [geoState.lng, geoState.lat],
       end,
     })
     setDestination(end)
   }
 
-  const onNavigate = () => {}
+  const onNavigate = async (to: Coords) => {
+    await routeTo(to)
+    manageModal('details', false)
+    setSearchButton((prev) => ({ ...prev, mode: 'close' }))
+  }
+
+  const onSearchClick = async () => {
+    if (IS_NAVIGATING) {
+      setDestination([])
+      setSources([])
+      setShopDetail({})
+      setSearchButton((prev) => ({ ...prev, mode: 'search' }))
+    } else {
+      await onGetPlaces()
+      setSearchButton((prev) => ({ ...prev, mode: 'close' }))
+    }
+  }
 
   return (
     <>
@@ -146,11 +163,14 @@ const Home: NextPage = () => {
             onClose={() => manageSidebar('activity', false)}
           />
         </main>
-        <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
+        <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
+          {IS_NAVIGATING && Object.keys(shopDetail)?.length ? (
+            <Restaurant.Small info={shopDetail} />
+          ) : null}
           <Action
-            mode={searchButton.mode}
+            mode={IS_NAVIGATING ? 'close' : 'search'}
             type={searchButton.type}
-            onClick={() => manageModal('confirm', true)}
+            onClick={onSearchClick}
             loading={searchButton.loading}
           />
         </footer>
@@ -160,7 +180,7 @@ const Home: NextPage = () => {
         state='LIKED'
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
-        onNavigate={() => routeTo(shopDetail?.geometry?.location)}
+        onNavigate={() => onNavigate(shopDetail?.geometry?.location)}
         info={shopDetail}
       />
       <Modal.Confirm
