@@ -55,7 +55,7 @@ const Home: NextPage = () => {
       manageModal('details', true)
       setShopDetail(place)
       clearTimeout(timeout)
-    }, 1500)
+    }, 1000)
   }
 
   const routeTo = async (to: Coords) => {
