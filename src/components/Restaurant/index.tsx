@@ -27,13 +27,8 @@ type Props = {
 
 const Large = (props: Props) => {
   const { state, onLike, onClick, onClose, info } = props
-  const { geoState } = useGeoLocation()
-
-  const distance =
-    Math.sqrt(
-      Math.pow(info?.geometry?.location.lat - geoState?.lat, 2) +
-        Math.pow(info?.geometry?.location.lng - geoState?.lng, 2),
-    ) * 100
+  const { geoState, calculateDistance } = useGeoLocation()
+  const distance = calculateDistance(info?.geometry?.location, geoState)
 
   return (
     <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white'>

@@ -18,6 +18,7 @@ const GeoLocationContext = createContext({
     current: null,
   },
   flyTo: () => {},
+  calculateDistance: () => {},
 })
 
 const GeoLocationProvider = ({ children }) => {
@@ -38,6 +39,15 @@ const GeoLocationProvider = ({ children }) => {
     })
   }
 
+  const calculateDistance = (endCoords, startCoods) => {
+    return (
+      Math.sqrt(
+        Math.pow(endCoords?.lat - startCoods?.lat, 2) +
+          Math.pow(endCoords?.lng - startCoods?.lng, 2),
+      ) * 100
+    )
+  }
+
   const value = {
     geoState,
     mapRef,
@@ -45,6 +55,7 @@ const GeoLocationProvider = ({ children }) => {
     mapboxAccessToken,
     setSources,
     flyTo,
+    calculateDistance,
   }
 
   useEffect(() => {
