@@ -31,7 +31,7 @@ const Large = (props: Props) => {
   const distance = calculateDistance(info?.geometry?.location, geoState)
 
   return (
-    <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white'>
+    <div className='max-w-[20rem] rounded-md overflow-hidden bg-white'>
       <button className='absolute left-[1rem] top-[1rem] outline-none' onClick={onClose}>
         <Close fill={colors['gh-white']} />
       </button>
