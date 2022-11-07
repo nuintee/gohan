@@ -20,6 +20,7 @@ const MapBox = (props) => {
   const onLoad = (e) => {}
 
   const onClick = async (e) => {
+    if (process.env.NODE_ENV !== 'development') return
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
     setDestination(coords)
     console.dir(coords)
