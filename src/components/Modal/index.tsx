@@ -61,13 +61,13 @@ const Confirm = (props: Props) => {
   )
 }
 
-type Details = {
+type DetailsType = {
   isOpen: boolean
-  onClose: React.MouseEvent<HTMLButtonElement>
+  onClose: React.MouseEvent<HTMLButtonElement, MouseEvent>
   state: typeof states[number]
 }
 
-const Details = (props) => {
+const Details = (props: DetailsType) => {
   const { isOpen, onClose, state } = props
 
   return (
@@ -77,7 +77,7 @@ const Details = (props) => {
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
-        <Restaurant.Large state={state} onClick={() => {}} onLike={() => {}} />
+        <Restaurant.Large state={state} onClick={() => {}} onLike={() => {}} onClose={onClose} />
       </section>
     </Layout>
   )

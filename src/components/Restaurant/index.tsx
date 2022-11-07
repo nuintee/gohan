@@ -14,15 +14,16 @@ import { Close } from '@/icons'
 type Props = {
   state: typeof states[number]
   onClick: React.MouseEventHandler<HTMLDivElement>
+  onClose: React.MouseEventHandler<HTMLDivElement>
   onLike: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Large = (props: Props) => {
-  const { state, onLike, onClick } = props
+  const { state, onLike, onClick, onClose } = props
 
   return (
-    <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white' onClick={onClick}>
-      <button className='absolute left-[1rem] top-[1rem] outline-none'>
+    <div className='max-w-[20rem] rounded-xl overflow-hidden bg-white'>
+      <button className='absolute left-[1rem] top-[1rem] outline-none' onClick={onClose}>
         <Close fill={colors['gh-white']} />
       </button>
       <img
@@ -43,7 +44,7 @@ const Large = (props: Props) => {
         </p>
         <footer className='flex w-full gap-4'>
           {/* Footer */}
-          <Regular text={'Navigate'} loading={false} onClick={() => {}} />
+          <Regular text={'Navigate'} loading={false} onClick={onClick} />
           <Like state={state} onClick={onLike} />
         </footer>
       </div>

@@ -133,7 +133,10 @@ const Home: NextPage = () => {
         </footer>
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
-      <Modal.Details isOpen={modalsState.details.isOpen} />
+      <Modal.Details
+        isOpen={modalsState.details.isOpen}
+        onClose={() => manageModal('details', false)}
+      />
       <Modal.Confirm
         isOpen={modalsState.confirm.isOpen}
         type={'like'}
