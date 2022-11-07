@@ -72,7 +72,7 @@ type DetailsType = {
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, state, info } = props
+  const { isOpen, onClose, state, info, onClick } = props
 
   return (
     <Layout isOpen={isOpen}>
@@ -83,7 +83,7 @@ const Details = (props: DetailsType) => {
       >
         <Restaurant.Large
           state={state}
-          onClick={() => {}}
+          onClick={onClick}
           onLike={() => {}}
           onClose={onClose}
           info={info}

@@ -24,6 +24,9 @@ import { Restaurant } from '@/components/Restaurant'
 import { initialStates } from '@/components/Button/Action/constants'
 import useDirections from '@/components/MapBox/hooks/Directions'
 
+// Types
+import { Coords } from '@/types/GeoLocation/index.types'
+
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const [shopDetail, setShopDetail] = useState({})
@@ -54,8 +57,10 @@ const Home: NextPage = () => {
     }, 1500)
   }
 
-  const routeRandomly = async () => {
-    const end = [geoState.lng + 1, geoState.lat + 1]
+  const routeTo = async (to: Coords) => {
+    // To Hooks
+    if (!to) return
+    const end = [to?.lng, to?.lat]
     getRoute({
       start: [geoState.lng, geoState.lat],
       end,
@@ -109,7 +114,7 @@ const Home: NextPage = () => {
                 </button>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={routeRandomly}
+                  onClick={() => routeTo()}
                   disabled={!isLocationReady}
                 >
                   Random
@@ -153,6 +158,7 @@ const Home: NextPage = () => {
         state='LIKED'
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
+        onClick={() => routeTo(shopDetail?.geometry?.location)}
         info={shopDetail}
       />
       <Modal.Confirm
