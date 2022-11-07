@@ -22,6 +22,7 @@ import { Restaurant } from '@/components/Restaurant'
 
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
+import useDirections from '@/components/MapBox/hooks/Directions'
 
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
@@ -30,13 +31,10 @@ const Home: NextPage = () => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
   const { mapRef, geoState, flyTo } = useGeoLocation()
+  const { getRoute } = useDirections()
   const { get } = usePlaces(geoState)
 
   const isLocationReady = geoState.lat && geoState.lng
-
-  const addMarker = () => {
-    new mapboxgl.Marker().setLngLat([12.554729, 55.70651]).addTo(mapRef.current)
-  }
 
   const onGetPlaces = async () => {
     setSearchButton((prev) => ({
@@ -54,6 +52,13 @@ const Home: NextPage = () => {
       setShopDetail(place)
       clearTimeout(timeout)
     }, 1500)
+  }
+
+  const onGetRoute = async () => {
+    await getRoute({
+      start: [geoState.lng, geoState.lat],
+      end: [geoState.lng + 1, geoState.lat + 5],
+    })
   }
 
   return (
@@ -99,6 +104,13 @@ const Home: NextPage = () => {
                   disabled={!isLocationReady}
                 >
                   getPlace
+                </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={onGetRoute}
+                  disabled={!isLocationReady}
+                >
+                  Random Route
                 </button>
               </div>
             )}
