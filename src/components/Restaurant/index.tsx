@@ -22,6 +22,7 @@ type Props = {
   info: ResultsEntity
   onNavigate: React.MouseEventHandler<HTMLDivElement>
   onClose: React.MouseEventHandler<HTMLDivElement>
+  onClick?: React.MouseEventHandler<HTMLDivElement>
   onLike: React.MouseEventHandler<HTMLButtonElement>
 }
 

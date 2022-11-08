@@ -26,6 +26,7 @@ import useDirections from '@/components/MapBox/hooks/Directions'
 
 // Types
 import { Coords } from '@/types/GeoLocation/index.types'
+import place from '@/mocks/api/place'
 
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
@@ -40,6 +41,11 @@ const Home: NextPage = () => {
   const isLocationReady = geoState.lat && geoState.lng
   const IS_NAVIGATING = destination.length
 
+  const showDetails = (place) => {
+    manageModal('details', true)
+    setShopDetail(place)
+  }
+
   const onGetPlaces = async () => {
     try {
       setSearchButton((prev) => ({
@@ -53,8 +59,7 @@ const Home: NextPage = () => {
           ...prev,
           loading: false,
         }))
-        manageModal('details', true)
-        setShopDetail(place)
+        showDetails(place)
         clearTimeout(timeout)
       }, 1000)
     } catch (error) {
@@ -179,7 +184,7 @@ const Home: NextPage = () => {
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
           {IS_NAVIGATING && Object.keys(shopDetail)?.length ? (
-            <Restaurant.Small info={shopDetail} />
+            <Restaurant.Small info={shopDetail} onClick={() => showDetails(shopDetail)} />
           ) : null}
           <Action
             mode={IS_NAVIGATING ? 'close' : 'search'}
