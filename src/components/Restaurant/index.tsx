@@ -28,7 +28,7 @@ type Props = {
 }
 
 const Large = (props: Props) => {
-  const { state, onLike, onNavigate, onClose, info } = props
+  const { state, onLike, onNavigate, onClose, info, isLoading } = props
   const { geoState, calculateDistance } = useGeoLocation()
   const distance = calculateDistance(info?.geometry?.location, geoState)
 
@@ -59,7 +59,7 @@ const Large = (props: Props) => {
         )}
         <footer className='flex w-full gap-4'>
           {/* Footer */}
-          <Regular text={'Navigate'} loading={false} onClick={onNavigate} />
+          <Regular text={'Navigate'} loading={isLoading} onClick={onNavigate} />
           <Like state={state} onClick={onLike} />
         </footer>
       </div>

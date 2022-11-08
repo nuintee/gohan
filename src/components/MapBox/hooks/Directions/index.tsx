@@ -40,9 +40,8 @@ type Data = {
 }
 
 const useDirections = () => {
-  const [isFindingRoute, setIsFindingRouting] = useState(false)
   const { manageToast } = useToast()
-  const { setSources } = useGeoLocation()
+  const { setSources, isFindingRoute, setIsFindingRouting } = useGeoLocation()
 
   const addSource = (payload: Data) => {
     const { source, layer } = payload
@@ -120,6 +119,7 @@ const useDirections = () => {
 
   const getRoute = async ({ profileType, start, end }) => {
     try {
+      setIsFindingRouting(true)
       const base_coordinates = encodeURIComponent(`${start};${end}`)
       const profile = `mapbox/${profileType || 'walking'}`
       const query = await fetch(
@@ -131,6 +131,7 @@ const useDirections = () => {
       const coordinates = routes?.map((route) => route.geometry.coordinates)
       const endpoint = waypoints.map((waypoint) => waypoint.location)
       onSuccess({ coordinates, endpoint })
+      setIsFindingRouting(false)
     } catch (error) {
       console.error(error)
       onError(error)

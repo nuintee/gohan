@@ -70,10 +70,11 @@ type DetailsType = {
   onNavigate: React.MouseEvent<HTMLButtonElement, MouseEvent>
   state: typeof states[number]
   info: ResultsEntity
+  isLoading: boolean
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, state, info, onNavigate } = props
+  const { isOpen, onClose, state, info, onNavigate, isLoading } = props
 
   return (
     <Layout isOpen={isOpen}>
@@ -88,6 +89,7 @@ const Details = (props: DetailsType) => {
           onLike={() => {}}
           onClose={onClose}
           info={info}
+          isLoading={isLoading}
         />
       </section>
     </Layout>

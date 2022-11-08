@@ -34,7 +34,16 @@ const Home: NextPage = () => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
-  const { mapRef, geoState, flyTo, setDestination, destination, setSources } = useGeoLocation()
+  const {
+    mapRef,
+    geoState,
+    flyTo,
+    setDestination,
+    destination,
+    setSources,
+    isFindingRoute,
+    setIsFindingRouting,
+  } = useGeoLocation()
   const { getRoute } = useDirections()
   const { get } = usePlaces(geoState)
 
@@ -156,6 +165,13 @@ const Home: NextPage = () => {
                 >
                   Random
                 </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={() => setIsFindingRouting((prev) => !prev)}
+                  disabled={!isLocationReady}
+                >
+                  Update Finding {isFindingRoute.toString()}
+                </button>
               </div>
             )}
           </div>
@@ -200,6 +216,7 @@ const Home: NextPage = () => {
         onClose={() => manageModal('details', false)}
         onNavigate={() => onNavigate(shopDetail?.geometry?.location)}
         info={shopDetail}
+        isLoading={isFindingRoute}
       />
       <Modal.Confirm
         isOpen={modalsState.confirm.isOpen}

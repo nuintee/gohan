@@ -15,16 +15,19 @@ const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
   mapboxAccessToken,
   destination: [],
+  isFindingRoute: false,
   setDestination: () => {},
   mapRef: {
     current: null,
   },
   flyTo: () => {},
   calculateDistance: () => {},
+  setIsFindingRouting: () => {},
 })
 
 const GeoLocationProvider = ({ children }) => {
   const [geoState, setGeoState] = useState<MapBoxInit>(initialValues.mapbox)
+  const [isFindingRoute, setIsFindingRouting] = useState(false)
   const [sources, setSources] = useState([])
   const [destination, setDestination] = useState([])
   const { manageToast } = useToast()
@@ -57,6 +60,8 @@ const GeoLocationProvider = ({ children }) => {
     sources,
     mapboxAccessToken,
     destination,
+    isFindingRoute,
+    setIsFindingRouting,
     setDestination,
     setSources,
     flyTo,
