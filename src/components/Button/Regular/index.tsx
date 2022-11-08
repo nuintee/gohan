@@ -22,9 +22,9 @@ const Regular = (props: Props) => {
 
   return (
     <button onClick={onClick} className={className} disabled={loading}>
-      {icon?.position && icon.src}
+      {icon?.position === 'before' && icon.src}
       {text || 'BUTTON'}
-      {icon?.position && icon.src}
+      {icon?.position === 'after' && icon.src}
       {loading && (
         <PulseLoader
           color={`${colors[theme.icon]}`}

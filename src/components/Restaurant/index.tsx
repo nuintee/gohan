@@ -63,6 +63,10 @@ const Large = (props: Props) => {
             text={isNavigating ? 'Stop Navigation' : 'Navigate'}
             loading={isLoading}
             onClick={onNavigate}
+            icon={{
+              position: 'before',
+              src: isNavigating && <Close fill='#FFF' />,
+            }}
           />
           <Like state={state} onClick={onLike} />
         </footer>
