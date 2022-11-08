@@ -42,8 +42,16 @@ type Data = {
 const useDirections = () => {
   const { manageToast } = useToast()
   const { manageModal } = useModals()
-  const { setSources, isFindingRoute, setIsFindingRouting, setDestination, setShopDetail } =
-    useGeoLocation()
+  const {
+    setSources,
+    isFindingRoute,
+    setIsFindingRouting,
+    setDestination,
+    setShopDetail,
+    shopDetail,
+    destination,
+    geoState,
+  } = useGeoLocation()
 
   const addSource = (payload: Data) => {
     const { source, layer } = payload
@@ -147,6 +155,12 @@ const useDirections = () => {
     manageModal('details', persistModal)
   }
 
+  const isLocationReady = geoState.lat && geoState.lng
+  const isAnyNavigation = destination.length
+  const isNavigatingCurrent =
+    shopDetail?.geometry?.location?.lng === destination[0] &&
+    shopDetail?.geometry?.location?.lat === destination[1]
+
   return {
     onError,
     onSuccess,
@@ -154,6 +168,9 @@ const useDirections = () => {
     isFindingRoute,
     setIsFindingRouting,
     clearRouting,
+    isLocationReady,
+    isAnyNavigation,
+    isNavigatingCurrent,
   }
 }
 

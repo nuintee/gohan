@@ -45,14 +45,9 @@ const Home: NextPage = () => {
     setShopDetail,
     setIsFindingRouting,
   } = useGeoLocation()
-  const { getRoute, clearRouting } = useDirections()
+  const { getRoute, clearRouting, isLocationReady, isAnyNavigation, isNavigatingCurrent } =
+    useDirections()
   const { get } = usePlaces(geoState)
-
-  const isLocationReady = geoState.lat && geoState.lng
-  const IS_NAVIGATING = destination.length
-  const IS_NAVIGATING_CURRENT_SHOP =
-    shopDetail?.geometry?.location?.lng === destination[0] &&
-    shopDetail?.geometry?.location?.lat === destination[1]
 
   const showDetails = (place) => {
     manageModal('details', true)
@@ -100,7 +95,7 @@ const Home: NextPage = () => {
   }
 
   const onNavigate = async (to: Coords) => {
-    if (IS_NAVIGATING_CURRENT_SHOP) {
+    if (isNavigatingCurrent) {
       // StopNavigation
       return clearRouting()
     }
@@ -111,7 +106,7 @@ const Home: NextPage = () => {
   }
 
   const onSearchClick = async () => {
-    if (IS_NAVIGATING) {
+    if (isAnyNavigation) {
       setDestination([])
       setSources([])
       setShopDetail({})
@@ -206,11 +201,11 @@ const Home: NextPage = () => {
           />
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
-          {IS_NAVIGATING && Object.keys(shopDetail)?.length ? (
+          {isAnyNavigation && Object.keys(shopDetail)?.length ? (
             <Restaurant.Small info={shopDetail} onClick={() => showDetails(shopDetail)} />
           ) : null}
           <Action
-            mode={IS_NAVIGATING ? 'close' : 'search'}
+            mode={isAnyNavigation ? 'close' : 'search'}
             type={searchButton.type}
             onClick={onSearchClick}
             loading={searchButton.loading}
@@ -223,7 +218,7 @@ const Home: NextPage = () => {
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
         onNavigate={() => onNavigate(shopDetail?.geometry?.location)}
-        isNavigating={IS_NAVIGATING_CURRENT_SHOP}
+        isNavigating={isNavigatingCurrent}
         info={shopDetail}
         isLoading={isFindingRoute}
       />
