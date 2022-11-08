@@ -48,8 +48,8 @@ const Home: NextPage = () => {
   const { get } = usePlaces(geoState)
 
   const showDetails = (restaurant_info) => {
-    manageModal('details', true)
     setShopDetail(restaurant_info)
+    manageModal('details', true)
   }
 
   const onGetPlaces = async () => {
