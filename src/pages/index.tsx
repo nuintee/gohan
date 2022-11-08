@@ -176,7 +176,6 @@ const Home: NextPage = () => {
           </div>
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
-        <h1>{JSON.stringify(modalsState.details)}</h1>
         <main>
           {isLocationReady && <MapBox />}
           <div
