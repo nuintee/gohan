@@ -45,7 +45,7 @@ const Home: NextPage = () => {
     setShopDetail,
     setIsFindingRouting,
   } = useGeoLocation()
-  const { getRoute } = useDirections()
+  const { getRoute, clearRouting } = useDirections()
   const { get } = usePlaces(geoState)
 
   const isLocationReady = geoState.lat && geoState.lng
@@ -97,13 +97,6 @@ const Home: NextPage = () => {
       end,
     })
     setDestination(end)
-  }
-
-  const clearRouting = (persistModal: boolean) => {
-    setDestination([])
-    setSources([])
-    setShopDetail({})
-    manageModal('details', persistModal)
   }
 
   const onNavigate = async (to: Coords) => {

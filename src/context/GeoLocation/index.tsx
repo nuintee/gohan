@@ -23,6 +23,7 @@ const GeoLocationContext = createContext({
   flyTo: () => {},
   calculateDistance: () => {},
   setIsFindingRouting: () => {},
+  setShopDetail: () => {},
 })
 
 const GeoLocationProvider = ({ children }) => {

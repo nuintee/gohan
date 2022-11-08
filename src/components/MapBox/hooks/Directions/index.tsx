@@ -42,7 +42,8 @@ type Data = {
 const useDirections = () => {
   const { manageToast } = useToast()
   const { manageModal } = useModals()
-  const { setSources, isFindingRoute, setIsFindingRouting, setDestination } = useGeoLocation()
+  const { setSources, isFindingRoute, setIsFindingRouting, setDestination, setShopDetail } =
+    useGeoLocation()
 
   const addSource = (payload: Data) => {
     const { source, layer } = payload
