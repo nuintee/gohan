@@ -100,14 +100,17 @@ const Home: NextPage = () => {
     setDestination(end)
   }
 
+  const clearRouting = (persistModal: boolean) => {
+    setDestination([])
+    setSources([])
+    setShopDetail({})
+    manageModal('details', persistModal)
+  }
+
   const onNavigate = async (to: Coords) => {
     if (IS_NAVIGATING_CURRENT_SHOP) {
       // StopNavigation
-      setDestination([])
-      setSources([])
-      setShopDetail({})
-      manageModal('details', false)
-      return
+      return clearRouting()
     }
     await routeTo(to)
     manageModal('details', false)
