@@ -34,11 +34,9 @@ const Home: NextPage = () => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
   const {
-    mapRef,
     geoState,
     flyTo,
     setDestination,
-    destination,
     setSources,
     isFindingRoute,
     shopDetail,
@@ -107,9 +105,7 @@ const Home: NextPage = () => {
 
   const onSearchClick = async () => {
     if (isAnyNavigation) {
-      setDestination([])
-      setSources([])
-      setShopDetail({})
+      clearRouting()
       setSearchButton((prev) => ({ ...prev, mode: 'search' }))
     } else {
       await onGetPlaces()
