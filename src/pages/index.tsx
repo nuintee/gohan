@@ -53,7 +53,6 @@ const Home: NextPage = () => {
         loading: true,
       }))
       const place = await get()
-      console.log(place)
       const timeout = setTimeout(() => {
         setSearchButton((prev) => ({
           ...prev,

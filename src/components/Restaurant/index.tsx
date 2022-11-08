@@ -16,6 +16,7 @@ import { colors } from 'config/tailwind'
 
 // Icons
 import { Close } from '@/icons'
+import { useEffect, useState } from 'react'
 
 type Props = {
   state: typeof states[number]
