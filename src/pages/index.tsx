@@ -47,9 +47,9 @@ const Home: NextPage = () => {
     useDirections()
   const { get } = usePlaces(geoState)
 
-  const showDetails = (place) => {
-    manageModal('details', true, place)
-    setShopDetail(place)
+  const showDetails = (restaurant_info) => {
+    manageModal('details', true, { restaurant_info })
+    setShopDetail(restaurant_info)
   }
 
   const onGetPlaces = async () => {
@@ -216,7 +216,7 @@ const Home: NextPage = () => {
         onClose={() => manageModal('details', false)}
         onNavigate={() => onNavigate(shopDetail?.geometry?.location)}
         isNavigating={isNavigatingCurrent}
-        info={shopDetail}
+        info={modalsState.details?.restaurant_info}
         isLoading={isFindingRoute}
       />
       <Modal.Confirm
