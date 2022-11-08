@@ -49,11 +49,16 @@ const Home: NextPage = () => {
 
   const isLocationReady = geoState.lat && geoState.lng
   const IS_NAVIGATING = destination.length
+  const IS_NAVIGATING_CURRENT_SHOP =
+    shopDetail?.geometry?.location?.lng === destination[0] &&
+    shopDetail?.geometry?.location?.lat === destination[1]
 
   const showDetails = (place) => {
     manageModal('details', true)
     setShopDetail(place)
   }
+
+  const isNavigating = () => {}
 
   const onGetPlaces = async () => {
     try {
@@ -96,6 +101,14 @@ const Home: NextPage = () => {
   }
 
   const onNavigate = async (to: Coords) => {
+    if (IS_NAVIGATING_CURRENT_SHOP) {
+      // StopNavigation
+      setDestination([])
+      setSources([])
+      setShopDetail({})
+      manageModal('details', false)
+      return
+    }
     await routeTo(to)
     manageModal('details', false)
     setSearchButton((prev) => ({ ...prev, mode: 'close' }))
@@ -215,6 +228,7 @@ const Home: NextPage = () => {
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
         onNavigate={() => onNavigate(shopDetail?.geometry?.location)}
+        isNavigating={IS_NAVIGATING_CURRENT_SHOP}
         info={shopDetail}
         isLoading={isFindingRoute}
       />

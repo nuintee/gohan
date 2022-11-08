@@ -74,7 +74,7 @@ type DetailsType = {
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, state, info, onNavigate, isLoading } = props
+  const { isOpen, onClose, state, info, onNavigate, isLoading, isNavigating } = props
 
   return (
     <Layout isOpen={isOpen}>
@@ -90,6 +90,7 @@ const Details = (props: DetailsType) => {
           onClose={onClose}
           info={info}
           isLoading={isLoading}
+          isNavigating={isNavigating}
         />
       </section>
     </Layout>
