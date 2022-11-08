@@ -30,7 +30,6 @@ import place from '@/mocks/api/place'
 
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
-  const [shopDetail, setShopDetail] = useState({})
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
@@ -42,6 +41,8 @@ const Home: NextPage = () => {
     destination,
     setSources,
     isFindingRoute,
+    shopDetail,
+    setShopDetail,
     setIsFindingRouting,
   } = useGeoLocation()
   const { getRoute } = useDirections()
@@ -57,8 +58,6 @@ const Home: NextPage = () => {
     manageModal('details', true)
     setShopDetail(place)
   }
-
-  const isNavigating = () => {}
 
   const onGetPlaces = async () => {
     try {

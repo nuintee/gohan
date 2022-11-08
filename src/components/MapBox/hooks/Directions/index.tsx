@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { useGeoLocation } from '@/hooks/context'
+import { useGeoLocation, useModals } from '@/hooks/context'
 
 // Constants
 import { colors } from 'config/tailwind'
@@ -41,7 +41,8 @@ type Data = {
 
 const useDirections = () => {
   const { manageToast } = useToast()
-  const { setSources, isFindingRoute, setIsFindingRouting } = useGeoLocation()
+  const { manageModal } = useModals()
+  const { setSources, isFindingRoute, setIsFindingRouting, setDestination } = useGeoLocation()
 
   const addSource = (payload: Data) => {
     const { source, layer } = payload
@@ -138,12 +139,20 @@ const useDirections = () => {
     }
   }
 
+  const clearRouting = (persistModal) => {
+    setDestination([])
+    setSources([])
+    setShopDetail({})
+    manageModal('details', persistModal)
+  }
+
   return {
     onError,
     onSuccess,
     getRoute,
     isFindingRoute,
     setIsFindingRouting,
+    clearRouting,
   }
 }
 

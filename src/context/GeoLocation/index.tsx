@@ -30,6 +30,7 @@ const GeoLocationProvider = ({ children }) => {
   const [isFindingRoute, setIsFindingRouting] = useState(false)
   const [sources, setSources] = useState([])
   const [destination, setDestination] = useState([])
+  const [shopDetail, setShopDetail] = useState({})
   const { manageToast } = useToast()
   const mapRef = useRef(null)
 
@@ -61,6 +62,8 @@ const GeoLocationProvider = ({ children }) => {
     mapboxAccessToken,
     destination,
     isFindingRoute,
+    shopDetail,
+    setShopDetail,
     setIsFindingRouting,
     setDestination,
     setSources,
