@@ -10,6 +10,7 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 // Hooks
 import { useToast } from '@/hooks/context'
+import usePlaces from '@/hooks/API/Places'
 
 // Types
 type Source = {
@@ -52,6 +53,7 @@ const useDirections = () => {
     destination,
     geoState,
   } = useGeoLocation()
+  const { get } = usePlaces(geoState)
 
   const showDetails = (restaurant_info) => {
     setShopDetail(restaurant_info)
@@ -171,6 +173,26 @@ const useDirections = () => {
     manageModal('details', persistModal)
   }
 
+  const onGetPlaces = async (controlSearch) => {
+    try {
+      controlSearch(true)
+      const place = await get()
+      const timeout = setTimeout(() => {
+        controlSearch(false)
+        showDetails(place)
+        clearTimeout(timeout)
+      }, 1000)
+    } catch (error) {
+      manageToast({
+        isOpen: true,
+        mode: 'error',
+        main: 'Error',
+        sub: error.message,
+      })
+      controlSearch(false)
+    }
+  }
+
   const isLocationReady = geoState.lat && geoState.lng
   const isAnyNavigation = destination.length
   const isNavigatingCurrent =
@@ -189,6 +211,7 @@ const useDirections = () => {
     isLocationReady,
     isAnyNavigation,
     isNavigatingCurrent,
+    onGetPlaces,
   }
 }
 

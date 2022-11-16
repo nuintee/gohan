@@ -39,8 +39,8 @@ const Home: NextPage = () => {
     isNavigatingCurrent,
     showDetails,
     routeTo,
+    onGetPlaces,
   } = useDirections()
-  const { get } = usePlaces(geoState)
 
   const useSearchButton = () => {
     // setSearchButton((prev) => ({ ...prev, payload }))
@@ -56,29 +56,6 @@ const Home: NextPage = () => {
   }
 
   const usedSearch = useSearchButton()
-
-  // usedSearch.setLoading(false)
-  // usedSearch.setLoading(false)
-
-  const onGetPlaces = async (controlSearch) => {
-    try {
-      controlSearch(true)
-      const place = await get()
-      const timeout = setTimeout(() => {
-        controlSearch(false)
-        showDetails(place)
-        clearTimeout(timeout)
-      }, 1000)
-    } catch (error) {
-      manageToast({
-        isOpen: true,
-        mode: 'error',
-        main: 'Error',
-        sub: error.message,
-      })
-      controlSearch(false)
-    }
-  }
 
   const onNavigateClicked = async (to: Coords, controlSearch) => {
     if (isNavigatingCurrent) {
