@@ -53,6 +53,11 @@ const useDirections = () => {
     geoState,
   } = useGeoLocation()
 
+  const showDetails = (restaurant_info) => {
+    setShopDetail(restaurant_info)
+    manageModal('details', true)
+  }
+
   const addSource = (payload: Data) => {
     const { source, layer } = payload
 
@@ -168,6 +173,7 @@ const useDirections = () => {
     isFindingRoute,
     setIsFindingRouting,
     clearRouting,
+    showDetails,
     isLocationReady,
     isAnyNavigation,
     isNavigatingCurrent,

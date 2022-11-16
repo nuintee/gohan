@@ -43,14 +43,15 @@ const Home: NextPage = () => {
     setShopDetail,
     setIsFindingRouting,
   } = useGeoLocation()
-  const { getRoute, clearRouting, isLocationReady, isAnyNavigation, isNavigatingCurrent } =
-    useDirections()
+  const {
+    getRoute,
+    clearRouting,
+    isLocationReady,
+    isAnyNavigation,
+    isNavigatingCurrent,
+    showDetails,
+  } = useDirections()
   const { get } = usePlaces(geoState)
-
-  const showDetails = (restaurant_info) => {
-    setShopDetail(restaurant_info)
-    manageModal('details', true)
-  }
 
   const onGetPlaces = async () => {
     try {
