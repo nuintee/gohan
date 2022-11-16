@@ -83,7 +83,7 @@ const Home: NextPage = () => {
     }
   }
 
-  const onNavigate = async (to: Coords) => {
+  const onNavigateClicked = async (to: Coords) => {
     if (isNavigatingCurrent) {
       // StopNavigation
       return clearRouting()
@@ -204,7 +204,7 @@ const Home: NextPage = () => {
         state='LIKED'
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
-        onNavigate={() => onNavigate(shopDetail?.geometry?.location)}
+        onNavigate={() => onNavigateClicked(shopDetail?.geometry?.location)}
         isNavigating={isNavigatingCurrent}
         info={shopDetail}
         isLoading={isFindingRoute}
