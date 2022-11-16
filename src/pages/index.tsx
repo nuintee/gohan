@@ -18,6 +18,9 @@ import { Restaurant } from '@/components/Restaurant'
 import { initialStates } from '@/components/Button/Action/constants'
 import useDirections from '@/components/MapBox/hooks/Directions'
 
+// Icons
+import { IoMdLocate } from 'react-icons/io'
+
 // Types
 type setModePayload = {
   mode: 'close' | 'search'
@@ -147,8 +150,11 @@ const Home: NextPage = () => {
             onClick={() => onSearchClick(usedSearch)}
             loading={searchButton.loading}
           />
-          <button onClick={() => flyTo(geoState)} className='absolute right-4 bottom-4'>
-            ORIGIN
+          <button
+            onClick={() => flyTo(geoState)}
+            className='absolute right-6 bottom-8 bg-white p-4 rounded-full'
+          >
+            <IoMdLocate size={20} />
           </button>
         </footer>
       </div>
