@@ -89,24 +89,10 @@ const Home: NextPage = () => {
                 </button>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={() => flyTo(geoState)}
-                  disabled={!isLocationReady}
-                >
-                  Origin
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
                   onClick={() => onGetPlaces(() => usedSearch.setLoading(false))}
                   disabled={!isLocationReady}
                 >
                   getPlace
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={() => routeTo()}
-                  disabled={!isLocationReady}
-                >
-                  Random
                 </button>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
