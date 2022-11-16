@@ -152,7 +152,7 @@ const Home: NextPage = () => {
           />
           <button
             onClick={() => flyTo(geoState)}
-            className='absolute right-6 bottom-8 bg-white p-4 rounded-full'
+            className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-gray-100'
           >
             <IoMdLocate size={20} />
           </button>
