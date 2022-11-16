@@ -1,11 +1,11 @@
-import { Close, Search } from '@/icons/index'
+import { Close, Search, Logo } from '@/icons/index'
 
 // Types
 import { Props } from '../index.types'
 
 const dictionary = {
   modes: {
-    search: Search,
+    search: Logo,
     close: Close,
   },
   type: ['hero', 'support'] as const,
