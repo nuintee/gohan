@@ -1,10 +1,5 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-
-// Lib
-import mapboxgl from 'mapbox-gl'
 
 // Hooks
 import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
@@ -26,25 +21,14 @@ import useDirections from '@/components/MapBox/hooks/Directions'
 
 // Types
 import { Coords } from '@/types/GeoLocation/index.types'
-import place from '@/mocks/api/place'
 
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
+  const { geoState, flyTo, isFindingRoute, shopDetail, setIsFindingRouting } = useGeoLocation()
   const {
-    geoState,
-    flyTo,
-    setDestination,
-    setSources,
-    isFindingRoute,
-    shopDetail,
-    setShopDetail,
-    setIsFindingRouting,
-  } = useGeoLocation()
-  const {
-    getRoute,
     clearRouting,
     isLocationReady,
     isAnyNavigation,
