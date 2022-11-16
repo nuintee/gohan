@@ -33,7 +33,6 @@ const Home: NextPage = () => {
   const { toastState, manageToast } = useToast()
   const { geoState, flyTo, isFindingRoute, shopDetail, setIsFindingRouting } = useGeoLocation()
   const {
-    clearRouting,
     isLocationReady,
     isAnyNavigation,
     isNavigatingCurrent,
@@ -41,6 +40,7 @@ const Home: NextPage = () => {
     routeTo,
     onGetPlaces,
     onNavigateClicked,
+    onSearchClick,
   } = useDirections()
 
   const useSearchButton = () => {
@@ -57,16 +57,6 @@ const Home: NextPage = () => {
   }
 
   const usedSearch = useSearchButton()
-
-  const onSearchClick = async () => {
-    if (isAnyNavigation) {
-      clearRouting()
-      usedSearch.setMode('search')
-    } else {
-      await onGetPlaces(usedSearch.setLoading)
-      usedSearch.setMode('close')
-    }
-  }
 
   return (
     <>
@@ -158,7 +148,7 @@ const Home: NextPage = () => {
           <Action
             mode={isAnyNavigation ? 'close' : 'search'}
             type={searchButton.type}
-            onClick={onSearchClick}
+            onClick={() => onSearchClick(usedSearch)}
             loading={searchButton.loading}
           />
         </footer>

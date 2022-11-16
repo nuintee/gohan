@@ -206,6 +206,16 @@ const useDirections = () => {
     flyTo(geoState)
   }
 
+  const onSearchClick = async (searchControl) => {
+    if (isAnyNavigation) {
+      clearRouting()
+      searchControl.setMode('search')
+    } else {
+      await onGetPlaces(searchControl.setLoading)
+      searchControl.setMode('close')
+    }
+  }
+
   const isLocationReady = geoState.lat && geoState.lng
   const isAnyNavigation = destination.length
   const isNavigatingCurrent =
@@ -226,6 +236,7 @@ const useDirections = () => {
     isNavigatingCurrent,
     onGetPlaces,
     onNavigateClicked,
+    onSearchClick,
   }
 }
 
