@@ -62,10 +62,10 @@ const Home: NextPage = () => {
 
   const onGetPlaces = async (controlSearch) => {
     try {
-      usedSearch.setLoading(true)
+      controlSearch(true)
       const place = await get()
       const timeout = setTimeout(() => {
-        controlSearch()
+        controlSearch(false)
         showDetails(place)
         clearTimeout(timeout)
       }, 1000)
@@ -76,7 +76,7 @@ const Home: NextPage = () => {
         main: 'Error',
         sub: error.message,
       })
-      controlSearch()
+      controlSearch(false)
     }
   }
 
@@ -97,7 +97,7 @@ const Home: NextPage = () => {
       clearRouting()
       usedSearch.setMode('search')
     } else {
-      await onGetPlaces(() => usedSearch.setLoading(false))
+      await onGetPlaces(usedSearch.setLoading)
       usedSearch.setMode('close')
     }
   }
