@@ -22,6 +22,10 @@ import useDirections from '@/components/MapBox/hooks/Directions'
 // Types
 import { Coords } from '@/types/GeoLocation/index.types'
 
+type setModePayload = {
+  mode: 'close' | 'search'
+}
+
 const Home: NextPage = () => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
@@ -37,6 +41,19 @@ const Home: NextPage = () => {
     routeTo,
   } = useDirections()
   const { get } = usePlaces(geoState)
+
+  const useSearchButton = () => {
+    // setSearchButton((prev) => ({ ...prev, payload }))
+    const setLoading = (is: boolean) => {
+      setSearchButton((prev) => ({ ...prev, loading: is }))
+    }
+
+    const setMode = (mode: setModePayload) => {
+      setSearchButton((prev) => ({ ...prev, mode }))
+    }
+
+    return { setLoading, setMode }
+  }
 
   const onGetPlaces = async () => {
     try {
