@@ -142,7 +142,11 @@ const Home: NextPage = () => {
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
           {isAnyNavigation && Object.keys(shopDetail)?.length ? (
-            <Restaurant.Small info={shopDetail} onClick={() => showDetails(shopDetail)} />
+            <Restaurant.Small
+              info={shopDetail}
+              onClick={() => showDetails(shopDetail)}
+              state='LIKED'
+            />
           ) : null}
           <Action
             mode={isAnyNavigation ? 'close' : 'search'}
@@ -150,12 +154,14 @@ const Home: NextPage = () => {
             onClick={() => onSearchClick(usedSearch)}
             loading={searchButton.loading}
           />
-          <button
-            onClick={() => flyTo(geoState)}
-            className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-gray-100'
-          >
-            <IoMdLocate size={20} />
-          </button>
+          {isLocationReady && (
+            <button
+              onClick={() => flyTo(geoState)}
+              className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-opacity-90 active:scale-90'
+            >
+              <IoMdLocate size={20} />
+            </button>
+          )}
         </footer>
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
