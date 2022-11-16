@@ -57,15 +57,15 @@ const Home: NextPage = () => {
 
   const usedSearch = useSearchButton()
 
-  const onGetPlaces = async () => {
+  // usedSearch.setLoading(false)
+  // usedSearch.setLoading(false)
+
+  const onGetPlaces = async (controlSearch) => {
     try {
       usedSearch.setLoading(true)
       const place = await get()
       const timeout = setTimeout(() => {
-        setSearchButton((prev) => ({
-          ...prev,
-          loading: false,
-        }))
+        controlSearch()
         showDetails(place)
         clearTimeout(timeout)
       }, 1000)
@@ -76,28 +76,29 @@ const Home: NextPage = () => {
         main: 'Error',
         sub: error.message,
       })
-      usedSearch.setLoading(false)
+      controlSearch()
     }
   }
 
-  const onNavigateClicked = async (to: Coords) => {
+  const onNavigateClicked = async (to: Coords, controlSearch) => {
     if (isNavigatingCurrent) {
       // StopNavigation
       return clearRouting()
     }
     await routeTo(to)
     manageModal('details', false)
-    setSearchButton((prev) => ({ ...prev, mode: 'close' }))
+    controlSearch()
+    // usedSearch.setMode('close')
     flyTo(geoState)
   }
 
   const onSearchClick = async () => {
     if (isAnyNavigation) {
       clearRouting()
-      setSearchButton((prev) => ({ ...prev, mode: 'search' }))
+      usedSearch.setMode('search')
     } else {
-      await onGetPlaces()
-      setSearchButton((prev) => ({ ...prev, mode: 'close' }))
+      await onGetPlaces(() => usedSearch.setLoading(false))
+      usedSearch.setMode('close')
     }
   }
 
@@ -140,7 +141,7 @@ const Home: NextPage = () => {
                 </button>
                 <button
                   className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={onGetPlaces}
+                  onClick={() => onGetPlaces(() => usedSearch.setLoading(false))}
                   disabled={!isLocationReady}
                 >
                   getPlace
@@ -201,7 +202,9 @@ const Home: NextPage = () => {
         state='LIKED'
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
-        onNavigate={() => onNavigateClicked(shopDetail?.geometry?.location)}
+        onNavigate={() =>
+          onNavigateClicked(shopDetail?.geometry?.location, () => usedSearch.setMode('close'))
+        }
         isNavigating={isNavigatingCurrent}
         info={shopDetail}
         isLoading={isFindingRoute}
