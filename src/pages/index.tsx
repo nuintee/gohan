@@ -55,12 +55,11 @@ const Home: NextPage = () => {
     return { setLoading, setMode }
   }
 
+  const usedSearch = useSearchButton()
+
   const onGetPlaces = async () => {
     try {
-      setSearchButton((prev) => ({
-        ...prev,
-        loading: true,
-      }))
+      usedSearch.setLoading(true)
       const place = await get()
       const timeout = setTimeout(() => {
         setSearchButton((prev) => ({
@@ -77,10 +76,7 @@ const Home: NextPage = () => {
         main: 'Error',
         sub: error.message,
       })
-      setSearchButton((prev) => ({
-        ...prev,
-        loading: false,
-      }))
+      usedSearch.setLoading(false)
     }
   }
 
