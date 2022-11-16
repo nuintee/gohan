@@ -69,7 +69,7 @@ const Home: NextPage = () => {
       />
       <div className='relative h-screen w-screen overflow-hidden'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-          <div className='flex gap-2 items-center'>
+          <div className='flex gap-2 items-center flex-1 flex-wrap'>
             <User
               loading={false}
               onClick={() =>
