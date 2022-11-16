@@ -147,6 +147,9 @@ const Home: NextPage = () => {
             onClick={() => onSearchClick(usedSearch)}
             loading={searchButton.loading}
           />
+          <button onClick={() => flyTo(geoState)} className='absolute right-4 bottom-4'>
+            ORIGIN
+          </button>
         </footer>
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />

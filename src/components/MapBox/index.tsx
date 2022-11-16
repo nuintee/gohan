@@ -48,12 +48,6 @@ const MapBox = (props) => {
         onLoad={onLoad}
         renderWorldCopies={false}
       >
-        <GeolocateControl
-          trackUserLocation={true}
-          showUserHeading={true}
-          showUserLocation={true}
-          position={'bottom-right'}
-        />
         {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
             <div className='relative'>
