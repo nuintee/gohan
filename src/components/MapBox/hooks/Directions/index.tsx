@@ -52,6 +52,7 @@ const useDirections = () => {
     shopDetail,
     destination,
     geoState,
+    flyTo,
   } = useGeoLocation()
   const { get } = usePlaces(geoState)
 
@@ -193,6 +194,18 @@ const useDirections = () => {
     }
   }
 
+  const onNavigateClicked = async (to: Coords, controlSearch) => {
+    if (isNavigatingCurrent) {
+      // StopNavigation
+      return clearRouting()
+    }
+    await routeTo(to)
+    manageModal('details', false)
+    controlSearch()
+    // usedSearch.setMode('close')
+    flyTo(geoState)
+  }
+
   const isLocationReady = geoState.lat && geoState.lng
   const isAnyNavigation = destination.length
   const isNavigatingCurrent =
@@ -212,6 +225,7 @@ const useDirections = () => {
     isAnyNavigation,
     isNavigatingCurrent,
     onGetPlaces,
+    onNavigateClicked,
   }
 }
 

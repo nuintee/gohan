@@ -40,6 +40,7 @@ const Home: NextPage = () => {
     showDetails,
     routeTo,
     onGetPlaces,
+    onNavigateClicked,
   } = useDirections()
 
   const useSearchButton = () => {
@@ -56,18 +57,6 @@ const Home: NextPage = () => {
   }
 
   const usedSearch = useSearchButton()
-
-  const onNavigateClicked = async (to: Coords, controlSearch) => {
-    if (isNavigatingCurrent) {
-      // StopNavigation
-      return clearRouting()
-    }
-    await routeTo(to)
-    manageModal('details', false)
-    controlSearch()
-    // usedSearch.setMode('close')
-    flyTo(geoState)
-  }
 
   const onSearchClick = async () => {
     if (isAnyNavigation) {
