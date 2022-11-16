@@ -58,6 +58,17 @@ const useDirections = () => {
     manageModal('details', true)
   }
 
+  const routeTo = async (to: Coords) => {
+    // To Hooks
+    if (!to) return
+    const end = [to?.lng, to?.lat]
+    await getRoute({
+      start: [geoState.lng, geoState.lat],
+      end,
+    })
+    setDestination(end)
+  }
+
   const addSource = (payload: Data) => {
     const { source, layer } = payload
 
@@ -174,6 +185,7 @@ const useDirections = () => {
     setIsFindingRouting,
     clearRouting,
     showDetails,
+    routeTo,
     isLocationReady,
     isAnyNavigation,
     isNavigatingCurrent,

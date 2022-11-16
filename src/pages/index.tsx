@@ -50,6 +50,7 @@ const Home: NextPage = () => {
     isAnyNavigation,
     isNavigatingCurrent,
     showDetails,
+    routeTo,
   } = useDirections()
   const { get } = usePlaces(geoState)
 
@@ -80,17 +81,6 @@ const Home: NextPage = () => {
         loading: false,
       }))
     }
-  }
-
-  const routeTo = async (to: Coords) => {
-    // To Hooks
-    if (!to) return
-    const end = [to?.lng, to?.lat]
-    await getRoute({
-      start: [geoState.lng, geoState.lat],
-      end,
-    })
-    setDestination(end)
   }
 
   const onNavigate = async (to: Coords) => {
