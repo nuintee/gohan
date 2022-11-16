@@ -3,8 +3,8 @@ import { Props } from '../index.types'
 const Logo = (props: Props) => {
   return (
     <svg
-      width={props.width}
-      height={props.height}
+      width={props.width || 35}
+      height={props.height || 35}
       viewBox='0 0 114 114'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
