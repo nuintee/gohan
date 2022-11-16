@@ -3,7 +3,6 @@ import type { NextPage } from 'next'
 
 // Hooks
 import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
-import usePlaces from '@/hooks/API/Places'
 
 // Components
 import Modal from '@/components/Modal'
@@ -20,8 +19,6 @@ import { initialStates } from '@/components/Button/Action/constants'
 import useDirections from '@/components/MapBox/hooks/Directions'
 
 // Types
-import { Coords } from '@/types/GeoLocation/index.types'
-
 type setModePayload = {
   mode: 'close' | 'search'
 }
@@ -44,7 +41,6 @@ const Home: NextPage = () => {
   } = useDirections()
 
   const useSearchButton = () => {
-    // setSearchButton((prev) => ({ ...prev, payload }))
     const setLoading = (is: boolean) => {
       setSearchButton((prev) => ({ ...prev, loading: is }))
     }
