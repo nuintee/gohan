@@ -122,6 +122,7 @@ const Home: NextPage = () => {
             </p>
           </div>
           <Sidebar
+            title='Activities'
             isOpen={sidebarState.activity.isOpen}
             onClose={() => manageSidebar('activity', false)}
           />
