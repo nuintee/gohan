@@ -44,7 +44,6 @@ const MapBox = (props) => {
         mapStyle='mapbox://styles/mapbox/streets-v11'
         mapboxAccessToken={mapboxAccessToken}
         ref={mapRef}
-        onClick={onClick}
         onLoad={onLoad}
         renderWorldCopies={false}
       >
