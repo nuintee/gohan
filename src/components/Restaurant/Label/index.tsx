@@ -8,7 +8,7 @@ type Props = {
 
 const distanceFormatter = (distance: number) => {
   if (distance >= 1) {
-    return distance + 'km'
+    return Math.round(distance) + 'km'
   } else if (distance < 1) {
     return Math.round(distance * 1000) + 'm'
   }
