@@ -33,25 +33,32 @@ const Large = (props: Props) => {
   const distance = calculateDistance(info?.geometry?.location, geoState)
 
   const IS_IMAGE_AVAILABLE = info?.photos
+  const THEME = IS_IMAGE_AVAILABLE
+    ? {
+        label: '',
+        closeFill: colors['gh-white'],
+      }
+    : {
+        label: 'ml-7',
+        closeFill: colors['gh-gray'],
+      }
 
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={onClose}>
-        <Close fill={colors['gh-white']} />
+        <Close fill={THEME.closeFill} />
       </button>
-      {IS_IMAGE_AVAILABLE ? (
+
+      {IS_IMAGE_AVAILABLE && (
         <img
           src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`}
           className={`select-none max-h-52 w-full object-cover`}
           draggable={false}
         />
-      ) : (
-        <div className='bg-gray-300 h-48 flex items-center justify-center'>
-          <p className='select-none text-gray-700 font-bold'>No Image 😕</p>
-        </div>
       )}
+
       <div className='p-4 flex flex-col gap-4'>
-        <Label distance={distance} />
+        <Label distance={distance} extraClassName={THEME.label} />
         <Texts main={info?.name || 'NAME'} sub={info?.types?.join('・') || 'Types・Pros'} />
         {info?.url && (
           <p className='bg-gh-l-orange text-center p-4 rounded-md'>
@@ -91,7 +98,7 @@ const Small = (props: Props) => {
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
       onClick={onClick}
     >
-      {!IS_IMAGE_AVAILABLE && (
+      {IS_IMAGE_AVAILABLE && (
         <img
           src={
             info?.photos?.length
