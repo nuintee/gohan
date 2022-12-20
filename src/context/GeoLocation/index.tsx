@@ -84,8 +84,8 @@ const GeoLocationProvider = ({ children }) => {
             ...rest,
           }
           const DEV_GEO = {
-            lat: -36.39303,
-            lng: 133.52095,
+            lat: 42.647781,
+            lng: 23.40562,
             ...rest,
           }
           const GEO = process.env.NODE_ENV === 'production' ? PROD_GEO : DEV_GEO
