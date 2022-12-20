@@ -91,7 +91,7 @@ const Small = (props: Props) => {
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
       onClick={onClick}
     >
-      {IS_IMAGE_AVAILABLE ? (
+      {!IS_IMAGE_AVAILABLE && (
         <img
           src={
             info?.photos?.length
@@ -101,10 +101,6 @@ const Small = (props: Props) => {
           className='max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md'
           alt={'image'}
         />
-      ) : (
-        <div className='aspect-square w-24 rounded-md bg-gray-300 flex items-center justify-center'>
-          <p className='select-none text-gray-700 font-bold text-sm'>No Image 😕</p>
-        </div>
       )}
       <div className='flex flex-1 gap-4 items-start'>
         <div className='flex flex-col gap-2'>
