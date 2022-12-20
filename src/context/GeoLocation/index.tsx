@@ -78,17 +78,21 @@ const GeoLocationProvider = ({ children }) => {
         (pos) => {
           const { coords } = pos
           const { latitude: lat, longitude: lng, ...rest } = coords
-          const geo = {
+          const PROD_GEO = {
             lat,
             lng,
             ...rest,
           }
-          console.log(geo)
+          const DEV_GEO = {
+            lat: -36.39303,
+            lng: 133.52095,
+            ...rest,
+          }
+          const GEO = process.env.NODE_ENV === 'production' ? PROD_GEO : DEV_GEO
+          console.log(PROD_GEO)
           setGeoState((prev) => ({
             ...prev,
-            ...rest,
-            lat,
-            lng,
+            ...GEO,
             zoom: 18,
           }))
         },

@@ -32,21 +32,24 @@ const Large = (props: Props) => {
   const { geoState, calculateDistance } = useGeoLocation()
   const distance = calculateDistance(info?.geometry?.location, geoState)
 
+  const IS_IMAGE_AVAILABLE = info?.photos
+
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white'>
-      <button className='absolute left-[1rem] top-[1rem] outline-none' onClick={onClose}>
+      <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={onClose}>
         <Close fill={colors['gh-white']} />
       </button>
-      <img
-        src={
-          info?.photos?.length &&
-          `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
-        }
-        className={`select-none max-h-52 w-full object-cover ${
-          !info?.photos?.length && 'bg-gray-300 h-48 animate-pulse'
-        }`}
-        draggable={false}
-      />
+      {IS_IMAGE_AVAILABLE ? (
+        <img
+          src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`}
+          className={`select-none max-h-52 w-full object-cover`}
+          draggable={false}
+        />
+      ) : (
+        <div className='bg-gray-300 h-48 flex items-center justify-center'>
+          <p className='select-none text-gray-700 font-bold'>No Image 😕</p>
+        </div>
+      )}
       <div className='p-4 flex flex-col gap-4'>
         <Label distance={distance} />
         <Texts main={info?.name || 'NAME'} sub={info?.types?.join('・') || 'Types・Pros'} />
@@ -81,20 +84,28 @@ const Small = (props: Props) => {
   const { geoState, calculateDistance } = useGeoLocation()
   const distance = calculateDistance(info?.geometry?.location, geoState)
 
+  const IS_IMAGE_AVAILABLE = info?.photos
+
   return (
     <div
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
       onClick={onClick}
     >
-      <img
-        src={
-          info?.photos?.length
-            ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
-            : 'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
-        }
-        className='max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md'
-        alt={'image'}
-      />
+      {IS_IMAGE_AVAILABLE ? (
+        <img
+          src={
+            info?.photos?.length
+              ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
+              : 'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
+          }
+          className='max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md'
+          alt={'image'}
+        />
+      ) : (
+        <div className='aspect-square w-24 rounded-md bg-gray-300 flex items-center justify-center'>
+          <p className='select-none text-gray-700 font-bold text-sm'>No Image 😕</p>
+        </div>
+      )}
       <div className='flex flex-1 gap-4 items-start'>
         <div className='flex flex-col gap-2'>
           <Texts main={info?.name || 'NAME'} sub={info?.types?.join('・')} size='small' />
