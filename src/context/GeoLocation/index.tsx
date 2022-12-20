@@ -11,6 +11,9 @@ import initialValues from '@/components/MapBox/constants'
 import { MapBoxInit } from '@/components/MapBox/types'
 import { Coords } from '@/types/GeoLocation/index.types'
 
+// Consts
+import GEOLOCATION from '@/constants/GeoLocation'
+
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
   mapboxAccessToken,
@@ -78,21 +81,12 @@ const GeoLocationProvider = ({ children }) => {
         (pos) => {
           const { coords } = pos
           const { latitude: lat, longitude: lng, ...rest } = coords
-          const PROD_GEO = {
-            lat,
-            lng,
-            ...rest,
-          }
-          const DEV_GEO = {
-            lat: 42.647781,
-            lng: 23.40562,
-            ...rest,
-          }
-          const GEO = process.env.NODE_ENV === 'production' ? PROD_GEO : DEV_GEO
-          console.log(PROD_GEO)
+
           setGeoState((prev) => ({
             ...prev,
-            ...GEO,
+            ...(process.env.NODE_ENV === 'production'
+              ? { lat, lng }
+              : GEOLOCATION.DEFAULT_LOCATION),
             zoom: 18,
           }))
         },
