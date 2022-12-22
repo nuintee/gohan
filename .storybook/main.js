@@ -25,6 +25,7 @@ module.exports = {
       '@/icons': path.resolve(__dirname, '../src/icons'),
       '@/hooks': path.resolve(__dirname, '../src/hooks'),
       '@/context': path.resolve(__dirname, '../src/context'),
+      '@/constants': path.resolve(__dirname, '../src/constants'),
     }
 
     config.resolve.modules = [...(config.resolve.modules || []), path.resolve('./')] // 絶対パスでimportできるようにする

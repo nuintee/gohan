@@ -52,7 +52,7 @@ const Large = (props: Props) => {
       {IS_IMAGE_AVAILABLE && (
         <img
           src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`}
-          className={`select-none max-h-52 w-full object-cover`}
+          className={`select-none max-h-52 w-full object-cover h-52`}
           draggable={false}
         />
       )}
