@@ -31,9 +31,66 @@ type Props = {
   ip: string
 }
 
-const Home = (props: Props) => {
+const DevPanel = (props) => {
+  const [isOpen, setIsOpen] = useState(false)
   const { ip } = props
   const { data: session } = useSession()
+  const { flyTo } = useGeoLocation()
+
+  const { isLocationReady } = useDirections()
+
+  const authHandle = () => {
+    if (session) {
+      signOut()
+    } else {
+      signIn()
+    }
+  }
+
+  if (process.env.NODE_ENV !== 'development') return <></>
+
+  if (!isOpen)
+    return (
+      <button
+        onClick={() => setIsOpen(true)}
+        className='z-[100] bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+      >
+        DevTools
+      </button>
+    )
+
+  return (
+    <div className='z-[100] absolute left-0 top-0 bg-white h-screen'>
+      <header className='flex items-center justify-between gap-4 p-4'>
+        <p>Dev Tools</p>
+        <button
+          onClick={() => setIsOpen(false)}
+          className='z-[100] bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+        >
+          CLOSE
+        </button>
+      </header>
+      <main className='flex flex-col gap-4 p-4'>
+        <button
+          className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+          onClick={flyTo}
+          disabled={!isLocationReady}
+        >
+          ✈️ FlyTo
+        </button>
+        <button
+          className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+          onClick={authHandle}
+        >
+          {session ? 'SIGNOUT' : 'SIGNIN'}
+        </button>
+        <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>IP: {ip}</p>
+      </main>
+    </div>
+  )
+}
+
+const Home = (props: Props) => {
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
@@ -64,14 +121,6 @@ const Home = (props: Props) => {
 
   const usedSearch = useSearchButton()
 
-  const authHandle = () => {
-    if (session) {
-      signOut()
-    } else {
-      signIn()
-    }
-  }
-
   return (
     <>
       <Toast
@@ -93,40 +142,7 @@ const Home = (props: Props) => {
                 })
               }
             />
-            {process.env.NODE_ENV === 'development' && (
-              <div className='flex gap-2 z-[1]'>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={flyTo}
-                  disabled={!isLocationReady}
-                >
-                  ✈️ FlyTo
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={() => onGetPlaces(() => usedSearch.setLoading(false))}
-                  disabled={!isLocationReady}
-                >
-                  getPlace
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={() => setIsFindingRouting((prev) => !prev)}
-                  disabled={!isLocationReady}
-                >
-                  Update Finding {isFindingRoute.toString()}
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={authHandle}
-                >
-                  {session ? 'SIGNOUT' : 'SIGNIN'}
-                </button>
-                <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-                  IP: {ip}
-                </p>
-              </div>
-            )}
+            <DevPanel />
           </div>
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
