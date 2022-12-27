@@ -85,7 +85,11 @@ const Home = (props: Props) => {
                 })
               }
             />
-            <DevPanel />
+            <DevPanel
+              useragent={{
+                ip: props.ip,
+              }}
+            />
           </div>
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
@@ -170,7 +174,7 @@ export const getServerSideProps = async (ctx: any) => {
   if (ctx.req.headers['x-forwarded-for']) {
     ip = ctx.req.headers['x-forwarded-for']
   } else if (ctx.req.headers['x-real-ip']) {
-    ip = ctx.req.connection.remoteAddress
+    ip = ctx.req.headers['x-real-ip']
   } else {
     ip = ctx.req.connection.remoteAddress
   }

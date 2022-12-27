@@ -3,12 +3,61 @@ import { Copy } from '@/icons'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
+import { GetServerSideProps } from 'next'
+
+type IndicatorProps = {
+  label: string
+  value?: string | number | null
+  supportText?: string
+  allowCopy: boolean
+  callback: Function
+}
+
+const Indicator = (props: IndicatorProps) => {
+  const { label, value, supportText, allowCopy } = props
+  const { manageToast } = useToast()
+
+  const copy = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      function () {
+        console.log('Async: Copying to clipboard was successful!')
+        manageToast({
+          isOpen: true,
+          main: 'Copied!',
+          sub: text,
+          mode: 'success',
+        })
+      },
+      function (err) {
+        manageToast({
+          isOpen: true,
+          main: 'Copy Failed',
+          sub: err.message,
+          mode: 'error',
+        })
+      },
+    )
+  }
+
+  return (
+    <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
+      <p className='flex items-center gap-1'>
+        {label}: {value}
+        <span className='text-xs text-gh-gray'>{supportText && `(${supportText})`}</span>
+      </p>
+      {allowCopy && (
+        <button className='text-gray-400 active:text-gray-300' onClick={() => copy(value)}>
+          <Copy />
+        </button>
+      )}
+    </div>
+  )
+}
 
 const DevPanel = (props) => {
+  const { useragent } = props
   const [isOpen, setIsOpen] = useState(false)
-  const { ip } = props
   const { data: session } = useSession()
-  const { manageToast } = useToast()
   const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
   const { isLocationReady } = useDirections()
 
@@ -31,28 +80,6 @@ const DevPanel = (props) => {
   const setCoordsToDefault = () => {
     console.dir(DEFAULT_COORDS.current)
     setGeoState(DEFAULT_COORDS.current)
-  }
-
-  const copy = (text: string) => {
-    navigator.clipboard.writeText(text).then(
-      function () {
-        console.log('Async: Copying to clipboard was successful!')
-        manageToast({
-          isOpen: true,
-          main: 'Copied!',
-          sub: text,
-          mode: 'success',
-        })
-      },
-      function (err) {
-        manageToast({
-          isOpen: true,
-          main: 'Copy Failed',
-          sub: err.message,
-          mode: 'error',
-        })
-      },
-    )
   }
 
   const authHandle = () => {
@@ -101,7 +128,8 @@ const DevPanel = (props) => {
         >
           {session ? 'SIGNOUT' : 'SIGNIN'}
         </button>
-        <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>IP: {ip}</p>
+
+        <Indicator label='IP' value={useragent?.ip} allowCopy />
 
         <section className='flex flex-col gap-2 justify-between'>
           <div className='flex justify-between'>
@@ -125,31 +153,19 @@ const DevPanel = (props) => {
             </button>
           </div>
 
-          <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
-            <p className='flex items-center gap-1'>
-              Latitude: {geoState.lat}
-              <span className='text-xs text-gh-gray'>({DEFAULT_COORDS.current?.lat})</span>
-            </p>
-            <button
-              className='text-gray-400 active:text-gray-300'
-              onClick={() => copy(geoState.lat)}
-            >
-              <Copy />
-            </button>
-          </div>
+          <Indicator
+            label='Latitude'
+            supportText={DEFAULT_COORDS.current?.lat}
+            value={geoState.lat}
+            allowCopy
+          />
 
-          <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
-            <p className='flex items-center gap-1'>
-              Longitude: {geoState.lng}
-              <span className='text-xs text-gh-gray'>({DEFAULT_COORDS.current?.lng})</span>
-            </p>
-            <button
-              className='text-gray-400 active:text-gray-300'
-              onClick={() => copy(geoState.lng)}
-            >
-              <Copy />
-            </button>
-          </div>
+          <Indicator
+            label='Longitude'
+            supportText={DEFAULT_COORDS.current?.lng}
+            value={geoState.lng}
+            allowCopy
+          />
         </section>
 
         <fieldset className='flex gap-2 justify-between'>
