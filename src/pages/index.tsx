@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { NextPage } from 'next'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
@@ -35,9 +35,26 @@ const DevPanel = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const { ip } = props
   const { data: session } = useSession()
-  const { flyTo, geoState, setIsMapClickable, isMapClickable } = useGeoLocation()
-
+  const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
   const { isLocationReady } = useDirections()
+
+  const DEFAULT_COORDS = useRef(null as any)
+
+  useEffect(() => {
+    if (!geoState.lat || !geoState.lng) return
+
+    const sameLat = geoState.lat && DEFAULT_COORDS.current?.lat
+    const sameLng = geoState.lng && DEFAULT_COORDS.current?.lng
+
+    if (sameLat && sameLng) return
+
+    DEFAULT_COORDS.current = geoState
+  }, [geoState])
+
+  const setCoordsToDefault = () => {
+    console.dir(DEFAULT_COORDS.current)
+    setGeoState(DEFAULT_COORDS.current)
+  }
 
   const authHandle = () => {
     if (session) {
@@ -60,7 +77,7 @@ const DevPanel = (props) => {
     )
 
   return (
-    <div className='z-[100] absolute left-0 top-0 bg-white h-screen'>
+    <div className='z-[100] absolute left-0 top-0 bg-white h-screen min-w-[20rem]'>
       <header className='flex items-center justify-between gap-4 p-4'>
         <p className='font-bold'>Dev Tools</p>
         <button
@@ -86,14 +103,33 @@ const DevPanel = (props) => {
           {session ? 'SIGNOUT' : 'SIGNIN'}
         </button>
         <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>IP: {ip}</p>
-        <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-          Latitude: {geoState.lat}
-        </p>
-        <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-          Longitude: {geoState.lng}
-        </p>
-        <fieldset className='flex gap-4 justify-between'>
-          <legend className='mb-2 text-gh-gray'>Move current position on map</legend>
+
+        <section className='flex flex-col gap-2 justify-between'>
+          <div className='flex justify-between'>
+            <label className='text-gh-gray'>Coords</label>
+            <button
+              className='text text-blue-300 active:text-opacity-50'
+              onClick={setCoordsToDefault}
+            >
+              reset
+            </button>
+          </div>
+          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
+            Latitude: {geoState.lat}
+          </p>
+          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
+            Longitude: {geoState.lng}
+          </p>
+          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
+            Df-Latitude: {DEFAULT_COORDS.current?.lat}
+          </p>
+          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
+            Df-Longitude: {DEFAULT_COORDS.current?.lng}
+          </p>
+        </section>
+
+        <fieldset className='flex gap-2 justify-between'>
+          <legend className='mb-2 text-gh-gray'>Move position on click</legend>
           <div className='flex gap-2'>
             <input
               type='radio'
