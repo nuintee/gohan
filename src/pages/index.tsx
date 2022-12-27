@@ -26,7 +26,12 @@ type setModePayload = {
   mode: 'close' | 'search'
 }
 
-const Home: NextPage = () => {
+type Props = {
+  ip: string
+}
+
+const Home = (props: Props) => {
+  const { ip } = props
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
@@ -101,6 +106,9 @@ const Home: NextPage = () => {
                 >
                   Update Finding {isFindingRoute.toString()}
                 </button>
+                <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
+                  IP: {ip}
+                </p>
               </div>
             )}
           </div>
@@ -170,6 +178,33 @@ const Home: NextPage = () => {
       />
     </>
   )
+}
+
+export const getServerSideProps = async (ctx: any) => {
+  // Parse token
+  // const token = ctx.req.headers['Authorization'].replace('Bearer ', '')
+
+  /**
+    Determine source IP address. Alternative methods to determine source IP address may be necessary
+    depending on the ho
+    sting infrastructure
+   **/
+
+  let ip = 'IP_DEFAULT'
+
+  if (ctx.req.headers['x-forwarded-for']) {
+    ip = ctx.req.headers['x-forwarded-for']
+  } else if (ctx.req.headers['x-real-ip']) {
+    ip = ctx.req.connection.remoteAddress
+  } else {
+    ip = ctx.req.connection.remoteAddress
+  }
+
+  return {
+    props: {
+      ip,
+    },
+  }
 }
 
 export default Home
