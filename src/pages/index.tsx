@@ -111,10 +111,13 @@ const DevPanel = (props) => {
           <div className='flex justify-between'>
             <label className='text-gh-gray'>Coords</label>
             <button
-              className='text text-blue-300 active:text-opacity-50'
+              className={`text text-gh-gray  ${
+                isCoordsMoved && 'active:text-opacity-50 text-blue-500'
+              }`}
               onClick={setCoordsToDefault}
+              disabled={!isCoordsMoved}
             >
-              {isCoordsMoved ? 'moved' : 'nope'}
+              reset
             </button>
           </div>
           <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
