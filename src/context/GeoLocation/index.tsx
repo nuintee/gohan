@@ -16,6 +16,7 @@ import GEOLOCATION from '@/constants/GeoLocation'
 
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
+  setGeoState: () => {},
   mapboxAccessToken,
   destination: [],
   isFindingRoute: false,
@@ -67,6 +68,7 @@ const GeoLocationProvider = ({ children }) => {
     destination,
     isFindingRoute,
     shopDetail,
+    setGeoState,
     setShopDetail,
     setIsFindingRouting,
     setDestination,

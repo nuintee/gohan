@@ -35,7 +35,7 @@ const DevPanel = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const { ip } = props
   const { data: session } = useSession()
-  const { flyTo } = useGeoLocation()
+  const { flyTo, geoState } = useGeoLocation()
 
   const { isLocationReady } = useDirections()
 
@@ -49,7 +49,7 @@ const DevPanel = (props) => {
 
   if (process.env.NODE_ENV !== 'development') return <></>
 
-  if (!isOpen)
+  if (isOpen)
     return (
       <button
         onClick={() => setIsOpen(true)}
@@ -62,7 +62,7 @@ const DevPanel = (props) => {
   return (
     <div className='z-[100] absolute left-0 top-0 bg-white h-screen'>
       <header className='flex items-center justify-between gap-4 p-4'>
-        <p>Dev Tools</p>
+        <p className='font-bold'>Dev Tools</p>
         <button
           onClick={() => setIsOpen(false)}
           className='z-[100] bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
@@ -70,6 +70,7 @@ const DevPanel = (props) => {
           CLOSE
         </button>
       </header>
+      <hr></hr>
       <main className='flex flex-col gap-4 p-4'>
         <button
           className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
@@ -85,6 +86,23 @@ const DevPanel = (props) => {
           {session ? 'SIGNOUT' : 'SIGNIN'}
         </button>
         <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>IP: {ip}</p>
+        <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
+          Latitude: {geoState.lat}
+        </p>
+        <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
+          Longitude: {geoState.lng}
+        </p>
+        <fieldset className='flex gap-4 justify-between'>
+          <legend className='mb-2 text-gh-gray'>Click on Map</legend>
+          <div className='flex gap-2'>
+            <input type='radio' id='map_clickable' name='map_click' value='true' checked />
+            <label htmlFor='map_clickable'>On</label>
+          </div>
+          <div className='flex gap-2'>
+            <input type='radio' id='map_unclickable' name='map_click' value='false' />
+            <label htmlFor='map_unclickable'>Off</label>
+          </div>
+        </fieldset>
       </main>
     </div>
   )
