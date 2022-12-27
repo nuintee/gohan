@@ -239,31 +239,32 @@ const DevPanel = (props) => {
           />
         </Section>
 
-        <fieldset className='flex gap-2 justify-between'>
-          <legend className='mb-2 text-gh-gray'>Move position on click</legend>
-          <div className='flex gap-2'>
-            <input
-              type='radio'
-              id='map_clickable'
-              name='map_click'
-              value='true'
-              defaultChecked={isMapClickable}
-              onInput={(e) => setIsMapClickable(true)}
-            />
-            <label htmlFor='map_clickable'>On</label>
+        <Section label='Move position on click'>
+          <div className='flex gap-2 justify-between'>
+            <div className='flex gap-2'>
+              <input
+                type='radio'
+                id='map_clickable'
+                name='map_click'
+                value='true'
+                defaultChecked={isMapClickable}
+                onInput={(e) => setIsMapClickable(true)}
+              />
+              <label htmlFor='map_clickable'>On</label>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='radio'
+                id='map_unclickable'
+                name='map_click'
+                value='false'
+                defaultChecked={!isMapClickable}
+                onInput={(e) => setIsMapClickable(false)}
+              />
+              <label htmlFor='map_unclickable'>Off</label>
+            </div>
           </div>
-          <div className='flex gap-2'>
-            <input
-              type='radio'
-              id='map_unclickable'
-              name='map_click'
-              value='false'
-              defaultChecked={!isMapClickable}
-              onInput={(e) => setIsMapClickable(false)}
-            />
-            <label htmlFor='map_unclickable'>Off</label>
-          </div>
-        </fieldset>
+        </Section>
       </main>
     </div>
   )
