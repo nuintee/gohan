@@ -35,7 +35,7 @@ const DevPanel = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const { ip } = props
   const { data: session } = useSession()
-  const { flyTo, geoState } = useGeoLocation()
+  const { flyTo, geoState, setIsMapClickable, isMapClickable } = useGeoLocation()
 
   const { isLocationReady } = useDirections()
 
@@ -93,13 +93,27 @@ const DevPanel = (props) => {
           Longitude: {geoState.lng}
         </p>
         <fieldset className='flex gap-4 justify-between'>
-          <legend className='mb-2 text-gh-gray'>Click on Map</legend>
+          <legend className='mb-2 text-gh-gray'>Move current position on map</legend>
           <div className='flex gap-2'>
-            <input type='radio' id='map_clickable' name='map_click' value='true' checked />
+            <input
+              type='radio'
+              id='map_clickable'
+              name='map_click'
+              value='true'
+              defaultChecked={isMapClickable}
+              onInput={(e) => setIsMapClickable(true)}
+            />
             <label htmlFor='map_clickable'>On</label>
           </div>
           <div className='flex gap-2'>
-            <input type='radio' id='map_unclickable' name='map_click' value='false' />
+            <input
+              type='radio'
+              id='map_unclickable'
+              name='map_click'
+              value='false'
+              defaultChecked={!isMapClickable}
+              onInput={(e) => setIsMapClickable(false)}
+            />
             <label htmlFor='map_unclickable'>Off</label>
           </div>
         </fieldset>

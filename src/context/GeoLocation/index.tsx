@@ -17,6 +17,8 @@ import GEOLOCATION from '@/constants/GeoLocation'
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
   setGeoState: () => {},
+  isMapClickable: false,
+  setIsMapClickable: () => {},
   mapboxAccessToken,
   destination: [],
   isFindingRoute: false,
@@ -36,6 +38,7 @@ const GeoLocationProvider = ({ children }) => {
   const [sources, setSources] = useState([])
   const [destination, setDestination] = useState([])
   const [shopDetail, setShopDetail] = useState({})
+  const [isMapClickable, setIsMapClickable] = useState(false)
   const { manageToast } = useToast()
   const mapRef = useRef(null)
 
@@ -68,6 +71,8 @@ const GeoLocationProvider = ({ children }) => {
     destination,
     isFindingRoute,
     shopDetail,
+    isMapClickable,
+    setIsMapClickable,
     setGeoState,
     setShopDetail,
     setIsFindingRouting,
