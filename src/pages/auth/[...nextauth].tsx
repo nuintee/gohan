@@ -10,4 +10,10 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
+  callbacks: {
+    async session({ session, token }) {
+      session.user.accessToken = token.accessToken
+      return session
+    },
+  },
 })

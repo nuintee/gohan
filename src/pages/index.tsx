@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 // Hooks
 import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
@@ -32,6 +33,7 @@ type Props = {
 
 const Home = (props: Props) => {
   const { ip } = props
+  const { data: session } = useSession()
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
@@ -61,6 +63,14 @@ const Home = (props: Props) => {
   }
 
   const usedSearch = useSearchButton()
+
+  const authHandle = () => {
+    if (session) {
+      signOut()
+    } else {
+      signIn()
+    }
+  }
 
   return (
     <>
@@ -105,6 +115,12 @@ const Home = (props: Props) => {
                   disabled={!isLocationReady}
                 >
                   Update Finding {isFindingRoute.toString()}
+                </button>
+                <button
+                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
+                  onClick={authHandle}
+                >
+                  {session ? 'SIGNOUT' : 'SIGNIN'}
                 </button>
                 <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
                   IP: {ip}
