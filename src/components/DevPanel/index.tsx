@@ -15,22 +15,92 @@ type IndicatorProps = {
   children: React.ReactChildren
 }
 
-const Section = (props: IndicatorProps) => {
-  const { label, value, supportText, allowCopy, children } = props
+interface SectionProps extends IndicatorProps {
+  allowReset: boolean
+  disabledReset: boolean
+  onReset: Function
+}
+
+const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
+  navigator.clipboard.writeText(text).then(
+    function () {
+      console.log('Async: Copying to clipboard was successful!')
+      //   manageToast({
+      //     isOpen: true,
+      //     main: 'Copied!',
+      //     sub: text,
+      //     mode: 'success',
+      //   })
+      onSuccessCopy(text)
+    },
+    function (err) {
+      //   manageToast({
+      //     isOpen: true,
+      //     main: 'Copy Failed',
+      //     sub: err.message,
+      //     mode: 'error',
+      //   })
+      onErrorCopy(err)
+    },
+  )
+}
+
+const Section = (props: SectionProps) => {
+  const { label, value, supportText, allowCopy, allowReset, disabledReset, children } = props
+  const { manageToast } = useToast()
+
+  const copyHandle = (text: string) => {
+    copy(
+      text,
+      (str) => {
+        manageToast({
+          isOpen: true,
+          main: 'Copied!',
+          sub: str,
+          mode: 'success',
+        })
+      },
+      (error) => {
+        manageToast({
+          isOpen: true,
+          main: 'Copy Failed',
+          sub: error.message,
+          mode: 'error',
+        })
+      },
+    )
+  }
 
   return (
     <section className='flex flex-col gap-2 justify-between'>
-      <div className='flex gap-2'>
-        <p className='flex items-center gap-1 text-gh-gray'>
-          {label}
-          <span className='text-xs text-gh-gray'>{supportText && `(${supportText})`}</span>
-        </p>
-        {allowCopy && (
-          <button className='text-gray-400 active:text-gray-300' onClick={() => copy(value)}>
-            <Copy />
+      <div className='flex justify-between'>
+        <div className='flex gap-2'>
+          <p className='flex items-center gap-1 text-gh-gray'>
+            {label}
+            <span className='text-xs text-gh-gray'>{supportText && `(${supportText})`}</span>
+          </p>
+          {allowCopy && (
+            <button
+              className='text-gray-400 active:text-gray-300'
+              onClick={() => copyHandle(value)}
+            >
+              <Copy />
+            </button>
+          )}
+        </div>
+        {allowReset && (
+          <button
+            className={`text text-gh-gray  ${
+              !disabledReset && 'active:text-opacity-50 text-blue-500'
+            }`}
+            onClick={() => {}}
+            disabled={disabledReset}
+          >
+            reset
           </button>
         )}
       </div>
+
       <div className='flex flex-col gap-2 justify-between'>{children}</div>
     </section>
   )
@@ -40,22 +110,22 @@ const Indicator = (props: IndicatorProps) => {
   const { label, value, supportText, allowCopy } = props
   const { manageToast } = useToast()
 
-  const copy = (text: string) => {
-    navigator.clipboard.writeText(text).then(
-      function () {
-        console.log('Async: Copying to clipboard was successful!')
+  const copyHandle = (text: string) => {
+    copy(
+      text,
+      (str) => {
         manageToast({
           isOpen: true,
           main: 'Copied!',
-          sub: text,
+          sub: str,
           mode: 'success',
         })
       },
-      function (err) {
+      (error) => {
         manageToast({
           isOpen: true,
           main: 'Copy Failed',
-          sub: err.message,
+          sub: error.message,
           mode: 'error',
         })
       },
@@ -69,7 +139,7 @@ const Indicator = (props: IndicatorProps) => {
         <span className='text-xs text-gh-gray'>{supportText && `(${supportText})`}</span>
       </p>
       {allowCopy && (
-        <button className='text-gray-400 active:text-gray-300' onClick={() => copy(value)}>
+        <button className='text-gray-400 active:text-gray-300' onClick={() => copyHandle(value)}>
           <Copy />
         </button>
       )}
@@ -154,7 +224,7 @@ const DevPanel = (props) => {
 
         <Indicator label='IP' value={useragent?.ip} allowCopy />
 
-        <Section label='IPs'>
+        <Section label='IPs' value={10} allowReset disabledReset={true} allowCopy>
           <Indicator label='IP' value={useragent?.ip} allowCopy />
           <Indicator label='IP' value={useragent?.ip} allowCopy />
           <Indicator label='IP' value={useragent?.ip} allowCopy />
