@@ -36,6 +36,7 @@ const DevPanel = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const { ip } = props
   const { data: session } = useSession()
+  const { manageToast } = useToast()
   const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
   const { isLocationReady } = useDirections()
 
@@ -64,9 +65,20 @@ const DevPanel = (props) => {
     navigator.clipboard.writeText(text).then(
       function () {
         console.log('Async: Copying to clipboard was successful!')
+        manageToast({
+          isOpen: true,
+          main: 'Copied!',
+          sub: text,
+          mode: 'success',
+        })
       },
       function (err) {
-        console.error('Async: Could not copy text: ', err)
+        manageToast({
+          isOpen: true,
+          main: 'Copy Failed',
+          sub: err.message,
+          mode: 'error',
+        })
       },
     )
   }
