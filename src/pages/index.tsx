@@ -60,6 +60,17 @@ const DevPanel = (props) => {
     setGeoState(DEFAULT_COORDS.current)
   }
 
+  const copy = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      function () {
+        console.log('Async: Copying to clipboard was successful!')
+      },
+      function (err) {
+        console.error('Async: Could not copy text: ', err)
+      },
+    )
+  }
+
   const authHandle = () => {
     if (session) {
       signOut()
@@ -110,7 +121,15 @@ const DevPanel = (props) => {
 
         <section className='flex flex-col gap-2 justify-between'>
           <div className='flex justify-between'>
-            <label className='text-gh-gray'>Coords</label>
+            <div className='flex gap-2'>
+              <label className='text-gh-gray'>Coords</label>
+              <button
+                className='text-gray-400 active:text-gray-300'
+                onClick={() => copy(`${geoState.lat}, ${geoState.lng}`)}
+              >
+                <Copy />
+              </button>
+            </div>
             <button
               className={`text text-gh-gray  ${
                 isCoordsMoved && 'active:text-opacity-50 text-blue-500'
@@ -124,14 +143,20 @@ const DevPanel = (props) => {
 
           <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
             <p className=''>Latitude: {geoState.lat}</p>
-            <button className='text-gray-400 active:text-gray-300'>
+            <button
+              className='text-gray-400 active:text-gray-300'
+              onClick={() => copy(geoState.lat)}
+            >
               <Copy />
             </button>
           </div>
 
           <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
-            <p className=''>Latitude: {geoState.lat}</p>
-            <button className='text-gray-400 active:text-gray-300'>
+            <p className=''>Longitude: {geoState.lng}</p>
+            <button
+              className='text-gray-400 active:text-gray-300'
+              onClick={() => copy(geoState.lng)}
+            >
               <Copy />
             </button>
           </div>
