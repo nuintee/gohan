@@ -3,6 +3,7 @@ import { Copy } from '@/icons'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
+import { Regular as Button } from '@/components/Button'
 import { GetServerSideProps } from 'next'
 
 type IndicatorProps = {
@@ -188,29 +189,13 @@ const DevPanel = (props) => {
   return (
     <div className='z-[100] absolute left-0 top-0 bg-white h-screen min-w-[20rem]'>
       <header className='flex items-center justify-between gap-4 p-4'>
-        <p className='font-bold'>Dev Tools</p>
-        <button
-          onClick={() => setIsOpen(false)}
-          className='z-[100] bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-        >
-          CLOSE
-        </button>
+        <p className='font-bold whitespace-nowrap'>Dev Tools</p>
+        <Button text='Close' onClick={() => setIsOpen(false)} />
       </header>
       <hr></hr>
       <main className='flex flex-col gap-4 p-4'>
-        <button
-          className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-          onClick={flyTo}
-          disabled={!isLocationReady}
-        >
-          ✈️ FlyTo
-        </button>
-        <button
-          className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-          onClick={authHandle}
-        >
-          {session ? 'SIGNOUT' : 'SIGNIN'}
-        </button>
+        <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />
+        <Button text={session ? 'SIGNOUT' : 'SIGNIN'} onClick={authHandle} />
 
         <Section label='IPs'>
           <Indicator label='IP' value={useragent?.ip} allowCopy />
