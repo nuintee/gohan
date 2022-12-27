@@ -126,7 +126,10 @@ const DevPanel = (props) => {
           </div>
 
           <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
-            <p className=''>Latitude: {geoState.lat}</p>
+            <p className='flex items-center gap-1'>
+              Latitude: {geoState.lat}
+              <span className='text-xs text-gh-gray'>({DEFAULT_COORDS.current?.lat})</span>
+            </p>
             <button
               className='text-gray-400 active:text-gray-300'
               onClick={() => copy(geoState.lat)}
@@ -136,7 +139,10 @@ const DevPanel = (props) => {
           </div>
 
           <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
-            <p className=''>Longitude: {geoState.lng}</p>
+            <p className='flex items-center gap-1'>
+              Longitude: {geoState.lng}
+              <span className='text-xs text-gh-gray'>({DEFAULT_COORDS.current?.lng})</span>
+            </p>
             <button
               className='text-gray-400 active:text-gray-300'
               onClick={() => copy(geoState.lng)}
@@ -144,13 +150,6 @@ const DevPanel = (props) => {
               <Copy />
             </button>
           </div>
-
-          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-            Default Latitude: {DEFAULT_COORDS.current?.lat}
-          </p>
-          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-            Default Longitude: {DEFAULT_COORDS.current?.lng}
-          </p>
         </section>
 
         <fieldset className='flex gap-2 justify-between'>
