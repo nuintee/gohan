@@ -39,16 +39,19 @@ const DevPanel = (props) => {
   const { isLocationReady } = useDirections()
 
   const DEFAULT_COORDS = useRef(null as any)
+  const [isCoordsMoved, setIsCoordsMoved] = useState(false)
 
   useEffect(() => {
     if (!geoState.lat || !geoState.lng) return
 
-    const sameLat = geoState.lat && DEFAULT_COORDS.current?.lat
-    const sameLng = geoState.lng && DEFAULT_COORDS.current?.lng
-
-    if (sameLat && sameLng) return
-
-    DEFAULT_COORDS.current = geoState
+    if (!DEFAULT_COORDS.current?.IS_FIXED) {
+      DEFAULT_COORDS.current = { ...geoState, IS_FIXED: true }
+    } else {
+      const sameLat = DEFAULT_COORDS.current?.lat === geoState?.lat
+      const sameLng = DEFAULT_COORDS.current?.lng === geoState?.lng
+      const IS_MOVED = !sameLat || !sameLng
+      setIsCoordsMoved(IS_MOVED)
+    }
   }, [geoState])
 
   const setCoordsToDefault = () => {
@@ -111,7 +114,7 @@ const DevPanel = (props) => {
               className='text text-blue-300 active:text-opacity-50'
               onClick={setCoordsToDefault}
             >
-              reset
+              {isCoordsMoved ? 'moved' : 'nope'}
             </button>
           </div>
           <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
