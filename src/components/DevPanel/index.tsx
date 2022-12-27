@@ -35,7 +35,8 @@ const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
 }
 
 const Section = (props: SectionProps) => {
-  const { label, value, supportText, allowCopy, allowReset, disabledReset, children } = props
+  const { label, value, supportText, allowCopy, allowReset, disabledReset, onReset, children } =
+    props
   const { manageToast } = useToast()
 
   const copyHandle = (text: string) => {
@@ -82,7 +83,7 @@ const Section = (props: SectionProps) => {
             className={`text text-gh-gray  ${
               !disabledReset && 'active:text-opacity-50 text-blue-500'
             }`}
-            onClick={() => {}}
+            onClick={onReset}
             disabled={disabledReset}
           >
             reset
@@ -211,36 +212,18 @@ const DevPanel = (props) => {
           {session ? 'SIGNOUT' : 'SIGNIN'}
         </button>
 
-        <Indicator label='IP' value={useragent?.ip} allowCopy />
-
-        <Section label='IPs' value={10} allowReset disabledReset={true} allowCopy>
-          <Indicator label='IP' value={useragent?.ip} allowCopy />
-          <Indicator label='IP' value={useragent?.ip} allowCopy />
+        <Section label='IPs'>
           <Indicator label='IP' value={useragent?.ip} allowCopy />
         </Section>
 
-        <section className='flex flex-col gap-2 justify-between'>
-          <div className='flex justify-between'>
-            <div className='flex gap-2'>
-              <label className='text-gh-gray'>Coords</label>
-              <button
-                className='text-gray-400 active:text-gray-300'
-                onClick={() => copy(`${geoState.lat}, ${geoState.lng}`)}
-              >
-                <Copy />
-              </button>
-            </div>
-            <button
-              className={`text text-gh-gray  ${
-                isCoordsMoved && 'active:text-opacity-50 text-blue-500'
-              }`}
-              onClick={setCoordsToDefault}
-              disabled={!isCoordsMoved}
-            >
-              reset
-            </button>
-          </div>
-
+        <Section
+          label='Coords'
+          value={`${geoState.lat}, ${geoState.lng}`}
+          allowCopy
+          allowReset
+          disabledReset={!isCoordsMoved}
+          onReset={setCoordsToDefault}
+        >
           <Indicator
             label='Latitude'
             supportText={DEFAULT_COORDS.current?.lat}
@@ -254,7 +237,7 @@ const DevPanel = (props) => {
             value={geoState.lng}
             allowCopy
           />
-        </section>
+        </Section>
 
         <fieldset className='flex gap-2 justify-between'>
           <legend className='mb-2 text-gh-gray'>Move position on click</legend>
