@@ -21,6 +21,7 @@ import useDirections from '@/components/MapBox/hooks/Directions'
 
 // Icons
 import { IoMdLocate } from 'react-icons/io'
+import { Copy } from '@/icons'
 
 // Types
 type setModePayload = {
@@ -120,12 +121,21 @@ const DevPanel = (props) => {
               reset
             </button>
           </div>
-          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-            Latitude: {geoState.lat}
-          </p>
-          <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-            Longitude: {geoState.lng}
-          </p>
+
+          <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
+            <p className=''>Latitude: {geoState.lat}</p>
+            <button className='text-gray-400 active:text-gray-300'>
+              <Copy />
+            </button>
+          </div>
+
+          <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
+            <p className=''>Latitude: {geoState.lat}</p>
+            <button className='text-gray-400 active:text-gray-300'>
+              <Copy />
+            </button>
+          </div>
+
           <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
             Df-Latitude: {DEFAULT_COORDS.current?.lat}
           </p>

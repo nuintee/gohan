@@ -6,5 +6,6 @@ import User from './User'
 import Signout from './Signout'
 import CurrentPostion from './CurrentPostion'
 import Logo from './Logo'
+import Copy from './Copy'
 
-export { Check, Close, Search, Signout, Like, User, CurrentPostion, Logo }
+export { Check, Close, Search, Signout, Like, User, CurrentPostion, Logo, Copy }
