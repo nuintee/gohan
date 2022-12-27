@@ -10,7 +10,30 @@ type IndicatorProps = {
   value?: string | number | null
   supportText?: string
   allowCopy: boolean
-  callback: Function
+  onSuccessCopy: Function
+  onErrorCopy: Function
+  children: React.ReactChildren
+}
+
+const Section = (props: IndicatorProps) => {
+  const { label, value, supportText, allowCopy, children } = props
+
+  return (
+    <section className='flex flex-col gap-2 justify-between'>
+      <div className='flex gap-2'>
+        <p className='flex items-center gap-1 text-gh-gray'>
+          {label}
+          <span className='text-xs text-gh-gray'>{supportText && `(${supportText})`}</span>
+        </p>
+        {allowCopy && (
+          <button className='text-gray-400 active:text-gray-300' onClick={() => copy(value)}>
+            <Copy />
+          </button>
+        )}
+      </div>
+      <div className='flex flex-col gap-2 justify-between'>{children}</div>
+    </section>
+  )
 }
 
 const Indicator = (props: IndicatorProps) => {
@@ -130,6 +153,12 @@ const DevPanel = (props) => {
         </button>
 
         <Indicator label='IP' value={useragent?.ip} allowCopy />
+
+        <Section label='IPs'>
+          <Indicator label='IP' value={useragent?.ip} allowCopy />
+          <Indicator label='IP' value={useragent?.ip} allowCopy />
+          <Indicator label='IP' value={useragent?.ip} allowCopy />
+        </Section>
 
         <section className='flex flex-col gap-2 justify-between'>
           <div className='flex justify-between'>
