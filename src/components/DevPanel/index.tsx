@@ -25,21 +25,10 @@ const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
   navigator.clipboard.writeText(text).then(
     function () {
       console.log('Async: Copying to clipboard was successful!')
-      //   manageToast({
-      //     isOpen: true,
-      //     main: 'Copied!',
-      //     sub: text,
-      //     mode: 'success',
-      //   })
       onSuccessCopy(text)
     },
     function (err) {
-      //   manageToast({
-      //     isOpen: true,
-      //     main: 'Copy Failed',
-      //     sub: err.message,
-      //     mode: 'error',
-      //   })
+      console.log(err)
       onErrorCopy(err)
     },
   )
