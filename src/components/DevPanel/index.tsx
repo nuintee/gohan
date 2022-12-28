@@ -22,6 +22,11 @@ interface SectionProps extends IndicatorProps {
   onReset: Function
 }
 
+type SwitchButtonProps = {
+  onChange: Function
+  defaultValue: string
+}
+
 const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
   navigator.clipboard.writeText(text).then(
     function () {
@@ -35,9 +40,9 @@ const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
   )
 }
 
-const SwitchButton = (props) => {
-  const { onChange } = props
-  const [isOn, setIsOn] = useState(false)
+const SwitchButton = (props: SwitchButtonProps) => {
+  const { onChange, defaultValue } = props
+  const [isOn, setIsOn] = useState(defaultValue || false)
 
   const containerClassName = `flex h-10 bg-black w-16 rounded-full p-1 duration-200 ease-in-out ${
     isOn && 'justify-end bg-gh-green'
@@ -249,32 +254,11 @@ const DevPanel = (props) => {
           />
         </Section>
 
-        <Section label='Move position on click'>
-          <SwitchButton />
-          <div className='flex gap-2 justify-between'>
-            <div className='flex gap-2'>
-              <input
-                type='radio'
-                id='map_clickable'
-                name='map_click'
-                value='true'
-                defaultChecked={isMapClickable}
-                onInput={(e) => setIsMapClickable(true)}
-              />
-              <label htmlFor='map_clickable'>On</label>
-            </div>
-            <div className='flex gap-2'>
-              <input
-                type='radio'
-                id='map_unclickable'
-                name='map_click'
-                value='false'
-                defaultChecked={!isMapClickable}
-                onInput={(e) => setIsMapClickable(false)}
-              />
-              <label htmlFor='map_unclickable'>Off</label>
-            </div>
-          </div>
+        <Section label='Map Control'>
+          <SwitchButton
+            defaultValue={isMapClickable}
+            onChange={(bool) => setIsMapClickable(bool)}
+          />
         </Section>
       </main>
     </div>
