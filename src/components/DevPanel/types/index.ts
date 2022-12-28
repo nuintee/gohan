@@ -1,3 +1,4 @@
 import IndicatorProps from './Indicator'
+import SectionProps from './Section'
 
-export { IndicatorProps }
+export { IndicatorProps, SectionProps }

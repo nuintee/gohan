@@ -5,13 +5,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import copy from '@/utils/copy'
-import { IndicatorProps } from './types'
-
-interface SectionProps extends IndicatorProps {
-  allowReset: boolean
-  disabledReset: boolean
-  onReset: Function
-}
+import { IndicatorProps, SectionProps } from './types'
 
 type SwitchButtonProps = {
   onChange: Function
