@@ -49,7 +49,7 @@ const GeoLocationProvider = ({ children }) => {
         coords?.lng || (Math.random() - 0.5) * 90,
         coords?.lat || (Math.random() - 0.5) * 90,
       ],
-      zoom: 15,
+      zoom: geoState.zoom || 15,
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     })
   }

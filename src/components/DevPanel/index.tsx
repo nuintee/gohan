@@ -260,7 +260,7 @@ const DevPanel = (props) => {
             .map((v, index) => (
               <Indicator
                 label={v}
-                supportText={DEFAULT_COORDS.current[v]}
+                supportText={DEFAULT_COORDS.current && DEFAULT_COORDS.current[v]}
                 value={geoState[v]}
                 allowCopy
               />
@@ -272,6 +272,15 @@ const DevPanel = (props) => {
             <SwitchButton
               defaultValue={isMapClickable}
               onChange={(bool) => setIsMapClickable(bool)}
+            />
+          </Label>
+          <Label spacing='justify-between' text='Set Zoom'>
+            <input
+              type={'number'}
+              min={0}
+              max={100}
+              onChange={(e) => setGeoState((prev) => ({ ...prev, zoom: e.target.value }))}
+              defaultValue={geoState?.zoom}
             />
           </Label>
         </Section>
