@@ -5,49 +5,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import copy from '@/utils/copy'
-import { IndicatorProps, SectionProps } from './types'
-import { Label, SwitchButton, Section } from './components'
-
-const Indicator = (props: IndicatorProps) => {
-  const { label, value, supportText, allowCopy } = props
-  const { manageToast } = useToast()
-
-  const copyHandle = (text: string) => {
-    copy(
-      text,
-      (str) => {
-        manageToast({
-          isOpen: true,
-          main: 'Copied!',
-          sub: str,
-          mode: 'success',
-        })
-      },
-      (error) => {
-        manageToast({
-          isOpen: true,
-          main: 'Copy Failed',
-          sub: error.message,
-          mode: 'error',
-        })
-      },
-    )
-  }
-
-  return (
-    <div className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none flex justify-between gap-2'>
-      <p className='flex items-center gap-1'>
-        {label}: {value}
-        <span className='text-xs text-gh-gray'>{supportText && `(${supportText})`}</span>
-      </p>
-      {allowCopy && (
-        <button className='text-gray-400 active:text-gray-300' onClick={() => copyHandle(value)}>
-          <Copy />
-        </button>
-      )}
-    </div>
-  )
-}
+import { IndicatorProps } from './types'
+import { Label, SwitchButton, Section, Indicator } from './components'
 
 const DevPanel = (props) => {
   const { useragent } = props
