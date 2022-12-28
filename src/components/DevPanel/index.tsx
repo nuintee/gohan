@@ -5,32 +5,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import copy from '@/utils/copy'
-import { IndicatorProps, SectionProps, SwitchButtonProps, LabelProps } from './types'
-import { Label } from './components'
-
-const SwitchButton = (props: SwitchButtonProps) => {
-  const { onChange, defaultValue } = props
-  const [isOn, setIsOn] = useState(defaultValue || false)
-
-  const containerClassName = `flex h-10 bg-black w-16 rounded-full p-1 duration-200 ease-in-out ${
-    isOn && 'justify-end bg-gh-green'
-  }`
-  const knobClassName = `aspect-square h-full bg-white rounded-full`
-
-  const clickHandle = () => {
-    setIsOn((prev) => !prev)
-
-    if (!onChange) return
-
-    onChange(!isOn)
-  }
-
-  return (
-    <div className={containerClassName} onClick={clickHandle}>
-      <button className={knobClassName}></button>
-    </div>
-  )
-}
+import { IndicatorProps, SectionProps } from './types'
+import { Label, SwitchButton } from './components'
 
 const Section = (props: SectionProps) => {
   const { label, value, supportText, allowCopy, allowReset, disabledReset, onReset, children } =

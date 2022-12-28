@@ -1,3 +1,4 @@
 import Label from './Label'
+import SwitchButton from './SwitchButton'
 
-export { Label }
+export { Label, SwitchButton }
