@@ -160,15 +160,6 @@ const Home = (props: Props) => {
 }
 
 export const getServerSideProps = async (ctx: any) => {
-  // Parse token
-  // const token = ctx.req.headers['Authorization'].replace('Bearer ', '')
-
-  /**
-    Determine source IP address. Alternative methods to determine source IP address may be necessary
-    depending on the ho
-    sting infrastructure
-   **/
-
   let ip = 'IP_DEFAULT'
 
   if (ctx.req.headers['x-forwarded-for']) {

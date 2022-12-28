@@ -4,7 +4,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
-import { GetServerSideProps } from 'next'
+import copy from '@/utils/copy'
 
 type IndicatorProps = {
   label: string
@@ -31,19 +31,6 @@ type LabelProps = {
   text: string
   spacing: 'justify-between' | 'justify-round' | 'justify-evenly' | 'justify-start' | 'justify-end'
   children: React.ReactChildren
-}
-
-const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
-  navigator.clipboard.writeText(text).then(
-    function () {
-      console.log('Async: Copying to clipboard was successful!')
-      onSuccessCopy(text)
-    },
-    function (err) {
-      console.log(err)
-      onErrorCopy(err)
-    },
-  )
 }
 
 const SwitchButton = (props: SwitchButtonProps) => {
