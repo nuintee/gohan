@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { NextPage } from 'next'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 // Hooks
 import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
@@ -13,6 +14,7 @@ import User from '@/components/User'
 import Sidebar from '@/components/Sidebar'
 import Toast from '@/components/Toast'
 import { Restaurant } from '@/components/Restaurant'
+import DevPanel from '@/components/DevPanel'
 
 // InitialValues
 import { initialStates } from '@/components/Button/Action/constants'
@@ -20,6 +22,7 @@ import useDirections from '@/components/MapBox/hooks/Directions'
 
 // Icons
 import { IoMdLocate } from 'react-icons/io'
+import { Copy } from '@/icons'
 
 // Types
 type setModePayload = {
@@ -31,7 +34,6 @@ type Props = {
 }
 
 const Home = (props: Props) => {
-  const { ip } = props
   const [searchButton, setSearchButton] = useState(initialStates)
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
@@ -83,34 +85,11 @@ const Home = (props: Props) => {
                 })
               }
             />
-            {process.env.NODE_ENV === 'development' && (
-              <div className='flex gap-2 z-[1]'>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={flyTo}
-                  disabled={!isLocationReady}
-                >
-                  ✈️ FlyTo
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={() => onGetPlaces(() => usedSearch.setLoading(false))}
-                  disabled={!isLocationReady}
-                >
-                  getPlace
-                </button>
-                <button
-                  className='bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
-                  onClick={() => setIsFindingRouting((prev) => !prev)}
-                  disabled={!isLocationReady}
-                >
-                  Update Finding {isFindingRoute.toString()}
-                </button>
-                <p className='bg-gh-white py-2 px-4 rounded-md text-gh-black outline-none'>
-                  IP: {ip}
-                </p>
-              </div>
-            )}
+            <DevPanel
+              useragent={{
+                ip: props.ip,
+              }}
+            />
           </div>
           <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
         </header>
@@ -181,21 +160,12 @@ const Home = (props: Props) => {
 }
 
 export const getServerSideProps = async (ctx: any) => {
-  // Parse token
-  // const token = ctx.req.headers['Authorization'].replace('Bearer ', '')
-
-  /**
-    Determine source IP address. Alternative methods to determine source IP address may be necessary
-    depending on the ho
-    sting infrastructure
-   **/
-
   let ip = 'IP_DEFAULT'
 
   if (ctx.req.headers['x-forwarded-for']) {
     ip = ctx.req.headers['x-forwarded-for']
   } else if (ctx.req.headers['x-real-ip']) {
-    ip = ctx.req.connection.remoteAddress
+    ip = ctx.req.headers['x-real-ip']
   } else {
     ip = ctx.req.connection.remoteAddress
   }

@@ -12,7 +12,8 @@ import useDirections from './hooks/Directions'
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 const MapBox = (props) => {
-  const { mapRef, sources, geoState, destination, setDestination } = useGeoLocation()
+  const { mapRef, sources, geoState, destination, setDestination, setGeoState, isMapClickable } =
+    useGeoLocation()
   const { getRoute, isFindingRoute, setIsFindingRouting } = useDirections()
 
   const isLocationReady = geoState.lat && geoState.lng
@@ -20,16 +21,13 @@ const MapBox = (props) => {
   const onLoad = (e) => {}
 
   const onClick = async (e) => {
-    if (process.env.NODE_ENV !== 'development') return
+    if (process.env.NODE_ENV !== 'development' || !isMapClickable) return
     const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
-    setDestination(coords)
-    console.dir(coords)
-    setIsFindingRouting(true)
-    await getRoute({
-      start: [geoState.lng, geoState.lat],
-      end: coords,
-    })
-    setIsFindingRouting(false)
+    setGeoState((prev) => ({
+      ...prev,
+      lat: coords[1],
+      lng: coords[0],
+    }))
   }
 
   return (
@@ -38,13 +36,14 @@ const MapBox = (props) => {
         initialViewState={{
           longitude: geoState.lng || -100,
           latitude: geoState.lat || 40,
-          zoom: 17,
+          zoom: geoState.zoom || 17,
         }}
         style={{ width: '100vw', height: '100vh' }}
         mapStyle='mapbox://styles/mapbox/streets-v11'
         mapboxAccessToken={mapboxAccessToken}
         ref={mapRef}
         onLoad={onLoad}
+        onClick={onClick}
         renderWorldCopies={false}
       >
         {isLocationReady && (

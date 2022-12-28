@@ -16,6 +16,9 @@ import GEOLOCATION from '@/constants/GeoLocation'
 
 const GeoLocationContext = createContext({
   geoState: initialValues.mapbox,
+  setGeoState: () => {},
+  isMapClickable: false,
+  setIsMapClickable: () => {},
   mapboxAccessToken,
   destination: [],
   isFindingRoute: false,
@@ -35,6 +38,7 @@ const GeoLocationProvider = ({ children }) => {
   const [sources, setSources] = useState([])
   const [destination, setDestination] = useState([])
   const [shopDetail, setShopDetail] = useState({})
+  const [isMapClickable, setIsMapClickable] = useState(false)
   const { manageToast } = useToast()
   const mapRef = useRef(null)
 
@@ -45,7 +49,7 @@ const GeoLocationProvider = ({ children }) => {
         coords?.lng || (Math.random() - 0.5) * 90,
         coords?.lat || (Math.random() - 0.5) * 90,
       ],
-      zoom: 15,
+      zoom: geoState.zoom || 15,
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     })
   }
@@ -67,6 +71,9 @@ const GeoLocationProvider = ({ children }) => {
     destination,
     isFindingRoute,
     shopDetail,
+    isMapClickable,
+    setIsMapClickable,
+    setGeoState,
     setShopDetail,
     setIsFindingRouting,
     setDestination,
