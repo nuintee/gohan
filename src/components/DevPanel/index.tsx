@@ -27,6 +27,12 @@ type SwitchButtonProps = {
   defaultValue: string
 }
 
+type LabelProps = {
+  text: string
+  spacing: 'justify-between' | 'justify-round' | 'justify-evenly' | 'justify-start' | 'justify-end'
+  children: React.ReactChildren
+}
+
 const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
   navigator.clipboard.writeText(text).then(
     function () {
@@ -60,6 +66,16 @@ const SwitchButton = (props: SwitchButtonProps) => {
   return (
     <div className={containerClassName} onClick={clickHandle}>
       <button className={knobClassName}></button>
+    </div>
+  )
+}
+
+const Label = (props: LabelProps) => {
+  const { text, spacing, children } = props
+  return (
+    <div className={`flex gap-2 items-center ${spacing}`}>
+      <p>{text}</p>
+      {children}
     </div>
   )
 }
@@ -255,10 +271,12 @@ const DevPanel = (props) => {
         </Section>
 
         <Section label='Map Control'>
-          <SwitchButton
-            defaultValue={isMapClickable}
-            onChange={(bool) => setIsMapClickable(bool)}
-          />
+          <Label spacing='justify-between' text='Move on click'>
+            <SwitchButton
+              defaultValue={isMapClickable}
+              onChange={(bool) => setIsMapClickable(bool)}
+            />
+          </Label>
         </Section>
       </main>
     </div>
