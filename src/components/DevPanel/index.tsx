@@ -5,18 +5,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import copy from '@/utils/copy'
-import { IndicatorProps, SectionProps, SwitchButtonProps } from './types'
-
-type SwitchButtonProps = {
-  onChange: Function
-  defaultValue: string
-}
-
-type LabelProps = {
-  text: string
-  spacing: 'justify-between' | 'justify-round' | 'justify-evenly' | 'justify-start' | 'justify-end'
-  children: React.ReactChildren
-}
+import { IndicatorProps, SectionProps, SwitchButtonProps, LabelProps } from './types'
 
 const SwitchButton = (props: SwitchButtonProps) => {
   const { onChange, defaultValue } = props
