@@ -255,19 +255,16 @@ const DevPanel = (props) => {
           disabledReset={!isCoordsMoved}
           onReset={setCoordsToDefault}
         >
-          <Indicator
-            label='Latitude'
-            supportText={DEFAULT_COORDS.current?.lat}
-            value={geoState.lat}
-            allowCopy
-          />
-
-          <Indicator
-            label='Longitude'
-            supportText={DEFAULT_COORDS.current?.lng}
-            value={geoState.lng}
-            allowCopy
-          />
+          {Object.keys(geoState)
+            .filter((v) => !['error', 'IS_FIXED'].includes(v))
+            .map((v, index) => (
+              <Indicator
+                label={v}
+                supportText={DEFAULT_COORDS.current[v]}
+                value={geoState[v]}
+                allowCopy
+              />
+            ))}
         </Section>
 
         <Section label='Map Control'>
