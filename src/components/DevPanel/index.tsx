@@ -6,6 +6,7 @@ import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import copy from '@/utils/copy'
 import { IndicatorProps, SectionProps, SwitchButtonProps, LabelProps } from './types'
+import { Label } from './components'
 
 const SwitchButton = (props: SwitchButtonProps) => {
   const { onChange, defaultValue } = props
@@ -27,16 +28,6 @@ const SwitchButton = (props: SwitchButtonProps) => {
   return (
     <div className={containerClassName} onClick={clickHandle}>
       <button className={knobClassName}></button>
-    </div>
-  )
-}
-
-const Label = (props: LabelProps) => {
-  const { text, spacing, children } = props
-  return (
-    <div className={`flex gap-2 items-center ${spacing}`}>
-      <p>{text}</p>
-      {children}
     </div>
   )
 }
