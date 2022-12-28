@@ -35,6 +35,30 @@ const copy = (text: string, onSuccessCopy: Function, onErrorCopy: Function) => {
   )
 }
 
+const SwitchButton = (props) => {
+  const { onChange } = props
+  const [isOn, setIsOn] = useState(false)
+
+  const containerClassName = `flex h-10 bg-black w-16 rounded-full p-1 duration-200 ease-in-out ${
+    isOn && 'justify-end bg-gh-green'
+  }`
+  const knobClassName = `aspect-square h-full bg-white rounded-full`
+
+  const clickHandle = () => {
+    setIsOn((prev) => !prev)
+
+    if (!onChange) return
+
+    onChange(!isOn)
+  }
+
+  return (
+    <div className={containerClassName} onClick={clickHandle}>
+      <button className={knobClassName}></button>
+    </div>
+  )
+}
+
 const Section = (props: SectionProps) => {
   const { label, value, supportText, allowCopy, allowReset, disabledReset, onReset, children } =
     props
@@ -194,8 +218,9 @@ const DevPanel = (props) => {
       </header>
       <hr></hr>
       <main className='flex flex-col gap-4 p-4'>
-        <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />
-        <Button text={session ? 'SIGNOUT' : 'SIGNIN'} onClick={authHandle} />
+        <Section label='Actions'>
+          <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />
+        </Section>
 
         <Section label='IPs'>
           <Indicator label='IP' value={useragent?.ip} allowCopy />
@@ -225,6 +250,7 @@ const DevPanel = (props) => {
         </Section>
 
         <Section label='Move position on click'>
+          <SwitchButton />
           <div className='flex gap-2 justify-between'>
             <div className='flex gap-2'>
               <input
