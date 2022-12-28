@@ -3,9 +3,9 @@ type IndicatorProps = {
   value?: string | number | null
   supportText?: string
   allowCopy: boolean
-  onSuccessCopy: Function
-  onErrorCopy: Function
-  children: React.ReactChildren
+  onSuccessCopy?: Function
+  onErrorCopy?: Function
+  children?: React.ReactChildren
 }
 
 export default IndicatorProps
