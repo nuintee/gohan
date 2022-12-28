@@ -1,22 +1,78 @@
 import { useGeoLocation, useToast } from '@/hooks/context'
-import { Copy } from '@/icons'
-import { signIn, signOut, useSession } from 'next-auth/react'
 import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
-import copy from '@/utils/copy'
-import { IndicatorProps } from './types'
 import { Label, SwitchButton, Section, Indicator } from './components'
 
 const DevPanel = (props) => {
   const { useragent } = props
   const [isOpen, setIsOpen] = useState(false)
-  const { data: session } = useSession()
   const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
   const { isLocationReady } = useDirections()
 
-  const DEFAULT_COORDS = useRef(null as any)
+  const DEFAULT_COORDS = useRef(null as any) // Must be global
   const [isCoordsMoved, setIsCoordsMoved] = useState(false)
+
+  const setCoordsToDefault = () => {
+    console.dir(DEFAULT_COORDS.current)
+    setGeoState(DEFAULT_COORDS.current)
+  }
+
+  const labels = [
+    {
+      text: 'Move on click',
+      spacing: 'justify-between',
+      children: (
+        <SwitchButton defaultValue={isMapClickable} onChange={(bool) => setIsMapClickable(bool)} />
+      ),
+    },
+    {
+      text: 'Set Zoom',
+      spacing: 'justify-between',
+      children: (
+        <input
+          type={'number'}
+          min={0}
+          max={100}
+          onChange={(e) => setGeoState((prev) => ({ ...prev, zoom: e.target.value }))}
+          defaultValue={geoState?.zoom}
+        />
+      ),
+    },
+  ]
+
+  const sections = [
+    {
+      label: 'Actions',
+      children: <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />,
+    },
+    {
+      label: 'IPs',
+      children: <Indicator label='IP' value={useragent?.ip} allowCopy />,
+    },
+    {
+      label: 'Coords',
+      value: `${geoState.lat}, ${geoState.lng}`,
+      allowCopy: true,
+      allowReset: true,
+      disabledReset: !isCoordsMoved,
+      onReset: setCoordsToDefault,
+      children: Object.keys(geoState)
+        .filter((v) => !['error', 'IS_FIXED'].includes(v))
+        .map((v, index) => (
+          <Indicator
+            label={v}
+            supportText={DEFAULT_COORDS.current && DEFAULT_COORDS.current[v]}
+            value={geoState[v]}
+            allowCopy
+          />
+        )),
+    },
+    {
+      label: 'Map Control',
+      children: labels.map((label) => <Label {...label}>{label.children}</Label>),
+    },
+  ]
 
   useEffect(() => {
     if (!geoState.lat || !geoState.lng) return
@@ -30,19 +86,6 @@ const DevPanel = (props) => {
       setIsCoordsMoved(IS_MOVED)
     }
   }, [geoState])
-
-  const setCoordsToDefault = () => {
-    console.dir(DEFAULT_COORDS.current)
-    setGeoState(DEFAULT_COORDS.current)
-  }
-
-  const authHandle = () => {
-    if (session) {
-      signOut()
-    } else {
-      signIn()
-    }
-  }
 
   if (process.env.NODE_ENV !== 'development') return <></>
 
@@ -64,51 +107,11 @@ const DevPanel = (props) => {
       </header>
       <hr></hr>
       <main className='flex flex-col gap-4 p-4'>
-        <Section label='Actions'>
-          <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />
-        </Section>
-
-        <Section label='IPs'>
-          <Indicator label='IP' value={useragent?.ip} allowCopy />
-        </Section>
-
-        <Section
-          label='Coords'
-          value={`${geoState.lat}, ${geoState.lng}`}
-          allowCopy
-          allowReset
-          disabledReset={!isCoordsMoved}
-          onReset={setCoordsToDefault}
-        >
-          {Object.keys(geoState)
-            .filter((v) => !['error', 'IS_FIXED'].includes(v))
-            .map((v, index) => (
-              <Indicator
-                label={v}
-                supportText={DEFAULT_COORDS.current && DEFAULT_COORDS.current[v]}
-                value={geoState[v]}
-                allowCopy
-              />
-            ))}
-        </Section>
-
-        <Section label='Map Control'>
-          <Label spacing='justify-between' text='Move on click'>
-            <SwitchButton
-              defaultValue={isMapClickable}
-              onChange={(bool) => setIsMapClickable(bool)}
-            />
-          </Label>
-          <Label spacing='justify-between' text='Set Zoom'>
-            <input
-              type={'number'}
-              min={0}
-              max={100}
-              onChange={(e) => setGeoState((prev) => ({ ...prev, zoom: e.target.value }))}
-              defaultValue={geoState?.zoom}
-            />
-          </Label>
-        </Section>
+        {sections.map((section) => (
+          <Section label={section.label} {...section}>
+            {section.children}
+          </Section>
+        ))}
       </main>
     </div>
   )
