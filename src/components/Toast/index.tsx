@@ -10,7 +10,7 @@ import { colors } from '@/../config/tailwind/index'
 import { useEffect } from 'react'
 
 // Types
-import { Props } from './index.types'
+import Props from './types'
 
 const themes = {
   error: {

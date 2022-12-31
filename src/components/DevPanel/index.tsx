@@ -7,6 +7,7 @@ import { Label, SwitchButton, Section, Indicator } from './components'
 const DevPanel = (props) => {
   const { useragent } = props
   const [isOpen, setIsOpen] = useState(false)
+  const { manageToast } = useToast()
   const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
   const { isLocationReady } = useDirections()
 
@@ -45,6 +46,10 @@ const DevPanel = (props) => {
     {
       label: 'Actions',
       children: <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />,
+    },
+    {
+      label: 'Toast',
+      children: '',
     },
     {
       label: 'IPs',
@@ -100,13 +105,32 @@ const DevPanel = (props) => {
     )
 
   return (
-    <div className='z-[100] absolute left-0 top-0 bg-white h-screen min-w-[20rem]'>
+    <div className='z-[100] absolute left-0 top-0 bg-white h-screen min-w-[20rem] overflow-auto'>
       <header className='flex items-center justify-between gap-4 p-4'>
         <p className='font-bold whitespace-nowrap'>Dev Tools</p>
         <Button text='Close' onClick={() => setIsOpen(false)} />
       </header>
       <hr></hr>
       <main className='flex flex-col gap-4 p-4'>
+        <Section label='Toast'>
+          <Label text='isOpen' spacing='justify-between'>
+            <SwitchButton onChange={() => {}} />
+          </Label>
+          <Label text='infinite' spacing='justify-between'>
+            <SwitchButton onChange={() => {}} />
+          </Label>
+          <Label text='mode' spacing='justify-between'>
+            <select>
+              <option>success</option>
+              <option>error</option>
+            </select>
+          </Label>
+          <Label text='main' spacing='justify-between'>
+            <input type='text' defaultValue={'MODAL'} />
+          </Label>
+          <Button text='Open' />
+        </Section>
+
         {sections.map((section) => (
           <Section label={section.label} {...section}>
             {section.children}

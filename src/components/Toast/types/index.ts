@@ -1,6 +1,6 @@
-import modes from './constants'
+import modes from '../constants'
 
-export type Props = {
+type Props = {
   isOpen: boolean
   mode: typeof modes[number]
   main: string
@@ -9,3 +9,5 @@ export type Props = {
   infinite?: boolean
   timeout?: number // Millisecond
 }
+
+export default Props
