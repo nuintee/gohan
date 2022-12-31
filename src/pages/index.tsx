@@ -85,7 +85,10 @@ const Home = (props: Props) => {
               }}
             />
           </div>
-          <Acitvity locked={false} onClick={() => manageSidebar('activity', true)} />
+          <Acitvity
+            locked={status !== 'authenticated'}
+            onClick={() => manageSidebar('activity', true)}
+          />
         </header>
         <main>
           {isLocationReady && <MapBox />}
@@ -113,7 +116,7 @@ const Home = (props: Props) => {
             <Restaurant.Small
               info={shopDetail}
               onClick={() => showDetails(shopDetail)}
-              state='LIKED'
+              state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
             />
           ) : null}
           <Action
@@ -134,7 +137,7 @@ const Home = (props: Props) => {
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
       <Modal.Details
-        state='LIKED'
+        state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
         isOpen={modalsState.details.isOpen}
         onClose={() => manageModal('details', false)}
         onNavigate={() =>
