@@ -1,4 +1,4 @@
-import modes from '../constants'
+import { modes } from '../constants'
 
 type Props = {
   isOpen: boolean

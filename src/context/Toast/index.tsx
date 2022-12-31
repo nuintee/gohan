@@ -1,14 +1,10 @@
 import React, { useState, createContext, ReactNode } from 'react'
 
 // Types
-import { Props as InitialValues } from '@/components/Toast/index.types'
+import InitialValues from '@/components/Toast/types'
 
-const initialValues: InitialValues = {
-  isOpen: false,
-  mode: 'success',
-  main: 'MODAL',
-  onClose: () => {},
-}
+// Consts
+import { initialValues } from '@/components/Toast/constants'
 
 type Props = {
   children: React.ReactNode
