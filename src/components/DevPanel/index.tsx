@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import { Label, SwitchButton, Section, Indicator } from './components'
-import { useSession, signIn } from 'next-auth/react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 import { version } from '@/../package.json'
 
@@ -24,8 +24,15 @@ const DevPanel = (props) => {
   }
 
   const setFakeAuth = (bool) => {
-    if (!bool) return
-    signIn('credentials', { username: 'jsmith', password: '1234' })
+    if (!bool) {
+      signOut()
+    } else {
+      signIn('credentials')
+    }
+  }
+
+  const showSession = () => {
+    console.log(session)
   }
 
   const labels = [
@@ -59,9 +66,12 @@ const DevPanel = (props) => {
     {
       label: 'Auth',
       children: (
-        <Label text='Fake auth' spacing='justify-between'>
-          <SwitchButton onChange={(bool) => setFakeAuth(bool)} defaultValue={session} />
-        </Label>
+        <>
+          <Label text='Fake auth' spacing='justify-between'>
+            <SwitchButton onChange={(bool) => setFakeAuth(bool)} defaultValue={session} />
+          </Label>
+          <Button onClick={showSession}>Info</Button>
+        </>
       ),
     },
     {
