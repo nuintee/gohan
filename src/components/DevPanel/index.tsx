@@ -4,6 +4,8 @@ import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import { Label, SwitchButton, Section, Indicator } from './components'
 
+import { version } from '@/../package.json'
+
 const DevPanel = (props) => {
   const { useragent } = props
   const [isOpen, setIsOpen] = useState(false)
@@ -72,6 +74,14 @@ const DevPanel = (props) => {
     {
       label: 'Map Control',
       children: labels.map((label) => <Label {...label}>{label.children}</Label>),
+    },
+    {
+      label: 'App Info',
+      children: (
+        <>
+          <Indicator label='Version' value={version} allowCopy />
+        </>
+      ),
     },
   ]
 
