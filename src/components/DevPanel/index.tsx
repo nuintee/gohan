@@ -70,7 +70,7 @@ const DevPanel = (props) => {
           <Label text='Fake auth' spacing='justify-between'>
             <SwitchButton onChange={(bool) => setFakeAuth(bool)} defaultValue={session} />
           </Label>
-          <Button onClick={showSession}>Info</Button>
+          <Button onClick={showSession} text='Session Info' />
         </>
       ),
     },
