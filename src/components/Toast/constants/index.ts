@@ -6,6 +6,9 @@ const initialValues: InitialValues = {
   mode: 'success',
   main: 'MODAL',
   onClose: () => {},
+  sub: '',
+  infinite: false,
+  timeout: 1000, // Millisecond
 }
 
 export { modes, initialValues }

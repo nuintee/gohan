@@ -13,6 +13,7 @@ type Props = {
 const ToastContext = createContext({
   toastState: initialValues,
   manageToast: (payload: InitialValues | undefined) => {},
+  setToastState: () => {},
 })
 
 const ToastProvider = (props: Props) => {
@@ -29,6 +30,7 @@ const ToastProvider = (props: Props) => {
   const value = {
     toastState,
     manageToast,
+    setToastState,
   }
 
   return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>

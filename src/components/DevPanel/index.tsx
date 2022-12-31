@@ -4,10 +4,13 @@ import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import { Label, SwitchButton, Section, Indicator } from './components'
 
+// Consts
+import { initialValues } from '../Toast/constants'
+
 const DevPanel = (props) => {
   const { useragent } = props
   const [isOpen, setIsOpen] = useState(false)
-  const { manageToast } = useToast()
+  const { toastState, setToastState } = useToast()
   const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
   const { isLocationReady } = useDirections()
 
@@ -92,6 +95,30 @@ const DevPanel = (props) => {
     }
   }, [geoState])
 
+  const labelChildren = (object, key) => {
+    if (typeof object[key] === 'boolean') {
+      return (
+        <SwitchButton
+          onChange={(bool) =>
+            setToastState((prev) => ({
+              ...prev,
+              [key]: bool,
+            }))
+          }
+        />
+      )
+    } else if (key == 'mode') {
+      return (
+        <select>
+          <option>success</option>
+          <option>error</option>
+        </select>
+      )
+    } else {
+      return <input type='text' defaultValue={object[key]} />
+    }
+  }
+
   if (process.env.NODE_ENV !== 'development') return <></>
 
   if (!isOpen)
@@ -113,21 +140,13 @@ const DevPanel = (props) => {
       <hr></hr>
       <main className='flex flex-col gap-4 p-4'>
         <Section label='Toast'>
-          <Label text='isOpen' spacing='justify-between'>
-            <SwitchButton onChange={() => {}} />
-          </Label>
-          <Label text='infinite' spacing='justify-between'>
-            <SwitchButton onChange={() => {}} />
-          </Label>
-          <Label text='mode' spacing='justify-between'>
-            <select>
-              <option>success</option>
-              <option>error</option>
-            </select>
-          </Label>
-          <Label text='main' spacing='justify-between'>
-            <input type='text' defaultValue={'MODAL'} />
-          </Label>
+          {Object.keys(initialValues)
+            .filter((filterKey) => !['isOpen', 'onClose'].includes(filterKey))
+            .map((stateKey) => (
+              <Label text={stateKey} spacing='justify-between'>
+                {labelChildren(toastState, stateKey)}
+              </Label>
+            ))}
           <Button text='Open' />
         </Section>
 
