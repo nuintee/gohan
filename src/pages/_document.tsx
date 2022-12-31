@@ -10,7 +10,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Gohan</title>
+          <title>Gohan {process.env.NODE_ENV != 'production' && `| ${process.env.NODE_ENV}`}</title>
+          <link rel='icon' href='prod_favicon.svg' />
         </Head>
         <body>
           <Main />
