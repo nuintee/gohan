@@ -6,28 +6,30 @@ import PulseLoader from 'react-spinners/PulseLoader'
 
 // Icons
 import UserIcon from '@/icons/User'
+import { useSession } from 'next-auth/react'
 
 // Types
 type Props = {
   loading: boolean
   user?: {
     id: string
-    email: string
-    username: string
-    createdAt: string // Time string
+    email?: string
+    name?: string
+    // createdAt: string // Time string
   }
   onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const User = (props: Props) => {
   // Authed => User Sidebar state, Unauthed => Signin modal state
-  const { loading, user, onClick } = props
+  const { loading, onClick } = props
+  const { data: session } = useSession()
 
-  const isAuthed = user && Object.keys(user).length
+  const isAuthed = session
   const icon = isAuthed ? (
     <img
       className='h-10 w-10 rounded-full bg-gh-l-gray'
-      src={`https://ui-avatars.com/api/?name=${user.username}`}
+      src={`https://ui-avatars.com/api/?name=${session?.user?.name}`}
     />
   ) : (
     <UserIcon.Guest />
@@ -57,7 +59,7 @@ const User = (props: Props) => {
           className='mr-4'
         />
       ) : (
-        <p className='select-none font-medium mr-4'>{isAuthed ? user.username : 'Guest'}</p>
+        <p className='select-none font-medium mr-4'>{isAuthed ? session?.user?.name : 'Guest'}</p>
       )}
     </button>
   )

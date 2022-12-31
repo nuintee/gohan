@@ -39,6 +39,7 @@ const Home = (props: Props) => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { toastState, manageToast } = useToast()
   const { geoState, flyTo, isFindingRoute, shopDetail, setIsFindingRouting } = useGeoLocation()
+  const { data: session, status } = useSession()
   const {
     isLocationReady,
     isAnyNavigation,
@@ -77,14 +78,7 @@ const Home = (props: Props) => {
       <div className='relative h-screen w-screen overflow-hidden'>
         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
           <div className='flex gap-2 items-center flex-1 flex-wrap'>
-            <User
-              loading={false}
-              onClick={() =>
-                manageToast({
-                  isOpen: true,
-                })
-              }
-            />
+            <User loading={status === 'loading'} onClick={() => {}} />
             <DevPanel
               useragent={{
                 ip: props.ip,
