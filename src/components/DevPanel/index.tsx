@@ -10,7 +10,7 @@ import { initialValues } from '../Toast/constants'
 const DevPanel = (props) => {
   const { useragent } = props
   const [isOpen, setIsOpen] = useState(false)
-  const { toastState, setToastState } = useToast()
+  const { toastState, setToastState, manageToast } = useToast()
   const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
   const { isLocationReady } = useDirections()
 
@@ -49,10 +49,6 @@ const DevPanel = (props) => {
     {
       label: 'Actions',
       children: <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />,
-    },
-    {
-      label: 'Toast',
-      children: '',
     },
     {
       label: 'IPs',
@@ -95,30 +91,6 @@ const DevPanel = (props) => {
     }
   }, [geoState])
 
-  const labelChildren = (object, key) => {
-    if (typeof object[key] === 'boolean') {
-      return (
-        <SwitchButton
-          onChange={(bool) =>
-            setToastState((prev) => ({
-              ...prev,
-              [key]: bool,
-            }))
-          }
-        />
-      )
-    } else if (key == 'mode') {
-      return (
-        <select>
-          <option>success</option>
-          <option>error</option>
-        </select>
-      )
-    } else {
-      return <input type='text' defaultValue={object[key]} />
-    }
-  }
-
   if (process.env.NODE_ENV !== 'development') return <></>
 
   if (!isOpen)
@@ -139,17 +111,6 @@ const DevPanel = (props) => {
       </header>
       <hr></hr>
       <main className='flex flex-col gap-4 p-4'>
-        <Section label='Toast'>
-          {Object.keys(initialValues)
-            .filter((filterKey) => !['isOpen', 'onClose'].includes(filterKey))
-            .map((stateKey) => (
-              <Label text={stateKey} spacing='justify-between'>
-                {labelChildren(toastState, stateKey)}
-              </Label>
-            ))}
-          <Button text='Open' />
-        </Section>
-
         {sections.map((section) => (
           <Section label={section.label} {...section}>
             {section.children}
