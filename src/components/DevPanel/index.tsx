@@ -4,9 +4,6 @@ import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import { Label, SwitchButton, Section, Indicator } from './components'
 
-// Consts
-import { initialValues } from '../Toast/constants'
-
 const DevPanel = (props) => {
   const { useragent } = props
   const [isOpen, setIsOpen] = useState(false)
