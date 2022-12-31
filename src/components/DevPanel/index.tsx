@@ -99,7 +99,7 @@ const DevPanel = (props) => {
         onClick={() => setIsOpen(true)}
         className='z-[100] bg-gh-dark py-2 px-4 rounded-md text-white outline-none active:scale-90'
       >
-        DevTools
+        👨‍💻 DevTools
       </button>
     )
 
