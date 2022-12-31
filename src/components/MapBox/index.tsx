@@ -30,6 +30,17 @@ const MapBox = (props) => {
     }))
   }
 
+  useEffect(() => {
+    if (!destination.length) return
+
+    // update route on change
+    getRoute({
+      profileType: 'walking',
+      start: [geoState.lng, geoState.lat],
+      end: destination,
+    })
+  }, [geoState])
+
   return (
     <div className='w-screen h-screen'>
       <Map
