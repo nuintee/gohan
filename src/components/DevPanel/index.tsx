@@ -3,11 +3,13 @@ import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
 import { Label, SwitchButton, Section, Indicator } from './components'
+import { useSession, signIn } from 'next-auth/react'
 
 import { version } from '@/../package.json'
 
 const DevPanel = (props) => {
   const { useragent } = props
+  const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const { toastState, setToastState, manageToast } = useToast()
   const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
@@ -19,6 +21,11 @@ const DevPanel = (props) => {
   const setCoordsToDefault = () => {
     console.dir(DEFAULT_COORDS.current)
     setGeoState(DEFAULT_COORDS.current)
+  }
+
+  const setFakeAuth = (bool) => {
+    if (!bool) return
+    signIn('credentials', { username: 'jsmith', password: '1234' })
   }
 
   const labels = [
@@ -48,6 +55,14 @@ const DevPanel = (props) => {
     {
       label: 'Actions',
       children: <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />,
+    },
+    {
+      label: 'Auth',
+      children: (
+        <Label text='Fake auth' spacing='justify-between'>
+          <SwitchButton onChange={(bool) => setFakeAuth(bool)} defaultValue={session} />
+        </Label>
+      ),
     },
     {
       label: 'IPs',
