@@ -6,6 +6,7 @@ import { Label, SwitchButton, Section, Indicator } from './components'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
 import { version } from '@/../package.json'
+import Input from '../Input'
 
 const DevPanel = (props) => {
   const { useragent } = props
@@ -47,12 +48,10 @@ const DevPanel = (props) => {
       text: 'Set Zoom',
       spacing: 'justify-between',
       children: (
-        <input
+        <Input
           type={'number'}
-          min={0}
-          max={100}
+          value={geoState?.zoom}
           onChange={(e) => setGeoState((prev) => ({ ...prev, zoom: e.target.value }))}
-          defaultValue={geoState?.zoom}
         />
       ),
     },
