@@ -11,8 +11,8 @@ type Data = {
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   switch (req.method) {
     case 'POST':
-      create({
-        hi: 2,
+      create(3, {
+        address: 'ee',
       })
       res.status(200).json({})
       break
@@ -21,7 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
       res.status(200).json(all)
       break
     case 'DELETE':
-      _deleteActivity('4', 4)
+      _deleteActivity(3, '50fe57a4-c366-4ee2-bfc0-c7e75e21a2e3')
       res.status(200).json({})
       break
     default:

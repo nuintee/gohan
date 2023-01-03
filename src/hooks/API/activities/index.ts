@@ -5,34 +5,34 @@ import activities from '@/data/activities/index.json'
 
 // Type
 import { Activity, Activities } from '@/data/activities/types'
+import { randomUUID } from 'crypto'
 
 export const activitiesTable = {
   getAll: () => activities,
-  getByUserId: (userId: string) => activities[userId],
+  getByUserId: (userId: string) => activities.find((x) => x.user_id.toString() === userId),
   getById: (userId: string, activityId: string) =>
     activitiesTable.getByUserId(userId).find((x) => x.id === activityId),
 }
 
-export const create = (acitivity: Activity) => {
-  // generate new user id
-  acitivity.id = Object.keys(activities).length + 1
+export const create = (user_id: string, acitivity: Activity) => {
+  const newData = {
+    user_id,
+    activities: [acitivity],
+  }
+  const id = randomUUID()
+  acitivity.id = id
 
-  // set date created and updated
-  acitivity.discovered_time = new Date().toISOString()
-
-  // add and save user
-  activities[acitivity.id] = [acitivity]
+  activities.push(newData)
   saveData()
 }
 
-export const _deleteActivity = (userId: string, id: string) => {
-  // filter out deleted user and save
-  activities[userId] = activities[userId].filter((v) => v.id !== id)
-
+export const _deleteActivity = (user_id: string, id: string) => {
+  const index = activities.findIndex((v) => v.user_id === user_id)
+  activities[index].activities = activities[index].activities.filter((v) => v.id !== id)
   saveData()
 }
 
-function saveData() {
+function saveData(data: any) {
   fs.writeFileSync(
     path.resolve('src/data/activities/index.json'),
     JSON.stringify(activities, null, 4),
