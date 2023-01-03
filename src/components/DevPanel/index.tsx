@@ -101,11 +101,7 @@ const DevPanel = (props) => {
     },
     {
       label: 'App Info',
-      children: (
-        <>
-          <Indicator label='Version' value={version} allowCopy />
-        </>
-      ),
+      children: <Indicator label='Version' value={version} allowCopy />,
     },
   ]
 
