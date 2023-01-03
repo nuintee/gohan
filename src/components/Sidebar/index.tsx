@@ -5,6 +5,7 @@ import Header from '../Modal/Header'
 import Modal from '@/components/Modal/index'
 import { Restaurant } from '@/components/Restaurant'
 import Tab from '@/components/Tab'
+import { Activities, Activity } from '@/data/activities/types'
 
 // Constants
 const tabs = [
@@ -29,12 +30,12 @@ type Props = {
   isOpen: boolean
 } & HeaderProps
 
-const Renderer = (props: any) => {
+const Renderer = (props) => {
   const { data } = props
   return (
     <div className='overflow-auto px-4'>
       {data?.map((item) => (
-        <Restaurant.Small state={item.state} />
+        <Restaurant.Small state={item.state} info={item?.info} />
       ))}
     </div>
   )
