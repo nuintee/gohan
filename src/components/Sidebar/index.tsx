@@ -6,6 +6,8 @@ import Modal from '@/components/Modal/index'
 import { Restaurant } from '@/components/Restaurant'
 import Tab from '@/components/Tab'
 import { Activities, Activity } from '@/data/activities/types'
+import { activitiesTable } from '@/hooks/API/activities'
+import activities from '@/data/activities/index.json'
 
 // Constants
 const tabs = [
@@ -56,7 +58,7 @@ const Sidebar = (props: Props) => {
 
   useEffect(() => {
     const init = async () => {
-      setActivityData(placeholder_data)
+      setActivityData(activities)
     }
 
     init()
