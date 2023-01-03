@@ -5,6 +5,9 @@ import { Regular as Button } from '@/components/Button'
 import { Label, SwitchButton, Section, Indicator } from './components'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
+// DB
+import { activitiesTable } from '@/hooks/API/activities'
+
 import { version } from '@/../package.json'
 import Input from '../Input'
 
@@ -102,6 +105,12 @@ const DevPanel = (props) => {
     {
       label: 'App Info',
       children: <Indicator label='Version' value={version} allowCopy />,
+    },
+    {
+      label: 'DB',
+      children: Object.keys(activitiesTable).map((v) => (
+        <Button text={v} onClick={() => console.log(activitiesTable[v](1, 'uoiefa'))} />
+      )),
     },
   ]
 
