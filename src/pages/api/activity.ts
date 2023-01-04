@@ -1,6 +1,5 @@
 import prisma from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { randomUUID } from 'crypto'
 
 type Data = {
   name: string
