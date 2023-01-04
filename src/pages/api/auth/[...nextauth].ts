@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 export default NextAuth({
@@ -15,7 +16,7 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
+        const user = { name: 'J Smith', email: 'jsmith@example.com' }
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -29,4 +30,20 @@ export default NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      user && (token.user = user)
+      return token
+    },
+    async session({ session, token, user }) {
+      session = {
+        ...session,
+        user: {
+          id: randomUUID(),
+          ...session.user,
+        },
+      }
+      return session
+    },
+  },
 })

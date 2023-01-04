@@ -43,7 +43,9 @@ const Renderer = (props: RendererProps) => {
       {/* {data?.map((item) => (
         <Restaurant.Small state={item.state} info={item} />
       ))} */}
-      {JSON.stringify(data)}
+      {data.activities?.map((item) => (
+        <p>{item.id}</p>
+      ))}
     </div>
   )
 }
@@ -63,7 +65,7 @@ const Sidebar = (props: Props) => {
 
   useEffect(() => {
     const init = async () => {
-      setActivityData(activities)
+      setActivityData(activities.find((x) => x.user_id === 2))
     }
 
     init()
