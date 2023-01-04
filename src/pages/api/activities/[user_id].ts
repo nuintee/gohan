@@ -6,11 +6,12 @@ type Data = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  const { user_id } = req.query
   switch (req.method) {
     case 'POST':
       const posted = await prisma.activity.create({
         data: {
-          user_id: '1',
+          user_id,
           place_id: 'de',
           is_liked: true,
           discovered_at: new Date().toISOString(),
@@ -19,7 +20,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       res.json(posted)
       break
     case 'GET':
-      const result = await prisma.activity.findMany()
+      const result = await prisma.activity.findMany({
+        where: {
+          user_id,
+        },
+      })
       res.json(result)
   }
 }
