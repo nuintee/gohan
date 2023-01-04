@@ -39,7 +39,7 @@ export default NextAuth({
       session = {
         ...session,
         user: {
-          id: randomUUID(),
+          id: 'DEV_ID_XXX',
           ...session.user,
         },
       }

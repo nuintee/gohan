@@ -8,6 +8,7 @@ import Tab from '@/components/Tab'
 import { Activities, Activity } from '@/data/activities/types'
 import { activitiesTable } from '@/hooks/API/activities'
 import activities from '@/data/activities/index.json'
+import { useSession } from 'next-auth/react'
 
 // Constants
 const tabs = [
@@ -43,7 +44,7 @@ const Renderer = (props: RendererProps) => {
       {/* {data?.map((item) => (
         <Restaurant.Small state={item.state} info={item} />
       ))} */}
-      {data.activities?.map((item) => (
+      {data?.activities?.map((item) => (
         <p>{item.id}</p>
       ))}
     </div>
@@ -51,6 +52,7 @@ const Renderer = (props: RendererProps) => {
 }
 
 const Sidebar = (props: Props) => {
+  const { data: session } = useSession()
   const [selectedId, setSelectedId] = useState(0)
   const [activityData, setActivityData] = useState([])
   const { isOpen, title, onClose } = props
@@ -65,7 +67,7 @@ const Sidebar = (props: Props) => {
 
   useEffect(() => {
     const init = async () => {
-      setActivityData(activities.find((x) => x.user_id === 2))
+      setActivityData(activities.find((x) => x.user_id === session?.user?.id))
     }
 
     init()
