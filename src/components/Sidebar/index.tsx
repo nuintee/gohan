@@ -39,13 +39,16 @@ type RendererProps = {
 
 const Renderer = (props: RendererProps) => {
   const { data } = props
+
+  const onLike = () => {}
+
   return (
     <div className='overflow-auto px-4'>
       {/* {data?.map((item) => (
         <Restaurant.Small state={item.state} info={item} />
       ))} */}
       {data?.activities?.map((item) => (
-        <Restaurant.Small state={item.state} info={item} />
+        <Restaurant.Small state={item.state} info={item} onLike={() => {}} />
       ))}
     </div>
   )
