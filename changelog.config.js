@@ -1,7 +1,19 @@
 module.exports = {
   disableEmoji: false,
   format: '{type}{scope}: {emoji}{subject}',
-  list: ['test', 'feat', 'fix', 'chore', 'docs', 'refactor', 'style', 'ci', 'perf'],
+  list: [
+    'add',
+    'remove',
+    'test',
+    'feat',
+    'fix',
+    'chore',
+    'docs',
+    'refactor',
+    'style',
+    'ci',
+    'perf',
+  ],
   maxMessageLength: 64,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject', 'body', 'breaking', 'issues', 'lerna'],
@@ -11,6 +23,16 @@ module.exports = {
       description: 'Build process or auxiliary tool changes',
       emoji: '🤖',
       value: 'chore',
+    },
+    add: {
+      description: 'Added new code',
+      emoji: '➕',
+      value: 'add',
+    },
+    remove: {
+      description: 'Removed code',
+      emoji: '➖',
+      value: 'remove',
     },
     ci: {
       description: 'CI related changes',
