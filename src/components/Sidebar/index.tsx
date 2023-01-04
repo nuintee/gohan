@@ -32,13 +32,18 @@ type Props = {
   isOpen: boolean
 } & HeaderProps
 
-const Renderer = (props) => {
+type RendererProps = {
+  data: Activities
+}
+
+const Renderer = (props: RendererProps) => {
   const { data } = props
   return (
     <div className='overflow-auto px-4'>
-      {data?.map((item) => (
-        <Restaurant.Small state={item.state} info={item?.info} />
-      ))}
+      {/* {data?.map((item) => (
+        <Restaurant.Small state={item.state} info={item} />
+      ))} */}
+      {JSON.stringify(data)}
     </div>
   )
 }
@@ -50,7 +55,7 @@ const Sidebar = (props: Props) => {
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
-  const filteredData = activityData.filter((v) => v?.state === ['LIKED', 'UNLIKED'][selectedId])
+  // const filteredData = activityData.filter((v) => v?.state === ['LIKED', 'UNLIKED'][selectedId])
 
   const setTabs = (id: number) => {
     setSelectedId(id)
@@ -58,7 +63,7 @@ const Sidebar = (props: Props) => {
 
   useEffect(() => {
     const init = async () => {
-      // setActivityData(activities)
+      setActivityData(activities)
     }
 
     init()
@@ -70,7 +75,7 @@ const Sidebar = (props: Props) => {
     >
       <Header title={title || 'Sidebar'} onClose={onClose} />
       <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
-      <Renderer data={filteredData} />
+      <Renderer data={activityData} />
     </div>
   )
 }
