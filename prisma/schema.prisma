@@ -8,21 +8,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+model User {
+  id              String     @id
+  username        String  @unique 
+  email           String  @unique 
+  registered_at   DateTime
+  activities      Activity[] 
 }
 
-model User {
-  id            String       @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Post[]
-  @@map(name: "users")
+model Activity { 
+  id            Int     @id @default(autoincrement()) 
+  user_id       String 
+  user          User?   @relation(fields: [user_id], references: [id]) 
+  place_id      String
+  is_liked      Boolean
+  discovered_at DateTime
 }
