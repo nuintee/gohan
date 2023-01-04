@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 
 // Data
-import mapData from '@/hooks/API/Places/res/index.json'
+import mapData from '@/data/places/index.json'
 
 export const handlers = [
   rest.post('/login', (req, res, ctx) => {
