@@ -1,5 +1,5 @@
 ---
-to: <%= path %>/<%= name%>.stories.tsx
+to: <%= path %>/stories/<%= name%>.stories.tsx
 ---
 import { type ComponentMeta, type ComponentStoryObj } from "@storybook/react"
 import { <%= name %> } from "."
