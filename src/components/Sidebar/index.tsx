@@ -45,7 +45,7 @@ const Renderer = (props: RendererProps) => {
         <Restaurant.Small state={item.state} info={item} />
       ))} */}
       {data?.activities?.map((item) => (
-        <p>{item.id}</p>
+        <Restaurant.Small state={item.state} info={item} />
       ))}
     </div>
   )
@@ -67,11 +67,14 @@ const Sidebar = (props: Props) => {
 
   useEffect(() => {
     const init = async () => {
-      setActivityData(activities.find((x) => x.user_id === session?.user?.id))
+      if (!session?.user?.id) return
+      const userData = activities.find((x) => x.user_id === session?.user?.id)
+      console.log(userData)
+      setActivityData(userData)
     }
 
     init()
-  }, [])
+  }, [session?.user?.id])
 
   return (
     <div
