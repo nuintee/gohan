@@ -58,7 +58,7 @@ const Sidebar = (props: Props) => {
 
   useEffect(() => {
     const init = async () => {
-      setActivityData(activities)
+      // setActivityData(activities)
     }
 
     init()
