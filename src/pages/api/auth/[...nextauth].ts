@@ -39,7 +39,7 @@ export default NextAuth({
       session = {
         ...session,
         user: {
-          id: 'DEV_ID_XXX',
+          id: process.env.DEV_USER_ID,
           ...session.user,
         },
       }
