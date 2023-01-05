@@ -76,3 +76,5 @@ I wanted to create an app that would choose a restaurant on its own for me when 
 APP : [https://gohan-location.web.app](https://gohan-location.web.app/)
 
 Notion : [https://spangle-erica-897.notion.site/Gohan-v2-0-defac4e40cac4e4188307cd75fe4ea40](https://www.notion.so/Gohan-v2-0-defac4e40cac4e4188307cd75fe4ea40)
+
+Gitbook: https://90s-organization.gitbook.io/gohan-public/
