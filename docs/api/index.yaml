@@ -1,0 +1,469 @@
+openapi: 3.0.0
+x-stoplight:
+  id: rf1imorwk4fha
+info:
+  title: APIs
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/api/v1'
+    description: v1
+paths:
+  '/activities/user/{userId}':
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+    get:
+      summary: Gets all activities of a specific user
+      tags: []
+      operationId: get-activities-userId
+      x-internal: true
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/fields'
+      description: Returns specific user's activities
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivitiesSuccess'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  '/activity/{activityId}':
+    parameters:
+      - schema:
+          type: string
+        name: activityId
+        in: path
+        required: true
+    get:
+      summary: Gets specific activity
+      tags: []
+      operationId: get-activity-activityId
+      x-internal: false
+      description: |
+        Returns specific activity by activity_id
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivityScucess'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - DEV_XXX_TOKEN: []
+      parameters: []
+    patch:
+      summary: Patches specific activity
+      operationId: patch-activity-activityId
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivityScucess'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/ActivityUpdate'
+    delete:
+      summary: Deletes specific activity
+      operationId: delete-activity-activityId
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivityScucess'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: string
+  /activities:
+    get:
+      summary: Gets all user activities
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivitiesSuccess'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-activities
+      description: Returns current user's activities
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/fields'
+    post:
+      summary: Adds new activity
+      operationId: post-activities
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivityScucess'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      requestBody:
+        $ref: '#/components/requestBodies/ActivityAdd'
+    delete:
+      summary: Deletes all the user's activity
+      operationId: delete-activities
+      responses:
+        '200':
+          $ref: '#/components/responses/ActivitiesSuccess'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: Wipes out users all activity
+  /health:
+    get:
+      summary: Health check
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+        '500':
+          description: Internal Server Error
+      operationId: get-health
+      security: []
+  /users:
+    get:
+      summary: Gets all users
+      tags:
+        - public
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-users
+      x-internal: true
+      security:
+        - DEV_XXX_TOKEN: []
+      description: Internal API for admin panel
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+    post:
+      summary: Adds new user
+      operationId: post-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      x-internal: false
+      requestBody:
+        $ref: '#/components/requestBodies/UserAdd'
+  '/user/{userId}':
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+    get:
+      summary: Gets specific user
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-user-userId
+      security:
+        - DEV_XXX_TOKEN: []
+      x-internal: true
+    delete:
+      summary: Deletes specific user
+      operationId: delete-user-userId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      x-internal: true
+    patch:
+      summary: Patches specific user
+      operationId: patch-user-userId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      requestBody:
+        $ref: '#/components/requestBodies/UserUpdate'
+      x-internal: true
+  /user:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-user
+    patch:
+      summary: ''
+      operationId: patch-user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      requestBody:
+        $ref: '#/components/requestBodies/UserUpdate'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        username:
+          type: string
+        email:
+          type: string
+        registered_at:
+          type: string
+      required:
+        - id
+    Activity:
+      type: object
+      x-examples:
+        Example 1:
+          id: 2
+          user_id: '1'
+          place_id: feafeafagggg
+          is_liked: false
+          discovered_at: '1970-01-01T00:00:00.000Z'
+      properties:
+        user_id:
+          type: string
+        place_id:
+          type: string
+          format: uri
+        is_liked:
+          type: boolean
+        discovered_at:
+          type: string
+          format: date
+        id:
+          type: string
+    Activities:
+      title: Activities
+      x-stoplight:
+        id: eqwq4vpsrm4hs
+      type: object
+      additionalProperties: false
+      properties:
+        total:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Activity'
+    Users:
+      title: Users
+      x-stoplight:
+        id: jsjn85howakqj
+      type: object
+      properties:
+        total:
+          type: number
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+  parameters:
+    filter:
+      name: filter
+      in: query
+      schema:
+        type: string
+      description: liked | unliked
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: number
+      description: max result number
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: number
+      description: offset start cursor
+    fields:
+      name: fields
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: 'is_liked,id'
+    place_id:
+      name: place_id
+      in: query
+      required: false
+      schema:
+        type: string
+    is_liked:
+      name: is_liked
+      in: query
+      required: false
+      schema:
+        type: boolean
+  responses:
+    ActivitiesSuccess:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Activities'
+        application/xml:
+          schema:
+            type: object
+            properties: {}
+      headers:
+        x-next-page:
+          schema:
+            type: string
+            example: 'http://localhost:3000/api/v1/activities?offset=10&limit=100'
+          description: next available request url
+    ActivityScucess:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Activity'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Activity'
+      headers: {}
+  requestBodies:
+    ActivityUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              place_id:
+                type: string
+                nullable: true
+              is_liked:
+                type: boolean
+                nullable: true
+      description: ''
+    ActivityAdd:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              place_id:
+                type: string
+              is_liked:
+                type: string
+            required:
+              - place_id
+              - is_liked
+        application/xml:
+          schema:
+            type: object
+            properties:
+              '':
+                type: string
+    UserAdd:
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              username:
+                type: string
+              email:
+                type: string
+            required:
+              - username
+              - email
+    UserUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                nullable: true
+              email:
+                type: string
+                nullable: true
+  securitySchemes:
+    DEV_XXX_TOKEN:
+      type: http
+      scheme: bearer
+x-internal: true
+security:
+  - DEV_XXX_TOKEN: []
