@@ -18,7 +18,7 @@ const user = {
   },
 }
 
-const handle_request = async (action, res) => {
+const handle_request = async (action: Function, res: NextApiResponse<Data>) => {
   try {
     const result = await action()
     res.status(200).json(result)
