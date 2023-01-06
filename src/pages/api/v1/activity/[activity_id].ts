@@ -14,8 +14,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await handleRequest(() => activityTable.get({ id: activity_id }), res)
       break
     case 'PATCH':
+      await handleRequest(
+        () =>
+          activityTable.patch({
+            id: activity_id,
+            ...req.body,
+          }),
+        res,
+      )
       break
     case 'DELETE':
+      handleRequest(() => activityTable.delete({ id: activity_id }), res)
       break
     default:
       res.status(200).json({})
