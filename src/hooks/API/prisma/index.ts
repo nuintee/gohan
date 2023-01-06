@@ -9,7 +9,10 @@ export type ListFilter = {
 }
 
 const resultFilter = (listFilters: ListFilter) => {
+  const { offset, limit, ...rest } = listFilters
+
   return {
+    ...rest,
     ...(listFilters?.offset && { skip: Number(listFilters?.offset) }),
     ...(listFilters?.limit && { take: Number(listFilters?.limit) }),
   }

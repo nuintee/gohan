@@ -18,6 +18,10 @@ type ListFilter = {
 
 type MutateProps = UserKey & Data
 
+type ListProps = {
+  user_id: string
+} & ListFilter
+
 const activityTable = {
   get: async (props: UserKey) => {
     const fetchedActivity = await prisma.activity.findUniqueOrThrow({
@@ -26,6 +30,16 @@ const activityTable = {
       },
     })
     return fetchedActivity
+  },
+  getUserAll: async (props: ListProps) => {
+    const { user_id, ...rest } = props
+    const fetchedUserActivities = await prisma.activity.findMany({
+      where: {
+        user_id: props?.user_id,
+      },
+      ...resultFilter(rest),
+    })
+    return fetchedUserActivities
   },
   getAll: async (props: ListFilter) => {
     const fetchedActivities = await prisma.activity.findMany(resultFilter(props))
