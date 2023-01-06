@@ -6,11 +6,21 @@ type Data = {
   email: string
 }
 
-type MutateProps = {
-  id: string
-} & Data
+type UserKey = {
+  id: string | string[] | undefined
+}
+
+type MutateProps = UserKey & Data
 
 const userTable = {
+  get: async (props: UserKey) => {
+    const fetchedUser = await prisma.user.findUniqueOrThrow({
+      where: {
+        id: props.id,
+      },
+    })
+    return fetchedUser
+  },
   add: async (props: Data) => {
     const id = randomUUID()
     const addedUser = await prisma.user.create({
@@ -30,7 +40,7 @@ const userTable = {
     })
     return updatedUser
   },
-  delete: async (props: { id: string | undefined }) => {
+  delete: async (props: UserKey) => {
     const deletedUsers = await prisma.user.delete({
       where: {
         id: props.id,

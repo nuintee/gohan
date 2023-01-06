@@ -11,29 +11,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const { userId } = req.query
   switch (req.method) {
     case 'GET':
-      await handleRequest(
-        () =>
-          prisma.user.findUnique({
-            where: {
-              id: userId,
-            },
-          }),
-        res,
-      )
+      await handleRequest(() => userTable.get({ id: userId }), res)
       break
     case 'PATCH':
       await handleRequest(() => userTable.patch({ id: userId, ...req.body }), res)
       break
     case 'DELETE':
-      // await handle_request(
-      //   () =>
-      //     prisma.user.delete({
-      //       where: {
-      //         id: userId,
-      //       },
-      //     }),
-      //   res,
-      // )
       await handleRequest(() => userTable.delete({ id: userId }), res)
       break
     default:
