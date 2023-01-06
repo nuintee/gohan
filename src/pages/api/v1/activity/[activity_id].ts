@@ -1,5 +1,4 @@
-import { handleRequest } from '@/hooks/API/prisma'
-import activityTable from '@/hooks/API/prisma/activity'
+import { handleRequest, activityTable } from '@/hooks/API/prisma'
 import prisma from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -12,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const { activity_id } = req.query
   switch (req.method) {
     case 'GET':
+      await handleRequest(() => activityTable.get({ id: activity_id }), res)
       break
     case 'PATCH':
       break
