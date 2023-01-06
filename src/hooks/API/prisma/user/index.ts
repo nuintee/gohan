@@ -21,6 +21,10 @@ const userTable = {
     })
     return fetchedUser
   },
+  getAll: async () => {
+    const fetchedUsers = await prisma.user.findMany()
+    return fetchedUsers
+  },
   add: async (props: Data) => {
     const id = randomUUID()
     const addedUser = await prisma.user.create({
