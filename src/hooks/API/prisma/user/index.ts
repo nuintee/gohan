@@ -29,8 +29,8 @@ const userTable = {
   },
   getAll: async (props: GetListProps) => {
     const filter = {
-      ...(props?.offset && { skip: props?.offset }),
-      ...(props?.limit && { take: props?.limit }),
+      ...(props?.offset && { skip: Number(props?.offset) }),
+      ...(props?.limit && { take: Number(props?.limit) }),
     }
 
     const fetchedUsers = await prisma.user.findMany(filter)
