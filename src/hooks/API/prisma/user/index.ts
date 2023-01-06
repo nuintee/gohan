@@ -17,7 +17,6 @@ type ListFilter = {
 }
 
 type MutateProps = UserKey & Data
-type GetListProps = UserKey & ListFilter
 
 const userTable = {
   get: async (props: UserKey) => {
@@ -28,7 +27,7 @@ const userTable = {
     })
     return fetchedUser
   },
-  getAll: async (props: GetListProps) => {
+  getAll: async (props: ListFilter) => {
     const fetchedUsers = await prisma.user.findMany(resultFilter(props))
     return fetchedUsers
   },

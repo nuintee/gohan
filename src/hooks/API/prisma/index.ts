@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { NextApiResponse } from 'next'
 import userTable from './user'
 
-type ListFilter = {
+export type ListFilter = {
   limit?: number
   offset?: number
 }
