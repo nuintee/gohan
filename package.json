@@ -17,7 +17,11 @@
     "server:mock": "json-server --watch src/json-server/db.json",
     "prepare": "husky install",
     "commit": "npx git-cz",
-    "addfc": "npx hygen fc new"
+    "addfc": "npx hygen fc new",
+    "prisma:push": "npx prisma db push",
+    "prisma:gen": "npx prisma generate",
+    "prisma:studio": "npx prisma studio",
+    "prisma:all": "npm run prisma:push && npm run prisma:gen && npm run prisma:studio"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [

@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { NextApiResponse } from 'next'
 import userTable from './user'
+import activityTable from './activity'
 
 export type ListFilter = {
   limit?: number
@@ -35,4 +36,4 @@ const handleRequest = async (action: Function, res: NextApiResponse<Data>) => {
   }
 }
 
-export { userTable, handleRequest, resultFilter }
+export { userTable, activityTable, handleRequest, resultFilter }

@@ -17,10 +17,10 @@ model User {
 }
 
 model Activity { 
-  id            String   @id @default(uuid())
+  id            String @id @default(uuid())
   user_id       String 
   user          User   @relation(fields: [user_id], references: [id]) 
   place_id      String
-  is_liked      Boolean
-  discovered_at DateTime
+  is_liked      Boolean @default(false)
+  discovered_at DateTime @default(now())
 }

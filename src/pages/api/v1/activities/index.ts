@@ -1,3 +1,4 @@
+import { handleRequest, activityTable } from '@/hooks/API/prisma'
 import prisma from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -6,25 +7,11 @@ type Data = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const { user_id } = req.query
   switch (req.method) {
-    case 'POST':
-      const posted = await prisma.activity.create({
-        data: {
-          user_id,
-          place_id: 'de',
-          is_liked: true,
-          discovered_at: new Date().toISOString(),
-        },
-      })
-      res.json(posted)
-      break
     case 'GET':
-      const result = await prisma.activity.findMany({
-        where: {
-          user_id: '1',
-        },
-      })
-      res.json(result)
+      await handleRequest(() => activityTable.getAll(req.query), res)
+      break
+    default:
+      break
   }
 }

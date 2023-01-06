@@ -20,11 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       res.json(posted)
       break
     case 'GET':
-      const result = await prisma.activity.findMany({
-        where: {
-          user_id,
-        },
-      })
-      res.json(result)
+      break
+    default:
+      res.status(200).json({})
+      break
   }
 }
