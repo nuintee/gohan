@@ -30,6 +30,14 @@ const userTable = {
     })
     return updatedUser
   },
+  delete: async (props: { id: string | undefined }) => {
+    const deletedUsers = await prisma.user.delete({
+      where: {
+        id: props.id,
+      },
+    })
+    return deletedUsers
+  },
 }
 
 export default userTable
