@@ -24,20 +24,3 @@ model Activity {
   is_liked      Boolean
   discovered_at DateTime
 }
-
-// model User {
-//   id              Int @id @default(autoincrement())
-//   username        String  @unique 
-//   email           String  @unique 
-//   registered_at   DateTime @default(now())
-//   activities      Activity[] 
-// }
-
-// model Activity { 
-//   id            String   @id @default(uuid())
-//   user_id       Int 
-//   user          User   @relation(fields: [user_id], references: [id]) 
-//   place_id      String
-//   is_liked      Boolean
-//   discovered_at DateTime
-// }
