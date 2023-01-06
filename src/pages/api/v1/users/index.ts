@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -15,34 +16,37 @@ const user = {
     })
     return addedUser
   },
-  upsert: async (props: Data) => {
-    const uuid = randomUUID()
-    await prisma.user.upsert({
-      where: { id: uuid },
-      update: {},
-      create: { ...props, registered_at: new Date().toISOString() },
-    })
-    return props
-  },
+}
+
+const handle_request = async (action, res) => {
+  try {
+    const result = await action()
+    res.status(200).json(result)
+  } catch (error) {
+    let message = ''
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      switch (error.code) {
+        case 'P2002':
+          message =
+            'There is a unique constraint violation, a new user cannot be created with this email'
+          break
+        default:
+          break
+      }
+      res.status(500).json({ ...error, message })
+    }
+    res.status(500).json(error)
+  }
 }
 
 // GET | POST
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   switch (req.method) {
     case 'POST':
-      const id = randomUUID()
-      const data = {
-        id,
-        email: 'SHO@gmail.com',
-        username: 'SHO',
-        registered_at: new Date().toISOString(),
-      }
-      await prisma.user.create({ data })
-      res.status(200).json(data)
+      await handle_request(() => user.add(req.body), res)
       break
     case 'GET':
-      const all = await prisma.user.findMany()
-      res.status(200).json(all)
+      await handle_request(() => prisma.user.findMany(), res)
       break
     default:
       break
