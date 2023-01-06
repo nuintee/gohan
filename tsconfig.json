@@ -24,7 +24,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/pages/api/auth/[...nextauth].ts",
-    "changelog.config.js"
+    "changelog.config.js",
+    "src/pages/api/v1/user/.DEPRECATED_index.ts"
   ],
   "exclude": ["node_modules"]
 }
