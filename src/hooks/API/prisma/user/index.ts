@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
+import { resultFilter } from '..'
 
 type Data = {
   username: string
@@ -28,12 +29,7 @@ const userTable = {
     return fetchedUser
   },
   getAll: async (props: GetListProps) => {
-    const filter = {
-      ...(props?.offset && { skip: Number(props?.offset) }),
-      ...(props?.limit && { take: Number(props?.limit) }),
-    }
-
-    const fetchedUsers = await prisma.user.findMany(filter)
+    const fetchedUsers = await prisma.user.findMany(resultFilter(props))
     return fetchedUsers
   },
   add: async (props: Data) => {

@@ -2,6 +2,18 @@ import { Prisma } from '@prisma/client'
 import { NextApiResponse } from 'next'
 import userTable from './user'
 
+type ListFilter = {
+  limit?: number
+  offset?: number
+}
+
+const resultFilter = (listFilters: ListFilter) => {
+  return {
+    ...(listFilters?.offset && { skip: Number(listFilters?.offset) }),
+    ...(listFilters?.limit && { take: Number(listFilters?.limit) }),
+  }
+}
+
 const handleRequest = async (action: Function, res: NextApiResponse<Data>) => {
   try {
     const result = await action()
@@ -23,4 +35,4 @@ const handleRequest = async (action: Function, res: NextApiResponse<Data>) => {
   }
 }
 
-export { userTable, handleRequest }
+export { userTable, handleRequest, resultFilter }
