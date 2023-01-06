@@ -9,7 +9,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await handle_request(() => userTable.add(req.body), res)
       break
     case 'GET':
-      await handle_request(() => prisma.user.findMany(), res)
+      await handle_request(
+        () =>
+          prisma.user.findMany({
+            ...(req.query?.limit && { take: Number(req.query?.limit) }),
+            ...(req.query?.offset && { skip: Number(req.query?.offset) }),
+          }),
+        res,
+      )
       break
     default:
       break
