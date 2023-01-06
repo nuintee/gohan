@@ -10,7 +10,13 @@ type UserKey = {
   id: string | string[] | undefined
 }
 
+type ListFilter = {
+  limit?: number
+  offset?: number
+}
+
 type MutateProps = UserKey & Data
+type GetListProps = UserKey & ListFilter
 
 const userTable = {
   get: async (props: UserKey) => {
@@ -21,8 +27,13 @@ const userTable = {
     })
     return fetchedUser
   },
-  getAll: async () => {
-    const fetchedUsers = await prisma.user.findMany()
+  getAll: async (props: GetListProps) => {
+    const filter = {
+      ...(props?.offset && { skip: props?.offset }),
+      ...(props?.limit && { take: props?.limit }),
+    }
+
+    const fetchedUsers = await prisma.user.findMany(filter)
     return fetchedUsers
   },
   add: async (props: Data) => {
