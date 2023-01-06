@@ -6,6 +6,10 @@ type UserKey = {
   id: string | string[] | undefined
 }
 
+type UserId = {
+  user_id: string
+}
+
 type Data = {
   place_id: string
   is_liked: boolean
@@ -18,9 +22,7 @@ type ListFilter = {
 
 type MutateProps = UserKey & Data
 
-type ListProps = {
-  user_id: string
-} & ListFilter
+type ListProps = UserId & ListFilter
 
 const activityTable = {
   get: async (props: UserKey) => {
@@ -71,6 +73,14 @@ const activityTable = {
       },
     })
     return deletedUsers
+  },
+  deleteUserAll: async (props: UserId) => {
+    const deletedUser = await prisma.activity.deleteMany({
+      where: {
+        user_id: props.user_id,
+      },
+    })
+    return deletedUser
   },
 }
 

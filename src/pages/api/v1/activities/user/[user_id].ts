@@ -14,6 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await handleRequest(() => activityTable.getUserAll({ user_id, ...req.query }), res)
       break
     case 'DELETE':
+      await handleRequest(() => activityTable.deleteUserAll({ user_id }), res)
       break
     default:
       res.status(200).json({})
