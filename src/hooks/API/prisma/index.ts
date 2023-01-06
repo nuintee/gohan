@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { NextApiResponse } from 'next'
 import userTable from './user'
 
-const handle_request = async (action: Function, res: NextApiResponse<Data>) => {
+const handleRequest = async (action: Function, res: NextApiResponse<Data>) => {
   try {
     const result = await action()
     res.status(200).json(result)
@@ -23,4 +23,4 @@ const handle_request = async (action: Function, res: NextApiResponse<Data>) => {
   }
 }
 
-export { userTable, handle_request }
+export { userTable, handleRequest }

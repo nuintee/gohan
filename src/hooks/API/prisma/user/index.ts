@@ -6,6 +6,10 @@ type Data = {
   email: string
 }
 
+type MutateProps = {
+  id: string
+} & Data
+
 const userTable = {
   add: async (props: Data) => {
     const id = randomUUID()
@@ -13,6 +17,18 @@ const userTable = {
       data: { ...props, id, registered_at: new Date().toISOString() },
     })
     return addedUser
+  },
+  patch: async (props: MutateProps) => {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: props.id,
+      },
+      data: {
+        email: props?.email,
+        username: props?.username,
+      },
+    })
+    return updatedUser
   },
 }
 
