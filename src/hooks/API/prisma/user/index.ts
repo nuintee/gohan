@@ -1,25 +1,17 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
-import { resultFilter } from '..'
+import { resultFilter, ListFilter } from '..'
+import { Id } from '../types'
 
 type Data = {
   username: string
   email: string
 }
 
-type UserKey = {
-  id: string | string[] | undefined
-}
-
-type ListFilter = {
-  limit?: number
-  offset?: number
-}
-
-type MutateProps = UserKey & Data
+type MutateProps = Id<Data>
 
 const userTable = {
-  get: async (props: UserKey) => {
+  get: async (props: Id) => {
     const fetchedUser = await prisma.user.findUniqueOrThrow({
       where: {
         id: props.id,

@@ -1,31 +1,19 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
-import { resultFilter } from '..'
-
-type UserKey = {
-  id: string | string[] | undefined
-}
-
-type UserId = {
-  user_id: string
-}
+import { resultFilter, ListFilter } from '..'
+import { Id, UserId } from '../types'
 
 type Data = {
   place_id: string
   is_liked: boolean
 }
 
-type ListFilter = {
-  limit?: number
-  offset?: number
-}
-
-type MutateProps = UserKey & Data
+type MutateProps = Id<Data>
 
 type ListProps = UserId & ListFilter
 
 const activityTable = {
-  get: async (props: UserKey) => {
+  get: async (props: Id) => {
     const fetchedActivity = await prisma.activity.findUniqueOrThrow({
       where: {
         id: props.id,
@@ -66,7 +54,7 @@ const activityTable = {
     })
     return updatedUser
   },
-  delete: async (props: UserKey) => {
+  delete: async (props: Id) => {
     const deletedUsers = await prisma.activity.delete({
       where: {
         id: props.id,
