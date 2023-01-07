@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
-import { resultFilter } from '..'
+import { resultFilter, handleRequired } from '..'
 import { Id, MutateProps, ListFilter } from '../types'
 
 type Data = {
@@ -22,6 +22,10 @@ const userTable = {
     return fetchedUsers
   },
   add: async (props: Data) => {
+    const required_fields = ['email', 'username']
+
+    handleRequired(required_fields, props)
+
     const id = randomUUID()
     const addedUser = await prisma.user.create({
       data: { ...props, id, registered_at: new Date().toISOString() },
