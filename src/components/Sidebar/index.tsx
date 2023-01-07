@@ -5,9 +5,6 @@ import Header from '../Modal/Header'
 import Modal from '@/components/Modal/index'
 import { Restaurant } from '@/components/Restaurant'
 import Tab from '@/components/Tab'
-import { Activities, Activity } from '@/data/activities/types'
-import { activitiesTable } from '@/hooks/API/activities'
-import activities from '@/data/activities/index.json'
 import { useSession } from 'next-auth/react'
 
 // Constants
@@ -33,10 +30,6 @@ type Props = {
   isOpen: boolean
 } & HeaderProps
 
-type RendererProps = {
-  data: Activities
-}
-
 const Renderer = (props: RendererProps) => {
   const { data } = props
 
@@ -47,9 +40,6 @@ const Renderer = (props: RendererProps) => {
       {/* {data?.map((item) => (
         <Restaurant.Small state={item.state} info={item} />
       ))} */}
-      {data?.activities?.map((item) => (
-        <Restaurant.Small state={item.state} info={item} onLike={() => {}} />
-      ))}
     </div>
   )
 }
@@ -71,9 +61,6 @@ const Sidebar = (props: Props) => {
   useEffect(() => {
     const init = async () => {
       if (!session?.user?.id) return
-      const userData = activities.find((x) => x.user_id === session?.user?.id)
-      console.log(userData)
-      setActivityData(userData)
     }
 
     init()

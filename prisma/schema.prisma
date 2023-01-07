@@ -1,0 +1,26 @@
+// schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String @id @default(uuid())
+  username        String  
+  email           String  @unique 
+  registered_at   DateTime @default(now())
+  activities      Activity[] 
+}
+
+model Activity { 
+  id            String @id @default(uuid())
+  user_id       String 
+  user          User   @relation(fields: [user_id], references: [id]) 
+  place_id      String
+  is_liked      Boolean @default(false)
+  discovered_at DateTime @default(now())
+}
