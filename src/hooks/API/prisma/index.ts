@@ -28,8 +28,13 @@ const resultFilter = (listFilters: ListFilter) => {
   }
 }
 
-const handleRequired = (fields: string[], src: Data) => {
-  const missing_fields = fields.map((field) => (!src.hasOwnProperty(field) ? field : null))
+const handleRequired = <T extends {}>(fields: string[], src: T) => {
+  const missing_fields: string[] = []
+
+  fields.forEach((field) => {
+    if (src.hasOwnProperty(field)) return
+    missing_fields.push(field)
+  })
 
   if (missing_fields.length) throw new Error(`${missing_fields} is required`)
 }

@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
-import { resultFilter } from '..'
+import { resultFilter, handleRequired } from '..'
 import { Id, UserId, ListFilter, MutateProps, ListProps } from '../types'
 
 type Data = {
@@ -34,7 +34,8 @@ const activityTable = {
     return fetchedActivities
   },
   add: async (props: Data) => {
-    if (!props?.user_id) throw new Error('user_id is required')
+    const required_fields = ['user_id']
+    handleRequired(required_fields, props)
 
     const id = randomUUID()
     const addedActivity = await prisma.activity.create({
