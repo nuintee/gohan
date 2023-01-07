@@ -22,6 +22,14 @@ const userTable = {
     return fetchedUsers
   },
   add: async (props: Data) => {
+    const required_fields = ['email', 'username']
+
+    const missing_fields = required_fields.map((field) =>
+      !props.hasOwnProperty(field) ? field : null,
+    )
+
+    if (missing_fields.length) throw new Error(`${missing_fields} is required`)
+
     const id = randomUUID()
     const addedUser = await prisma.user.create({
       data: { ...props, id, registered_at: new Date().toISOString() },

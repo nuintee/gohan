@@ -47,7 +47,7 @@ const handleRequest = async (action: Function, res: NextApiResponse<Response>) =
     }
     res.status(500).json({
       code: 500,
-      message: 'UNHANDLED_EXCEPTION',
+      message: error?.message,
     })
   }
 }

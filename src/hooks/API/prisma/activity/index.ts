@@ -20,6 +20,7 @@ const activityTable = {
   },
   getUserAll: async (props: ListProps<UserId>) => {
     const { user_id, ...rest } = props
+
     const fetchedUserActivities = await prisma.activity.findMany({
       where: {
         user_id: props?.user_id,
@@ -33,6 +34,8 @@ const activityTable = {
     return fetchedActivities
   },
   add: async (props: Data) => {
+    if (!props?.user_id) throw new Error('user_id is required')
+
     const id = randomUUID()
     const addedActivity = await prisma.activity.create({
       data: { ...props, id, discovered_at: new Date().toISOString() },
