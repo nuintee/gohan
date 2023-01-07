@@ -1,14 +1,12 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
-import { resultFilter, ListFilter } from '..'
-import { Id, UserId } from '../types'
+import { resultFilter } from '..'
+import { Id, UserId, ListFilter, MutateProps } from '../types'
 
 type Data = {
   place_id: string
   is_liked: boolean
 }
-
-type MutateProps = Id<Data>
 
 type ListProps = UserId & ListFilter
 
@@ -42,7 +40,7 @@ const activityTable = {
     })
     return addedActivity
   },
-  patch: async (props: MutateProps) => {
+  patch: async (props: MutateProps<Data>) => {
     const updatedUser = await prisma.activity.update({
       where: {
         id: props.id,

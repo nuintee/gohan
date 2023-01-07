@@ -1,7 +1,14 @@
-export type Id<T = {}> = {
+export type Id = {
   id: string | undefined
-} & T
+}
 
 export type UserId = {
   user_id: string
 }
+
+export type ListFilter = {
+  limit?: number
+  offset?: number
+}
+
+export type MutateProps<T> = Id & T

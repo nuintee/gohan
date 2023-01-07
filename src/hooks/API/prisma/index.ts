@@ -2,11 +2,7 @@ import { Prisma } from '@prisma/client'
 import { NextApiResponse } from 'next'
 import userTable from './user'
 import activityTable from './activity'
-
-export type ListFilter = {
-  limit?: number
-  offset?: number
-}
+import { ListFilter } from './types'
 
 const resultFilter = (listFilters: ListFilter) => {
   const { offset, limit, ...rest } = listFilters

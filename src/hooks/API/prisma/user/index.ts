@@ -1,14 +1,12 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
-import { resultFilter, ListFilter } from '..'
-import { Id } from '../types'
+import { resultFilter } from '..'
+import { Id, MutateProps, ListFilter } from '../types'
 
 type Data = {
   username: string
   email: string
 }
-
-type MutateProps = Id<Data>
 
 const userTable = {
   get: async (props: Id) => {
@@ -30,7 +28,7 @@ const userTable = {
     })
     return addedUser
   },
-  patch: async (props: MutateProps) => {
+  patch: async (props: MutateProps<Data>) => {
     const updatedUser = await prisma.user.update({
       where: {
         id: props.id,
