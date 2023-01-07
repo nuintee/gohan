@@ -67,13 +67,15 @@ const MapBox = (props) => {
             </div>
           </Marker>
         )}
-        {destination.length && (
+        {destination.length ? (
           <Marker longitude={destination[0]} latitude={destination[1]}>
             <div className='relative'>
               <div className='w-8 h-8 bg-gh-orange bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
               <span className='h-6 w-6 bg-gh-orange rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md'></span>
             </div>
           </Marker>
+        ) : (
+          <></>
         )}
         {sources?.map((source) => (
           <Source id={source.id} type='geojson' data={source}>
