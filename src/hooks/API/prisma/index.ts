@@ -12,7 +12,11 @@ type Error = {
   code?: number | undefined
 }
 
-export type Response = Data | Error
+type Status = {
+  status: string
+}
+
+export type Response = Data | Error | Status
 
 const resultFilter = (listFilters: ListFilter) => {
   const { offset, limit, ...rest } = listFilters
