@@ -1,14 +1,12 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
 import { resultFilter } from '..'
-import { Id, UserId, ListFilter, MutateProps } from '../types'
+import { Id, UserId, ListFilter, MutateProps, ListProps } from '../types'
 
 type Data = {
   place_id: string
   is_liked: boolean
 }
-
-type ListProps = UserId & ListFilter
 
 const activityTable = {
   get: async (props: Id) => {
@@ -19,7 +17,7 @@ const activityTable = {
     })
     return fetchedActivity
   },
-  getUserAll: async (props: ListProps) => {
+  getUserAll: async (props: ListProps<UserId>) => {
     const { user_id, ...rest } = props
     const fetchedUserActivities = await prisma.activity.findMany({
       where: {

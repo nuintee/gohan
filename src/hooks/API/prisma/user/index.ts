@@ -40,7 +40,7 @@ const userTable = {
     })
     return updatedUser
   },
-  delete: async (props: UserKey) => {
+  delete: async (props: Id) => {
     const deletedUsers = await prisma.user.delete({
       where: {
         id: props.id,

@@ -12,3 +12,5 @@ export type ListFilter = {
 }
 
 export type MutateProps<T> = Id & T
+
+export type ListProps<T extends Id | UserId> = T & ListFilter
