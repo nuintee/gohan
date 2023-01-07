@@ -40,7 +40,7 @@ const handleRequired = <T extends {}>(fields: string[], src: T) => {
     throw new Error(`${missing_fields} ${missing_fields.length > 1 ? 'are' : 'is'} required`)
 }
 
-const prismaErrors = [
+const _prismaErrors = [
   {
     code: 'P1000',
     message:
@@ -56,10 +56,10 @@ const prismaErrors = [
   },
 ]
 
-const prismaErrorMapper = (error: Prisma.PrismaClientKnownRequestError) => {
+const _prismaErrorMapper = (error: Prisma.PrismaClientKnownRequestError) => {
   let message = ''
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    prismaErrors.forEach((e) => {
+    _prismaErrors.forEach((e) => {
       if (e.code === error.code) {
         message = e.message
       }
@@ -74,7 +74,7 @@ const handleRequest = async (action: Function, res: NextApiResponse<Response>) =
     res.status(200).json(result)
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      const message = prismaErrorMapper(error)
+      const message = _prismaErrorMapper(error)
       res.status(500).json({ ...error, message })
     }
     res.status(500).json({
