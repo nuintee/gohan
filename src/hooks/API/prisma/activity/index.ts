@@ -34,7 +34,7 @@ const activityTable = {
     return fetchedActivities
   },
   add: async (props: Data) => {
-    const required_fields = ['user_id']
+    const required_fields = ['user_id', 'place_id']
     handleRequired(required_fields, props)
 
     const id = randomUUID()
