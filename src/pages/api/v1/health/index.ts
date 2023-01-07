@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Response } from '@/hooks/API/prisma'
 
