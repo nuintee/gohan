@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma'
+import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 import { resultFilter } from '..'
 import { Id, UserId, ListFilter, MutateProps, ListProps } from '../types'
@@ -6,7 +7,7 @@ import { Id, UserId, ListFilter, MutateProps, ListProps } from '../types'
 type Data = {
   place_id: string
   is_liked: boolean
-}
+} & UserId
 
 const activityTable = {
   get: async (props: Id) => {
