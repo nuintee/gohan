@@ -1,14 +1,10 @@
 import { handleRequest, activityTable, Response } from '@/hooks/API/prisma'
-import prisma from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-type Data = {
-  name: string
-}
 
 // GET | PATCH | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
-  const { activity_id } = req.query
+  const activity_id = req.query.activity_id as string
+
   switch (req.method) {
     case 'GET':
       await handleRequest(() => activityTable.get({ id: activity_id }), res)

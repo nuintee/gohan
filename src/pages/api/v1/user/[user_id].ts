@@ -1,23 +1,18 @@
-import prisma from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { handleRequest, userTable, Response } from '@/hooks/API/prisma'
 
-type Data = {
-  name: string
-}
-
 // GET | PATCH | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
-  const { userId } = req.query
+  const user_id = req.query.user_id as string
   switch (req.method) {
     case 'GET':
-      await handleRequest(() => userTable.get({ id: userId }), res)
+      await handleRequest(() => userTable.get({ id: user_id }), res)
       break
     case 'PATCH':
-      await handleRequest(() => userTable.patch({ id: userId, ...req.body }), res)
+      await handleRequest(() => userTable.patch({ id: user_id, ...req.body }), res)
       break
     case 'DELETE':
-      await handleRequest(() => userTable.delete({ id: userId }), res)
+      await handleRequest(() => userTable.delete({ id: user_id }), res)
       break
     default:
       break
