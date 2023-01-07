@@ -156,8 +156,12 @@ type Props = {
 //   )
 // }
 
-const Home = () => {
-  return <div></div>
+const Home = (props) => {
+  return (
+    <div className='relative h-screen w-screen overflow-hidden'>
+      <MapBox />
+    </div>
+  )
 }
 
 export const getServerSideProps = async (ctx: any) => {
