@@ -36,7 +36,8 @@ const handleRequired = <T extends {}>(fields: string[], src: T) => {
     missing_fields.push(field)
   })
 
-  if (missing_fields.length) throw new Error(`${missing_fields} is required`)
+  if (missing_fields.length)
+    throw new Error(`${missing_fields} ${missing_fields.length > 1 ? 'are' : 'is'} required`)
 }
 
 const handleRequest = async (action: Function, res: NextApiResponse<Response>) => {
