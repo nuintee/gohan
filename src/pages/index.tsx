@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 // Hooks
-import { useModals, useSidebar, useToast, useGeoLocation } from '@/hooks/context'
+import { useModals, useSidebar, useToast } from '@/hooks/context'
 
 // Components
 import Modal from '@/components/Modal'
@@ -16,9 +16,9 @@ import Toast from '@/components/Toast'
 import { Restaurant } from '@/components/Restaurant'
 import DevPanel from '@/components/DevPanel'
 
-// InitialValues
-import { initialStates } from '@/components/Button/Action/constants'
-import useDirections from '@/components/MapBox/hooks/Directions'
+// // InitialValues
+// import { initialStates } from '@/components/Button/Action/constants'
+// import useDirections from '@/components/MapBox/hooks/Directions'
 
 // Icons
 import { IoMdLocate } from 'react-icons/io'
@@ -33,127 +33,131 @@ type Props = {
   ip: string
 }
 
-const Home = (props: Props) => {
-  const [searchButton, setSearchButton] = useState(initialStates)
-  const { modalsState, manageModal } = useModals()
-  const { sidebarState, manageSidebar } = useSidebar()
-  const { toastState, manageToast } = useToast()
-  const { geoState, flyTo, isFindingRoute, shopDetail, setIsFindingRouting } = useGeoLocation()
-  const { data: session, status } = useSession()
-  const {
-    isLocationReady,
-    isAnyNavigation,
-    isNavigatingCurrent,
-    showDetails,
-    routeTo,
-    onGetPlaces,
-    onNavigateClicked,
-    onSearchClick,
-  } = useDirections()
+// const Home = (props: Props) => {
+//   const [searchButton, setSearchButton] = useState(initialStates)
+//   const { modalsState, manageModal } = useModals()
+//   const { sidebarState, manageSidebar } = useSidebar()
+//   const { toastState, manageToast } = useToast()
+//   const { geoState, flyTo, isFindingRoute, shopDetail, setIsFindingRouting } = useGeoLocation()
+//   const { data: session, status } = useSession()
+//   const {
+//     isLocationReady,
+//     isAnyNavigation,
+//     isNavigatingCurrent,
+//     showDetails,
+//     routeTo,
+//     onGetPlaces,
+//     onNavigateClicked,
+//     onSearchClick,
+//   } = useDirections()
 
-  const useSearchButton = () => {
-    const setLoading = (is: boolean) => {
-      setSearchButton((prev) => ({ ...prev, loading: is }))
-    }
+//   const useSearchButton = () => {
+//     const setLoading = (is: boolean) => {
+//       setSearchButton((prev) => ({ ...prev, loading: is }))
+//     }
 
-    const setMode = (mode: setModePayload) => {
-      setSearchButton((prev) => ({ ...prev, mode }))
-    }
+//     const setMode = (mode: setModePayload) => {
+//       setSearchButton((prev) => ({ ...prev, mode }))
+//     }
 
-    return { setLoading, setMode }
-  }
+//     return { setLoading, setMode }
+//   }
 
-  const usedSearch = useSearchButton()
+//   const usedSearch = useSearchButton()
 
-  return (
-    <>
-      <Toast
-        {...toastState}
-        onClose={() =>
-          manageToast({
-            isOpen: false,
-          })
-        }
-      />
-      <div className='relative h-screen w-screen overflow-hidden'>
-        <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-          <div className='flex gap-2 items-center flex-1 flex-wrap'>
-            <User loading={status === 'loading'} onClick={() => {}} />
-            <DevPanel
-              useragent={{
-                ip: props.ip,
-              }}
-            />
-          </div>
-          <Acitvity
-            locked={status !== 'authenticated'}
-            onClick={() => manageSidebar('activity', true)}
-          />
-        </header>
-        <main>
-          {isLocationReady && <MapBox />}
-          <div
-            className={`absolute top-0 left-0 z-[-1] bg-gh-white h-screen w-screen flex items-center justify-center duration-500 ${
-              isLocationReady ? 'scale-0' : 'scale-100'
-            }`}
-          >
-            <p>
-              {!geoState.error?.is
-                ? isLocationReady
-                  ? ''
-                  : 'Loading'
-                : 'Please Allow Geolocation'}
-            </p>
-          </div>
-          <Sidebar
-            title='Activities'
-            isOpen={sidebarState.activity.isOpen}
-            onClose={() => manageSidebar('activity', false)}
-          />
-        </main>
-        <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
-          {isAnyNavigation && Object.keys(shopDetail)?.length ? (
-            <Restaurant.Small
-              info={shopDetail}
-              onClick={() => showDetails(shopDetail)}
-              state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
-            />
-          ) : null}
-          <Action
-            mode={isAnyNavigation ? 'close' : 'search'}
-            type={searchButton.type}
-            onClick={() => onSearchClick(usedSearch)}
-            loading={searchButton.loading}
-          />
-          {isLocationReady && (
-            <button
-              onClick={() => flyTo(geoState)}
-              className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-opacity-90 active:scale-90'
-            >
-              <IoMdLocate size={20} />
-            </button>
-          )}
-        </footer>
-      </div>
-      <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
-      <Modal.Details
-        state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
-        isOpen={modalsState.details.isOpen}
-        onClose={() => manageModal('details', false)}
-        onNavigate={() =>
-          onNavigateClicked(shopDetail?.geometry?.location, () => usedSearch.setMode('close'))
-        }
-        isNavigating={isNavigatingCurrent}
-        info={shopDetail}
-        isLoading={isFindingRoute}
-      />
-      <Modal.Confirm
-        isOpen={modalsState.confirm.isOpen}
-        type={'like'}
-        onClose={() => manageModal('confirm', false)}
-      />
-    </>
-  )
+//   return (
+//     <>
+//       <Toast
+//         {...toastState}
+//         onClose={() =>
+//           manageToast({
+//             isOpen: false,
+//           })
+//         }
+//       />
+//       <div className='relative h-screen w-screen overflow-hidden'>
+//         <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
+//           <div className='flex gap-2 items-center flex-1 flex-wrap'>
+//             <User loading={status === 'loading'} onClick={() => {}} />
+//             <DevPanel
+//               useragent={{
+//                 ip: props.ip,
+//               }}
+//             />
+//           </div>
+//           <Acitvity
+//             locked={status !== 'authenticated'}
+//             onClick={() => manageSidebar('activity', true)}
+//           />
+//         </header>
+//         <main>
+//           {isLocationReady && <MapBox />}
+//           <div
+//             className={`absolute top-0 left-0 z-[-1] bg-gh-white h-screen w-screen flex items-center justify-center duration-500 ${
+//               isLocationReady ? 'scale-0' : 'scale-100'
+//             }`}
+//           >
+//             <p>
+//               {!geoState.error?.is
+//                 ? isLocationReady
+//                   ? ''
+//                   : 'Loading'
+//                 : 'Please Allow Geolocation'}
+//             </p>
+//           </div>
+//           <Sidebar
+//             title='Activities'
+//             isOpen={sidebarState.activity.isOpen}
+//             onClose={() => manageSidebar('activity', false)}
+//           />
+//         </main>
+//         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
+//           {isAnyNavigation && Object.keys(shopDetail)?.length ? (
+//             <Restaurant.Small
+//               info={shopDetail}
+//               onClick={() => showDetails(shopDetail)}
+//               state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
+//             />
+//           ) : null}
+//           <Action
+//             mode={isAnyNavigation ? 'close' : 'search'}
+//             type={searchButton.type}
+//             onClick={() => onSearchClick(usedSearch)}
+//             loading={searchButton.loading}
+//           />
+//           {isLocationReady && (
+//             <button
+//               onClick={() => flyTo(geoState)}
+//               className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-opacity-90 active:scale-90'
+//             >
+//               <IoMdLocate size={20} />
+//             </button>
+//           )}
+//         </footer>
+//       </div>
+//       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
+//       <Modal.Details
+//         state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
+//         isOpen={modalsState.details.isOpen}
+//         onClose={() => manageModal('details', false)}
+//         onNavigate={() =>
+//           onNavigateClicked(shopDetail?.geometry?.location, () => usedSearch.setMode('close'))
+//         }
+//         isNavigating={isNavigatingCurrent}
+//         info={shopDetail}
+//         isLoading={isFindingRoute}
+//       />
+//       <Modal.Confirm
+//         isOpen={modalsState.confirm.isOpen}
+//         type={'like'}
+//         onClose={() => manageModal('confirm', false)}
+//       />
+//     </>
+//   )
+// }
+
+const Home = () => {
+  return <div></div>
 }
 
 export const getServerSideProps = async (ctx: any) => {
