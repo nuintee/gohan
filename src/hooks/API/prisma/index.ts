@@ -28,6 +28,12 @@ const resultFilter = (listFilters: ListFilter) => {
   }
 }
 
+const handleRequired = (fields: string[], src: Data) => {
+  const missing_fields = fields.map((field) => (!src.hasOwnProperty(field) ? field : null))
+
+  if (missing_fields.length) throw new Error(`${missing_fields} is required`)
+}
+
 const handleRequest = async (action: Function, res: NextApiResponse<Response>) => {
   try {
     const result = await action()
@@ -52,4 +58,4 @@ const handleRequest = async (action: Function, res: NextApiResponse<Response>) =
   }
 }
 
-export { userTable, activityTable, handleRequest, resultFilter }
+export { userTable, activityTable, handleRequest, resultFilter, handleRequired }

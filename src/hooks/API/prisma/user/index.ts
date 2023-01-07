@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
-import { resultFilter } from '..'
+import { resultFilter, handleRequired } from '..'
 import { Id, MutateProps, ListFilter } from '../types'
 
 type Data = {
@@ -24,11 +24,7 @@ const userTable = {
   add: async (props: Data) => {
     const required_fields = ['email', 'username']
 
-    const missing_fields = required_fields.map((field) =>
-      !props.hasOwnProperty(field) ? field : null,
-    )
-
-    if (missing_fields.length) throw new Error(`${missing_fields} is required`)
+    handleRequired(required_fields, props)
 
     const id = randomUUID()
     const addedUser = await prisma.user.create({
