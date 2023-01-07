@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { CurrentPostion } from '@/icons'
 import { type FC } from 'react'
 import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-gl'
+import { useMapBox } from '@/hooks/context'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
@@ -9,7 +10,7 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 export type MapBoxProps = {}
 
 const MapBox: FC<MapBoxProps> = (props) => {
-  const mapRef = useRef(null)
+  const { mapBoxRef, setMapBoxState, mapBoxState } = useMapBox()
 
   const onLoad = () => {}
   const onClick = () => {}
@@ -17,15 +18,11 @@ const MapBox: FC<MapBoxProps> = (props) => {
   return (
     <div className='w-screen h-screen'>
       <Map
-        initialViewState={{
-          longitude: -100,
-          latitude: 40,
-          zoom: 17,
-        }}
+        initialViewState={mapBoxState}
         style={{ width: '100vw', height: '100vh' }}
         mapStyle='mapbox://styles/mapbox/streets-v11'
         mapboxAccessToken={mapboxAccessToken}
-        ref={mapRef}
+        ref={mapBoxRef}
         onLoad={onLoad}
         onClick={onClick}
         renderWorldCopies={false}
