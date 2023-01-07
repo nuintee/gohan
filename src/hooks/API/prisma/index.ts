@@ -4,6 +4,7 @@ import userTable from './user'
 import activityTable from './activity'
 import { ListFilter } from './types'
 import type { User, Activity } from '@prisma/client'
+import { _PRISMA_ERROR_CODES } from './constants'
 
 type Data = User | User[] | Activity | Activity[]
 
@@ -40,26 +41,10 @@ const handleRequired = <T extends {}>(fields: string[], src: T) => {
     throw new Error(`${missing_fields} ${missing_fields.length > 1 ? 'are' : 'is'} required`)
 }
 
-const _prismaErrors = [
-  {
-    code: 'P1000',
-    message:
-      'Authentication failed against database server at {database_host}, the provided database credentials for {database_user} are not valid. Please make sure to provide valid database credentials for the database server at {database_host}.',
-  },
-  {
-    code: 'P2002',
-    message: 'There is a unique constraint violation, a new user cannot be created with this email',
-  },
-  {
-    code: 'P2003',
-    message: 'Foreign key constraint failed on the field: {field_name}',
-  },
-]
-
 const _prismaErrorMapper = (error: Prisma.PrismaClientKnownRequestError) => {
   let message = ''
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    _prismaErrors.forEach((e) => {
+    _PRISMA_ERROR_CODES.forEach((e) => {
       if (e.code === error.code) {
         message = e.message
       }

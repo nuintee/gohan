@@ -1,4 +1,4 @@
-export const _primsa_errors = [
+export const _PRISMA_ERROR_CODES = [
   {
     code: 'P1000',
     message:
