@@ -1,13 +1,13 @@
 import prisma from '@/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { handleRequest, userTable } from '@/hooks/API/prisma'
+import { handleRequest, userTable, Response } from '@/hooks/API/prisma'
 
 type Data = {
   name: string
 }
 
 // GET | PATCH | DELETE
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
   const { userId } = req.query
   switch (req.method) {
     case 'GET':

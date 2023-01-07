@@ -3,6 +3,16 @@ import { NextApiResponse } from 'next'
 import userTable from './user'
 import activityTable from './activity'
 import { ListFilter } from './types'
+import type { User, Activity } from '@prisma/client'
+
+type Data = User | User[] | Activity | Activity[]
+
+type Error = {
+  message?: string | undefined
+  code?: number | undefined
+}
+
+export type Response = Data | Error
 
 const resultFilter = (listFilters: ListFilter) => {
   const { offset, limit, ...rest } = listFilters
@@ -14,7 +24,7 @@ const resultFilter = (listFilters: ListFilter) => {
   }
 }
 
-const handleRequest = async (action: Function, res: NextApiResponse<Data>) => {
+const handleRequest = async (action: Function, res: NextApiResponse<Response>) => {
   try {
     const result = await action()
     res.status(200).json(result)
@@ -31,7 +41,10 @@ const handleRequest = async (action: Function, res: NextApiResponse<Data>) => {
       }
       res.status(500).json({ ...error, message })
     }
-    res.status(500).json(error)
+    res.status(500).json({
+      code: 500,
+      message: 'UNHANDLED_EXCEPTION',
+    })
   }
 }
 
