@@ -4,7 +4,6 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { useMapBox, useModals, useSidebar, useToast } from '@/hooks/context'
 
 // Components
-
 import Modal from '@/components/Modal'
 import MapBox from '@/components/MapBox'
 import { Action } from '@/components/Button'
