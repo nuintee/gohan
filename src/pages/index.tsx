@@ -1,5 +1,3 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import type { NextPage } from 'next'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 // Hooks
