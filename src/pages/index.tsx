@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { useMapBox, useModals, useSidebar, useToast } from '@/hooks/context'
 
 // Components
+
 import Modal from '@/components/Modal'
 import MapBox from '@/components/MapBox'
 import { Action } from '@/components/Button'
@@ -13,11 +14,6 @@ import Sidebar from '@/components/Sidebar'
 import Toast from '@/components/Toast'
 import { Restaurant } from '@/components/Restaurant'
 import DevPanel from '@/components/DevPanel'
-
-// Icons
-import { IoMdLocate } from 'react-icons/io'
-import { Copy } from '@/icons'
-import useGPS from '@/hooks/context/GPS'
 
 // Types
 type setModePayload = {
