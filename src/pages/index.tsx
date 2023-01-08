@@ -158,26 +158,37 @@ type Props = {
 // }
 
 const Home = (props) => {
+  const { toastState, manageToast } = useToast()
   const { data: session, status } = useSession()
 
   return (
-    <div className='relative h-screen w-screen overflow-hidden'>
-      <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-        <div className='flex gap-2 items-center flex-1 flex-wrap'>
-          <User loading={status === 'loading'} onClick={() => {}} />
-          <DevPanel
-            useragent={{
-              ip: props.ip,
-            }}
+    <>
+      <Toast
+        {...toastState}
+        onClose={() =>
+          manageToast({
+            isOpen: false,
+          })
+        }
+      />
+      <div className='relative h-screen w-screen overflow-hidden'>
+        <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
+          <div className='flex gap-2 items-center flex-1 flex-wrap'>
+            <User loading={status === 'loading'} onClick={() => {}} />
+            <DevPanel
+              useragent={{
+                ip: props.ip,
+              }}
+            />
+          </div>
+          <Acitvity
+            locked={status !== 'authenticated'}
+            onClick={() => manageSidebar('activity', true)}
           />
-        </div>
-        <Acitvity
-          locked={status !== 'authenticated'}
-          onClick={() => manageSidebar('activity', true)}
-        />
-      </header>
-      <MapBox />
-    </div>
+        </header>
+        <MapBox />
+      </div>
+    </>
   )
 }
 
