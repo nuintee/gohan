@@ -9,6 +9,7 @@ const GPSContext = createContext({
   setInitialPosition: typeof useState,
   currentPosition: {},
   setCurerntPosition: typeof useState,
+  setToDefaultGPS: Function,
 })
 
 const GPSProvider = (props) => {
@@ -25,6 +26,10 @@ const GPSProvider = (props) => {
   })
 
   const isMoved = JSON.stringify(currentPosition) !== JSON.stringify(initialPosition)
+
+  const setToDefaultGPS = () => {
+    setCurerntPosition(initialPosition)
+  }
 
   useState(() => {
     const init = async () => {
@@ -44,6 +49,7 @@ const GPSProvider = (props) => {
     initialPosition,
     currentPosition,
     setCurerntPosition,
+    setToDefaultGPS,
     isMoved,
   }
 

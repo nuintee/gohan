@@ -14,12 +14,9 @@ const DevPanel = (props) => {
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const { toastState, setToastState, manageToast } = useToast()
-  const { mapBoxState, setMapBoxState } = useMapBox()
-  const { initialPosition, isMoved, currentPosition } = useGPS()
-
-  const setCoordsToDefault = () => {
-    setMapBoxState((prev) => ({ ...prev, ...initialPosition }))
-  }
+  const { mapBoxState, setMapBoxState, isViewStateChanged, setToDefaultViewState, MAPBOX_DEFAULT } =
+    useMapBox()
+  const { initialPosition, isMoved, currentPosition, setToDefaultGPS } = useGPS()
 
   const setFakeAuth = (bool) => {
     if (!bool) {
@@ -78,14 +75,14 @@ const DevPanel = (props) => {
       value: `${mapBoxState.latitude}, ${mapBoxState.longitude}`,
       allowCopy: true,
       allowReset: true,
-      disabledReset: isMoved,
-      onReset: setCoordsToDefault,
+      disabledReset: !isViewStateChanged,
+      onReset: setToDefaultViewState,
       children: Object.keys(mapBoxState)
         .filter((v) => !['padding'].includes(v))
         .map((v, index) => (
           <Indicator
             label={v}
-            supportText={initialPosition[v]?.toString()}
+            supportText={MAPBOX_DEFAULT[v]?.toString()}
             value={mapBoxState[v]?.toString()}
             allowCopy
           />
@@ -100,8 +97,8 @@ const DevPanel = (props) => {
       value: `${currentPosition.latitude}, ${currentPosition.longitude}`,
       allowCopy: true,
       allowReset: true,
-      disabledReset: isMoved,
-      onReset: setCoordsToDefault,
+      disabledReset: !isMoved,
+      onReset: setToDefaultGPS,
       children: Object.keys(currentPosition)
         .filter((v) => !['padding'].includes(v))
         .map((v, index) => (
