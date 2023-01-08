@@ -2,8 +2,10 @@ import React, { useState, useRef, createContext, ReactNode } from 'react'
 
 const GPSContext = createContext({
   initialPosition: {
-    latitude: undefined,
+    latitude: null,
+    longitude: null,
   },
+  isMoved: false,
   setInitialPosition: typeof useState,
   currentPosition: {},
   setCurerntPosition: typeof useState,

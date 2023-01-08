@@ -83,8 +83,17 @@ const DevPanel = (props) => {
       children: Object.keys(mapBoxState)
         .filter((v) => !['padding'].includes(v))
         .map((v, index) => (
-          <Indicator label={v} supportText={initialPosition[v]} value={mapBoxState[v]} allowCopy />
+          <Indicator
+            label={v}
+            supportText={initialPosition[v]?.toString()}
+            value={mapBoxState[v]?.toString()}
+            allowCopy
+          />
         )),
+    },
+    {
+      label: 'Map Control',
+      children: labels.map((label) => <Label {...label}>{label.children}</Label>),
     },
     {
       label: 'Current Location',
@@ -103,10 +112,6 @@ const DevPanel = (props) => {
             allowCopy
           />
         )),
-    },
-    {
-      label: 'Map Control',
-      children: labels.map((label) => <Label {...label}>{label.children}</Label>),
     },
     {
       label: 'App Info',

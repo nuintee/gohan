@@ -18,7 +18,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
   return (
     <div className='w-screen h-screen'>
       <Map
-        onMove={(e) => setMapBoxState(e.viewState)}
+        onMove={(e) => setMapBoxState((prev) => ({ ...prev, ...e.viewState }))}
         initialViewState={mapBoxState}
         style={{ width: '100vw', height: '100vh' }}
         mapStyle='mapbox://styles/mapbox/streets-v11'
