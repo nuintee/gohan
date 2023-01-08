@@ -27,6 +27,19 @@ type Props = {
 import Texts from '../Restaurant/Texts'
 import { Regular } from '@/components/Button/index'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+import Tab from '../Tab'
+
+const tabs = [
+  {
+    label: 'Signin',
+    id: 0,
+  },
+  {
+    label: 'Singup',
+    id: 1,
+  },
+]
 
 const Layout = (props: Props) => {
   const { children, isOpen } = props
@@ -101,6 +114,7 @@ const Details = (props: DetailsType) => {
 const User = (props: Props) => {
   const { isOpen, onClose } = props
   const { data: session } = useSession()
+  const [selecteTabId, setSelectedTabId] = useState(0)
 
   if (!session) {
     return (
@@ -111,6 +125,7 @@ const User = (props: Props) => {
           }`}
         >
           <Header title='Signup' onClose={onClose} />
+          <Tab tabs={tabs} selectedId={selecteTabId} onSelect={(id) => setSelectedTabId(id)} />
           <main className='p-4 flex flex-col gap-4'>
             {users.map((conf, index) => (
               <Input {...conf} label={conf.label} action={conf.action} key={index} />
