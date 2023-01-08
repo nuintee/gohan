@@ -23,6 +23,7 @@ import DevPanel from '@/components/DevPanel'
 // Icons
 import { IoMdLocate } from 'react-icons/io'
 import { Copy } from '@/icons'
+import useGPS from '@/hooks/context/GPS'
 
 // Types
 type setModePayload = {
@@ -157,12 +158,24 @@ type Props = {
 // }
 
 const Home = (props) => {
-  const { setMapBoxState, mapBoxState } = useMapBox()
+  const { mapBoxState } = useMapBox()
+  const { initialPosition, isMoved, setCurerntPosition, currentPosition } = useGPS()
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <header className='absolute top-0 left-0 z-[100]'>
-        <p>{JSON.stringify(mapBoxState)}</p>
+        <button
+          onClick={() => setCurerntPosition((prev) => ({ ...prev, latitude: prev.latitude + 10 }))}
+        >
+          update pos
+        </button>
+        <p>MB {JSON.stringify(mapBoxState)}</p>
+        <p>
+          IP {JSON.stringify(initialPosition)} {isMoved.toString()}
+        </p>
+        <p>
+          CP {JSON.stringify(currentPosition)} {isMoved.toString()}
+        </p>
       </header>
       <MapBox />
     </div>
