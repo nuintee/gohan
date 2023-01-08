@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 // Hooks
-import { useModals, useSidebar, useToast } from '@/hooks/context'
+import { useMapBox, useModals, useSidebar, useToast } from '@/hooks/context'
 
 // Components
 import Modal from '@/components/Modal'
@@ -157,8 +157,18 @@ type Props = {
 // }
 
 const Home = (props) => {
+  const { setMapBoxState, mapBoxState } = useMapBox()
+
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
+      <header className='absolute top-0 left-0 z-[100]'>
+        <button
+          onClick={() => setMapBoxState((prev) => ({ ...prev, moveOnClick: !prev.moveOnClick }))}
+        >
+          Update lat
+        </button>
+        <p>{JSON.stringify(mapBoxState)}</p>
+      </header>
       <MapBox />
     </div>
   )
