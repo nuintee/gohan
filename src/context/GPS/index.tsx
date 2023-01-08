@@ -5,7 +5,15 @@ const GPSContext = createContext({})
 const GPSProvider = (props) => {
   const { children } = props
 
-  const value = {}
+  const [initialPosition, setInitialPosition] = useState({})
+  const [currentPosition, setCurerntPosition] = useState({})
+
+  const value = {
+    initialPosition,
+    setInitialPosition,
+    currentPosition,
+    setCurerntPosition,
+  }
 
   return <GPSContext.Provider value={value}>{children}</GPSContext.Provider>
 }
