@@ -26,6 +26,7 @@ type Props = {
 // Component
 import Texts from '../Restaurant/Texts'
 import { Regular } from '@/components/Button/index'
+import { useSession } from 'next-auth/react'
 
 const Layout = (props: Props) => {
   const { children, isOpen } = props
@@ -99,6 +100,30 @@ const Details = (props: DetailsType) => {
 
 const User = (props: Props) => {
   const { isOpen, onClose } = props
+  const { data: session } = useSession()
+
+  if (!session) {
+    return (
+      <Layout isOpen={isOpen}>
+        <section
+          className={`bg-white duration-700 rounded-md min-w-[20rem] ${
+            isOpen ? 'scale-100' : 'scale-0'
+          }`}
+        >
+          <Header title='Signup' onClose={onClose} />
+          <main className='p-4 flex flex-col gap-4'>
+            {users.map((conf, index) => (
+              <Input {...conf} label={conf.label} action={conf.action} key={index} />
+            ))}
+          </main>
+          <hr></hr>
+          <footer className='p-4 flex flex-col gap-2'>
+            <Regular text='Signup' />
+          </footer>
+        </section>
+      </Layout>
+    )
+  }
 
   return (
     <Layout isOpen={isOpen}>
