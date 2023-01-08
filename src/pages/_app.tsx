@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 
 // Context
-import { MapBox, Modals, Sidebar, Toast, GPS } from '@/context'
+import { MapBox, Modals, Sidebar, Toast, GPS, Restaurants } from '@/context'
 import { Session } from 'next-auth'
 
 if (process.env.NODE_ENV === 'development') {
@@ -21,7 +21,9 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
           <MapBox.MapBoxProvider>
             <Modals.ModalsProvider>
               <Sidebar.SidebarProvider>
-                <Component {...pageProps} />
+                <Restaurants.RestaurantsProvider>
+                  <Component {...pageProps} />
+                </Restaurants.RestaurantsProvider>
               </Sidebar.SidebarProvider>
             </Modals.ModalsProvider>
           </MapBox.MapBoxProvider>

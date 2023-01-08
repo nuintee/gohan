@@ -19,7 +19,9 @@ const RestaurantsContext = createContext({})
 const RestaurantsProvider = (props: Props) => {
   const { children } = props
 
-  const value = {}
+  const value = {
+    name: 2,
+  }
 
   return <RestaurantsContext.Provider value={value}>{children}</RestaurantsContext.Provider>
 }
