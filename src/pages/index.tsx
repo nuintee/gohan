@@ -16,10 +16,6 @@ import Toast from '@/components/Toast'
 import { Restaurant } from '@/components/Restaurant'
 import DevPanel from '@/components/DevPanel'
 
-// // InitialValues
-// import { initialStates } from '@/components/Button/Action/constants'
-// import useDirections from '@/components/MapBox/hooks/Directions'
-
 // Icons
 import { IoMdLocate } from 'react-icons/io'
 import { Copy } from '@/icons'
