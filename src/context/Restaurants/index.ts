@@ -24,9 +24,9 @@ const RestaurantsProvider = (props: Props) => {
   return <RestaurantsContext.Provider value={value}>{children}</RestaurantsContext.Provider>
 }
 
-const Sidebar = {
+const Restaurants = {
   RestaurantsContext,
   RestaurantsProvider,
 }
 
-export default Sidebar
+export default Restaurants
