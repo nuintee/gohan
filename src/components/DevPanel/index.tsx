@@ -1,4 +1,4 @@
-import { useGeoLocation, useToast } from '@/hooks/context'
+import { useGeoLocation, useMapBox, useToast } from '@/hooks/context'
 import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
@@ -7,21 +7,18 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 
 import { version } from '@/../package.json'
 import Input from '../Input'
+import useGPS from '@/hooks/context/GPS'
 
 const DevPanel = (props) => {
   const { useragent } = props
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const { toastState, setToastState, manageToast } = useToast()
-  const { flyTo, geoState, setIsMapClickable, isMapClickable, setGeoState } = useGeoLocation()
-  const { isLocationReady } = useDirections()
-
-  const DEFAULT_COORDS = useRef(null as any) // Must be global
-  const [isCoordsMoved, setIsCoordsMoved] = useState(false)
+  const { mapBoxState, setMapBoxState } = useMapBox()
+  const { initialPosition, isMoved, currentPosition } = useGPS()
 
   const setCoordsToDefault = () => {
-    console.dir(DEFAULT_COORDS.current)
-    setGeoState(DEFAULT_COORDS.current)
+    setMapBoxState((prev) => ({ ...prev, ...initialPosition }))
   }
 
   const setFakeAuth = (bool) => {
@@ -41,7 +38,10 @@ const DevPanel = (props) => {
       text: 'Move on click',
       spacing: 'justify-between',
       children: (
-        <SwitchButton defaultValue={isMapClickable} onChange={(bool) => setIsMapClickable(bool)} />
+        <SwitchButton
+          defaultValue={mapBoxState.moveOnClick}
+          onChange={(bool) => setMapBoxState((prev) => ({ ...prev, moveOnClick: bool }))}
+        />
       ),
     },
     {
@@ -50,18 +50,14 @@ const DevPanel = (props) => {
       children: (
         <Input
           type={'number'}
-          value={geoState?.zoom}
-          onChange={(e) => setGeoState((prev) => ({ ...prev, zoom: e.target.value }))}
+          value={mapBoxState?.zoom}
+          onChange={(e) => setMapBoxState((prev) => ({ ...prev, zoom: e.target.value }))}
         />
       ),
     },
   ]
 
   const sections = [
-    {
-      label: 'Actions',
-      children: <Button text='Go random' loading={!isLocationReady} onClick={flyTo} />,
-    },
     {
       label: 'Auth',
       children: (
@@ -78,19 +74,32 @@ const DevPanel = (props) => {
       children: <Indicator label='IP' value={useragent?.ip} allowCopy />,
     },
     {
-      label: 'Coords',
-      value: `${geoState.lat}, ${geoState.lng}`,
+      label: 'Mapbox',
+      value: `${mapBoxState.latitude}, ${mapBoxState.longitude}`,
       allowCopy: true,
       allowReset: true,
-      disabledReset: !isCoordsMoved,
+      disabledReset: isMoved,
       onReset: setCoordsToDefault,
-      children: Object.keys(geoState)
-        .filter((v) => !['error', 'IS_FIXED'].includes(v))
+      children: Object.keys(mapBoxState)
+        .filter((v) => !['padding'].includes(v))
+        .map((v, index) => (
+          <Indicator label={v} supportText={initialPosition[v]} value={mapBoxState[v]} allowCopy />
+        )),
+    },
+    {
+      label: 'Current Location',
+      value: `${currentPosition.latitude}, ${currentPosition.longitude}`,
+      allowCopy: true,
+      allowReset: true,
+      disabledReset: isMoved,
+      onReset: setCoordsToDefault,
+      children: Object.keys(currentPosition)
+        .filter((v) => !['padding'].includes(v))
         .map((v, index) => (
           <Indicator
             label={v}
-            supportText={DEFAULT_COORDS.current && DEFAULT_COORDS.current[v]}
-            value={geoState[v]}
+            supportText={initialPosition[v]}
+            value={currentPosition[v]}
             allowCopy
           />
         )),
@@ -104,19 +113,6 @@ const DevPanel = (props) => {
       children: <Indicator label='Version' value={version} allowCopy />,
     },
   ]
-
-  useEffect(() => {
-    if (!geoState.lat || !geoState.lng) return
-
-    if (!DEFAULT_COORDS.current?.IS_FIXED) {
-      DEFAULT_COORDS.current = { ...geoState, IS_FIXED: true }
-    } else {
-      const sameLat = DEFAULT_COORDS.current?.lat === geoState?.lat
-      const sameLng = DEFAULT_COORDS.current?.lng === geoState?.lng
-      const IS_MOVED = !sameLat || !sameLng
-      setIsCoordsMoved(IS_MOVED)
-    }
-  }, [geoState])
 
   if (process.env.NODE_ENV !== 'development') return <></>
 

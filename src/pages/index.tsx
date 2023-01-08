@@ -158,24 +158,23 @@ type Props = {
 // }
 
 const Home = (props) => {
-  const { mapBoxState } = useMapBox()
-  const { initialPosition, isMoved, setCurerntPosition, currentPosition } = useGPS()
+  const { data: session, status } = useSession()
 
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
-      <header className='absolute top-0 left-0 z-[100]'>
-        <button
-          onClick={() => setCurerntPosition((prev) => ({ ...prev, latitude: prev.latitude + 10 }))}
-        >
-          update pos
-        </button>
-        <p>MB {JSON.stringify(mapBoxState)}</p>
-        <p>
-          IP {JSON.stringify(initialPosition)} {isMoved.toString()}
-        </p>
-        <p>
-          CP {JSON.stringify(currentPosition)} {isMoved.toString()}
-        </p>
+      <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
+        <div className='flex gap-2 items-center flex-1 flex-wrap'>
+          <User loading={status === 'loading'} onClick={() => {}} />
+          <DevPanel
+            useragent={{
+              ip: props.ip,
+            }}
+          />
+        </div>
+        <Acitvity
+          locked={status !== 'authenticated'}
+          onClick={() => manageSidebar('activity', true)}
+        />
       </header>
       <MapBox />
     </div>

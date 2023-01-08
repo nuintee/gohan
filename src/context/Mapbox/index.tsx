@@ -9,6 +9,8 @@ const MapBoxContext = createContext({
     longitude: -100,
     latitude: 40,
     zoom: 17,
+    bearing: null,
+    padding: null,
   },
   setMapBoxState: typeof useState,
 })
@@ -22,6 +24,8 @@ const MapBoxProvider = (props) => {
     longitude: -100,
     latitude: 40,
     zoom: 17,
+    bearing: null,
+    padding: null,
   })
 
   const value = {
