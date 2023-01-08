@@ -1,26 +1,21 @@
 import React, { useState, createContext, ReactNode } from 'react'
 
-const initialValues = {
-  activity: {
-    isOpen: false,
-  },
-}
+import { ResultsEntity } from '@/hooks/context/Restaurants/types'
 
 type Props = {
   children: JSX.Element
 }
-
-type InitialValues = typeof initialValues
-
-type SidebarTypes = keyof InitialValues
 
 const RestaurantsContext = createContext({})
 
 const RestaurantsProvider = (props: Props) => {
   const { children } = props
 
+  const [restaurant, setRestaurant] = useState<ResultsEntity | {}>({})
+
   const value = {
-    name: 2,
+    restaurant,
+    setRestaurant,
   }
 
   return <RestaurantsContext.Provider value={value}>{children}</RestaurantsContext.Provider>
