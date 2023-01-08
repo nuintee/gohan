@@ -162,11 +162,6 @@ const Home = (props) => {
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <header className='absolute top-0 left-0 z-[100]'>
-        <button
-          onClick={() => setMapBoxState((prev) => ({ ...prev, moveOnClick: !prev.moveOnClick }))}
-        >
-          Update lat
-        </button>
         <p>{JSON.stringify(mapBoxState)}</p>
       </header>
       <MapBox />
