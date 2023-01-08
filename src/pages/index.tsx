@@ -159,6 +159,8 @@ type Props = {
 
 const Home = (props) => {
   const { toastState, manageToast } = useToast()
+  const { modalsState, manageModal } = useModals()
+  const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
 
   return (
@@ -186,8 +188,45 @@ const Home = (props) => {
             onClick={() => manageSidebar('activity', true)}
           />
         </header>
-        <MapBox />
+        <main>
+          <MapBox />
+          {/* <div
+            className={`absolute top-0 left-0 z-[-1] bg-gh-white h-screen w-screen flex items-center justify-center duration-500 ${
+              isLocationReady ? 'scale-0' : 'scale-100'
+            }`}
+          >
+            <p>
+              {!geoState.error?.is
+                ? isLocationReady
+                  ? ''
+                  : 'Loading'
+                : 'Please Allow Geolocation'}
+            </p>
+          </div> */}
+          <Sidebar
+            title='Activities'
+            isOpen={sidebarState.activity.isOpen}
+            onClose={() => manageSidebar('activity', false)}
+          />
+        </main>
       </div>
+      <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
+      {/* <Modal.Details
+        state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
+        isOpen={modalsState.details.isOpen}
+        onClose={() => manageModal('details', false)}
+        onNavigate={() =>
+          onNavigateClicked(shopDetail?.geometry?.location, () => usedSearch.setMode('close'))
+        }
+        isNavigating={isNavigatingCurrent}
+        info={shopDetail}
+        isLoading={isFindingRoute}
+      /> */}
+      <Modal.Confirm
+        isOpen={modalsState.confirm.isOpen}
+        type={'like'}
+        onClose={() => manageModal('confirm', false)}
+      />
     </>
   )
 }
