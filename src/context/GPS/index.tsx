@@ -15,15 +15,9 @@ const GPSContext = createContext({
 const GPSProvider = (props) => {
   const { children } = props
 
-  const [initialPosition, _setInitialPosition] = useState({
-    latitude: null,
-    longitude: null,
-  })
+  const [initialPosition, _setInitialPosition] = useState(DEFAULT_COORDS)
 
-  const [currentPosition, setCurerntPosition] = useState({
-    latitude: null,
-    longitude: null,
-  })
+  const [currentPosition, setCurerntPosition] = useState(DEFAULT_COORDS)
 
   const isMoved = JSON.stringify(currentPosition) !== JSON.stringify(initialPosition)
 
