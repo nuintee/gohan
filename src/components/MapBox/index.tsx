@@ -5,6 +5,7 @@ import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-g
 import { useMapBox } from '@/hooks/context'
 import useGPS from '@/hooks/context/GPS'
 import { CurrentLocationMarker, DestinationMarker } from './components'
+import { DEV_GEO_JSON, DEV_LAYER, DEV_TARGET_COORDS } from './data'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
@@ -40,12 +41,10 @@ const MapBox: FC<MapBoxProps> = (props) => {
         renderWorldCopies={false}
       >
         <CurrentLocationMarker coords={currentPosition} />
-        <DestinationMarker
-          coords={{
-            latitude: 42.64993295111122,
-            longitude: 23.407461507120896,
-          }}
-        />
+        <DestinationMarker coords={DEV_TARGET_COORDS} />
+        <Source data={DEV_GEO_JSON} type='geojson'>
+          <Layer {...DEV_LAYER} />
+        </Source>
         {/* {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
             <div className='relative'>

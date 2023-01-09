@@ -309,3 +309,30 @@ export const DEV_ROUTES = {
   code: 'Ok',
   uuid: 'ByRbUkX_4LmNmO7I2uA_2MMhqsd5IONY54-vJCX9P2IhxX7MKuwzVg==',
 }
+
+export const DEV_GEO_JSON = {
+  type: 'Feature',
+  properties: {},
+  geometry: {
+    type: 'LineString',
+    coordinates: DEV_ROUTES.routes[0].geometry.coordinates,
+  },
+}
+
+export const DEV_LAYER = {
+  id: 'route',
+  type: 'line',
+  source: {
+    type: 'geojson',
+    data: DEV_GEO_JSON,
+  },
+  layout: {
+    'line-join': 'round',
+    'line-cap': 'round',
+  },
+  paint: {
+    'line-color': '#3887be',
+    'line-width': 5,
+    'line-opacity': 0.75,
+  },
+}
