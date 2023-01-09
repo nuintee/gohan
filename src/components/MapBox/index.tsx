@@ -5,7 +5,8 @@ import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-g
 import { useMapBox } from '@/hooks/context'
 import useGPS from '@/hooks/context/GPS'
 import { CurrentLocationMarker, DestinationMarker } from './components'
-import { DEV_GEO_JSON, DEV_LAYER, DEV_TARGET_COORDS } from './data'
+import { DEV_GEO_JSON, DEV_LAYER, DEV_ROUTES, DEV_TARGET_COORDS } from './data'
+import useRestaurantSearch from '@/hooks/API/restaurant'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
@@ -15,8 +16,70 @@ export type MapBoxProps = {}
 const MapBox: FC<MapBoxProps> = (props) => {
   const { mapBoxRef, setMapBoxState, mapBoxState, isReady } = useMapBox()
   const { currentPosition } = useGPS()
+  const { getRoute } = useRestaurantSearch()
 
-  const onClick = () => {}
+  const [_directions, _setDirection] = useState({
+    layer: {
+      id: 'route',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: DEV_ROUTES.routes[0].geometry.coordinates,
+          },
+        },
+      },
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': '#3887be',
+        'line-width': 5,
+        'line-opacity': 0.75,
+      },
+    },
+  })
+
+  const onClick = async (e) => {
+    const { lngLat } = e
+    const { lat: latitude, lng: longitude } = lngLat
+    const coords = {
+      latitude,
+      longitude,
+    }
+
+    // GetRoute
+    const { coordinates, endpoint } = await getRoute({
+      profileType: 'walking',
+      start: currentPosition,
+      end: coords,
+    })
+    const { source, ...restLayer } = _directions.layer
+    const { data, ...restSource } = source
+    const { geometry, ...restData } = data
+    const { coordinates: crds, ...restGeometry } = geometry
+
+    _setDirection((prev) => ({
+      layer: {
+        ...restLayer,
+        source: {
+          ...restSource,
+          data: {
+            ...restData,
+            geometry: {
+              ...restGeometry,
+              crds: coordinates,
+            },
+          },
+        },
+      },
+    }))
+  }
   const onLoad = () => {}
 
   if (!isReady) {
@@ -42,9 +105,15 @@ const MapBox: FC<MapBoxProps> = (props) => {
       >
         <CurrentLocationMarker coords={currentPosition} />
         <DestinationMarker coords={DEV_TARGET_COORDS} />
-        <Source data={DEV_GEO_JSON} type='geojson'>
-          <Layer {...DEV_LAYER} />
+
+        <Source data={_directions.layer.source.data} type='geojson'>
+          <Layer {..._directions.layer} />
         </Source>
+
+        {/* <Source data={DEV_GEO_JSON} type='geojson'>
+          <Layer {...DEV_LAYER} />
+        </Source> */}
+
         {/* {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
             <div className='relative'>
