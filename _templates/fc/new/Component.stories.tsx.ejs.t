@@ -1,20 +1,19 @@
 ---
 to: <%= path %>/stories/<%= name%>.stories.tsx
 ---
-import { type ComponentMeta, type ComponentStoryObj } from "@storybook/react"
-import { <%= name %> } from "."
 
-type T = typeof <%= name %>
-type Meta = ComponentMeta<T>;
-type Story = ComponentStoryObj<T>;
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import Psah from '..'
 
 export default {
+  title: `<%= name %>`,
   component: <%= name %>,
-  <% if (have_props) { -%>
-  args: {},
-  <% } -%>
-} as Meta
+} as ComponentMeta<typeof <%= name %> >
 
+const <%= name %>Template: ComponentStory<typeof <%= name %>> = (args) => < <%= name %> {...args} />
 
-export const Default: Story = {}
+export const Default = <%= name %>Template.bind({})
 
+Default.args = {
+  type: 'text',
+}

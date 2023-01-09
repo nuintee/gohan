@@ -6,10 +6,12 @@ import { type FC } from "react";
 export type <%= name%>Props = {};
 <% } -%>
 
-export const <%= name%>: <%- type_annotate %> = <%= props %> => {
+const <%= name%>: <%- type_annotate %> = <%= props %> => {
   return (
     <div className="">
       <h1><%= name%></h1>
     </div>
   );
 };
+
+export default <%= name%>
