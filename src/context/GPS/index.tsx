@@ -51,8 +51,12 @@ const GPSProvider = (props) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords
-          _setInitialPosition({ latitude, longitude })
-          setCurerntPosition({ latitude, longitude })
+
+          if (process.env.NODE_ENV !== 'production') {
+          } else {
+            _setInitialPosition({ latitude, longitude })
+            setCurerntPosition({ latitude, longitude })
+          }
         },
         (err) => console.log(err),
         {
