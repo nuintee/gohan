@@ -14,6 +14,7 @@ import Toast from '@/components/Toast'
 import { Restaurant } from '@/components/Restaurant'
 import DevPanel from '@/components/DevPanel'
 import useRestaurants from '@/hooks/context/Restaurants'
+import useRestaurantSearch from '@/hooks/API/restaurant'
 
 // Types
 type setModePayload = {
@@ -153,6 +154,7 @@ const Home = (props) => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
+  const { getRoute } = useRestaurantSearch()
 
   // // Later separate to useGPS
   // const getRoute = async (baseCoords, targetCoords) => {}

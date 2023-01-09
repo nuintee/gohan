@@ -1,9 +1,20 @@
 import { RestaurantResult } from '@/context/Restaurants'
 import useRestaurants from '@/hooks/context/Restaurants'
 
+// constants
+import { Coords } from '@/constants/coords'
+
 export type RestaurantOptions = {
   drawRoute?: boolean
 }
+
+export type GetRouteProps = {
+  profileType?: 'walking'
+  start: Coords
+  end: Coords
+}
+
+const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 const useRestaurantSearch = () => {
   const { restaurant, setRestaurant } = useRestaurants()
@@ -23,9 +34,16 @@ const useRestaurantSearch = () => {
     setRestaurant({})
   }
 
-  const getRoute = async ({ profileType, start, end }) => {
+  const getRoute = async (props: GetRouteProps) => {
+    const { profileType, start, end } = props
+
+    function _formatCoords(coords: Coords) {
+      const { latitude, longitude } = coords
+      return `${latitude}, ${longitude}`
+    }
+
     try {
-      const base_coordinates = encodeURIComponent(`${start};${end}`)
+      const base_coordinates = encodeURIComponent(`${_formatCoords(start)};${_formatCoords(end)}`)
       const profile = `mapbox/${profileType || 'walking'}`
       const query = await fetch(
         `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&access_token=${mapboxAccessToken}`,
