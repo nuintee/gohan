@@ -18,6 +18,10 @@ const MapBox: FC<MapBoxProps> = (props) => {
   const onLoad = () => {}
   const onClick = () => {}
 
+  if (!isReady) {
+    return <div>Not Ready!</div>
+  }
+
   return (
     <div className='w-screen h-screen'>
       <Map
@@ -31,7 +35,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
         onClick={onClick}
         renderWorldCopies={false}
       >
-        {isReady && <CurrentLocationMarker coords={currentPosition} />}
+        <CurrentLocationMarker coords={currentPosition} />
         {/* {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
             <div className='relative'>
