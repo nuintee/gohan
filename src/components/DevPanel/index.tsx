@@ -8,6 +8,8 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import { version } from '@/../package.json'
 import Input from '../Input'
 import useGPS from '@/hooks/context/GPS'
+import useRestaurantSearch from '@/hooks/API/restaurant'
+import { DEFAULT_DEV_COORDS } from '@/constants/coords'
 
 const DevPanel = (props) => {
   const { useragent } = props
@@ -17,6 +19,12 @@ const DevPanel = (props) => {
   const { mapBoxState, setMapBoxState, isViewStateChanged, setToDefaultViewState, MAPBOX_DEFAULT } =
     useMapBox()
   const { initialPosition, isMoved, currentPosition, setToDefaultGPS } = useGPS()
+  const { getRoute } = useRestaurantSearch()
+
+  const FAKE_COORDS = {
+    latitude: 42.6485419,
+    longitude: 23.4086112,
+  }
 
   const setFakeAuth = (bool) => {
     if (!bool) {
@@ -55,6 +63,19 @@ const DevPanel = (props) => {
   ]
 
   const sections = [
+    {
+      label: 'Actions',
+      children: (
+        <>
+          <Button
+            text='Get Route'
+            onClick={() =>
+              getRoute({ profileType: 'walking', start: DEFAULT_DEV_COORDS, end: FAKE_COORDS })
+            }
+          />
+        </>
+      ),
+    },
     {
       label: 'Auth',
       children: (

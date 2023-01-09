@@ -54,7 +54,7 @@ const useRestaurantSearch = () => {
       const coordinates = routes?.map((route) => route.geometry.coordinates)
       const endpoint = waypoints.map((waypoint) => waypoint.location)
       // addSource
-      console.log(endpoint)
+      console.log(json)
     } catch (error) {
       console.error(error)
     }
