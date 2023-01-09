@@ -18,30 +18,6 @@ const MapBox: FC<MapBoxProps> = (props) => {
   const { currentPosition } = useGPS()
   const { getRoute } = useRestaurantSearch()
 
-  // layer: {
-  //   id: 'route',
-  //   type: 'line',
-  //   source: {
-  //     type: 'geojson',
-  //     data: {
-  //       id: 'base-route',
-  //       geometry: {
-  //         type: 'MultiLineString',
-  //         coordinates: DEV_ROUTES.routes[0].geometry.coordinates,
-  //       },
-  //     },
-  //   },
-  //   layout: {
-  //     'line-join': 'round',
-  //     'line-cap': 'round',
-  //   },
-  //   paint: {
-  //     'line-color': '#3887be',
-  //     'line-width': 5,
-  //     'line-opacity': 0.75,
-  //   },
-  // },
-
   const [_directions, _setDirection] = useState({
     source: DEV_GEO_JSON,
     layer: DEV_LAYER,
@@ -61,8 +37,6 @@ const MapBox: FC<MapBoxProps> = (props) => {
       start: currentPosition,
       end: coords,
     })
-
-    const { coordinates, endpoint } = data
 
     const geojson = {
       type: 'Feature',
