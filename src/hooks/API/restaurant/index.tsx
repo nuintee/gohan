@@ -1,13 +1,14 @@
+import { RestaurantResult } from '@/context/Restaurants'
 import useRestaurants from '@/hooks/context/Restaurants'
 
 const useRestaurantSearch = () => {
-  const { restaurant, setRestaurant, setIsFetching } = useRestaurants()
+  const { restaurant, setRestaurant } = useRestaurants()
 
   const getRestaurant = (options) => {
-    setIsFetching(true)
+    setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: true }))
     setTimeout(() => {
       // Fetch
-      setIsFetching(false)
+      setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
     }, 2000)
   }
 

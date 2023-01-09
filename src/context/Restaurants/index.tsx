@@ -8,9 +8,14 @@ type Props = {
 
 type RestaurantGetOptions = {}
 
+export type RestaurantResult = {
+  data: ResultsEntity
+  isFetching: boolean
+}
+
 const RestaurantsContext = createContext({
-  restaurant: {},
-  setRestaurant: useState<ResultsEntity | {}>,
+  restaurant: { data: {}, isNavigating: false, isFetching: false },
+  setRestaurant: useState<RestaurantResult | {}>,
   restaurantsList: [],
   setRestaurantsList: useState<ResultsEntity[] | []>,
   isFetching: false,
@@ -21,16 +26,13 @@ const RestaurantsProvider = (props: Props) => {
   const { children } = props
 
   const [restaurantsList, setRestaurantsList] = useState<ResultsEntity[] | []>([])
-  const [restaurant, setRestaurant] = useState<ResultsEntity | {}>({})
-  const [isFetching, setIsFetching] = useState(false)
+  const [restaurant, setRestaurant] = useState<RestaurantResult | {}>({})
 
   const value = {
     restaurant,
     setRestaurant,
     restaurantsList,
     setRestaurantsList,
-    isFetching,
-    setIsFetching,
   }
 
   return <RestaurantsContext.Provider value={value}>{children}</RestaurantsContext.Provider>
