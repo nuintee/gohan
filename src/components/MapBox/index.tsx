@@ -31,7 +31,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
         onClick={onClick}
         renderWorldCopies={false}
       >
-        <CurrentLocationMarker coords={currentPosition} />
+        {isReady && <CurrentLocationMarker coords={currentPosition} />}
         {/* {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
             <div className='relative'>
