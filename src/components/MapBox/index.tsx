@@ -69,12 +69,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
       properties: {},
       geometry: {
         type: 'LineString',
-        coordinates: [
-          [23.405573, 42.647569],
-          [23.417979, 42.628057],
-          [23.418371, 42.628349],
-          [23.406342, 42.649122],
-        ],
+        coordinates: data.routes[0].geometry.coordinates,
       },
     }
 

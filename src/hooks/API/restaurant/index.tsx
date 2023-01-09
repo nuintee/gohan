@@ -69,11 +69,18 @@ const useRestaurantSearch = () => {
       const { latitude, longitude } = coords
       return `${longitude},${latitude}`
     }
+
     const base_coordinates = encodeURIComponent(`${_formatCoords(start)};${_formatCoords(end)}`)
-    console.log(base_coordinates)
     const profile = `mapbox/${profileType || 'walking'}`
-    const baseURL = `https://api.mapbox.com/directions/v5/mapbox/${profile}/23.405602%2C42.647753%3B23.408221%2C42.649699?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`
-    return {}
+    const baseURL = `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`
+
+    try {
+      const query = await fetch(baseURL)
+      const data = await query.json()
+      return data
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return { getRestaurant, clearRestaurant, getRoute }
