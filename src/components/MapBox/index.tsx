@@ -19,7 +19,11 @@ const MapBox: FC<MapBoxProps> = (props) => {
   const onClick = () => {}
 
   if (!isReady) {
-    return <div>Not Ready!</div>
+    return (
+      <div className='h-screen w-screen bg-gh-dark flex items-center justify-center text-white'>
+        Loading map
+      </div>
+    )
   }
 
   return (
