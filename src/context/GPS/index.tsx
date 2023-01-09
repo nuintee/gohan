@@ -55,6 +55,11 @@ const GPSProvider = (props) => {
           setCurerntPosition({ latitude, longitude })
         },
         (err) => console.log(err),
+        {
+          maximumAge: 60000,
+          timeout: 5000,
+          enableHighAccuracy: true,
+        },
       )
     }
     init()
