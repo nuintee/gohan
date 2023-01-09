@@ -5,7 +5,6 @@ import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-g
 import { useMapBox } from '@/hooks/context'
 import useGPS from '@/hooks/context/GPS'
 import { CurrentLocationMarker, DestinationMarker } from './components'
-import { DEFAULT_DEV_COORDS } from '@/constants/coords'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
