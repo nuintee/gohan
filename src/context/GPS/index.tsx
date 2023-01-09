@@ -1,7 +1,7 @@
-import { DEFAULT_COORDS, DEFAULT_DEV_COORDS } from '@/constants/coords'
 import React, { useState, useRef, createContext, ReactNode } from 'react'
 
 // constants
+import { DEFAULT_COORDS, DEFAULT_DEV_COORDS } from '@/constants/coords'
 
 const GPSContext = createContext({
   initialPosition: DEFAULT_COORDS,
