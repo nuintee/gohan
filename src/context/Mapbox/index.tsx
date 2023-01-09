@@ -34,13 +34,17 @@ const MapBoxProvider = (props) => {
 
   const [isReady, setIsReady] = useState(false) // Later move inside GPS Provider
 
+  const locateUser = async () => {
+    await mapBoxRef.current?.flyTo({
+      center: [currentPosition?.longitude, currentPosition?.latitude],
+    })
+  }
+
   useEffect(() => {
     const init = async () => {
       if (!isPositionAvailable) return
       setMapBoxState((prev) => ({ ...prev, ...currentPosition }))
-      await mapBoxRef.current?.flyTo({
-        center: [currentPosition?.longitude, currentPosition?.latitude],
-      })
+      await locateUser()
       setIsReady(true)
     }
 
@@ -59,6 +63,7 @@ const MapBoxProvider = (props) => {
     isViewStateChanged,
     setToDefaultViewState,
     isReady,
+    locateUser,
   }
 
   return <MapBoxContext.Provider value={value}>{children}</MapBoxContext.Provider>

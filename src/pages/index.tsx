@@ -16,6 +16,8 @@ import DevPanel from '@/components/DevPanel'
 import useRestaurants from '@/hooks/context/Restaurants'
 import useRestaurantSearch from '@/hooks/API/restaurant'
 
+import { CurrentPostion } from '@/icons'
+
 // Types
 type setModePayload = {
   mode: 'close' | 'search'
@@ -243,6 +245,12 @@ const Home = (props) => {
             onClick={() => {}}
             loading={false}
           />
+          <button
+            onClick={() => flyTo(geoState)}
+            className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-opacity-90 active:scale-90'
+          >
+            <CurrentPostion />
+          </button>
           {/* {isLocationReady && (
             <button
               onClick={() => flyTo(geoState)}
