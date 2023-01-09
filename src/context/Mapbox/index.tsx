@@ -1,10 +1,12 @@
 import useGPS from '@/hooks/context/GPS'
 import React, { useState, useRef, createContext, ReactNode } from 'react'
 
+// constants
+import { DEFAULT_COORDS } from '@/constants/coords'
+
 const MAPBOX_DEFAULT = {
   moveOnClick: false,
-  longitude: 23.405578430147724,
-  latitude: 42.647803615748145,
+  ...DEFAULT_COORDS,
   zoom: 17,
   bearing: null,
   padding: null,
