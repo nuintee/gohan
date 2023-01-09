@@ -36,15 +36,13 @@ const MapBox: FC<MapBoxProps> = (props) => {
     }
 
     // GetRoute
-    const data = await getRoute({
+    const { coordinates } = await getRoute({
       profileType: 'walking',
       start: currentPosition,
       end: coords,
     })
 
-    const source = createSource({
-      coordinates: data?.routes[0].geometry.coordinates,
-    })
+    const source = createSource({ coordinates })
 
     _setDirection((prev) => source)
   }

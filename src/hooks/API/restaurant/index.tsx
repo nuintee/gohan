@@ -34,34 +34,6 @@ const useRestaurantSearch = () => {
     setRestaurant({})
   }
 
-  const _getRoute = async (props: GetRouteProps) => {
-    const { profileType, start, end } = props
-
-    function _formatCoords(coords: Coords) {
-      const { latitude, longitude } = coords
-      return `${latitude},${longitude}`
-    }
-
-    try {
-      const base_coordinates = encodeURIComponent(`${_formatCoords(start)};${_formatCoords(end)}`)
-      const profile = `mapbox/${profileType || 'walking'}`
-      const query = await fetch(
-        `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`,
-      )
-      const json = await query.json()
-      const routes = json?.routes
-      const waypoints = json?.waypoints
-      // const coordinates = routes?.map((route) => route.geometry.coordinates)
-      const coordinates = routes[0].geometry.coordinates
-      const endpoint = waypoints.map((waypoint) => waypoint.location)
-      // addSource
-      console.log(json)
-      return { coordinates, endpoint, res: json }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const getRoute = async (props: GetRouteProps) => {
     const { profileType, start, end } = props
 
@@ -77,7 +49,8 @@ const useRestaurantSearch = () => {
     try {
       const query = await fetch(baseURL)
       const data = await query.json()
-      return data
+      const coordinates = data?.routes[0].geometry.coordinates
+      return { data, coordinates }
     } catch (error) {
       console.error(error)
     }
