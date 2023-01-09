@@ -21,12 +21,13 @@ const MapBoxContext = createContext({
   isViewStateChanged: false,
   MAPBOX_DEFAULT,
   setToDefaultViewState: typeof Function,
+  isReady: false,
 })
 
 const MapBoxProvider = (props) => {
   const { children } = props
   const { currentPosition } = useGPS()
-  const mapBoxRef = useRef()
+  const mapBoxRef = useRef(null)
   const [mapBoxState, setMapBoxState] = useState(MAPBOX_DEFAULT)
 
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
@@ -34,10 +35,16 @@ const MapBoxProvider = (props) => {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    const init = () => {
+    const init = async () => {
       const _is_current_position_available =
         !!currentPosition.latitude && !!currentPosition.longitude
-      setIsReady(_is_current_position_available)
+
+      if (!_is_current_position_available) return
+      setMapBoxState((prev) => ({ ...prev, ...currentPosition }))
+      await mapBoxRef.current?.flyTo({
+        center: [currentPosition?.longitude, currentPosition?.latitude],
+      })
+      setIsReady(true)
     }
 
     init()

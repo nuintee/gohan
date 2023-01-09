@@ -12,13 +12,8 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 export type MapBoxProps = {}
 
 const MapBox: FC<MapBoxProps> = (props) => {
-  const { mapBoxRef, setMapBoxState, mapBoxState } = useMapBox()
+  const { mapBoxRef, setMapBoxState, mapBoxState, isReady } = useMapBox()
   const { currentPosition } = useGPS()
-
-  useEffect(() => {
-    if (!currentPosition.latitude || !currentPosition.longitude) return
-    setMapBoxState((prev) => ({ ...prev, ...currentPosition }))
-  }, [currentPosition])
 
   const onLoad = () => {}
   const onClick = () => {}
