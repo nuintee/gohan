@@ -2,10 +2,10 @@ import { Directions, LayerType, SourceType } from '../types'
 
 type MutableSource = {
   coordinates: number[][]
-  id: string
-  lineColor: string
-  lineWidth: number
-  lineOpacity: number
+  id?: string | 'base-route'
+  lineColor?: string
+  lineWidth?: number
+  lineOpacity?: number
 }
 
 const createSource = (payload: MutableSource): Directions => {
@@ -21,7 +21,7 @@ const createSource = (payload: MutableSource): Directions => {
   }
 
   const layer: LayerType = {
-    id,
+    id: id || 'base-route',
     type: 'line',
     source: {
       type: 'geojson',
