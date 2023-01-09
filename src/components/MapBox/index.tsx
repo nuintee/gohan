@@ -8,6 +8,9 @@ import { CurrentLocationMarker, DestinationMarker } from './components'
 import { DEV_GEO_JSON, DEV_LAYER, DEV_ROUTES, DEV_TARGET_COORDS } from './data'
 import useRestaurantSearch from '@/hooks/API/restaurant'
 
+// utils
+import { createSource } from './utils'
+
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
@@ -26,6 +29,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
   const onClick = async (e) => {
     const { lngLat } = e
     const { lat: latitude, lng: longitude } = lngLat
+
     const coords = {
       latitude,
       longitude,
@@ -38,34 +42,11 @@ const MapBox: FC<MapBoxProps> = (props) => {
       end: coords,
     })
 
-    const geojson = {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'LineString',
-        coordinates: data.routes[0].geometry.coordinates,
-      },
-    }
+    const source = createSource({
+      coordinates: data?.routes[0].geometry.coordinates,
+    })
 
-    const layer = {
-      id: 'route',
-      type: 'line',
-      source: {
-        type: 'geojson',
-        data: geojson,
-      },
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: {
-        'line-color': '#3887be',
-        'line-width': 5,
-        'line-opacity': 0.75,
-      },
-    }
-
-    _setDirection((prev) => ({ source: geojson, layer }))
+    _setDirection((prev) => source)
   }
   const onLoad = () => {}
 

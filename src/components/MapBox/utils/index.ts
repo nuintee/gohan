@@ -8,7 +8,7 @@ type MutableSource = {
   lineOpacity?: number
 }
 
-const createSource = (payload: MutableSource): Directions => {
+export const createSource = (payload: MutableSource): Directions => {
   const { coordinates, id, lineColor, lineWidth, lineOpacity } = payload
 
   const source: SourceType = {

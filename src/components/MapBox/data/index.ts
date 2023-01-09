@@ -331,7 +331,7 @@ export const DEV_LAYER = {
     'line-cap': 'round',
   },
   paint: {
-    'line-color': '#3887be',
+    'line-color': 'orange',
     'line-width': 5,
     'line-opacity': 0.75,
   },
