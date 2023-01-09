@@ -17,6 +17,7 @@ import useRestaurants from '@/hooks/context/Restaurants'
 import useRestaurantSearch from '@/hooks/API/restaurant'
 
 import { IoMdLocate } from 'react-icons/io'
+import useGPS from '@/hooks/context/GPS'
 
 // Types
 type setModePayload = {
