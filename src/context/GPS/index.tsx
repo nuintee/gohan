@@ -7,7 +7,10 @@ const GPSContext = createContext({
   },
   isMoved: false,
   setInitialPosition: typeof useState,
-  currentPosition: {},
+  currentPosition: {
+    latitude: null,
+    longitude: null,
+  },
   setCurerntPosition: typeof useState,
   setToDefaultGPS: Function,
 })
