@@ -13,6 +13,7 @@ import Sidebar from '@/components/Sidebar'
 import Toast from '@/components/Toast'
 import { Restaurant } from '@/components/Restaurant'
 import DevPanel from '@/components/DevPanel'
+import useRestaurants from '@/hooks/context/Restaurants'
 
 // Types
 type setModePayload = {
@@ -151,8 +152,35 @@ const Home = (props) => {
   const { modalsState, manageModal } = useModals()
   const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
+  const { restaurant } = useRestaurants()
 
-  // Later to separete
+  // // Later separate to useGPS
+  // const getRoute = async (baseCoords, targetCoords) => {}
+
+  // // Later separate to useMapBox
+  // const drawRoute = async (GEOJSON: typeof getRoute) => {}
+  // const clearRoute = async (routeId: '') => {} // clear route by id if provided, otherwise delete current
+
+  // // Later separate to useRestaurants
+  // const getRestaurant = async () => {} // state
+  // const clearRestaurant = () => {}
+  // const [isFetching, setIsFetching] = true
+  // const [isNavigating, setIsNavigating] = true // if restaurant navigation is true
+
+  // // Helper function useSearch (wrap funcitons above)
+  // const searchRestaurant = async () => {
+  //   setIsFetching(true)
+  //   const fetchedRestaurant = await getRestaurant()
+  //   setIsFetching(false)
+  //   setRestaurant(fetchedRestaurant)
+
+  //   const route = await getRoute({}, fetchedRestaurant.geometry)
+  //   await drawRoute(route)
+  //   setIsNavigating(true)
+
+  //   // update
+  //   return { route, fetchedRestaurant }
+  // }
 
   return (
     <>

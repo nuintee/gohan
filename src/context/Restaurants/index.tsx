@@ -8,7 +8,12 @@ type Props = {
 
 type RestaurantGetOptions = {}
 
-const RestaurantsContext = createContext({})
+const RestaurantsContext = createContext({
+  restaurant: {},
+  setRestaurant: useState<ResultsEntity | {}>,
+  restaurantsList: [],
+  setRestaurantsList: useState<ResultsEntity[] | []>,
+})
 
 const RestaurantsProvider = (props: Props) => {
   const { children } = props
