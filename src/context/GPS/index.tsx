@@ -31,7 +31,17 @@ const GPSProvider = (props) => {
     setCurerntPosition(initialPosition)
   }
 
-  async function getRoute(baseCoords, targetCoords) {}
+  const calculateDistance = (endCoords: number[], startCoods: number[], unit?: 'km' | 'm') => {
+    const _calculated =
+      Math.sqrt(
+        Math.pow(endCoords[0] - startCoods[0], 2) + Math.pow(endCoords[1] - startCoods[1], 2),
+      ) * 100
+    return {
+      raw: _calculated,
+      km: `${Math.round(_calculated * 1000) / 1000}${unit && 'km'}`,
+      m: `${Math.round(_calculated * 1000)}${unit && 'm'}`,
+    }
+  }
 
   useState(() => {
     const init = async () => {
@@ -52,6 +62,7 @@ const GPSProvider = (props) => {
     currentPosition,
     setCurerntPosition,
     setToDefaultGPS,
+    calculateDistance,
     isMoved,
   }
 
