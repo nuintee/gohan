@@ -1,15 +1,15 @@
-import { type ComponentMeta, type ComponentStoryObj } from "@storybook/react"
-import { MapBox } from "."
-
-type T = typeof MapBox
-type Meta = ComponentMeta<T>;
-type Story = ComponentStoryObj<T>;
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import MapBox from '..'
 
 export default {
+  title: 'MapBox',
   component: MapBox,
-    args: {},
-  } as Meta
+} as ComponentMeta<typeof MapBox>
 
+const MapBoxTemplate: ComponentStory<typeof MapBox> = (args) => <MapBox {...args} />
 
-export const Default: Story = {}
+export const Default = MapBoxTemplate.bind({})
 
+Default.args = {
+  type: 'text',
+}
