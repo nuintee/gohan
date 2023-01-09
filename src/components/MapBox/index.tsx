@@ -41,7 +41,12 @@ const MapBox: FC<MapBoxProps> = (props) => {
         renderWorldCopies={false}
       >
         <CurrentLocationMarker coords={currentPosition} />
-        <DestinationMarker coords={DEFAULT_DEV_COORDS} />
+        <DestinationMarker
+          coords={{
+            latitude: 42.64993295111122,
+            longitude: 23.407461507120896,
+          }}
+        />
         {/* {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
             <div className='relative'>
