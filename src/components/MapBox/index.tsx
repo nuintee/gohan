@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { CurrentPostion } from '@/icons'
 import { type FC } from 'react'
 import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-gl'
@@ -14,6 +14,11 @@ export type MapBoxProps = {}
 const MapBox: FC<MapBoxProps> = (props) => {
   const { mapBoxRef, setMapBoxState, mapBoxState } = useMapBox()
   const { currentPosition } = useGPS()
+
+  useEffect(() => {
+    if (!currentPosition.latitude || !currentPosition.longitude) return
+    setMapBoxState((prev) => ({ ...prev, ...currentPosition }))
+  }, [currentPosition])
 
   const onLoad = () => {}
   const onClick = () => {}
