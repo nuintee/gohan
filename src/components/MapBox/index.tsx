@@ -18,31 +18,33 @@ const MapBox: FC<MapBoxProps> = (props) => {
   const { currentPosition } = useGPS()
   const { getRoute } = useRestaurantSearch()
 
+  // layer: {
+  //   id: 'route',
+  //   type: 'line',
+  //   source: {
+  //     type: 'geojson',
+  //     data: {
+  //       id: 'base-route',
+  //       geometry: {
+  //         type: 'MultiLineString',
+  //         coordinates: DEV_ROUTES.routes[0].geometry.coordinates,
+  //       },
+  //     },
+  //   },
+  //   layout: {
+  //     'line-join': 'round',
+  //     'line-cap': 'round',
+  //   },
+  //   paint: {
+  //     'line-color': '#3887be',
+  //     'line-width': 5,
+  //     'line-opacity': 0.75,
+  //   },
+  // },
+
   const [_directions, _setDirection] = useState({
-    layer: {
-      id: 'route',
-      type: 'line',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: DEV_ROUTES.routes[0].geometry.coordinates,
-          },
-        },
-      },
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: {
-        'line-color': '#3887be',
-        'line-width': 5,
-        'line-opacity': 0.75,
-      },
-    },
+    source: DEV_GEO_JSON,
+    layer: DEV_LAYER,
   })
 
   const onClick = async (e) => {
@@ -54,31 +56,47 @@ const MapBox: FC<MapBoxProps> = (props) => {
     }
 
     // GetRoute
-    const { coordinates, endpoint } = await getRoute({
+    const data = await getRoute({
       profileType: 'walking',
       start: currentPosition,
       end: coords,
     })
-    const { source, ...restLayer } = _directions.layer
-    const { data, ...restSource } = source
-    const { geometry, ...restData } = data
-    const { coordinates: crds, ...restGeometry } = geometry
 
-    _setDirection((prev) => ({
-      layer: {
-        ...restLayer,
-        source: {
-          ...restSource,
-          data: {
-            ...restData,
-            geometry: {
-              ...restGeometry,
-              crds: coordinates,
-            },
-          },
-        },
+    const { coordinates, endpoint } = data
+
+    const geojson = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          [23.405573, 42.647569],
+          [23.417979, 42.628057],
+          [23.418371, 42.628349],
+          [23.406342, 42.649122],
+        ],
       },
-    }))
+    }
+
+    const layer = {
+      id: 'route',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: geojson,
+      },
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': '#3887be',
+        'line-width': 5,
+        'line-opacity': 0.75,
+      },
+    }
+
+    _setDirection((prev) => ({ source: geojson, layer }))
   }
   const onLoad = () => {}
 
@@ -106,13 +124,9 @@ const MapBox: FC<MapBoxProps> = (props) => {
         <CurrentLocationMarker coords={currentPosition} />
         <DestinationMarker coords={DEV_TARGET_COORDS} />
 
-        <Source data={_directions.layer.source.data} type='geojson'>
+        <Source data={_directions.source} type='geojson'>
           <Layer {..._directions.layer} />
         </Source>
-
-        {/* <Source data={DEV_GEO_JSON} type='geojson'>
-          <Layer {...DEV_LAYER} />
-        </Source> */}
 
         {/* {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
