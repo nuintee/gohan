@@ -1,5 +1,5 @@
 import useGPS from '@/hooks/context/GPS'
-import React, { useState, useRef, createContext, ReactNode } from 'react'
+import React, { useState, useRef, createContext, ReactNode, useEffect } from 'react'
 
 // constants
 import { DEFAULT_COORDS } from '@/constants/coords'
@@ -31,6 +31,18 @@ const MapBoxProvider = (props) => {
 
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
 
+  const [isReady, setIsReady] = useState(false)
+
+  useEffect(() => {
+    const init = () => {
+      const _is_current_position_available =
+        !!currentPosition.latitude && !!currentPosition.longitude
+      setIsReady(_is_current_position_available)
+    }
+
+    init()
+  }, [currentPosition])
+
   const setToDefaultViewState = () => {
     setMapBoxState(MAPBOX_DEFAULT)
   }
@@ -42,6 +54,7 @@ const MapBoxProvider = (props) => {
     MAPBOX_DEFAULT,
     isViewStateChanged,
     setToDefaultViewState,
+    isReady,
   }
 
   return <MapBoxContext.Provider value={value}>{children}</MapBoxContext.Provider>
