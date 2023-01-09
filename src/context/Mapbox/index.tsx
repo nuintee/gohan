@@ -32,7 +32,7 @@ const MapBoxProvider = (props) => {
 
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
 
-  const [isReady, setIsReady] = useState(false)
+  const [isReady, setIsReady] = useState(false) // Later move inside GPS Provider
 
   useEffect(() => {
     const init = async () => {
