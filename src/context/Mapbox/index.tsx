@@ -1,3 +1,4 @@
+import useGPS from '@/hooks/context/GPS'
 import React, { useState, useRef, createContext, ReactNode } from 'react'
 
 const MAPBOX_DEFAULT = {
@@ -22,6 +23,7 @@ const MapBoxContext = createContext({
 
 const MapBoxProvider = (props) => {
   const { children } = props
+  const { currentPosition } = useGPS()
   const mapBoxRef = useRef()
   const [mapBoxState, setMapBoxState] = useState(MAPBOX_DEFAULT)
 
