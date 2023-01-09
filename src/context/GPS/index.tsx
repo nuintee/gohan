@@ -1,17 +1,13 @@
-import { DEFAULT_COORDS } from '@/constants/coords'
+import { DEFAULT_COORDS, DEFAULT_DEV_COORDS } from '@/constants/coords'
 import React, { useState, useRef, createContext, ReactNode } from 'react'
 
+// constants
+
 const GPSContext = createContext({
-  initialPosition: {
-    latitude: null,
-    longitude: null,
-  },
+  initialPosition: DEFAULT_COORDS,
   isMoved: false,
   setInitialPosition: typeof useState,
-  currentPosition: {
-    latitude: null,
-    longitude: null,
-  },
+  currentPosition: DEFAULT_COORDS,
   setCurerntPosition: typeof useState,
   setToDefaultGPS: Function,
 })
@@ -54,7 +50,7 @@ const GPSProvider = (props) => {
           const { latitude, longitude } = position.coords
 
           const coords =
-            process.env.NODE_ENV === 'production' ? { latitude, longitude } : DEFAULT_COORDS
+            process.env.NODE_ENV === 'production' ? { latitude, longitude } : DEFAULT_DEV_COORDS
 
           _setInitialPosition(coords)
           setCurerntPosition(coords)
