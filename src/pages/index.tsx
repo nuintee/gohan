@@ -152,6 +152,8 @@ const Home = (props) => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
 
+  // Later to separete
+
   return (
     <>
       <Toast
@@ -198,6 +200,29 @@ const Home = (props) => {
             onClose={() => manageSidebar('activity', false)}
           />
         </main>
+        <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
+          {/* {isAnyNavigation && Object.keys(shopDetail)?.length ? (
+            <Restaurant.Small
+              info={shopDetail}
+              onClick={() => showDetails(shopDetail)}
+              state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
+            />
+          ) : null} */}
+          <Action
+            mode={false ? 'close' : 'search'}
+            type={'hero'}
+            onClick={() => {}}
+            loading={false}
+          />
+          {/* {isLocationReady && (
+            <button
+              onClick={() => flyTo(geoState)}
+              className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-opacity-90 active:scale-90'
+            >
+              <IoMdLocate size={20} />
+            </button>
+          )} */}
+        </footer>
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
       {/* <Modal.Details
