@@ -22,6 +22,7 @@ const MapBoxContext = createContext({
   MAPBOX_DEFAULT,
   setToDefaultViewState: typeof Function,
   isReady: false,
+  locateUser: () => {},
 })
 
 const MapBoxProvider = (props) => {

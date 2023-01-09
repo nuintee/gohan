@@ -16,7 +16,7 @@ import DevPanel from '@/components/DevPanel'
 import useRestaurants from '@/hooks/context/Restaurants'
 import useRestaurantSearch from '@/hooks/API/restaurant'
 
-import { CurrentPostion } from '@/icons'
+import { IoMdLocate } from 'react-icons/io'
 
 // Types
 type setModePayload = {
@@ -156,6 +156,7 @@ const Home = (props) => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
+  const { locateUser } = useMapBox()
 
   // // Later separate to useGPS
   // const getRoute = async (baseCoords, targetCoords) => {}
@@ -246,10 +247,10 @@ const Home = (props) => {
             loading={false}
           />
           <button
-            onClick={() => flyTo(geoState)}
+            onClick={locateUser}
             className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-opacity-90 active:scale-90'
           >
-            <CurrentPostion />
+            <IoMdLocate size={20} />
           </button>
           {/* {isLocationReady && (
             <button
