@@ -3,8 +3,8 @@ import React, { useState, useRef, createContext, ReactNode } from 'react'
 
 const MAPBOX_DEFAULT = {
   moveOnClick: false,
-  longitude: -100,
-  latitude: 40,
+  longitude: 23.405578430147724,
+  latitude: 42.647803615748145,
   zoom: 17,
   bearing: null,
   padding: null,
