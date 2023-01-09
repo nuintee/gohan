@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { CurrentPostion } from '@/icons'
 import { type FC } from 'react'
 import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-gl'
@@ -9,61 +9,14 @@ import CurrentLocationMarker from './components/CurrentLocationMarker'
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
-// Types
-type SourceProps = {
-  id: string
-  geometry: {
-    type: 'MultiLineString' | 'Polygon'
-    coordinates: number[]
-  }
-}
-
-type LayerProps = {
-  id: string
-  type: 'line' | 'circle'
-  paint?: {
-    'line-color'?: string
-    'line-width'?: number
-    'circle-color'?: string
-    'circle-radius'?: {
-      base: number
-      stops?: number[][]
-    }
-  }
-}
-
-type AddSourceData = {
-  source: SourceProps
-  layer: LayerProps
-}
-
 export type MapBoxProps = {}
-
-const addSource = (payload: AddSourceData) => {
-  const { source, layer } = payload
-
-  const data = {
-    id: source.id,
-    type: 'Feature',
-    geometry: source.geometry,
-    layers: [
-      {
-        id: layer.id,
-        type: layer.type,
-        source: source.id,
-        paint: layer.paint,
-      },
-    ],
-  }
-  return data
-}
 
 const MapBox: FC<MapBoxProps> = (props) => {
   const { mapBoxRef, setMapBoxState, mapBoxState, isReady } = useMapBox()
   const { currentPosition } = useGPS()
 
-  const onLoad = () => {}
   const onClick = () => {}
+  const onLoad = () => {}
 
   if (!isReady) {
     return (

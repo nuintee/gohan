@@ -154,7 +154,6 @@ const Home = (props) => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
-  const { getRoute } = useRestaurantSearch()
 
   // // Later separate to useGPS
   // const getRoute = async (baseCoords, targetCoords) => {}
