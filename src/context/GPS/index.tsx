@@ -27,9 +27,11 @@ const GPSProvider = (props) => {
 
   const isMoved = JSON.stringify(currentPosition) !== JSON.stringify(initialPosition)
 
-  const setToDefaultGPS = () => {
+  function setToDefaultGPS() {
     setCurerntPosition(initialPosition)
   }
+
+  async function getRoute(baseCoords, targetCoords) {}
 
   useState(() => {
     const init = async () => {
