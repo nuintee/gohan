@@ -45,7 +45,8 @@ const MapBoxProvider = (props) => {
   const [isReady, setIsReady] = useState(false)
   const { getRoute } = useRestaurantSearch()
 
-  const isNavigating = !!Object.keys(directions)?.length
+  const isNavigating =
+    !!directions && directions !== undefined && Object.keys(directions).length > 0
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
 
   const locateUser = async () => {
