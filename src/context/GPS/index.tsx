@@ -11,6 +11,7 @@ const GPSContext = createContext({
   setCurerntPosition: typeof useState,
   setToDefaultGPS: Function,
   isPositionAvailable: false,
+  calculateDistance: (endCoords: number[], startCoods: number[], unit?: 'km' | 'm') => {},
 })
 
 const GPSProvider = (props) => {

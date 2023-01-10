@@ -45,7 +45,7 @@ const useRestaurantSearch = () => {
     setTimeout(async () => {
       // Fetch
       const data: ResultsEntity = await _fetchRestaurant(currentPosition)
-      const { lat: latitude, lng: longitude } = data.geometry.location
+      const { lat: latitude, lng: longitude } = data.geometry?.location
       setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
       if (options?.drawRoute) {
         // drawRoute on MapBox

@@ -11,7 +11,7 @@ import Acitvity from '@/components/Activity'
 import User from '@/components/User'
 import Sidebar from '@/components/Sidebar'
 import Toast from '@/components/Toast'
-import { Restaurant } from '@/components/Restaurant'
+import Restaurant from '@/components/Restaurant'
 import DevPanel from '@/components/DevPanel'
 import useRestaurants from '@/hooks/context/Restaurants'
 import useRestaurantSearch from '@/hooks/API/restaurant'
@@ -214,6 +214,7 @@ const Home = (props) => {
               state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
             />
           ) : null} */}
+          <Restaurant data={restaurant.data} mode='large' />
           <Action
             mode={isNavigating ? 'close' : 'search'}
             type={'hero'}
