@@ -25,6 +25,17 @@ const MapBox: FC<MapBoxProps> = (props) => {
   } = useMapBox()
   const { currentPosition } = useGPS()
 
+  const destinationCoords = isNavigating ? directions.source.geometry.coordinates : {}
+  const destinationCurosor = isNavigating ? destinationCoords[destinationCoords.length - 1] : []
+  const destination = isNavigating && {
+    latitude: destinationCurosor[1],
+    longitude: destinationCurosor[0],
+  }
+
+  useEffect(() => {
+    console.log({ directions })
+  }, [directions])
+
   const onClick = async (e) => {
     const { lngLat } = e
     const { lat: latitude, lng: longitude } = lngLat
@@ -64,12 +75,14 @@ const MapBox: FC<MapBoxProps> = (props) => {
         renderWorldCopies={false}
       >
         <CurrentLocationMarker coords={currentPosition} />
-        <DestinationMarker coords={DEV_TARGET_COORDS} />
 
         {isNavigating && (
-          <Source data={directions.source} type='geojson'>
-            <Layer {...directions.layer} />
-          </Source>
+          <>
+            <DestinationMarker coords={destination} />
+            <Source data={directions.source} type='geojson'>
+              <Layer {...directions.layer} />
+            </Source>
+          </>
         )}
       </Map>
     </div>
