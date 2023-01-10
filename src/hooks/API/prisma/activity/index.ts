@@ -1,13 +1,11 @@
 import prisma from '@/lib/prisma'
+import { RestaurantProps } from '@/types/Restaurant'
 import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 import { resultFilter, handleRequired } from '..'
 import { Id, UserId, ListFilter, MutateProps, ListProps } from '../types'
 
-type Data = {
-  place_id: string
-  is_liked: boolean
-} & UserId
+type Data = RestaurantProps & UserId
 
 const activityTable = {
   get: async (props: Id) => {
