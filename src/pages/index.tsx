@@ -214,7 +214,7 @@ const Home = (props) => {
               state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
             />
           ) : null} */}
-          <Restaurant data={restaurant.data} mode='large' />
+          <Restaurant {...restaurant} mode='large' />
           <Action
             mode={isNavigating ? 'close' : 'search'}
             type={'hero'}
