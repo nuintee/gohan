@@ -2,7 +2,14 @@ import useGPS from '@/hooks/context/GPS'
 import React, { useState, useRef, createContext, ReactNode, useEffect } from 'react'
 
 // constants
-import { DEFAULT_COORDS } from '@/constants/coords'
+import { Coords, DEFAULT_COORDS } from '@/constants/coords'
+import { Directions } from '@/components/MapBox/types'
+
+// Hooks
+import useRestaurantSearch from '@/hooks/API/restaurant'
+
+// Utils
+import { createSource } from '@/components/MapBox/utils'
 
 const MAPBOX_DEFAULT = {
   moveOnClick: false,
@@ -22,7 +29,11 @@ const MapBoxContext = createContext({
   MAPBOX_DEFAULT,
   setToDefaultViewState: typeof Function,
   isReady: false,
+  directions: {},
+  isNavigating: false,
   locateUser: () => {},
+  drawRoute: (coords: Coords) => {},
+  clearRoute: () => {},
 })
 
 const MapBoxProvider = (props) => {
@@ -30,15 +41,36 @@ const MapBoxProvider = (props) => {
   const { currentPosition, isPositionAvailable } = useGPS()
   const mapBoxRef = useRef(null)
   const [mapBoxState, setMapBoxState] = useState(MAPBOX_DEFAULT)
+  const [directions, setDirections] = useState<Directions | {}>({})
+  const [isReady, setIsReady] = useState(false)
+  const { getRoute } = useRestaurantSearch()
 
+  const isNavigating =
+    !!directions && directions !== undefined && Object.keys(directions).length > 0
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
-
-  const [isReady, setIsReady] = useState(false) // Later move inside GPS Provider
 
   const locateUser = async () => {
     await mapBoxRef.current?.flyTo({
       center: [currentPosition?.longitude, currentPosition?.latitude],
     })
+  }
+
+  async function drawRoute(coords: Coords) {
+    try {
+      const { coordinates } = await getRoute({
+        profileType: 'walking',
+        start: currentPosition,
+        end: coords,
+      })
+      const source = createSource({ coordinates })
+      setDirections(source)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  function clearRoute() {
+    setDirections({})
   }
 
   useEffect(() => {
@@ -65,6 +97,10 @@ const MapBoxProvider = (props) => {
     setToDefaultViewState,
     isReady,
     locateUser,
+    isNavigating,
+    drawRoute,
+    clearRoute,
+    directions,
   }
 
   return <MapBoxContext.Provider value={value}>{children}</MapBoxContext.Provider>
