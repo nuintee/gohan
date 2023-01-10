@@ -10,6 +10,7 @@ import useRestaurantSearch from '@/hooks/API/restaurant'
 
 // Utils
 import { createSource } from '@/components/MapBox/utils'
+import { MapRef } from 'react-map-gl'
 
 const MAPBOX_DEFAULT = {
   moveOnClick: false,
@@ -38,20 +39,30 @@ const MapBoxContext = createContext({
 
 const MapBoxProvider = (props) => {
   const { children } = props
-  const { currentPosition, isPositionAvailable } = useGPS()
-  const mapBoxRef = useRef(null)
+
+  // Refs
+  const mapBoxRef = useRef<MapRef>(null)
+
+  // useStates
   const [mapBoxState, setMapBoxState] = useState(MAPBOX_DEFAULT)
   const [directions, setDirections] = useState<Directions | {}>({})
   const [isReady, setIsReady] = useState(false)
-  const { getRoute } = useRestaurantSearch()
 
+  // Custom Hooks
+  const { getRoute } = useRestaurantSearch()
+  const { currentPosition, isPositionAvailable } = useGPS()
+
+  // Flags
   const isNavigating =
     !!directions && directions !== undefined && Object.keys(directions).length > 0
+
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
 
-  const locateUser = async () => {
-    await mapBoxRef.current?.flyTo({
-      center: [currentPosition?.longitude, currentPosition?.latitude],
+  // Functions
+  async function locateUser() {
+    if (!isPositionAvailable) return
+    mapBoxRef.current?.flyTo({
+      center: [currentPosition.longitude as number, currentPosition.latitude as number], // if isPositionAvailable, positions should not be null
     })
   }
 
@@ -73,6 +84,10 @@ const MapBoxProvider = (props) => {
     setDirections({})
   }
 
+  function setToDefaultViewState() {
+    setMapBoxState(MAPBOX_DEFAULT)
+  }
+
   useEffect(() => {
     const init = async () => {
       if (!isPositionAvailable) return
@@ -83,10 +98,6 @@ const MapBoxProvider = (props) => {
 
     init()
   }, [isPositionAvailable])
-
-  const setToDefaultViewState = () => {
-    setMapBoxState(MAPBOX_DEFAULT)
-  }
 
   const value = {
     mapBoxRef,
