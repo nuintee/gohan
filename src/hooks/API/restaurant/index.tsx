@@ -27,6 +27,14 @@ const useRestaurantSearch = () => {
   const { currentPosition } = useGPS()
   const { drawRoute, clearRoute, locateUser } = useMapBox()
 
+  type _CoordObject = Coords | { lat: number | null; lng: number | null }
+
+  const formatObjectCoords = (coordObject: _CoordObject): number[] => {
+    return Object.keys(coordObject)
+      .sort()
+      .map((k) => coordObject[k])
+  }
+
   const _fetchRestaurant = async (coords: Coords) => {
     const is_devmode = process.env.NODE_ENV === 'development'
     try {
@@ -91,7 +99,7 @@ const useRestaurantSearch = () => {
     }
   }
 
-  return { getRestaurant, clearRestaurant, getRoute }
+  return { getRestaurant, clearRestaurant, getRoute, formatObjectCoords }
 }
 
 export default useRestaurantSearch

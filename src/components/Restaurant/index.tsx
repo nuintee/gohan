@@ -1,4 +1,5 @@
 import { Coords } from '@/constants/coords'
+import useRestaurantSearch from '@/hooks/API/restaurant'
 import { useMapBox } from '@/hooks/context'
 import useGPS from '@/hooks/context/GPS'
 import useRestaurants from '@/hooks/context/Restaurants'
@@ -9,17 +10,15 @@ import Label from './Label'
 import { Like } from './Like'
 import Texts from './Texts'
 
-type _CoordObject = Coords | { lat: number | null; lng: number | null }
-
-const _formatObjectCoords = (coordObject: _CoordObject): number[] => {
-  return Object.keys(coordObject)
-    .sort()
-    .map((k) => coordObject[k])
-}
-
 const Restaurant = (props: RestaurantProps) => {
   const { mode, data, is_liked } = props
   const { calculateDistance, currentPosition } = useGPS()
+  const { formatObjectCoords } = useRestaurantSearch()
+
+  const { distance } = calculateDistance(
+    formatObjectCoords(data.geometry.location),
+    formatObjectCoords(currentPosition),
+  )
 
   // Dummy
   if (!data)
@@ -45,11 +44,6 @@ const Restaurant = (props: RestaurantProps) => {
         </div>
       </div>
     )
-
-  const { distance } = calculateDistance(
-    _formatObjectCoords(data.geometry.location),
-    _formatObjectCoords(currentPosition),
-  )
 
   const onLike = () => {}
 
