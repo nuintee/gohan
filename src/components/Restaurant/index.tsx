@@ -1,4 +1,5 @@
 import { Coords } from '@/constants/coords'
+import { useMapBox } from '@/hooks/context'
 import useGPS from '@/hooks/context/GPS'
 import useRestaurants from '@/hooks/context/Restaurants'
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
@@ -19,8 +20,9 @@ const _formatObjectCoords = (coordObject: _CoordObject): number[] => {
 const Restaurant = (props: RestaurantProps) => {
   const { mode, data, is_liked } = props
   const { calculateDistance, currentPosition } = useGPS()
+  const { isNavigating } = useMapBox()
 
-  if (!data) return <></>
+  if (!data || !isNavigating) return <></>
 
   const { distance } = calculateDistance(
     _formatObjectCoords(data.geometry.location),
