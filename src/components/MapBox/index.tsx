@@ -17,14 +17,21 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 export type MapBoxProps = {}
 
 const MapBox: FC<MapBoxProps> = (props) => {
-  const { mapBoxRef, setMapBoxState, mapBoxState, isReady } = useMapBox()
+  const {
+    mapBoxRef,
+    setMapBoxState,
+    mapBoxState,
+    isReady,
+    directions,
+    isNavigating,
+    drawRoute,
+    clearRoute,
+  } = useMapBox()
   const { currentPosition } = useGPS()
-  const { getRoute } = useRestaurantSearch()
 
-  const [_directions, _setDirection] = useState({
-    source: DEV_GEO_JSON,
-    layer: DEV_LAYER,
-  })
+  useEffect(() => {
+    console.log({ directions })
+  }, [directions])
 
   const onClick = async (e) => {
     const { lngLat } = e
@@ -35,16 +42,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
       longitude,
     }
 
-    // GetRoute
-    const { coordinates } = await getRoute({
-      profileType: 'walking',
-      start: currentPosition,
-      end: coords,
-    })
-
-    const source = createSource({ coordinates })
-
-    _setDirection((prev) => source)
+    drawRoute(coords)
   }
   const onLoad = () => {}
 
@@ -72,9 +70,11 @@ const MapBox: FC<MapBoxProps> = (props) => {
         <CurrentLocationMarker coords={currentPosition} />
         <DestinationMarker coords={DEV_TARGET_COORDS} />
 
-        <Source data={_directions.source} type='geojson'>
-          <Layer {..._directions.layer} />
-        </Source>
+        {/* {isNavigating && (
+          <Source data={directions.source} type='geojson'>
+            <Layer {...directions.layer} />
+          </Source>
+        )} */}
 
         {/* {isLocationReady && (
           <Marker longitude={geoState.lng} latitude={geoState.lat}>
