@@ -9,6 +9,7 @@ import { ResultsEntity } from '@/hooks/context/Restaurants/types'
 
 export type RestaurantOptions = {
   drawRoute?: boolean
+  locateUser?: boolean
 }
 
 export type GetRouteProps = {
@@ -24,7 +25,7 @@ const gcpKey = process.env.NEXT_PUBLIC_GCP_API_KEY
 const useRestaurantSearch = () => {
   const { restaurant, setRestaurant } = useRestaurants()
   const { currentPosition } = useGPS()
-  const { drawRoute, clearRoute } = useMapBox()
+  const { drawRoute, clearRoute, locateUser } = useMapBox()
 
   const _fetchRestaurant = async (coords: Coords) => {
     const is_devmode = process.env.NODE_ENV === 'development'
@@ -47,6 +48,11 @@ const useRestaurantSearch = () => {
       const data: ResultsEntity = await _fetchRestaurant(currentPosition)
       const { lat: latitude, lng: longitude } = data.geometry?.location
       setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
+
+      if (options?.locateUser === undefined || options?.locateUser === true) {
+        locateUser()
+      }
+
       if (options?.drawRoute) {
         // drawRoute on MapBox
         drawRoute({
