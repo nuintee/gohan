@@ -16,8 +16,8 @@ const GPSContext = createContext({
 const GPSProvider = (props) => {
   const { children } = props
 
+  // States
   const [initialPosition, _setInitialPosition] = useState(DEFAULT_COORDS)
-
   const [currentPosition, setCurerntPosition] = useState(DEFAULT_COORDS)
 
   const isMoved = JSON.stringify(currentPosition) !== JSON.stringify(initialPosition)
@@ -27,7 +27,7 @@ const GPSProvider = (props) => {
     setCurerntPosition(initialPosition)
   }
 
-  const calculateDistance = (endCoords: number[], startCoods: number[], unit?: 'km' | 'm') => {
+  function calculateDistance(endCoords: number[], startCoods: number[], unit?: 'km' | 'm') {
     const _calculated =
       Math.sqrt(
         Math.pow(endCoords[0] - startCoods[0], 2) + Math.pow(endCoords[1] - startCoods[1], 2),
