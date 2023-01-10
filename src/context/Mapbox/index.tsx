@@ -35,6 +35,9 @@ const MapBoxContext = createContext({
   locateUser: () => {},
   drawRoute: (coords: Coords) => {},
   clearRoute: () => {},
+  getDestinationCoords: (): Coords | {} => {
+    return {}
+  },
 })
 
 const MapBoxProvider = (props) => {
@@ -88,6 +91,17 @@ const MapBoxProvider = (props) => {
     setMapBoxState(MAPBOX_DEFAULT)
   }
 
+  function getDestinationCoords() {
+    if (!isNavigating) return {}
+    const destinationCoords = directions.source.geometry.coordinates
+    const destinationCurosor = destinationCoords[destinationCoords.length - 1]
+    const destination = isNavigating && {
+      latitude: destinationCurosor[1],
+      longitude: destinationCurosor[0],
+    }
+    return destination
+  }
+
   useEffect(() => {
     const init = async () => {
       if (!isPositionAvailable) return
@@ -112,6 +126,7 @@ const MapBoxProvider = (props) => {
     drawRoute,
     clearRoute,
     directions,
+    getDestinationCoords,
   }
 
   return <MapBoxContext.Provider value={value}>{children}</MapBoxContext.Provider>

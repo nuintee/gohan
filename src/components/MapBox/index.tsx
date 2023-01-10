@@ -22,15 +22,9 @@ const MapBox: FC<MapBoxProps> = (props) => {
     isNavigating,
     drawRoute,
     clearRoute,
+    getDestinationCoords,
   } = useMapBox()
   const { currentPosition } = useGPS()
-
-  const destinationCoords = isNavigating ? directions.source.geometry.coordinates : {}
-  const destinationCurosor = isNavigating ? destinationCoords[destinationCoords.length - 1] : []
-  const destination = isNavigating && {
-    latitude: destinationCurosor[1],
-    longitude: destinationCurosor[0],
-  }
 
   useEffect(() => {
     console.log({ directions })
@@ -78,7 +72,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
 
         {isNavigating && (
           <>
-            <DestinationMarker coords={destination} />
+            <DestinationMarker coords={getDestinationCoords()} />
             <Source data={directions.source} type='geojson'>
               <Layer {...directions.layer} />
             </Source>
