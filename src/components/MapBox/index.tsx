@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { CurrentPostion } from '@/icons'
+import React, { useEffect } from 'react'
 import { type FC } from 'react'
-import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-gl'
+import Map, { Source, Layer } from 'react-map-gl'
 import { useMapBox } from '@/hooks/context'
 import useGPS from '@/hooks/context/GPS'
 import { CurrentLocationMarker, DestinationMarker } from './components'
-import { DEV_GEO_JSON, DEV_LAYER, DEV_ROUTES, DEV_TARGET_COORDS } from './data'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
@@ -22,8 +20,13 @@ const MapBox: FC<MapBoxProps> = (props) => {
     isNavigating,
     drawRoute,
     clearRoute,
+    getDestinationCoords,
   } = useMapBox()
   const { currentPosition } = useGPS()
+
+  useEffect(() => {
+    console.log({ directions })
+  }, [directions])
 
   const onClick = async (e) => {
     const { lngLat } = e
@@ -64,12 +67,14 @@ const MapBox: FC<MapBoxProps> = (props) => {
         renderWorldCopies={false}
       >
         <CurrentLocationMarker coords={currentPosition} />
-        <DestinationMarker coords={DEV_TARGET_COORDS} />
 
         {isNavigating && (
-          <Source data={directions.source} type='geojson'>
-            <Layer {...directions.layer} />
-          </Source>
+          <>
+            <DestinationMarker coords={getDestinationCoords()} />
+            <Source data={directions.source} type='geojson'>
+              <Layer {...directions.layer} />
+            </Source>
+          </>
         )}
       </Map>
     </div>
