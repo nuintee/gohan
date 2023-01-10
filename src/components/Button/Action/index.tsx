@@ -10,7 +10,7 @@ import { dictionary } from './constants'
 import { Props } from './index.types'
 
 const Action = (props: Props) => {
-  const { mode, loading, onClick, type } = props
+  const { mode, loading, onClick, type, disabled } = props
 
   const size = type === 'hero' ? 5 : 3.5
 
@@ -22,7 +22,7 @@ const Action = (props: Props) => {
     <button
       onClick={onClick}
       className={className}
-      disabled={loading}
+      disabled={disabled || loading}
       style={{
         height: `${size}em`,
         width: `${size}em`,

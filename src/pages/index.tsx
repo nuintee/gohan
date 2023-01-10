@@ -158,7 +158,7 @@ const Home = (props) => {
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
   const { getRestaurant, clearRestaurant } = useRestaurantSearch()
-  const { locateUser, isNavigating } = useMapBox()
+  const { locateUser, isNavigating, isReady } = useMapBox()
 
   return (
     <>
@@ -222,6 +222,7 @@ const Home = (props) => {
               isNavigating ? () => clearRestaurant() : () => getRestaurant({ drawRoute: true })
             }
             loading={restaurant.isFetching}
+            disabled={!isReady}
           />
           <button
             onClick={locateUser}
