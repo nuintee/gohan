@@ -20,9 +20,8 @@ const _formatObjectCoords = (coordObject: _CoordObject): number[] => {
 const Restaurant = (props: RestaurantProps) => {
   const { mode, data, is_liked } = props
   const { calculateDistance, currentPosition } = useGPS()
-  const { isNavigating } = useMapBox()
 
-  if (!data || !isNavigating) return <></>
+  if (!data) return <></>
 
   const { distance } = calculateDistance(
     _formatObjectCoords(data.geometry.location),
