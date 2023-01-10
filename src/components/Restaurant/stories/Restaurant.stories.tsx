@@ -11,5 +11,6 @@ const LargeTemplate: ComponentStory<typeof Restaurant> = (args) => <Restaurant {
 export const Large = LargeTemplate.bind({})
 
 Large.args = {
-  state: 'LIKED',
+  isLiked: true,
+  isLocked: true,
 }

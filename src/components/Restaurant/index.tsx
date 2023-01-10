@@ -11,7 +11,7 @@ import { Like } from './Like'
 import Texts from './Texts'
 
 const Restaurant = (props: RestaurantProps) => {
-  const { mode, data, is_liked, is_locked } = props
+  const { mode, data, isLiked, isLocked } = props
   const { calculateDistance, currentPosition } = useGPS()
   const { formatObjectCoords } = useRestaurantSearch()
 
@@ -40,7 +40,7 @@ const Restaurant = (props: RestaurantProps) => {
             <Texts main={'NAME'} sub={''} size='small' />
             <Label distance={'300m'} />
           </div>
-          <Like onClick={() => {}} state={is_liked ? 'LIKED' : 'UNLIKED'} />
+          <Like onClick={() => {}} isLiked={isLiked} isLocked={isLocked} />
         </div>
       </div>
     )
@@ -68,7 +68,7 @@ const Restaurant = (props: RestaurantProps) => {
             <Texts main={data.name || 'NAME'} sub={data.types?.join('・')} size='small' />
             <Label distance={distance} />
           </div>
-          <Like onClick={onLike} state={is_liked ? 'LIKED' : 'UNLIKED'} />
+          <Like onClick={onLike} isLiked={isLiked} isLocked={true} />
         </div>
       </div>
     )
@@ -93,7 +93,7 @@ const Restaurant = (props: RestaurantProps) => {
             <Texts main={data.name || 'NAME'} sub={data.types?.join('・')} size='small' />
             <Label distance={distance} />
           </div>
-          <Like onClick={onLike} state={is_liked ? 'LIKED' : 'UNLIKED'} />
+          <Like onClick={onLike} isLiked={isLiked} isLocked={true} />
         </div>
       </div>
     )
