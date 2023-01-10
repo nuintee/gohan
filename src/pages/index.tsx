@@ -157,7 +157,7 @@ const Home = (props) => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
-  const { locateUser } = useMapBox()
+  const { locateUser, isNavigating } = useMapBox()
 
   // // Later separate to useGPS
   // const getRoute = async (baseCoords, targetCoords) => {}
@@ -253,14 +253,6 @@ const Home = (props) => {
           >
             <IoMdLocate size={20} />
           </button>
-          {/* {isLocationReady && (
-            <button
-              onClick={() => flyTo(geoState)}
-              className='absolute right-6 bottom-8 bg-white p-4 rounded-full active:bg-opacity-90 active:scale-90'
-            >
-              <IoMdLocate size={20} />
-            </button>
-          )} */}
         </footer>
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
