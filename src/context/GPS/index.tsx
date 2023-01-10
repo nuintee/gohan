@@ -6,6 +6,7 @@ import { DEFAULT_COORDS, DEFAULT_DEV_COORDS } from '@/constants/coords'
 type CalculatedDistance = {
   raw: number | null
   km: string | null
+  distance: string | null
   m: string | null
 }
 
@@ -22,7 +23,7 @@ const GPSContext = createContext({
     startCoods: number[],
     unit?: 'km' | 'm',
   ): CalculatedDistance => {
-    return { raw: null, km: null, m: null }
+    return { raw: null, km: null, m: null, distance: null }
   },
 })
 

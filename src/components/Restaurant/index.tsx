@@ -22,7 +22,7 @@ const Restaurant = (props: RestaurantProps) => {
 
   if (!data) return <></>
 
-  const distance = calculateDistance(
+  const { distance } = calculateDistance(
     _formatObjectCoords(data.geometry.location),
     _formatObjectCoords(currentPosition),
   )
@@ -48,7 +48,7 @@ const Restaurant = (props: RestaurantProps) => {
         <div className='flex flex-1 gap-4 items-start'>
           <div className='flex flex-col gap-2'>
             <Texts main={data.name || 'NAME'} sub={data.types?.join('・')} size='small' />
-            <Label distance={distance.m} />
+            <Label distance={distance} />
           </div>
           <Like onClick={onLike} state={is_liked ? 'LIKED' : 'UNLIKED'} />
         </div>
@@ -73,7 +73,7 @@ const Restaurant = (props: RestaurantProps) => {
         <div className='flex flex-1 gap-4 items-start'>
           <div className='flex flex-col gap-2'>
             <Texts main={data.name || 'NAME'} sub={data.types?.join('・')} size='small' />
-            <Label distance={2000} />
+            <Label distance={distance} />
           </div>
           <Like onClick={onLike} state={is_liked ? 'LIKED' : 'UNLIKED'} />
         </div>
