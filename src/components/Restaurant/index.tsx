@@ -11,7 +11,7 @@ import { Like } from './Like'
 import Texts from './Texts'
 
 const Restaurant = (props: RestaurantProps) => {
-  const { mode, data, is_liked } = props
+  const { mode, data, is_liked, is_locked } = props
   const { calculateDistance, currentPosition } = useGPS()
   const { formatObjectCoords } = useRestaurantSearch()
 
