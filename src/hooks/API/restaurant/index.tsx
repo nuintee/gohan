@@ -30,6 +30,7 @@ const useRestaurantSearch = () => {
   type _CoordObject = Coords | { lat: number | null; lng: number | null }
 
   const formatObjectCoords = (coordObject: _CoordObject): number[] => {
+    if (!coordObject) return []
     return Object.keys(coordObject)
       .sort()
       .map((k) => coordObject[k])

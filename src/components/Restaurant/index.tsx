@@ -16,7 +16,7 @@ const Restaurant = (props: RestaurantProps) => {
   const { formatObjectCoords } = useRestaurantSearch()
 
   const { distance } = calculateDistance(
-    formatObjectCoords(data.geometry.location),
+    formatObjectCoords(data?.geometry.location),
     formatObjectCoords(currentPosition),
   )
 
