@@ -157,35 +157,8 @@ const Home = (props) => {
   const { sidebarState, manageSidebar } = useSidebar()
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
+  const { getRestaurant, clearRestaurant } = useRestaurantSearch()
   const { locateUser, isNavigating } = useMapBox()
-
-  // // Later separate to useGPS
-  // const getRoute = async (baseCoords, targetCoords) => {}
-
-  // // Later separate to useMapBox
-  // const drawRoute = async (GEOJSON: typeof getRoute) => {}
-  // const clearRoute = async (routeId: '') => {} // clear route by id if provided, otherwise delete current
-
-  // // Later separate to useRestaurants
-  // const getRestaurant = async () => {} // state
-  // const clearRestaurant = () => {}
-  // const [isFetching, setIsFetching] = true
-  // const [isNavigating, setIsNavigating] = true // if restaurant navigation is true
-
-  // // Helper function useSearch (wrap funcitons above)
-  // const searchRestaurant = async () => {
-  //   setIsFetching(true)
-  //   const fetchedRestaurant = await getRestaurant()
-  //   setIsFetching(false)
-  //   setRestaurant(fetchedRestaurant)
-
-  //   const route = await getRoute({}, fetchedRestaurant.geometry)
-  //   await drawRoute(route)
-  //   setIsNavigating(true)
-
-  //   // update
-  //   return { route, fetchedRestaurant }
-  // }
 
   return (
     <>
@@ -242,10 +215,12 @@ const Home = (props) => {
             />
           ) : null} */}
           <Action
-            mode={false ? 'close' : 'search'}
+            mode={isNavigating ? 'close' : 'search'}
             type={'hero'}
-            onClick={() => {}}
-            loading={false}
+            onClick={
+              isNavigating ? () => clearRestaurant() : () => getRestaurant({ drawRoute: true })
+            }
+            loading={restaurant.isFetching}
           />
           <button
             onClick={locateUser}

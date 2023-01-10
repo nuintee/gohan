@@ -3,6 +3,9 @@ import useRestaurants from '@/hooks/context/Restaurants'
 
 // constants
 import { Coords } from '@/constants/coords'
+import useGPS from '@/hooks/context/GPS'
+import { useMapBox } from '@/hooks/context'
+import { ResultsEntity } from '@/hooks/context/Restaurants/types'
 
 export type RestaurantOptions = {
   drawRoute?: boolean
@@ -14,23 +17,49 @@ export type GetRouteProps = {
   end: Coords
 }
 
+// Env
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
+const gcpKey = process.env.NEXT_PUBLIC_GCP_API_KEY
 
 const useRestaurantSearch = () => {
   const { restaurant, setRestaurant } = useRestaurants()
+  const { currentPosition } = useGPS()
+  const { drawRoute, clearRoute } = useMapBox()
+
+  const _fetchRestaurant = async (coords: Coords) => {
+    const is_devmode = process.env.NODE_ENV === 'development'
+    try {
+      const url = is_devmode
+        ? `/api/place?location=${coords.latitude},${coords.longitude}&radius=500&opennow=true`
+        : `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords.latitude},${coords.longitude}&radius=500&types=food&opennow=true&key=${gcpKey}`
+      const query = await fetch(url)
+      const json = await query.json()
+      return json
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const getRestaurant = (options: RestaurantOptions) => {
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: true }))
-    setTimeout(() => {
+    setTimeout(async () => {
       // Fetch
+      const data: ResultsEntity = await _fetchRestaurant(currentPosition)
+      const { lat: latitude, lng: longitude } = data.geometry.location
+      setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
       if (options?.drawRoute) {
         // drawRoute on MapBox
+        drawRoute({
+          latitude,
+          longitude,
+        })
       }
       setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
     }, 2000)
   }
 
   const clearRestaurant = () => {
+    clearRoute()
     setRestaurant({})
   }
 
