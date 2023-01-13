@@ -72,6 +72,7 @@ const _Card = (props: CardProps) => {
       </button>
       <img
         src={getImageURL(props?.data?.photos)}
+        alt={`${data?.name}'s thumbnail`}
         className={`select-none max-h-52 w-full object-cover h-52`}
         draggable={false}
       />
