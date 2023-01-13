@@ -1,3 +1,4 @@
+import { initialData } from '@/constants/restaurant'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import Restaurant from '../index'
 
@@ -13,4 +14,5 @@ export const Large = LargeTemplate.bind({})
 Large.args = {
   isLiked: true,
   isLocked: true,
+  data: initialData,
 } // add initial data for restaurant
