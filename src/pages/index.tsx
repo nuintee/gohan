@@ -192,19 +192,6 @@ const Home = (props) => {
         </header>
         <main>
           <MapBox />
-          {/* <div
-            className={`absolute top-0 left-0 z-[-1] bg-gh-white h-screen w-screen flex items-center justify-center duration-500 ${
-              isLocationReady ? 'scale-0' : 'scale-100'
-            }`}
-          >
-            <p>
-              {!geoState.error?.is
-                ? isLocationReady
-                  ? ''
-                  : 'Loading'
-                : 'Please Allow Geolocation'}
-            </p>
-          </div> */}
           <Sidebar
             title='Activities'
             isOpen={sidebarState.activity.isOpen}
@@ -219,7 +206,7 @@ const Home = (props) => {
               state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
             />
           ) : null} */}
-          {/* {isNavigating && <Restaurant {...restaurant} mode='small' />} */}
+          {isNavigating && <Restaurant {...restaurant} mode='small' />}
           <Action
             mode={!isNavigating ? 'search' : 'close'}
             type={'hero'}
