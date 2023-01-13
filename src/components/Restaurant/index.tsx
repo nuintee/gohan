@@ -29,12 +29,12 @@ type CardProps = {
 } & CommonProps
 
 const getImageURL = (photos: ResultsEntity['photos']) => {
-  if (photos?.length) {
-    const fallbackURL = `https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80`
-    return fallbackURL
-  } else {
-    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${props?.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
+  const fallbackURL = `https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80`
+  if (!!photos?.length && !!photos[0].photo_reference) {
+    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
     return url
+  } else {
+    return fallbackURL
   }
 }
 

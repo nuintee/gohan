@@ -33,6 +33,8 @@ export const initialData: ResultsEntity = {
   scope: '',
   user_ratings_total: 0,
   vicinity: '',
+  price_level: 0,
+  photos: [{ photo_reference: '', height: NaN, width: NaN }],
 }
 
 export const restaurantInitialData: RestaurantProps = {
