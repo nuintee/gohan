@@ -1,7 +1,7 @@
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
 
 export type RestaurantProps<T = {} | {}> = {
-  mode: string
+  mode?: 'small' | 'large'
   place_id: string
   isLiked: boolean
   isLocked: boolean

@@ -6,30 +6,40 @@ import useRestaurants from '@/hooks/context/Restaurants'
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
 import { Close } from '@/icons'
 import { RestaurantProps } from '@/types/Restaurant'
+import { colors } from 'config/tailwind'
+import Image from 'next/image'
 import { useEffect } from 'react'
 import { Regular } from '../Button'
 import Label from './Label'
 import { Like } from './Like'
 import Texts from './Texts'
 
-const Small = (props: RestaurantProps & { distance: string }) => {
-  const { data, distance, onLike, isLiked, isLocked } = props
+type ImageURLRequest = {
+  photos: ResultsEntity['photos']
+}
+
+const getImageURL = (props: ImageURLRequest) => {
+  const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${props?.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
+  const fallbackURL = `https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80`
+  if (!props?.photos?.length) return fallbackURL
+
+  return url
+}
+
+const _Small = (props: RestaurantProps & { distance: string; onLike: Function }) => {
+  const { data, isLiked, isLocked, distance, onLike } = props
+
   return (
     <div
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
       onClick={() => {}}
     >
       <img
-        src={
-          data?.photos?.length
-            ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${data?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
-            : 'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
-        }
-        className='max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md'
-        alt={'image'}
+        src={getImageURL(data?.photos)}
+        alt={`${data?.name}'s thumbnail`}
+        className={`max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md`}
       />
-
-      <div className='flex flex-1 gap-4 items-start'>
+      <div className='flex flex-1 gap-4 items-start justify-between'>
         <div className='flex flex-col gap-2'>
           <Texts main={data?.name || 'NAME'} sub={data?.types?.join('・')} size='small' />
           <Label distance={distance || 'N/A m'} />
@@ -40,23 +50,31 @@ const Small = (props: RestaurantProps & { distance: string }) => {
   )
 }
 
-const Card = (
-  props: RestaurantProps & {
-    distance: string
-    isNavigating: boolean
-    isLoading: boolean
-    onLike: Function
-    onNavigate: Function
-  },
-) => {
-  const { distance, data, isLiked, isLoading, onLike, onNavigate, isNavigating, isLocked } = props
+type CommonProps = {
+  distance: string
+  onLike: Function
+} & RestaurantProps
+
+type SmallProps = {
+  onClick: Function
+} & CommonProps
+
+type CardProps = {
+  isNavigating: boolean
+  isLoading: boolean
+  onClick: Boolean
+} & CommonProps
+
+const _Card = (props: CardProps) => {
+  const { data, isLiked, isLocked, distance, onLike, isNavigating, isLoading, onClick } = props
+
   return (
-    <div className='max-w-[20rem] rounded-md overflow-hidden bg-white'>
+    <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
-        <Close fill={'#000'} />
+        <Close fill={colors['gh-white']} />
       </button>
       <img
-        src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${data?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`}
+        src={getImageURL(props?.data?.photos)}
         className={`select-none max-h-52 w-full object-cover h-52`}
         draggable={false}
       />
@@ -76,7 +94,7 @@ const Card = (
           <Regular
             text={isNavigating ? 'Stop Navigation' : 'Navigate'}
             loading={isLoading}
-            onClick={onNavigate}
+            onClick={onClick}
             icon={{
               position: 'before',
               src: isNavigating && <Close fill='#FFF' />,
@@ -94,12 +112,16 @@ const Restaurant = (props: RestaurantProps) => {
   const { calculateDistance, currentPosition } = useGPS()
   const { formatObjectCoords } = useRestaurantSearch()
 
-  const { distance } = calculateDistance(
-    formatObjectCoords(data?.geometry.location),
-    formatObjectCoords(currentPosition),
-  )
+  // const { distance } = calculateDistance(
+  //   formatObjectCoords(data?.geometry.location),
+  //   formatObjectCoords(currentPosition),
+  // )
 
-  return <div>Restaurant</div>
+  if (mode === 'small') {
+    return <_Small {...props} />
+  } else {
+    return <_Card {...props} />
+  }
 }
 
 export default Restaurant
