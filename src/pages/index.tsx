@@ -18,6 +18,7 @@ import useRestaurantSearch from '@/hooks/API/restaurant'
 
 import { IoMdLocate } from 'react-icons/io'
 import useGPS from '@/hooks/context/GPS'
+import { useEffect } from 'react'
 
 // Types
 type setModePayload = {
@@ -160,6 +161,10 @@ const Home = (props) => {
   const { getRestaurant, clearRestaurant } = useRestaurantSearch()
   const { locateUser, isNavigating, isReady } = useMapBox()
 
+  useEffect(() => {
+    console.log({ isNavigating, isFetching: restaurant.isFetching })
+  }, [isNavigating, restaurant.isFetching])
+
   return (
     <>
       <Toast
@@ -214,14 +219,14 @@ const Home = (props) => {
               state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
             />
           ) : null} */}
-          {isNavigating && <Restaurant {...restaurant} mode='small' />}
+          {/* {isNavigating && <Restaurant {...restaurant} mode='small' />} */}
           <Action
-            mode={isNavigating ? 'close' : 'search'}
+            mode={!isNavigating ? 'search' : 'close'}
             type={'hero'}
             onClick={
               isNavigating ? () => clearRestaurant() : () => getRestaurant({ drawRoute: true })
             }
-            loading={restaurant.isFetching}
+            loading={restaurant?.isFetching}
             disabled={!isReady}
           />
           <button

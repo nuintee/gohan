@@ -9,11 +9,13 @@ export default {
 
 const LargeTemplate: ComponentStory<typeof Restaurant> = (args) => <Restaurant {...args} />
 
-export const Large = LargeTemplate.bind({})
+export const Default = LargeTemplate.bind({})
 
-Large.args = {
+Default.args = {
   isLiked: true,
   isLocked: true,
   data: initialData,
   distance: '',
+  isLoading: false,
+  isNavigating: false,
 } // add initial data for restaurant

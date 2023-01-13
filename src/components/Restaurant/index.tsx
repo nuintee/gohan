@@ -111,15 +111,15 @@ const Restaurant = (props: RestaurantProps) => {
   const { calculateDistance, currentPosition } = useGPS()
   const { formatObjectCoords } = useRestaurantSearch()
 
-  // const { distance } = calculateDistance(
-  //   formatObjectCoords(data?.geometry.location),
-  //   formatObjectCoords(currentPosition),
-  // )
+  const { distance } = calculateDistance(
+    formatObjectCoords(data?.geometry.location),
+    formatObjectCoords(currentPosition),
+  )
 
   if (mode === 'small') {
-    return <_Small {...props} />
+    return <_Small {...props} distance={distance} />
   } else {
-    return <_Card {...props} />
+    return <_Card {...props} distance={distance} />
   }
 }
 
