@@ -25,8 +25,8 @@ const Texts = (props: Props) => {
   return (
     <div className='flex w-full items-center justify-between rounded-md gap-2'>
       <div className='flex flex-col'>
-        <h1 className={`font-bold ${textSize.main}`}>{main || 'MAIN TEXT'}</h1>
-        <p className={`text-gh-l-gray ${textSize.sub}`}>{sub || 'SUB TEXT'}</p>
+        <h1 className={`font-bold ${textSize.main}`}>{main || 'Name'}</h1>
+        <p className={`text-gh-l-gray ${textSize.sub}`}>{sub || 'Description'}</p>
       </div>
       {icon}
     </div>

@@ -18,6 +18,20 @@ type ImageURLRequest = {
   photos: ResultsEntity['photos']
 }
 
+type CommonProps = {
+  onLike: Function
+} & RestaurantProps
+
+type SmallProps = {
+  onClick: Function
+} & CommonProps
+
+type CardProps = {
+  isNavigating: boolean
+  isLoading: boolean
+  onClick: Boolean
+} & CommonProps
+
 const getImageURL = (props: ImageURLRequest) => {
   const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${props?.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
   const fallbackURL = `https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80`
@@ -41,28 +55,14 @@ const _Small = (props: SmallProps) => {
       />
       <div className='flex flex-1 gap-4 items-start justify-between'>
         <div className='flex flex-col gap-2'>
-          <Texts main={data?.name || 'NAME'} sub={data?.types?.join('・')} size='small' />
-          <Label distance={distance || 'N/A m'} />
+          <Texts main={data?.name} sub={data?.types?.join('・')} size='small' />
+          <Label distance={distance} />
         </div>
         <Like onClick={onLike} isLiked={isLiked} isLocked={isLocked} />
       </div>
     </div>
   )
 }
-
-type CommonProps = {
-  onLike: Function
-} & RestaurantProps
-
-type SmallProps = {
-  onClick: Function
-} & CommonProps
-
-type CardProps = {
-  isNavigating: boolean
-  isLoading: boolean
-  onClick: Boolean
-} & CommonProps
 
 const _Card = (props: CardProps) => {
   const { data, isLiked, isLocked, distance, onLike, isNavigating, isLoading, onClick } = props
@@ -78,8 +78,8 @@ const _Card = (props: CardProps) => {
         draggable={false}
       />
       <div className='p-4 flex flex-col gap-4'>
-        <Label distance={distance || 'N/A m'} extraClassName={''} />
-        <Texts main={data?.name || 'NAME'} sub={data?.types?.join('・')} />
+        <Label distance={distance} extraClassName={''} />
+        <Texts main={data?.name} sub={data?.types?.join('・')} />
         {data?.reference && (
           <p className='bg-gh-l-orange text-center p-4 rounded-md'>
             Checkout more data from{' '}
