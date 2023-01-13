@@ -26,7 +26,7 @@ const getImageURL = (props: ImageURLRequest) => {
   return url
 }
 
-const _Small = (props: RestaurantProps & { distance: string; onLike: Function }) => {
+const _Small = (props: SmallProps) => {
   const { data, isLiked, isLocked, distance, onLike } = props
 
   return (
@@ -51,7 +51,6 @@ const _Small = (props: RestaurantProps & { distance: string; onLike: Function })
 }
 
 type CommonProps = {
-  distance: string
   onLike: Function
 } & RestaurantProps
 

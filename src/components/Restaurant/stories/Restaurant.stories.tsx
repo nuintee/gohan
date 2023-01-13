@@ -15,4 +15,5 @@ Large.args = {
   isLiked: true,
   isLocked: true,
   data: initialData,
+  distance: '',
 } // add initial data for restaurant
