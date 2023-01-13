@@ -13,4 +13,4 @@ export const Large = LargeTemplate.bind({})
 Large.args = {
   isLiked: true,
   isLocked: true,
-}
+} // add initial data for restaurant
