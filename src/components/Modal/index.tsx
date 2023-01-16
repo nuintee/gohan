@@ -6,7 +6,7 @@ import { states } from '@/components/Restaurant/Like/index'
 import { Close, Signout } from '@/icons'
 
 // Components
-import { Restaurant } from '@/components/Restaurant'
+import Restaurant from '@/components/Restaurant'
 import Input from '@/components/Input'
 import Header from './Header/index'
 
@@ -88,7 +88,7 @@ type DetailsType = {
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, state, info, onNavigate, isLoading, isNavigating } = props
+  const { isOpen, onClose, state, data, onNavigate, isLoading, isNavigating, onClick } = props
 
   return (
     <Layout isOpen={isOpen}>
@@ -97,14 +97,12 @@ const Details = (props: DetailsType) => {
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
-        <Restaurant.Large
-          state={state}
-          onNavigate={onNavigate}
-          onLike={() => {}}
+        <Restaurant
+          mode='large'
+          data={data}
           onClose={onClose}
-          info={info}
-          isLoading={isLoading}
           isNavigating={isNavigating}
+          onClick={onClick}
         />
       </section>
     </Layout>

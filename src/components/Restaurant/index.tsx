@@ -1,6 +1,6 @@
 import { Coords } from '@/constants/coords'
 import useRestaurantSearch from '@/hooks/API/restaurant'
-import { useMapBox } from '@/hooks/context'
+import { useMapBox, useModals } from '@/hooks/context'
 import useGPS from '@/hooks/context/GPS'
 import useRestaurants from '@/hooks/context/Restaurants'
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
@@ -26,6 +26,7 @@ type CardProps = {
   isNavigating: boolean
   isLoading: boolean
   onClick: Boolean
+  onClose: Function
 } & CommonProps
 
 const getImageURL = (photos: ResultsEntity['photos']) => {
@@ -39,12 +40,12 @@ const getImageURL = (photos: ResultsEntity['photos']) => {
 }
 
 const _Small = (props: SmallProps) => {
-  const { data, isLiked, isLocked, distance, onLike } = props
+  const { data, isLiked, isLocked, distance, onLike, onClick } = props
 
   return (
     <div
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
-      onClick={() => {}}
+      onClick={onClick}
     >
       <img
         src={getImageURL(data?.photos)}
@@ -63,11 +64,12 @@ const _Small = (props: SmallProps) => {
 }
 
 const _Card = (props: CardProps) => {
-  const { data, isLiked, isLocked, distance, onLike, isNavigating, isLoading, onClick } = props
+  const { data, isLiked, isLocked, distance, onLike, isNavigating, isLoading, onClick, onClose } =
+    props
 
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
-      <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
+      <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={onClose}>
         <Close fill={colors['gh-white']} />
       </button>
       <img
@@ -109,6 +111,7 @@ const Restaurant = (props: RestaurantProps) => {
   const { mode, data, isLiked, isLocked } = props
   const { calculateDistance, currentPosition } = useGPS()
   const { formatObjectCoords } = useRestaurantSearch()
+  const { manageModal } = useModals()
 
   const { distance } = calculateDistance(
     formatObjectCoords(data?.geometry.location),
@@ -116,7 +119,7 @@ const Restaurant = (props: RestaurantProps) => {
   )
 
   if (mode === 'small') {
-    return <_Small {...props} distance={distance} />
+    return <_Small {...props} distance={distance} onClick={() => manageModal('details', true)} />
   } else {
     return <_Card {...props} distance={distance} />
   }

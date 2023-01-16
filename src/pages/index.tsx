@@ -159,7 +159,7 @@ const Home = (props) => {
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
   const { getRestaurant, clearRestaurant } = useRestaurantSearch()
-  const { locateUser, isNavigating, isReady } = useMapBox()
+  const { locateUser, isNavigating, isReady, clearRoute, drawRoute } = useMapBox()
 
   useEffect(() => {
     console.log({ isNavigating, isFetching: restaurant.isFetching })
@@ -236,6 +236,13 @@ const Home = (props) => {
         info={shopDetail}
         isLoading={isFindingRoute}
       /> */}
+      <Modal.Details
+        isOpen={modalsState.details.isOpen}
+        data={restaurant?.data}
+        isNavigating={isNavigating}
+        onClick={() => {}}
+        onClose={() => manageModal('details', false)}
+      />
       <Modal.Confirm
         isOpen={modalsState.confirm.isOpen}
         type={'like'}
