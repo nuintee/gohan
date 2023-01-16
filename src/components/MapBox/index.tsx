@@ -65,6 +65,7 @@ const MapBox: FC<MapBoxProps> = (props) => {
         onLoad={onLoad}
         onClick={onClick}
         renderWorldCopies={false}
+        pitchWithRotate={false}
       >
         <CurrentLocationMarker coords={currentPosition} />
 
