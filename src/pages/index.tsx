@@ -218,17 +218,6 @@ const Home = (props) => {
         </footer>
       </div>
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
-      {/* <Modal.Details
-        state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
-        isOpen={modalsState.details.isOpen}
-        onClose={() => manageModal('details', false)}
-        onNavigate={() =>
-          onNavigateClicked(shopDetail?.geometry?.location, () => usedSearch.setMode('close'))
-        }
-        isNavigating={isNavigatingCurrent}
-        info={shopDetail}
-        isLoading={isFindingRoute}
-      /> */}
       <Modal.Details
         isOpen={modalsState.details.isOpen}
         data={restaurant?.data}
