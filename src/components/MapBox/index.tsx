@@ -24,10 +24,6 @@ const MapBox: FC<MapBoxProps> = (props) => {
   } = useMapBox()
   const { currentPosition } = useGPS()
 
-  useEffect(() => {
-    console.log({ directions })
-  }, [directions])
-
   const onClick = async (e) => {
     const { lngLat } = e
     const { lat: latitude, lng: longitude } = lngLat
