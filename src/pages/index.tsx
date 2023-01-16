@@ -199,13 +199,6 @@ const Home = (props) => {
           />
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
-          {/* {isAnyNavigation && Object.keys(shopDetail)?.length ? (
-            <Restaurant.Small
-              info={shopDetail}
-              onClick={() => showDetails(shopDetail)}
-              state={status !== 'authenticated' ? 'LOCKED' : 'UNLIKED'}
-            />
-          ) : null} */}
           {isNavigating && <Restaurant {...restaurant} mode='small' />}
           <Action
             mode={!isNavigating ? 'search' : 'close'}
