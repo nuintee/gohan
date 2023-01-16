@@ -233,7 +233,6 @@ const Home = (props) => {
         isOpen={modalsState.details.isOpen}
         data={restaurant?.data}
         isNavigating={isNavigating}
-        onClick={() => {}}
         onClose={() => manageModal('details', false)}
       />
       <Modal.Confirm

@@ -29,6 +29,9 @@ import { Regular } from '@/components/Button/index'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import Tab from '../Tab'
+import { useMapBox } from '@/hooks/context'
+import { RestaurantProps } from '@/types/Restaurant'
+import useGPS from '@/hooks/context/GPS'
 
 const tabs = [
   {
@@ -83,12 +86,25 @@ type DetailsType = {
   onClose: React.MouseEvent<HTMLButtonElement, MouseEvent>
   onNavigate: React.MouseEvent<HTMLButtonElement, MouseEvent>
   state: typeof states[number]
-  info: ResultsEntity
+  data: ResultsEntity
   isLoading: boolean
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, state, data, onNavigate, isLoading, isNavigating, onClick } = props
+  const { isOpen, onClose, data, isNavigating } = props
+  const { clearRoute, drawRoute } = useMapBox()
+
+  const clickHandle = () => {
+    // CloseModal
+    if (isNavigating) {
+      clearRoute()
+    } else {
+      // Restaurant Coords
+      const geometry = data?.geometry?.location
+      const route = { latitude: geometry?.lat, longitude: geometry?.lng }
+      drawRoute(route)
+    }
+  }
 
   return (
     <Layout isOpen={isOpen}>
@@ -98,11 +114,11 @@ const Details = (props: DetailsType) => {
         }`}
       >
         <Restaurant
-          mode='large'
           data={data}
+          mode='large'
           onClose={onClose}
           isNavigating={isNavigating}
-          onClick={onClick}
+          onClick={clickHandle}
         />
       </section>
     </Layout>
