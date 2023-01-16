@@ -108,7 +108,7 @@ const _Card = (props: CardProps) => {
 }
 
 const Restaurant = (props: RestaurantProps) => {
-  const { mode, data, isLiked, isLocked } = props
+  const { mode, data } = props
   const { calculateDistance, currentPosition } = useGPS()
   const { formatObjectCoords } = useRestaurantSearch()
   const { manageModal } = useModals()
@@ -119,9 +119,16 @@ const Restaurant = (props: RestaurantProps) => {
   )
 
   if (mode === 'small') {
-    return <_Small {...props} distance={distance} onClick={() => manageModal('details', true)} />
+    return (
+      <_Small
+        {...props}
+        distance={distance}
+        onClick={() => manageModal('details', true)}
+        onLike={() => {}}
+      />
+    )
   } else {
-    return <_Card {...props} distance={distance} />
+    return <_Card {...props} distance={distance} onLike={() => {}} />
   }
 }
 

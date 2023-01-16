@@ -4,6 +4,6 @@ export type RestaurantProps<T = {} | {}> = {
   mode?: 'small' | 'large'
   isLiked: boolean
   isLocked: boolean
-  distance?: string
+  distance?: string | null
   data?: ResultsEntity
 } & T
