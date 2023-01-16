@@ -35,8 +35,6 @@ const MapBox: FC<MapBoxProps> = (props) => {
 
     if (mapBoxState.moveOnClick) {
       drawRoute(coords)
-    } else {
-      clearRoute()
     }
   }
   const onLoad = () => {}
