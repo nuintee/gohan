@@ -30,6 +30,6 @@ export const handlers = [
 
     if (!data) return res(ctx.status(500), ctx.json({}))
 
-    res(ctx.status(200), ctx.json({ data, coordinates, start, end }))
+    return res(ctx.status(200), ctx.json({ data, coordinates, start, end }))
   }),
 ]
