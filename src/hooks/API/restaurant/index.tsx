@@ -81,23 +81,6 @@ const useRestaurantSearch = () => {
 
   // Add Dev Route
   const getRoute = async (props: GetRouteProps) => {
-    // const { profileType, start, end } = props
-    // function _formatCoords(coords: Coords) {
-    //   const { latitude, longitude } = coords
-    //   return `${longitude},${latitude}`
-    // }
-    // const base_coordinates = encodeURIComponent(`${_formatCoords(start)};${_formatCoords(end)}`)
-    // const profile = `mapbox/${profileType || 'walking'}`
-    // const baseURL = `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`
-    // try {
-    //   const query = await fetch(baseURL)
-    //   const data = await query.json()
-    //   const coordinates = data?.routes[0].geometry.coordinates
-    //   return { data, coordinates }
-    // } catch (error) {
-    //   console.error(error)
-    // }
-
     const { profileType, start, end } = props
     function _formatAPICoords(coords: Coords) {
       const { latitude, longitude } = coords
@@ -105,7 +88,12 @@ const useRestaurantSearch = () => {
     }
     const formattedStart = _formatAPICoords(start)
     const formattedEnd = _formatAPICoords(end)
-    const baseURL = `/api/route?profileType=${profileType}&start=${formattedStart}&end=${formattedEnd}`
+    let baseURL = `/api/route?profileType=${profileType}&start=${formattedStart}&end=${formattedEnd}`
+
+    if (process.env.NODE_ENV === 'development' && !!restaurant?.data) {
+      baseURL += `&place_id=${restaurant?.data?.place_id}`
+    }
+
     try {
       const query = await fetch(baseURL)
       const res = await query.json()
