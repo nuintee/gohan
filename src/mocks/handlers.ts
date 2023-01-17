@@ -21,4 +21,6 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json(randomOne))
   }),
+
+  rest.get('/api/route', (req, res, ctx) => {}),
 ]
