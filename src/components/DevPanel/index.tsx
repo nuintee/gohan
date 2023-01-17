@@ -10,14 +10,22 @@ import Input from '../Input'
 import useGPS from '@/hooks/context/GPS'
 import useRestaurantSearch from '@/hooks/API/restaurant'
 import { DEFAULT_DEV_COORDS } from '@/constants/coords'
+import useRestaurants from '@/hooks/context/Restaurants'
 
 const DevPanel = (props) => {
   const { useragent } = props
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const { toastState, setToastState, manageToast } = useToast()
-  const { mapBoxState, setMapBoxState, isViewStateChanged, setToDefaultViewState, MAPBOX_DEFAULT } =
-    useMapBox()
+  const {
+    mapBoxState,
+    setMapBoxState,
+    isViewStateChanged,
+    setToDefaultViewState,
+    MAPBOX_DEFAULT,
+    isNavigating,
+  } = useMapBox()
+  const { restaurant } = useRestaurants()
   const { initialPosition, isMoved, currentPosition, setToDefaultGPS } = useGPS()
   const { getRoute } = useRestaurantSearch()
 
@@ -38,7 +46,7 @@ const DevPanel = (props) => {
     console.log(session)
   }
 
-  const labels = [
+  const mapLabels = [
     {
       text: 'Move on click',
       spacing: 'justify-between',
@@ -111,7 +119,16 @@ const DevPanel = (props) => {
     },
     {
       label: 'Map Control',
-      children: labels.map((label) => <Label {...label}>{label.children}</Label>),
+      children: mapLabels.map((label) => <Label {...label}>{label.children}</Label>),
+    },
+    {
+      label: 'Restaurant States',
+      children: (
+        <>
+          <Indicator label='isNavigating' value={isNavigating.toString()} />
+          <Indicator label='isFetching' value={restaurant?.isFetching?.toString()} />
+        </>
+      ),
     },
     {
       label: 'Current Location',

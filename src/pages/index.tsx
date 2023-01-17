@@ -206,7 +206,7 @@ const Home = (props) => {
             onClick={
               isNavigating ? () => clearRestaurant() : () => getRestaurant({ drawRoute: true })
             }
-            loading={restaurant?.isFetching}
+            loading={!isNavigating && restaurant?.isFetching === true}
             disabled={!isReady}
           />
           <button

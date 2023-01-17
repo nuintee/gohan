@@ -50,12 +50,13 @@ const useRestaurantSearch = () => {
     }
   }
 
+  // Add Demo Fetching
   const getRestaurant = (options: RestaurantOptions) => {
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: true }))
     setTimeout(async () => {
       // Fetch
       const data: ResultsEntity = await _fetchRestaurant(currentPosition)
-      const { lat: latitude, lng: longitude } = data.geometry?.location
+      const { lat: latitude, lng: longitude } = data?.geometry?.location
       setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
 
       if (options?.locateUser === undefined || options?.locateUser === true) {
@@ -78,6 +79,7 @@ const useRestaurantSearch = () => {
     setRestaurant({})
   }
 
+  // Add Dev Route
   const getRoute = async (props: GetRouteProps) => {
     const { profileType, start, end } = props
 
