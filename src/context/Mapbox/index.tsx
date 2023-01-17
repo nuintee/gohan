@@ -33,7 +33,7 @@ const MapBoxContext = createContext({
   directions: {},
   isNavigating: false,
   locateUser: () => {},
-  drawRoute: (coords: Coords) => {},
+  drawRoute: async (coords: Coords): Promise<void> => {},
   clearRoute: () => {},
   getDestinationCoords: (): Coords | {} => {
     return {}
@@ -72,7 +72,7 @@ const MapBoxProvider = (props) => {
     })
   }
 
-  async function drawRoute(coords: Coords) {
+  async function drawRoute(coords: Coords): Promise<void> {
     try {
       const { coordinates } = await getRoute({
         profileType: 'walking',

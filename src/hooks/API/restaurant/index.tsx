@@ -51,27 +51,24 @@ const useRestaurantSearch = () => {
   }
 
   // Add Demo Fetching
-  const getRestaurant = (options: RestaurantOptions) => {
+  const getRestaurant = async (options: RestaurantOptions) => {
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: true }))
-    setTimeout(async () => {
-      // Fetch
-      const data: ResultsEntity = await _fetchRestaurant(currentPosition)
-      const { lat: latitude, lng: longitude } = data?.geometry?.location
-      setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
+    const data: ResultsEntity = await _fetchRestaurant(currentPosition)
+    const { lat: latitude, lng: longitude } = data?.geometry?.location
+    setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
 
-      if (options?.locateUser === undefined || options?.locateUser === true) {
-        locateUser()
-      }
+    if (options?.locateUser) {
+      locateUser()
+    }
 
-      if (options?.drawRoute) {
-        // drawRoute on MapBox
-        drawRoute({
-          latitude,
-          longitude,
-        })
-      }
-      setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
-    }, 2000)
+    if (options?.drawRoute) {
+      // drawRoute on MapBox
+      await drawRoute({
+        latitude,
+        longitude,
+      })
+    }
+    setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
   }
 
   const clearRestaurant = () => {
