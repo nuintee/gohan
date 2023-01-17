@@ -7,10 +7,5 @@ type Data = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const { place_id } = req.query
-  const foundRoute = routeData.find((v) => v.place_id === place_id)
-
-  if (!foundRoute) return res.status(500).json([])
-
-  res.status(200).json(foundRoute?.routes)
+  res.status(200).json({ message: 1 })
 }

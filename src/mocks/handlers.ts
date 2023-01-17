@@ -24,14 +24,20 @@ export const handlers = [
   }),
 
   rest.get('/api/route', (req, res, ctx) => {
-    const place_id = req.url.searchParams.get('id')
-    const data = place_id
-      ? routeData.find((v, i) => v.place_id === place_id)
-      : routeData[Math.floor(Math.random() * routeData.length)]
-    const coordinates = data?.routes[0].geometry.coordinates
+    const place_id = req.url.searchParams.get('place_id')
+    // const data = place_id ? routeData.find((v) => v.place_id === place_id) : routeData[0]
+    if (!place_id) return res(ctx.status(500), ctx.json({}))
 
-    if (!data) return res(ctx.status(500), ctx.json({}))
+    const targetData = place_id ? routeData.find((v, i) => i === 3) : routeData[0]
+    const data = targetData.routes
+    const coordinates = data[0].geometry.coordinates
 
-    return res(ctx.status(200), ctx.json({ data, coordinates }))
+    return res(
+      ctx.status(200),
+      ctx.json({
+        data,
+        coordinates,
+      }),
+    )
   }),
 ]
