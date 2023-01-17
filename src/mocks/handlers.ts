@@ -24,12 +24,12 @@ export const handlers = [
   }),
 
   rest.get('/api/route', (req, res, ctx) => {
-    const { place_id, start, end } = req.params
-    const data = place_id ? routeData.find((v) => v.place_id === place_id) : routeData[0]
+    const { place_id } = req.params
+    const data = routeData.find((v, i) => v.place_id === place_id || i === 0)
     const coordinates = data?.routes[0].geometry.coordinates
 
     if (!data) return res(ctx.status(500), ctx.json({}))
 
-    return res(ctx.status(200), ctx.json({ data, coordinates, start, end }))
+    return res(ctx.status(200), ctx.json({ data, coordinates }))
   }),
 ]

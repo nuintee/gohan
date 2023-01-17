@@ -87,8 +87,9 @@ const useRestaurantSearch = () => {
     const formattedEnd = _formatAPICoords(end)
     let baseURL = `/api/route?profileType=${profileType}&start=${formattedStart}&end=${formattedEnd}`
 
-    if (process.env.NODE_ENV === 'development' && !!restaurant?.data) {
-      baseURL += `&place_id=${restaurant?.data?.place_id}`
+    if (process.env.NODE_ENV === 'development') {
+      // baseURL += `&place_id=${restaurant?.data?.place_id}`
+      baseURL += `&place_id=ChIJzdIWCP2GqkAR4wCobfmZAvo`
     }
 
     try {
