@@ -22,7 +22,7 @@ const Action = (props: Props) => {
     <button
       onClick={onClick}
       className={className}
-      disabled={disabled || loading}
+      disabled={loading || disabled}
       style={{
         height: `${size}em`,
         width: `${size}em`,

@@ -159,11 +159,11 @@ const Home = (props) => {
   const { data: session, status } = useSession()
   const { restaurant } = useRestaurants()
   const { getRestaurant, clearRestaurant } = useRestaurantSearch()
-  const { locateUser, isNavigating, isReady, clearRoute, drawRoute } = useMapBox()
+  const { locateUser, isNavigating, isReady, clearRoute, drawRoute, directions } = useMapBox()
 
   useEffect(() => {
-    console.log({ isNavigating, isFetching: restaurant.isFetching })
-  }, [isNavigating, restaurant.isFetching])
+    console.log(directions)
+  }, [directions])
 
   return (
     <>
@@ -201,7 +201,7 @@ const Home = (props) => {
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
           {isNavigating && <Restaurant {...restaurant} mode='small' />}
           <Action
-            mode={!isNavigating ? 'search' : 'close'}
+            mode={isNavigating ? 'close' : 'search'}
             type={'hero'}
             onClick={
               isNavigating ? () => clearRestaurant() : () => getRestaurant({ drawRoute: true })

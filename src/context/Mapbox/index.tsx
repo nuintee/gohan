@@ -56,8 +56,7 @@ const MapBoxProvider = (props) => {
   const { currentPosition, isPositionAvailable } = useGPS()
 
   // Flags
-  const isNavigating =
-    !!directions && directions !== undefined && Object.keys(directions).length > 0
+  const isNavigating = directions?.hasOwnProperty('source') && directions?.hasOwnProperty('layer')
 
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
 
