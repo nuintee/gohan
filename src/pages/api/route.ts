@@ -1,16 +1,26 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { Coords } from '@/constants/coords'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import routeData from '@/data/route/index.json'
+
+const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
 type Data = {
   name: string
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const { place_id } = req.query
-  const foundRoute = routeData.find((v) => v.place_id === place_id)
+  const { profileType, start, end } = req.query
 
-  if (!foundRoute) return res.status(500).json([])
+  const base_coordinates = encodeURIComponent(`${start};${end}`)
+  const profile = `mapbox/${profileType || 'walking'}`
+  const baseURL = `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`
 
-  res.status(200).json(foundRoute?.routes)
+  try {
+    const query = await fetch(baseURL)
+    const data = await query.json()
+    const coordinates = data?.routes[0].geometry.coordinates
+    res.status(200).json({ data, coordinates })
+  } catch (error) {
+    res.status(500).json(error)
+  }
 }

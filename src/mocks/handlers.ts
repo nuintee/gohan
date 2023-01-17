@@ -25,10 +25,11 @@ export const handlers = [
 
   rest.get('/api/route', (req, res, ctx) => {
     const { place_id } = req.params
-    const foundRoute = routeData.find((v) => v.place_id === place_id)
+    const data = place_id ? routeData.find((v) => v.place_id === place_id) : routeData[0]
+    const coordinates = data?.routes[0].geometry.coordinates
 
-    if (!foundRoute) return res(ctx.status(500), ctx.json([]))
+    if (!data) return res(ctx.status(500), ctx.json({}))
 
-    res(ctx.status(200), ctx.json(foundRoute?.routes))
+    res(ctx.status(200), ctx.json({ data, coordinates }))
   }),
 ]
