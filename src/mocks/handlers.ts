@@ -2,6 +2,7 @@ import { rest } from 'msw'
 
 // Data
 import mapData from '@/data/places/index.json'
+import routeData from '@/data/route/index.json'
 
 export const handlers = [
   rest.post('/login', (req, res, ctx) => {
@@ -22,5 +23,12 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(randomOne))
   }),
 
-  rest.get('/api/route', (req, res, ctx) => {}),
+  rest.get('/api/route', (req, res, ctx) => {
+    const { place_id } = req.params
+    const foundRoute = routeData.find((v) => v.place_id === place_id)
+
+    if (!foundRoute) return res(ctx.status(500), ctx.json([]))
+
+    res(ctx.status(200), ctx.json(foundRoute?.routes))
+  }),
 ]

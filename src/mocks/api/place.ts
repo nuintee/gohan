@@ -1,23 +1,13 @@
 import { ResponseResolver, MockedRequest, restContext } from 'msw'
 
+import mapData from '@/data/places/index.json'
+
 const get: ResponseResolver<MockedRequest, typeof restContext> = (req, res, ctx) => {
-  return res(
-    ctx.status(200),
-    ctx.json([
-      {
-        id: 1,
-        name: 'John',
-      },
-      {
-        id: 2,
-        name: 'Alice',
-      },
-      {
-        id: 3,
-        name: 'Bob',
-      },
-    ]),
-  )
+  const onlyOpenNow = mapData.results.filter((map, index) => map.opening_hours?.open_now)
+  const randomIndex = Math.floor(Math.random() * onlyOpenNow.length)
+  const randomOne = onlyOpenNow[randomIndex]
+
+  return res(ctx.status(200), ctx.json(randomOne))
 }
 
 export default { get }

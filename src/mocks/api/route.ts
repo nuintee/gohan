@@ -1,23 +1,14 @@
 import { ResponseResolver, MockedRequest, restContext } from 'msw'
 
+import routeData from '@/data/route/index.json'
+
 const get: ResponseResolver<MockedRequest, typeof restContext> = (req, res, ctx) => {
-  return res(
-    ctx.status(200),
-    ctx.json([
-      {
-        id: 1,
-        name: 'John',
-      },
-      {
-        id: 2,
-        name: 'Alice',
-      },
-      {
-        id: 3,
-        name: 'Bob',
-      },
-    ]),
-  )
+  const { place_id } = req.params
+  const foundRoute = routeData.find((v) => v.place_id === place_id)
+
+  if (!foundRoute) return res(ctx.status(500), ctx.json([]))
+
+  res(ctx.status(200), ctx.json(foundRoute?.routes))
 }
 
 export default { get }
