@@ -11,10 +11,7 @@ const Acitvity = (props: Props) => {
   return (
     <button
       onClick={onClick}
-      disabled={locked}
-      className={`bg-white h-12 w-12 rounded-full flex justify-center items-center active:bg-opacity-90 shrink-0 z-[1] ${
-        locked ? 'active:animate-bounce' : 'active:scale-90'
-      }`}
+      className={`bg-white h-12 w-12 rounded-full flex justify-center items-center active:bg-opacity-90 shrink-0 z-[1] active:scale-90`}
     >
       {locked ? <Locked /> : <Regular />}
     </button>

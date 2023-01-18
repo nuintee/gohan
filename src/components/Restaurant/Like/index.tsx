@@ -39,7 +39,6 @@ const Like = (props: Props) => {
     <button
       className='bg-gh-l-orange w-12 h-12 shrink-0 rounded-full flex items-center justify-center'
       onClick={onClick}
-      disabled={isLocked}
     >
       <Icon isLocked={isLocked} isLiked={isLiked} />
     </button>

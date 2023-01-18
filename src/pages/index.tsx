@@ -187,7 +187,11 @@ const Home = (props) => {
           </div>
           <Acitvity
             locked={status !== 'authenticated'}
-            onClick={() => manageSidebar('activity', true)}
+            onClick={
+              status === 'authenticated'
+                ? () => manageSidebar('activity', true)
+                : () => manageModal('user', true)
+            }
           />
         </header>
         <main>
@@ -199,7 +203,9 @@ const Home = (props) => {
           />
         </main>
         <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4 items-center flex-col'>
-          {isNavigating && <Restaurant {...restaurant} mode='small' />}
+          {isNavigating && (
+            <Restaurant {...restaurant} mode='small' isLocked={status !== 'authenticated'} />
+          )}
           <Action
             mode={isNavigating ? 'close' : 'search'}
             type={'hero'}
