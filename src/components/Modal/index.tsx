@@ -18,6 +18,7 @@ import { ResultsEntity } from '@/hooks/API/Places/types/index.types'
 
 type Props = {
   isOpen: boolean
+  zIndex?: string
   type?: keyof typeof dictionary.consent
   onClose?: React.MouseEventHandler<HTMLButtonElement>
   children?: React.ReactNode
@@ -45,10 +46,10 @@ const tabs = [
 ]
 
 const Layout = (props: Props) => {
-  const { children, isOpen } = props
+  const { children, isOpen, zIndex } = props
   return (
     <div
-      className={`absolute left-0 top-0 h-screen w-screen ease-in-out flex items-center justify-center bg-black bg-opacity-30 duration-500 ${
+      className={`absolute left-0 top-0 h-screen w-screen ease-in-out flex items-center justify-center bg-black bg-opacity-30 duration-500 ${zIndex} ${
         isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
@@ -134,9 +135,9 @@ const User = (props: Props) => {
 
   if (!session) {
     return (
-      <Layout isOpen={isOpen}>
+      <Layout isOpen={isOpen} zIndex={'z-[1]'}>
         <section
-          className={`bg-white duration-700 rounded-md min-w-[20rem] ${
+          className={`bg-white duration-700 rounded-md min-w-[20rem] z-[10000] ${
             isOpen ? 'scale-100' : 'scale-0'
           }`}
         >
