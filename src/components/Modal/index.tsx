@@ -102,7 +102,7 @@ const Details = (props: DetailsType) => {
       // Restaurant Coords
       const geometry = data?.geometry?.location
       const route = { latitude: geometry?.lat, longitude: geometry?.lng }
-      drawRoute(route)
+      drawRoute(route, data?.place_id)
     }
   }
 

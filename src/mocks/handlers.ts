@@ -25,7 +25,6 @@ export const handlers = [
 
   rest.get('/api/route', (req, res, ctx) => {
     const place_id = req.url.searchParams.get('place_id')
-    // const data = place_id ? routeData.find((v) => v.place_id === place_id) : routeData[0]
     if (!place_id) return res(ctx.status(500), ctx.json({}))
 
     const targetData = place_id ? routeData.find((v, i) => v.place_id === place_id) : routeData[0]
