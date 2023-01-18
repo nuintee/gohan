@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { handleRequest, userTable, Response } from '@/hooks/API/prisma'
+import { handleRequest, userTable, Response } from '@/utils/prisma'
 
 // GET | POST
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {

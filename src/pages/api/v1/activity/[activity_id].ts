@@ -1,4 +1,4 @@
-import { handleRequest, activityTable, Response } from '@/hooks/API/prisma'
+import { handleRequest, activityTable, Response } from '@/utils/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 // GET | PATCH | DELETE

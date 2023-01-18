@@ -7,6 +7,7 @@ import useGPS from '@/hooks/context/GPS'
 import { useMapBox } from '@/hooks/context'
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
 import routeData from '@/data/route/index.json'
+import { useSession } from 'next-auth/react'
 
 export type RestaurantOptions = {
   drawRoute?: boolean
@@ -30,6 +31,7 @@ const useRestaurantSearch = () => {
   const { restaurant, setRestaurant } = useRestaurants()
   const { currentPosition } = useGPS()
   const { drawRoute, clearRoute, locateUser } = useMapBox()
+  const { data: session, status } = useSession()
 
   type _CoordObject = Coords | { lat: number | null; lng: number | null }
 
@@ -60,6 +62,10 @@ const useRestaurantSearch = () => {
     const data: ResultsEntity = await _fetchRestaurant(currentPosition)
     const { lat: latitude, lng: longitude } = data?.geometry?.location
     setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
+
+    if (status === 'authenticated') {
+      // get
+    }
 
     if (options?.locateUser === false) {
     } else {

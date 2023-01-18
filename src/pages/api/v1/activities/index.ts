@@ -1,4 +1,4 @@
-import { handleRequest, activityTable, Response } from '@/hooks/API/prisma'
+import { handleRequest, activityTable, Response } from '@/utils/prisma'
 import prisma from '@/lib/prisma'
 import { randomUUID } from 'crypto'
 import type { NextApiRequest, NextApiResponse } from 'next'
