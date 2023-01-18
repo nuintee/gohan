@@ -81,10 +81,10 @@ const _Card = (props: CardProps) => {
       <div className='p-4 flex flex-col gap-4'>
         <Label distance={distance} extraClassName={''} />
         <Texts main={data?.name} sub={data?.types?.join('・')} />
-        {data?.reference && (
+        {data?.website && (
           <p className='bg-gh-l-orange text-center p-4 rounded-md'>
             Checkout more data from{' '}
-            <a href='' className='text-gh-orange font-semibold'>
+            <a href={data?.website} className='text-gh-orange font-semibold'>
               Here
             </a>
           </p>
