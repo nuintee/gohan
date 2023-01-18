@@ -118,7 +118,8 @@ const Restaurant = (props: RestaurantProps) => {
     formatObjectCoords(currentPosition),
   )
 
-  const handleOnLike = () => {
+  const handleOnLike = (e) => {
+    e.stopPropagation()
     if (isLocked) {
       manageModal('user', true)
     } else {
