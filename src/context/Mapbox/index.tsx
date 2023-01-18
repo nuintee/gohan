@@ -33,7 +33,7 @@ const MapBoxContext = createContext({
   directions: {},
   isNavigating: false,
   locateUser: () => {},
-  drawRoute: (coords: Coords) => {},
+  drawRoute: async (coords: Coords, place_id?: string | null): Promise<void> => {},
   clearRoute: () => {},
   getDestinationCoords: (): Coords | {} => {
     return {}
@@ -57,7 +57,10 @@ const MapBoxProvider = (props) => {
 
   // Flags
   const isNavigating =
-    !!directions && directions !== undefined && Object.keys(directions).length > 0
+    !!directions &&
+    directions?.hasOwnProperty('source') &&
+    directions?.hasOwnProperty('layer') &&
+    Object.keys(directions).length > 0
 
   const isViewStateChanged = JSON.stringify(mapBoxState) !== JSON.stringify(MAPBOX_DEFAULT)
 
@@ -69,12 +72,15 @@ const MapBoxProvider = (props) => {
     })
   }
 
-  async function drawRoute(coords: Coords) {
+  async function drawRoute(coords: Coords, place_id?: string | null): Promise<void> {
     try {
       const { coordinates } = await getRoute({
         profileType: 'walking',
         start: currentPosition,
         end: coords,
+        _dev: {
+          place_id,
+        },
       })
       const source = createSource({ coordinates })
       setDirections(source)

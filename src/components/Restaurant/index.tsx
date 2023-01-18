@@ -1,69 +1,90 @@
-import Image from 'next/image'
-
-import { Regular } from '../Button'
-import Texts from './Texts'
-import Label from './Label'
-import { Like, states } from './Like/index'
-
-// Hooks
-import { useGeoLocation } from '@/hooks/context'
-
-// Types
-import { ResultsEntity } from '@/hooks/API/Places/types/index.types'
-
-// Constants
-import { colors } from 'config/tailwind'
-
-// Icons
+import { Coords } from '@/constants/coords'
+import useRestaurantSearch from '@/hooks/API/restaurant'
+import { useMapBox, useModals } from '@/hooks/context'
+import useGPS from '@/hooks/context/GPS'
+import useRestaurants from '@/hooks/context/Restaurants'
+import { ResultsEntity } from '@/hooks/context/Restaurants/types'
 import { Close } from '@/icons'
-import { useEffect, useState } from 'react'
+import { RestaurantProps } from '@/types/Restaurant'
+import { colors } from 'config/tailwind'
+import Image from 'next/image'
+import { useEffect } from 'react'
+import { Regular } from '../Button'
+import Label from './Label'
+import { Like } from './Like'
+import Texts from './Texts'
 
-type Props = {
-  state: typeof states[number]
-  info: ResultsEntity
-  onNavigate: React.MouseEventHandler<HTMLDivElement>
-  onClose: React.MouseEventHandler<HTMLDivElement>
-  onClick?: React.MouseEventHandler<HTMLDivElement>
-  onLike: React.MouseEventHandler<HTMLButtonElement>
+type CommonProps = {
+  onLike: Function
+} & RestaurantProps
+
+type SmallProps = {
+  onClick: Function
+} & CommonProps
+
+type CardProps = {
+  isNavigating: boolean
+  isLoading: boolean
+  onClick: Boolean
+  onClose: Function
+} & CommonProps
+
+const getImageURL = (photos: ResultsEntity['photos']) => {
+  const fallbackURL = `https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80`
+  if (!!photos?.length && !!photos[0].photo_reference) {
+    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
+    return url
+  } else {
+    return fallbackURL
+  }
 }
 
-const Large = (props: Props) => {
-  const { state, onLike, onNavigate, onClose, info, isLoading, isNavigating } = props
-  const { geoState, calculateDistance } = useGeoLocation()
-  const distance = calculateDistance(info?.geometry?.location, geoState)
-
-  const IS_IMAGE_AVAILABLE = info?.photos
-  const THEME = IS_IMAGE_AVAILABLE
-    ? {
-        label: '',
-        closeFill: colors['gh-white'],
-      }
-    : {
-        label: 'ml-7',
-        closeFill: colors['gh-gray'],
-      }
+const _Small = (props: SmallProps) => {
+  const { data, isLiked, isLocked, distance, onLike, onClick } = props
 
   return (
-    <div className='max-w-[20rem] rounded-md overflow-hidden bg-white'>
+    <div
+      className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
+      onClick={onClick}
+    >
+      <img
+        src={getImageURL(data?.photos)}
+        alt={`${data?.name}'s thumbnail`}
+        className={`max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md`}
+      />
+      <div className='flex flex-1 gap-4 items-start justify-between'>
+        <div className='flex flex-col gap-2'>
+          <Texts main={data?.name} sub={data?.types?.join('・')} size='small' />
+          <Label distance={distance} />
+        </div>
+        <Like onClick={onLike} isLiked={isLiked} isLocked={isLocked} />
+      </div>
+    </div>
+  )
+}
+
+const _Card = (props: CardProps) => {
+  const { data, isLiked, isLocked, distance, onLike, isNavigating, isLoading, onClick, onClose } =
+    props
+
+  return (
+    <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={onClose}>
-        <Close fill={THEME.closeFill} />
+        <Close fill={colors['gh-white']} />
       </button>
-
-      {IS_IMAGE_AVAILABLE && (
-        <img
-          src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`}
-          className={`select-none max-h-52 w-full object-cover h-52`}
-          draggable={false}
-        />
-      )}
-
+      <img
+        src={getImageURL(props?.data?.photos)}
+        alt={`${data?.name}'s thumbnail`}
+        className={`select-none max-h-52 w-full object-cover h-52`}
+        draggable={false}
+      />
       <div className='p-4 flex flex-col gap-4'>
-        <Label distance={distance} extraClassName={THEME.label} />
-        <Texts main={info?.name || 'NAME'} sub={info?.types?.join('・') || 'Types・Pros'} />
-        {info?.url && (
+        <Label distance={distance} extraClassName={''} />
+        <Texts main={data?.name} sub={data?.types?.join('・')} />
+        {data?.website && (
           <p className='bg-gh-l-orange text-center p-4 rounded-md'>
-            Checkout more info from{' '}
-            <a href='' className='text-gh-orange font-semibold'>
+            Checkout more data from{' '}
+            <a href={data?.website} className='text-gh-orange font-semibold'>
               Here
             </a>
           </p>
@@ -73,56 +94,42 @@ const Large = (props: Props) => {
           <Regular
             text={isNavigating ? 'Stop Navigation' : 'Navigate'}
             loading={isLoading}
-            onClick={onNavigate}
+            onClick={onClick}
             icon={{
               position: 'before',
               src: isNavigating && <Close fill='#FFF' />,
             }}
           />
-          <Like state={state} onClick={onLike} />
+          <Like onClick={onLike} isLiked={isLiked} isLocked={isLocked} />
         </footer>
       </div>
     </div>
   )
 }
 
-const Small = (props: Props) => {
-  const { state, onClick, onLike, info } = props
-  const { geoState, calculateDistance } = useGeoLocation()
-  const distance = calculateDistance(info?.geometry?.location, geoState)
+const Restaurant = (props: RestaurantProps) => {
+  const { mode, data } = props
+  const { calculateDistance, currentPosition } = useGPS()
+  const { formatObjectCoords } = useRestaurantSearch()
+  const { manageModal } = useModals()
 
-  const IS_IMAGE_AVAILABLE = info?.photos
-
-  return (
-    <div
-      className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
-      onClick={onClick}
-    >
-      {IS_IMAGE_AVAILABLE && (
-        <img
-          src={
-            info?.photos?.length
-              ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${info?.photos[0]?.photo_reference}&key=${process.env.NEXT_PUBLIC_GCP_API_KEY}`
-              : 'https://images.unsplash.com/photo-1508424757105-b6d5ad9329d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80'
-          }
-          className='max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md'
-          alt={'image'}
-        />
-      )}
-      <div className='flex flex-1 gap-4 items-start'>
-        <div className='flex flex-col gap-2'>
-          <Texts main={info?.name || 'NAME'} sub={info?.types?.join('・')} size='small' />
-          <Label distance={distance} />
-        </div>
-        <Like onClick={onLike} state={state} />
-      </div>
-    </div>
+  const { distance } = calculateDistance(
+    formatObjectCoords(data?.geometry.location),
+    formatObjectCoords(currentPosition),
   )
+
+  if (mode === 'small') {
+    return (
+      <_Small
+        {...props}
+        distance={distance}
+        onClick={() => manageModal('details', true)}
+        onLike={() => {}}
+      />
+    )
+  } else {
+    return <_Card {...props} distance={distance} onLike={() => {}} />
+  }
 }
 
-const Restaurant = {
-  Large,
-  Small,
-}
-
-export { Restaurant, Like }
+export default Restaurant

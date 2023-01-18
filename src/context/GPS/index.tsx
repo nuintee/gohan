@@ -3,6 +3,13 @@ import React, { useState, useRef, createContext, ReactNode } from 'react'
 // constants
 import { DEFAULT_COORDS, DEFAULT_DEV_COORDS } from '@/constants/coords'
 
+type CalculatedDistance = {
+  raw: number | null
+  km: string | null
+  distance: string | null
+  m: string | null
+}
+
 const GPSContext = createContext({
   initialPosition: DEFAULT_COORDS,
   isMoved: false,
@@ -11,6 +18,13 @@ const GPSContext = createContext({
   setCurerntPosition: typeof useState,
   setToDefaultGPS: Function,
   isPositionAvailable: false,
+  calculateDistance: (
+    endCoords: number[],
+    startCoods: number[],
+    unit?: 'km' | 'm',
+  ): CalculatedDistance => {
+    return { raw: null, km: null, m: null, distance: null }
+  },
 })
 
 const GPSProvider = (props) => {
@@ -28,12 +42,22 @@ const GPSProvider = (props) => {
   }
 
   function calculateDistance(endCoords: number[], startCoods: number[], unit?: 'km' | 'm') {
+    const _distanceFormatter = (distance: number) => {
+      if (distance >= 1) {
+        return Math.round(distance) + 'km'
+      } else if (distance < 1) {
+        return Math.round(distance * 1000) + 'm'
+      }
+    }
+
     const _calculated =
       Math.sqrt(
         Math.pow(endCoords[0] - startCoods[0], 2) + Math.pow(endCoords[1] - startCoods[1], 2),
       ) * 100
+
     return {
       raw: _calculated,
+      distance: _distanceFormatter(_calculated),
       km: `${Math.round(_calculated * 1000) / 1000}${unit && 'km'}`,
       m: `${Math.round(_calculated * 1000)}${unit && 'm'}`,
     }

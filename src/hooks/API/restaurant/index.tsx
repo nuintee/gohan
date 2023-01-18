@@ -6,15 +6,20 @@ import { Coords } from '@/constants/coords'
 import useGPS from '@/hooks/context/GPS'
 import { useMapBox } from '@/hooks/context'
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
+import routeData from '@/data/route/index.json'
 
 export type RestaurantOptions = {
   drawRoute?: boolean
+  locateUser?: boolean
 }
 
 export type GetRouteProps = {
   profileType?: 'walking'
   start: Coords
   end: Coords
+  _dev?: {
+    place_id?: string | null
+  }
 }
 
 // Env
@@ -24,7 +29,16 @@ const gcpKey = process.env.NEXT_PUBLIC_GCP_API_KEY
 const useRestaurantSearch = () => {
   const { restaurant, setRestaurant } = useRestaurants()
   const { currentPosition } = useGPS()
-  const { drawRoute, clearRoute } = useMapBox()
+  const { drawRoute, clearRoute, locateUser } = useMapBox()
+
+  type _CoordObject = Coords | { lat: number | null; lng: number | null }
+
+  const formatObjectCoords = (coordObject: _CoordObject): number[] => {
+    if (!coordObject) return []
+    return Object.keys(coordObject)
+      .sort()
+      .map((k) => coordObject[k])
+  }
 
   const _fetchRestaurant = async (coords: Coords) => {
     const is_devmode = process.env.NODE_ENV === 'development'
@@ -40,22 +54,29 @@ const useRestaurantSearch = () => {
     }
   }
 
-  const getRestaurant = (options: RestaurantOptions) => {
+  // Add Demo Fetching
+  const getRestaurant = async (options: RestaurantOptions) => {
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: true }))
-    setTimeout(async () => {
-      // Fetch
-      const data: ResultsEntity = await _fetchRestaurant(currentPosition)
-      const { lat: latitude, lng: longitude } = data.geometry.location
-      setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
-      if (options?.drawRoute) {
-        // drawRoute on MapBox
-        drawRoute({
+    const data: ResultsEntity = await _fetchRestaurant(currentPosition)
+    const { lat: latitude, lng: longitude } = data?.geometry?.location
+    setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
+
+    if (options?.locateUser) {
+      locateUser()
+    }
+
+    if (options?.drawRoute) {
+      // drawRoute on MapBox
+      const place_id = data?.place_id
+      await drawRoute(
+        {
           latitude,
           longitude,
-        })
-      }
-      setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
-    }, 2000)
+        },
+        place_id,
+      )
+    }
+    setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
   }
 
   const clearRestaurant = () => {
@@ -63,29 +84,31 @@ const useRestaurantSearch = () => {
     setRestaurant({})
   }
 
+  // Add Dev Route
   const getRoute = async (props: GetRouteProps) => {
-    const { profileType, start, end } = props
-
-    function _formatCoords(coords: Coords) {
+    const { profileType, start, end, _dev } = props
+    function _formatAPICoords(coords: Coords) {
       const { latitude, longitude } = coords
       return `${longitude},${latitude}`
     }
+    const formattedStart = _formatAPICoords(start)
+    const formattedEnd = _formatAPICoords(end)
+    let baseURL = `/api/route?profileType=${profileType}&start=${formattedStart}&end=${formattedEnd}`
 
-    const base_coordinates = encodeURIComponent(`${_formatCoords(start)};${_formatCoords(end)}`)
-    const profile = `mapbox/${profileType || 'walking'}`
-    const baseURL = `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxAccessToken}`
+    if (_dev?.place_id) {
+      baseURL += `&place_id=${_dev?.place_id}`
+    }
 
     try {
       const query = await fetch(baseURL)
-      const data = await query.json()
-      const coordinates = data?.routes[0].geometry.coordinates
-      return { data, coordinates }
+      const res = await query.json()
+      return res
     } catch (error) {
       console.error(error)
     }
   }
 
-  return { getRestaurant, clearRestaurant, getRoute }
+  return { getRestaurant, clearRestaurant, getRoute, formatObjectCoords }
 }
 
 export default useRestaurantSearch
