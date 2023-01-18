@@ -5,4 +5,5 @@ export type Props = {
   loading: boolean
   onClick: React.MouseEventHandler<HTMLButtonElement>
   type: typeof dictionary.type[number]
+  disabled?: boolean
 }

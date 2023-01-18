@@ -1,11 +1,31 @@
-export type MapBoxInit = {
-  lng?: number | null
-  lat?: number | null
-  zoom?: number | null
-  pitch?: number | null
-  bearing?: number | null
-  error?: {
-    is: boolean
-    message: string
+export type SourceType = {
+  type: 'Feature'
+  properties: {}
+  geometry: {
+    type: 'LineString'
+    coordinates: number[][]
   }
+}
+
+export type LayerType = {
+  id: string
+  type: 'line'
+  source: {
+    type: 'geojson'
+    data: SourceType
+  }
+  layout: {
+    'line-join': 'round'
+    'line-cap': 'round'
+  }
+  paint: {
+    'line-color': string
+    'line-width': number
+    'line-opacity': number
+  }
+}
+
+export type Directions = {
+  source: SourceType
+  layer: LayerType
 }

@@ -6,7 +6,7 @@ import { states } from '@/components/Restaurant/Like/index'
 import { Close, Signout } from '@/icons'
 
 // Components
-import { Restaurant } from '@/components/Restaurant'
+import Restaurant from '@/components/Restaurant'
 import Input from '@/components/Input'
 import Header from './Header/index'
 
@@ -26,6 +26,23 @@ type Props = {
 // Component
 import Texts from '../Restaurant/Texts'
 import { Regular } from '@/components/Button/index'
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+import Tab from '../Tab'
+import { useMapBox } from '@/hooks/context'
+import { RestaurantProps } from '@/types/Restaurant'
+import useGPS from '@/hooks/context/GPS'
+
+const tabs = [
+  {
+    label: 'Signin',
+    id: 0,
+  },
+  {
+    label: 'Singup',
+    id: 1,
+  },
+]
 
 const Layout = (props: Props) => {
   const { children, isOpen } = props
@@ -69,12 +86,25 @@ type DetailsType = {
   onClose: React.MouseEvent<HTMLButtonElement, MouseEvent>
   onNavigate: React.MouseEvent<HTMLButtonElement, MouseEvent>
   state: typeof states[number]
-  info: ResultsEntity
+  data: ResultsEntity
   isLoading: boolean
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, state, info, onNavigate, isLoading, isNavigating } = props
+  const { isOpen, onClose, data, isNavigating } = props
+  const { clearRoute, drawRoute } = useMapBox()
+
+  const clickHandle = () => {
+    // CloseModal
+    if (isNavigating) {
+      clearRoute()
+    } else {
+      // Restaurant Coords
+      const geometry = data?.geometry?.location
+      const route = { latitude: geometry?.lat, longitude: geometry?.lng }
+      drawRoute(route, data?.place_id)
+    }
+  }
 
   return (
     <Layout isOpen={isOpen}>
@@ -83,14 +113,12 @@ const Details = (props: DetailsType) => {
           isOpen ? 'scale-100' : 'scale-0'
         }`}
       >
-        <Restaurant.Large
-          state={state}
-          onNavigate={onNavigate}
-          onLike={() => {}}
+        <Restaurant
+          data={data}
+          mode='large'
           onClose={onClose}
-          info={info}
-          isLoading={isLoading}
           isNavigating={isNavigating}
+          onClick={clickHandle}
         />
       </section>
     </Layout>
@@ -99,6 +127,32 @@ const Details = (props: DetailsType) => {
 
 const User = (props: Props) => {
   const { isOpen, onClose } = props
+  const { data: session } = useSession()
+  const [selecteTabId, setSelectedTabId] = useState(0)
+
+  if (!session) {
+    return (
+      <Layout isOpen={isOpen}>
+        <section
+          className={`bg-white duration-700 rounded-md min-w-[20rem] ${
+            isOpen ? 'scale-100' : 'scale-0'
+          }`}
+        >
+          <Header title='Signup' onClose={onClose} />
+          <Tab tabs={tabs} selectedId={selecteTabId} onSelect={(id) => setSelectedTabId(id)} />
+          <main className='p-4 flex flex-col gap-4'>
+            {users.map((conf, index) => (
+              <Input {...conf} label={conf.label} action={conf.action} key={index} />
+            ))}
+          </main>
+          <hr></hr>
+          <footer className='p-4 flex flex-col gap-2'>
+            <Regular text='Signup' />
+          </footer>
+        </section>
+      </Layout>
+    )
+  }
 
   return (
     <Layout isOpen={isOpen}>

@@ -24,7 +24,7 @@ type ModalTypes = keyof InitialValues
 const ModalsContext = createContext({
   modalsState: initialValues,
   setModalsState: () => {},
-  manageModal: () => {},
+  manageModal: (type: ModalTypes, isOpen: boolean) => {},
 })
 
 const ModalsProvider = (props: Props) => {

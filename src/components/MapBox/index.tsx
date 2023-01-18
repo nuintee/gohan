@@ -1,87 +1,76 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Map, { GeolocateControl, Popup, Marker, Source, Layer } from 'react-map-gl'
-
-// Icons
-import { CurrentPostion } from '@/icons'
-
-// Hooks
-import { useGeoLocation, useModals, useToast } from '@/hooks/context'
-import useDirections from './hooks/Directions'
+import React, { useEffect } from 'react'
+import { type FC } from 'react'
+import Map, { Source, Layer } from 'react-map-gl'
+import { useMapBox } from '@/hooks/context'
+import useGPS from '@/hooks/context/GPS'
+import { CurrentLocationMarker, DestinationMarker } from './components'
 
 // Config
 const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 
-const MapBox = (props) => {
-  const { mapRef, sources, geoState, destination, setDestination, setGeoState, isMapClickable } =
-    useGeoLocation()
-  const { getRoute, isFindingRoute, setIsFindingRouting } = useDirections()
+export type MapBoxProps = {}
 
-  const isLocationReady = geoState.lat && geoState.lng
-
-  const onLoad = (e) => {}
+const MapBox: FC<MapBoxProps> = (props) => {
+  const {
+    mapBoxRef,
+    setMapBoxState,
+    mapBoxState,
+    isReady,
+    directions,
+    isNavigating,
+    drawRoute,
+    clearRoute,
+    getDestinationCoords,
+  } = useMapBox()
+  const { currentPosition } = useGPS()
 
   const onClick = async (e) => {
-    if (process.env.NODE_ENV !== 'development' || !isMapClickable) return
-    const coords = Object.keys(e.lngLat).map((key) => e.lngLat[key])
-    setGeoState((prev) => ({
-      ...prev,
-      lat: coords[1],
-      lng: coords[0],
-    }))
+    const { lngLat } = e
+    const { lat: latitude, lng: longitude } = lngLat
+
+    const coords = {
+      latitude,
+      longitude,
+    }
+
+    if (mapBoxState.moveOnClick) {
+      drawRoute(coords)
+    }
   }
+  const onLoad = () => {}
 
-  useEffect(() => {
-    if (!destination.length) return
-
-    // update route on change
-    getRoute({
-      profileType: 'walking',
-      start: [geoState.lng, geoState.lat],
-      end: destination,
-    })
-  }, [geoState])
+  if (!isReady) {
+    return (
+      <div className='h-screen w-screen bg-gh-dark flex items-center justify-center text-white'>
+        Loading map
+      </div>
+    )
+  }
 
   return (
     <div className='w-screen h-screen'>
       <Map
-        initialViewState={{
-          longitude: geoState.lng || -100,
-          latitude: geoState.lat || 40,
-          zoom: geoState.zoom || 17,
-        }}
+        onMove={(e) => setMapBoxState((prev) => ({ ...prev, ...e.viewState }))}
+        initialViewState={mapBoxState}
         style={{ width: '100vw', height: '100vh' }}
         mapStyle='mapbox://styles/mapbox/streets-v11'
         mapboxAccessToken={mapboxAccessToken}
-        ref={mapRef}
+        ref={mapBoxRef}
         onLoad={onLoad}
         onClick={onClick}
         renderWorldCopies={false}
+        pitchWithRotate={false}
       >
-        {isLocationReady && (
-          <Marker longitude={geoState.lng} latitude={geoState.lat}>
-            <div className='relative'>
-              <div className='w-8 h-8 bg-white bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
-              <span className='h-6 w-6 bg-white rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md flex items-center justify-center'>
-                <CurrentPostion width={12} height={12} />
-              </span>
-            </div>
-          </Marker>
+        <CurrentLocationMarker coords={currentPosition} />
+
+        {isNavigating && (
+          <>
+            <DestinationMarker coords={getDestinationCoords()} />
+            <Source data={directions.source} type='geojson'>
+              <Layer {...directions.layer} />
+            </Source>
+          </>
         )}
-        {destination.length && (
-          <Marker longitude={destination[0]} latitude={destination[1]}>
-            <div className='relative'>
-              <div className='w-8 h-8 bg-gh-orange bg-opacity-75 rounded-full top-0 left-0 animate-ping'></div>
-              <span className='h-6 w-6 bg-gh-orange rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md'></span>
-            </div>
-          </Marker>
-        )}
-        {sources?.map((source) => (
-          <Source id={source.id} type='geojson' data={source}>
-            {source.layers.map((layer) => (
-              <Layer {...layer} />
-            ))}
-          </Source>
-        ))}
       </Map>
     </div>
   )

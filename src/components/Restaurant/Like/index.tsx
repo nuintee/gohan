@@ -6,8 +6,9 @@ import { Like as LikeIcon } from '@/icons'
 import { states } from './constants/index'
 
 type Props = {
-  state: typeof states[number]
-  onClick: React.MouseEventHandler<HTMLButtonElement>
+  isLocked: boolean
+  isLiked: boolean
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 // Constans
@@ -17,16 +18,30 @@ const icon = {
   LOCKED: <LikeIcon.Locked />,
 }
 
+const Icon = (props: Props) => {
+  const { isLocked, isLiked } = props
+
+  if (isLocked) {
+    return <LikeIcon.Locked />
+  }
+
+  if (isLiked) {
+    return <LikeIcon.Filled />
+  } else {
+    return <LikeIcon.Outline />
+  }
+}
+
 const Like = (props: Props) => {
-  const { state, onClick } = props
+  const { onClick, isLocked, isLiked } = props
 
   return (
     <button
       className='bg-gh-l-orange w-12 h-12 shrink-0 rounded-full flex items-center justify-center'
       onClick={onClick}
-      disabled={state === 'LOCKED'}
+      disabled={isLocked}
     >
-      {icon[state]}
+      <Icon isLocked={isLocked} isLiked={isLiked} />
     </button>
   )
 }

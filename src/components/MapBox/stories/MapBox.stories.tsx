@@ -2,10 +2,14 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import MapBox from '..'
 
 export default {
-  title: 'Mapbox',
+  title: 'MapBox',
   component: MapBox,
 } as ComponentMeta<typeof MapBox>
 
-const Template: ComponentStory<typeof MapBox> = (args) => <MapBox {...args} />
+const MapBoxTemplate: ComponentStory<typeof MapBox> = (args) => <MapBox {...args} />
 
-export const Default = Template.bind({})
+export const Default = MapBoxTemplate.bind({})
+
+Default.args = {
+  type: 'text',
+}

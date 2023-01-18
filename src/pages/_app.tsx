@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 
 // Context
-import { Modals, Sidebar, Toast, GeoLocation } from '@/context'
+import { MapBox, Modals, Sidebar, Toast, GPS, Restaurants } from '@/context'
 import { Session } from 'next-auth'
 
 if (process.env.NODE_ENV === 'development') {
@@ -16,15 +16,19 @@ if (process.env.NODE_ENV === 'development') {
 function App({ Component, pageProps }: AppProps<{ session: Session }>) {
   return (
     <SessionProvider session={pageProps.session}>
-      <Toast.ToastProvider>
-        <GeoLocation.GeoLocationProvider>
-          <Modals.ModalsProvider>
-            <Sidebar.SidebarProvider>
-              <Component {...pageProps} />
-            </Sidebar.SidebarProvider>
-          </Modals.ModalsProvider>
-        </GeoLocation.GeoLocationProvider>
-      </Toast.ToastProvider>
+      <GPS.GPSProvider>
+        <Toast.ToastProvider>
+          <MapBox.MapBoxProvider>
+            <Modals.ModalsProvider>
+              <Sidebar.SidebarProvider>
+                <Restaurants.RestaurantsProvider>
+                  <Component {...pageProps} />
+                </Restaurants.RestaurantsProvider>
+              </Sidebar.SidebarProvider>
+            </Modals.ModalsProvider>
+          </MapBox.MapBoxProvider>
+        </Toast.ToastProvider>
+      </GPS.GPSProvider>
     </SessionProvider>
   )
 }
