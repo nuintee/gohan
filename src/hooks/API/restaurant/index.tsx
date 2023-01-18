@@ -61,12 +61,13 @@ const useRestaurantSearch = () => {
     const { lat: latitude, lng: longitude } = data?.geometry?.location
     setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
 
-    if (options?.locateUser) {
+    if (options?.locateUser === false) {
+    } else {
       locateUser()
     }
 
-    if (options?.drawRoute) {
-      // drawRoute on MapBox
+    if (options?.drawRoute === false) {
+    } else {
       const place_id = data?.place_id
       await drawRoute(
         {
@@ -76,6 +77,7 @@ const useRestaurantSearch = () => {
         place_id,
       )
     }
+
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
   }
 
