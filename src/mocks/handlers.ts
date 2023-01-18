@@ -28,7 +28,7 @@ export const handlers = [
     // const data = place_id ? routeData.find((v) => v.place_id === place_id) : routeData[0]
     if (!place_id) return res(ctx.status(500), ctx.json({}))
 
-    const targetData = place_id ? routeData.find((v, i) => i === 3) : routeData[0]
+    const targetData = place_id ? routeData.find((v, i) => v.place_id === place_id) : routeData[0]
     const data = targetData.routes
     const coordinates = data[0].geometry.coordinates
 

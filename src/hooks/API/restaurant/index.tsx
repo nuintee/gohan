@@ -6,6 +6,7 @@ import { Coords } from '@/constants/coords'
 import useGPS from '@/hooks/context/GPS'
 import { useMapBox } from '@/hooks/context'
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
+import routeData from '@/data/route/index.json'
 
 export type RestaurantOptions = {
   drawRoute?: boolean
@@ -16,6 +17,9 @@ export type GetRouteProps = {
   profileType?: 'walking'
   start: Coords
   end: Coords
+  _dev?: {
+    place_id?: string | null
+  }
 }
 
 // Env
@@ -63,10 +67,14 @@ const useRestaurantSearch = () => {
 
     if (options?.drawRoute) {
       // drawRoute on MapBox
-      await drawRoute({
-        latitude,
-        longitude,
-      })
+      const place_id = data?.place_id
+      await drawRoute(
+        {
+          latitude,
+          longitude,
+        },
+        place_id,
+      )
     }
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: false }))
   }
@@ -78,7 +86,7 @@ const useRestaurantSearch = () => {
 
   // Add Dev Route
   const getRoute = async (props: GetRouteProps) => {
-    const { profileType, start, end } = props
+    const { profileType, start, end, _dev } = props
     function _formatAPICoords(coords: Coords) {
       const { latitude, longitude } = coords
       return `${longitude},${latitude}`
@@ -87,8 +95,8 @@ const useRestaurantSearch = () => {
     const formattedEnd = _formatAPICoords(end)
     let baseURL = `/api/route?profileType=${profileType}&start=${formattedStart}&end=${formattedEnd}`
 
-    if (process.env.NODE_ENV === 'development') {
-      baseURL += `&place_id=${11}`
+    if (_dev?.place_id) {
+      baseURL += `&place_id=${_dev?.place_id}`
     }
 
     try {
