@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto'
 import { resultFilter, handleRequired } from '..'
 import { Id, UserId, ListFilter, MutateProps, ListProps } from '../types'
 
-type Data = RestaurantProps & UserId
+type Data = Activity & UserId
 
 const activityTable = {
   get: async (props: Id) => {
@@ -35,7 +35,7 @@ const activityTable = {
     const required_fields = ['user_id', 'place_id']
     handleRequired(required_fields, props)
 
-    const id = randomUUID()
+    const id = props?.place_id || randomUUID()
     const addedActivity = await prisma.activity.create({
       data: { ...props, id, discovered_at: new Date().toISOString() },
     })
