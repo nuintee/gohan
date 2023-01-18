@@ -17,7 +17,13 @@ const useTables = () => {
     try {
       const query = await fetch('/api/v1/activities', {
         method: 'POST',
-        body: JSON.stringify(props),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: props?.user_id,
+          place_id: props?.place_id,
+        }),
       })
       const response: Activity = await query.json()
       return response

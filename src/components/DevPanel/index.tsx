@@ -1,4 +1,4 @@
-import { useGeoLocation, useMapBox, useToast } from '@/hooks/context'
+import { useMapBox, useToast } from '@/hooks/context'
 import React, { useState, useEffect, useRef } from 'react'
 import useDirections from '../MapBox/hooks/Directions'
 import { Regular as Button } from '@/components/Button'
@@ -12,13 +12,14 @@ import useRestaurantSearch from '@/hooks/API/restaurant'
 import { DEFAULT_DEV_COORDS } from '@/constants/coords'
 import useRestaurants from '@/hooks/context/Restaurants'
 import useTables from '@/hooks/API/tables'
+import { randomUUID } from 'crypto'
 
 const DevPanel = (props) => {
   const { useragent } = props
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const { toastState, setToastState, manageToast } = useToast()
-  const { getAllActivities } = useTables()
+  const { getAllActivities, addActivity } = useTables()
   const {
     mapBoxState,
     setMapBoxState,
@@ -86,6 +87,17 @@ const DevPanel = (props) => {
           <Button
             text='Get all activities'
             onClick={async () => console.log(await getAllActivities())}
+          />
+          <Button
+            text='Add Activity'
+            onClick={async () =>
+              console.log(
+                await addActivity({
+                  user_id: session?.user?.id,
+                  place_id: restaurant?.data?.place_id || 'A',
+                }),
+              )
+            }
           />
         </>
       ),
