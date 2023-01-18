@@ -203,12 +203,7 @@ const Home = (props) => {
           <Action
             mode={isNavigating ? 'close' : 'search'}
             type={'hero'}
-            onClick={
-              isNavigating
-                ? () => clearRestaurant()
-                : // : () => getRestaurant({ drawRoute: true, locateUser: true })
-                  () => getRestaurant()
-            }
+            onClick={isNavigating ? () => clearRestaurant() : () => getRestaurant()}
             loading={restaurant?.isFetching}
             disabled={!isReady}
           />

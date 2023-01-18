@@ -55,7 +55,7 @@ const useRestaurantSearch = () => {
   }
 
   // Add Demo Fetching
-  const getRestaurant = async (options: RestaurantOptions) => {
+  const getRestaurant = async (options?: RestaurantOptions) => {
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: true }))
     const data: ResultsEntity = await _fetchRestaurant(currentPosition)
     const { lat: latitude, lng: longitude } = data?.geometry?.location
