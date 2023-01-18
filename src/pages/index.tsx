@@ -187,7 +187,11 @@ const Home = (props) => {
           </div>
           <Acitvity
             locked={status !== 'authenticated'}
-            onClick={() => manageSidebar('activity', true)}
+            onClick={
+              status === 'authenticated'
+                ? () => manageSidebar('activity', true)
+                : () => manageModal('user', true)
+            }
           />
         </header>
         <main>
