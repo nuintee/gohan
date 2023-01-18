@@ -19,7 +19,7 @@ type Status = {
 
 export type Response = Data | Error | Status
 
-const resultFilter = (listFilters: ListFilter) => {
+const resultFilter = (listFilters?: ListFilter) => {
   const { offset, limit, ...rest } = listFilters
 
   return {

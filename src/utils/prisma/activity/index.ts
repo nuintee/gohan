@@ -27,7 +27,7 @@ const activityTable = {
     })
     return fetchedUserActivities
   },
-  getAll: async (props: ListFilter) => {
+  getAll: async (props?: ListFilter) => {
     const fetchedActivities = await prisma.activity.findMany(resultFilter(props))
     return fetchedActivities
   },

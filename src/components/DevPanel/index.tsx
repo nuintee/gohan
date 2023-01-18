@@ -11,12 +11,14 @@ import useGPS from '@/hooks/context/GPS'
 import useRestaurantSearch from '@/hooks/API/restaurant'
 import { DEFAULT_DEV_COORDS } from '@/constants/coords'
 import useRestaurants from '@/hooks/context/Restaurants'
+import useTables from '@/hooks/API/tables'
 
 const DevPanel = (props) => {
   const { useragent } = props
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const { toastState, setToastState, manageToast } = useToast()
+  const { getAllActivities } = useTables()
   const {
     mapBoxState,
     setMapBoxState,
@@ -80,6 +82,10 @@ const DevPanel = (props) => {
             onClick={() =>
               getRoute({ profileType: 'walking', start: DEFAULT_DEV_COORDS, end: FAKE_COORDS })
             }
+          />
+          <Button
+            text='Get all activities'
+            onClick={async () => console.log(await getAllActivities())}
           />
         </>
       ),
