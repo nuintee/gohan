@@ -224,7 +224,7 @@ const Home = (props) => {
       <Modal.User isOpen={modalsState.user.isOpen} onClose={() => manageModal('user', false)} />
       <Modal.Details
         isOpen={modalsState.details.isOpen}
-        data={restaurant?.data}
+        data={restaurant?.data || modalsState.details.data}
         isNavigating={isNavigating}
         onClose={() => manageModal('details', false)}
       />

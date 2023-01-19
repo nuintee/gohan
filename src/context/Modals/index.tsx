@@ -4,6 +4,7 @@ const initialValues = {
   details: {
     id: 0,
     isOpen: false,
+    data: null,
   },
   confirm: {
     isOpen: false,
@@ -24,19 +25,19 @@ type ModalTypes = keyof InitialValues
 const ModalsContext = createContext({
   modalsState: initialValues,
   setModalsState: () => {},
-  manageModal: (type: ModalTypes, isOpen: boolean) => {},
+  manageModal: (type: ModalTypes, isOpen: boolean, data?: {}) => {},
 })
 
 const ModalsProvider = (props: Props) => {
   const { children } = props
   const [modalsState, setModalsState] = useState(initialValues)
 
-  const manageModal = (type: ModalTypes, isOpen: boolean, payload) => {
+  const manageModal = (type: ModalTypes, isOpen: boolean, data: {}) => {
     setModalsState((prev) => ({
       ...prev,
       [type]: {
         isOpen,
-        ...(payload && { ...payload }),
+        ...(data && { data }),
       },
     }))
   }
