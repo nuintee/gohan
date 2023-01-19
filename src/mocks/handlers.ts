@@ -16,11 +16,13 @@ export const handlers = [
   }),
 
   rest.get('/api/place', (req, res, ctx) => {
+    const place_id = req.url.searchParams.get('place_id')
     const onlyOpenNow = mapData.results.filter((map, index) => map.opening_hours?.open_now)
     const randomIndex = Math.floor(Math.random() * onlyOpenNow.length)
-    const randomOne = onlyOpenNow[randomIndex]
+    // const responseData = onlyOpenNow[randomIndex]
+    const responseData = mapData.results.find((v, i) => i === 3)
 
-    return res(ctx.status(200), ctx.json(randomOne))
+    return res(ctx.status(200), ctx.json(responseData))
   }),
 
   rest.get('/api/route', (req, res, ctx) => {
