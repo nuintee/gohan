@@ -45,11 +45,10 @@ const useRestaurantSearch = () => {
   }
 
   const fetchRestaurant = async (coords: Coords, place_id?: string) => {
-    const is_devmode = process.env.NODE_ENV === 'development'
     try {
-      const url = is_devmode
-        ? `/api/place?location=${coords.latitude},${coords.longitude}&radius=500&opennow=true&place_id=${place_id}`
-        : `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coords.latitude},${coords.longitude}&radius=500&types=food&opennow=true&key=${gcpKey}`
+      const url = place_id
+        ? `/api/place/${place_id}`
+        : `/api/place?latitude=${coords?.latitude}&longitude=${coords?.longitude}`
       const query = await fetch(url)
       const json = await query.json()
       return json
@@ -62,8 +61,9 @@ const useRestaurantSearch = () => {
   const getRestaurant = async (options?: RestaurantOptions) => {
     setRestaurant((prev: RestaurantResult) => ({ ...prev, isFetching: true }))
     const data: ResultsEntity = await fetchRestaurant(currentPosition)
-    const { lat: latitude, lng: longitude } = data?.geometry?.location
     setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
+
+    const { lat: latitude, lng: longitude } = data?.geometry?.location
 
     if (status === 'authenticated') {
       const payload = {

@@ -20,15 +20,6 @@ import { IoMdLocate } from 'react-icons/io'
 import useGPS from '@/hooks/context/GPS'
 import { useEffect } from 'react'
 
-// Types
-type setModePayload = {
-  mode: 'close' | 'search'
-}
-
-type Props = {
-  ip: string
-}
-
 // const Home = (props: Props) => {
 //   const [searchButton, setSearchButton] = useState(initialStates)
 //   const { modalsState, manageModal } = useModals()
