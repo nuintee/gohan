@@ -11,6 +11,7 @@ import useTables from '@/hooks/API/tables'
 // Data
 import mapData from '@/data/places/index.json'
 import useRestaurants from '@/hooks/context/Restaurants'
+import { Activity } from '@prisma/client'
 
 // Constants
 const tabs = [
@@ -36,16 +37,18 @@ type Props = {
 } & HeaderProps
 
 const Renderer = (props: RendererProps) => {
-  const { data, isLocked } = props
-
-  const onLike = () => {
-    alert(1)
-  }
+  const { data, isLocked, onLike } = props
 
   return (
     <div className='overflow-auto px-4'>
-      {data?.map((activity) => (
-        <Restaurant mode='small' data={mapData.results[0]} isLocked={isLocked} onLike={onLike} />
+      {data?.map((activity: Activity) => (
+        <Restaurant
+          mode='small'
+          data={mapData.results[0]}
+          isLocked={isLocked}
+          isLiked={activity?.is_liked}
+          onLike={() => onLike(activity)}
+        />
       ))}
     </div>
   )
@@ -66,6 +69,12 @@ const Sidebar = (props: Props) => {
     setSelectedId(id)
   }
 
+  const handleOnLike = (activity: Activity) => {
+    setActivityList((prev) =>
+      prev.map((a) => (a.place_id === activity.place_id ? { ...a, is_liked: !a.is_liked } : a)),
+    )
+  }
+
   useEffect(() => {
     const init = async () => {
       if (!session?.user?.id) return
@@ -82,7 +91,7 @@ const Sidebar = (props: Props) => {
     >
       <Header title={title || 'Sidebar'} onClose={onClose} />
       <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
-      <Renderer data={activityList} isLocked={status !== 'authenticated'} />
+      <Renderer data={activityList} isLocked={status !== 'authenticated'} onLike={handleOnLike} />
     </div>
   )
 }
