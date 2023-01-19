@@ -13,6 +13,17 @@ const useTables = () => {
     }
   }
 
+  const getUserAllActivities = async (props?: Parameters<typeof activityTable.getUserAll>[0]) => {
+    try {
+      const query = await fetch(`/api/v1/activities/user/${props?.user_id}`)
+      const response: Activity[] = await query.json()
+      return response
+    } catch (error) {
+      console.error(error)
+      return []
+    }
+  }
+
   const addActivity = async (props?: Parameters<typeof activityTable.add>[0]) => {
     try {
       const query = await fetch('/api/v1/activities', {
@@ -33,7 +44,7 @@ const useTables = () => {
     }
   }
 
-  return { getAllActivities, addActivity }
+  return { getAllActivities, addActivity, getUserAllActivities }
 }
 
 export default useTables

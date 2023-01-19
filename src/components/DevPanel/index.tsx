@@ -19,7 +19,7 @@ const DevPanel = (props) => {
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const { toastState, setToastState, manageToast } = useToast()
-  const { getAllActivities, addActivity } = useTables()
+  const { getAllActivities, addActivity, getUserAllActivities } = useTables()
   const {
     mapBoxState,
     setMapBoxState,
@@ -94,9 +94,15 @@ const DevPanel = (props) => {
               console.log(
                 await addActivity({
                   user_id: session?.user?.id,
-                  place_id: restaurant?.data?.place_id || 'A',
+                  place_id: restaurant?.data?.place_id,
                 }),
               )
+            }
+          />
+          <Button
+            text='Get Use Activity'
+            onClick={async () =>
+              console.log(await getUserAllActivities({ user_id: session?.user?.id }))
             }
           />
         </>
