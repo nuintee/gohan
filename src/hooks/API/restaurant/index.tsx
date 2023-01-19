@@ -29,7 +29,7 @@ const mapboxAccessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN
 const gcpKey = process.env.NEXT_PUBLIC_GCP_API_KEY
 
 const useRestaurantSearch = () => {
-  const { restaurant, setRestaurant } = useRestaurants()
+  const { restaurant, setRestaurant, setActivityList } = useRestaurants()
   const { currentPosition } = useGPS()
   const { drawRoute, clearRoute, locateUser } = useMapBox()
   const { data: session, status } = useSession()
@@ -67,6 +67,8 @@ const useRestaurantSearch = () => {
 
     if (status === 'authenticated') {
       // get
+      setActivityList((prev) => [...prev, {}])
+
       await addActivity({
         user_id: session?.user.id,
         place_id: data.place_id,

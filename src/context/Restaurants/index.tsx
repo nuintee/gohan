@@ -1,6 +1,7 @@
 import React, { useState, createContext, ReactNode } from 'react'
 
 import { ResultsEntity } from '@/hooks/context/Restaurants/types'
+import { Activity } from '@prisma/client'
 
 type Props = {
   children: JSX.Element
@@ -16,8 +17,8 @@ export type RestaurantResult = {
 const RestaurantsContext = createContext({
   restaurant: { data: {}, isNavigating: false, isFetching: false },
   setRestaurant: useState<RestaurantResult | {}>,
-  restaurantsList: [],
-  setRestaurantsList: useState<ResultsEntity[] | []>,
+  activityList: [],
+  setActivityList: useState<Activity[] | []>,
   isFetching: false,
   setIsFetching: useState<boolean>,
 })
@@ -25,14 +26,14 @@ const RestaurantsContext = createContext({
 const RestaurantsProvider = (props: Props) => {
   const { children } = props
 
-  const [restaurantsList, setRestaurantsList] = useState<ResultsEntity[] | []>([])
+  const [activityList, setActivityList] = useState<ResultsEntity[] | []>([])
   const [restaurant, setRestaurant] = useState<RestaurantResult | {}>({})
 
   const value = {
     restaurant,
     setRestaurant,
-    restaurantsList,
-    setRestaurantsList,
+    activityList,
+    setActivityList,
   }
 
   return <RestaurantsContext.Provider value={value}>{children}</RestaurantsContext.Provider>

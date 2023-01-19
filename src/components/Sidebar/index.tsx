@@ -10,6 +10,7 @@ import useTables from '@/hooks/API/tables'
 
 // Data
 import mapData from '@/data/places/index.json'
+import useRestaurants from '@/hooks/context/Restaurants'
 
 // Constants
 const tabs = [
@@ -51,8 +52,8 @@ const Renderer = (props: RendererProps) => {
 const Sidebar = (props: Props) => {
   const { data: session } = useSession()
   const [selectedId, setSelectedId] = useState(0)
-  const [activityData, setActivityData] = useState([])
   const { getUserAllActivities } = useTables()
+  const { activityList, setActivityList } = useRestaurants()
   const { isOpen, title, onClose } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
@@ -67,7 +68,7 @@ const Sidebar = (props: Props) => {
     const init = async () => {
       if (!session?.user?.id) return
       const activities = await getUserAllActivities({ user_id: session?.user.id })
-      setActivityData(activities)
+      setActivityList(activities)
     }
 
     init()
@@ -79,7 +80,7 @@ const Sidebar = (props: Props) => {
     >
       <Header title={title || 'Sidebar'} onClose={onClose} />
       <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
-      <Renderer data={activityData} />
+      <Renderer data={activityList} />
     </div>
   )
 }
