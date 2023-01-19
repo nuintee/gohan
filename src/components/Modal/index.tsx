@@ -92,7 +92,7 @@ type DetailsType = {
 }
 
 const Details = (props: DetailsType) => {
-  const { isOpen, onClose, data, isNavigating } = props
+  const { isOpen, onClose, data, isNavigating, isLiked } = props
   const { clearRoute, drawRoute } = useMapBox()
   const { status } = useSession()
 
@@ -121,6 +121,7 @@ const Details = (props: DetailsType) => {
           onClose={onClose}
           isNavigating={isNavigating}
           onClick={clickHandle}
+          isLiked={isLiked}
           isLocked={status !== 'authenticated'}
         />
       </section>

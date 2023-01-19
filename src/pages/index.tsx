@@ -226,6 +226,7 @@ const Home = (props) => {
         isOpen={modalsState.details.isOpen}
         data={restaurant?.data || modalsState.details.data}
         isNavigating={isNavigating}
+        isLiked={restaurant?.isLiked}
         onClose={() => manageModal('details', false)}
       />
       <Modal.Confirm
