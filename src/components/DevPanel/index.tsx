@@ -89,6 +89,14 @@ const DevPanel = (props) => {
             onClick={async () => console.log(await getAllActivities())}
           />
           <Button
+            text='Get restaurant'
+            onClick={async () =>
+              console.log(
+                await (await fetch(`/api/place?place_id=ChIJsV5xkfyGqkARsB1A1aMTxZs`)).json(),
+              )
+            }
+          />
+          <Button
             text='Add Activity'
             onClick={async () =>
               console.log(
