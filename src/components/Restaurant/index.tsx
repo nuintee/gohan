@@ -124,9 +124,10 @@ const Restaurant = (props: RestaurantProps<{ handleOnClick: Function }>) => {
     if (isLocked) {
       manageModal('user', true)
     } else {
-      console.log({
-        props,
-      })
+      setRestaurant((prev) => ({
+        ...prev,
+        isLiked: !prev.isLiked,
+      }))
     }
   }
 
