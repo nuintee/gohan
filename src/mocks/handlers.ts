@@ -15,16 +15,11 @@ export const handlers = [
     )
   }),
 
-  rest.get('/api/place', async (req, res, ctx) => {
+  rest.get('/api/place/', async (req, res, ctx) => {
     const query = req.url.searchParams
     const place_id = query.get('place_id')
     const latitude = query.get('latitude')
     const longitude = query.get('longitude')
-
-    function _findOneById() {
-      const found = mapData.results.find((v) => v.place_id === place_id)
-      return found
-    }
 
     function _findRandomOne() {
       const onlyOpenNow = mapData.results.filter((map, index) => map.opening_hours?.open_now)
@@ -33,7 +28,21 @@ export const handlers = [
       return responseData
     }
 
-    const data = place_id ? _findOneById() : _findRandomOne()
+    const data = _findRandomOne()
+
+    return res(ctx.status(200), ctx.json(data))
+  }),
+
+  rest.get('/api/place/:place_id', async (req, res, ctx) => {
+    const query = req.url.searchParams
+    const place_id = query.get('place_id')
+
+    function _findOneById() {
+      const found = mapData.results.find((v) => v.place_id === place_id)
+      return found
+    }
+
+    const data = _findOneById()
 
     return res(ctx.status(200), ctx.json(data))
   }),
