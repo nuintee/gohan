@@ -35,7 +35,7 @@ export const handlers = [
 
   rest.get('/api/place/:place_id', async (req, res, ctx) => {
     const query = req.url.searchParams
-    const place_id = query.get('place_id')
+    const place_id = req.params?.place_id
 
     function _findOneById() {
       const found = mapData.results.find((v) => v.place_id === place_id)

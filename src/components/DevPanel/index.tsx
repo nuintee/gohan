@@ -13,6 +13,7 @@ import { DEFAULT_DEV_COORDS } from '@/constants/coords'
 import useRestaurants from '@/hooks/context/Restaurants'
 import useTables from '@/hooks/API/tables'
 import { randomUUID } from 'crypto'
+import { fetchRestaurantDetail } from '@/utils/place'
 
 const DevPanel = (props) => {
   const { useragent } = props
@@ -91,9 +92,7 @@ const DevPanel = (props) => {
           <Button
             text='Get restaurant'
             onClick={async () =>
-              console.log(
-                await (await fetch(`/api/place?place_id=ChIJsV5xkfyGqkARsB1A1aMTxZs`)).json(),
-              )
+              console.log(await (await fetch('/api/place/ChIJ6_7BNfyGqkAR-N0pM-lbono')).json())
             }
           />
           <Button
