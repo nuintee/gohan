@@ -69,6 +69,7 @@ const useRestaurantSearch = () => {
       const payload = {
         user_id: session?.user.id,
         place_id: data.place_id,
+        discovered_at: new Date().toDateString(),
       }
       setActivityList((prev) => [...prev, payload])
 
