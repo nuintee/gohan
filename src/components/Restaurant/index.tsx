@@ -108,7 +108,7 @@ const _Card = (props: CardProps) => {
 }
 
 const Restaurant = (props: RestaurantProps<{ handleOnClick: Function }>) => {
-  const { mode, data, isLocked, isLiked } = props
+  const { mode, data, isLocked, isLiked, onLike } = props
   const { calculateDistance, currentPosition } = useGPS()
   const { formatObjectCoords } = useRestaurantSearch()
   const { manageModal } = useModals()
@@ -128,6 +128,7 @@ const Restaurant = (props: RestaurantProps<{ handleOnClick: Function }>) => {
         ...prev,
         isLiked: !prev.isLiked,
       }))
+      onLike && onLike()
     }
   }
 

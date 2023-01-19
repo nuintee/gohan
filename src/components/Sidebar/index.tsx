@@ -36,21 +36,23 @@ type Props = {
 } & HeaderProps
 
 const Renderer = (props: RendererProps) => {
-  const { data } = props
+  const { data, isLocked } = props
 
-  const onLike = () => {}
+  const onLike = () => {
+    alert(1)
+  }
 
   return (
     <div className='overflow-auto px-4'>
       {data?.map((activity) => (
-        <Restaurant mode='small' data={mapData.results[0]} />
+        <Restaurant mode='small' data={mapData.results[0]} isLocked={isLocked} onLike={onLike} />
       ))}
     </div>
   )
 }
 
 const Sidebar = (props: Props) => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const [selectedId, setSelectedId] = useState(0)
   const { getUserAllActivities } = useTables()
   const { activityList, setActivityList } = useRestaurants()
@@ -80,7 +82,7 @@ const Sidebar = (props: Props) => {
     >
       <Header title={title || 'Sidebar'} onClose={onClose} />
       <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
-      <Renderer data={activityList} />
+      <Renderer data={activityList} isLocked={status !== 'authenticated'} />
     </div>
   )
 }
