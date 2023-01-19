@@ -3,6 +3,13 @@ export interface PlacesAPI {
   results?: ResultsEntity[] | null
   status: string
 }
+
+export interface DetailsAPI {
+  html_attributions?: null[] | null
+  result?: ResultsEntity[] | null
+  status: string
+}
+
 export interface ResultsEntity {
   business_status: string
   geometry: Geometry
