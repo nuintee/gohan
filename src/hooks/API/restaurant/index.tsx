@@ -66,13 +66,13 @@ const useRestaurantSearch = () => {
     setRestaurant((prev: RestaurantResult) => ({ ...prev, data }))
 
     if (status === 'authenticated') {
-      // get
-      setActivityList((prev) => [...prev, {}])
-
-      await addActivity({
+      const payload = {
         user_id: session?.user.id,
         place_id: data.place_id,
-      })
+      }
+      setActivityList((prev) => [...prev, payload])
+
+      await addActivity(payload)
     }
 
     if (options?.locateUser === false) {
