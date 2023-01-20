@@ -1,4 +1,4 @@
-import { ActivityEntity } from '@/features/activities/types'
+import { Activity } from '@prisma/client'
 
 export interface PlacesAPI {
   html_attributions?: null[] | null
@@ -58,7 +58,7 @@ export interface PlusCode {
 }
 
 // Data to pass UI Component
-export type RestaurantData = ActivityEntity<ResultsEntity>
+export type RestaurantData = Activity & ResultsEntity
 
 // Data to pass Renderer
 export type RestaurantProps<T extends { compact?: boolean } = {}> = {
