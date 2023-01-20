@@ -3,8 +3,9 @@ type Props = {
   height?: number
 }
 
-const RouteArrow = (props: Props) => {
-  const { width, height } = props
+const RouteArrow = (props?: Props) => {
+  const width = props?.width
+  const height = props?.height
   return (
     <svg
       width={width || 10}

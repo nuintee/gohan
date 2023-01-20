@@ -11,24 +11,35 @@ import { Close, RouteArrow } from '@/components/icons'
 // Types
 import { RestaurantProps, RestaurantData } from '../types'
 
-const Card = (props: RestaurantProps) => {
-  const { isLocked, data } = props
+// Constants
+import { CARD_CONFIG } from '../config'
+
+const Card = (props: RestaurantProps<{ compact?: boolean }>) => {
+  const { isLocked, data, compact } = props
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
-        <Close fill={colors['gh-white']} />
+        <Close fill={CARD_CONFIG.CLOSE_COLOR} />
       </button>
       <img
         src={'getImageURL(props?.data?.photos)'}
-        alt={`'s thumbnail`}
+        alt={CARD_CONFIG.imgAlt(data?.name)}
         className={`select-none max-h-52 w-full object-cover h-52`}
-        draggable={false}
+        draggable={CARD_CONFIG.IMG_DRAGGABLE}
       />
       <div className='p-4 flex flex-col gap-4'>
-        <Label text={'2000M'} extraClassName={''} icon={<RouteArrow />} />
-        <Texts main={'data?.name'} sub={"data?.types?.join('・')"} />
+        <Label
+          text={CARD_CONFIG.labelDistance()}
+          extraClassName={''}
+          icon={CARD_CONFIG.labelIcon}
+        />
+        <Texts
+          main={CARD_CONFIG.textsMain(data?.name)}
+          sub={CARD_CONFIG.textsSub(data?.types?.join('・'))}
+          size={CARD_CONFIG.textsSize(compact)}
+        />
         <footer className='flex w-full gap-4'>
-          <Button text='ASS' />
+          <Button text={CARD_CONFIG.buttonText()} />
           <LikeButton isLiked={Boolean(data?.is_liked)} isLocked={isLocked} />
         </footer>
       </div>
@@ -36,8 +47,8 @@ const Card = (props: RestaurantProps) => {
   )
 }
 
-const Compact = (props: RestaurantProps) => {
-  const { isLocked, data } = props
+const Compact = (props: RestaurantProps<{ compact?: boolean }>) => {
+  const { isLocked, data, compact } = props
   return (
     <div
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
@@ -45,13 +56,17 @@ const Compact = (props: RestaurantProps) => {
     >
       <img
         src={'getImageURL(data?.photos)'}
-        alt={`'s thumbnail`}
+        alt={CARD_CONFIG.imgAlt(data?.name)}
         className={`max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md`}
       />
       <div className='flex flex-1 gap-4 items-start justify-between'>
         <div className='flex flex-col gap-2'>
-          <Texts main={'data?.name'} sub={"data?.types?.join('・')"} size='small' />
-          <Label text='200' />
+          <Texts
+            main={CARD_CONFIG.textsMain(data?.name)}
+            sub={CARD_CONFIG.textsSub(data?.types?.join('・'))}
+            size={CARD_CONFIG.textsSize(compact)}
+          />
+          <Label text={CARD_CONFIG.labelDistance()} />
         </div>
         <LikeButton onClick={() => {}} isLiked={Boolean(data?.is_liked)} isLocked={isLocked} />
       </div>
