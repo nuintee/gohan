@@ -27,7 +27,7 @@ const GohanButton = (props: Props) => {
     <button
       onClick={onClick}
       className={`bg-gh-dark flex items-center justify-center rounded-full ${
-        (!isLoading || !disabled) && 'active:scale-90'
+        !disabled && 'active:scale-90 cursor-pointer'
       }`}
       disabled={isLoading || disabled}
       style={{
