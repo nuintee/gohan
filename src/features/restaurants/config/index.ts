@@ -1,5 +1,13 @@
-import { RouteArrow } from '@/components/icons'
+import { Like, RouteArrow } from '@/components/icons'
 import { colors } from '@/config/colors'
+
+export const LIKE_BUTTON_CONFIG = {
+  icon: ({ isLiked, isLocked }: { isLiked: boolean; isLocked: boolean }) => {
+    if (isLocked) return Like.Locked()
+    if (isLiked) return Like.Filled()
+    return Like.Outline()
+  },
+}
 
 export const CARD_CONFIG = {
   CLOSE_COLOR: colors['gh-white'],
