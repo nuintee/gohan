@@ -16,4 +16,6 @@ const Template: ComponentStory<typeof LocateUserButton> = (args) => <LocateUserB
 
 export const Default = Template.bind({})
 
-Default.args = {}
+Default.args = {
+  disabled: true,
+}
