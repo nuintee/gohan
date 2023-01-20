@@ -7,13 +7,13 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import ActivityPanel from './ActivityPanel'
 
 export default {
-  title: 'ActivityPanel',
+  title: 'Features/Activities/Panel',
   component: ActivityPanel,
 } as ComponentMeta<typeof ActivityPanel>
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof ActivityPanel> = (args) => <ActivityPanel {...args} />
+const TemplatePanel: ComponentStory<typeof ActivityPanel> = (args) => <ActivityPanel {...args} />
 
-export const Default = Template.bind({})
+export const Panel = TemplatePanel.bind({})
 
-Default.args = {}
+Panel.args = {}
