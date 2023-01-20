@@ -12,10 +12,8 @@ export default {
 } as ComponentMeta<typeof AcitvityButton>
 
 //👇 We create a “template” of how args map to rendering
-const TemplateButton: ComponentStory<typeof AcitvityButton> = (args) => <AcitvityButton {...args} />
+const Template: ComponentStory<typeof AcitvityButton> = (args) => <AcitvityButton {...args} />
 
-export const Button = TemplateButton.bind({})
+export const Default = Template.bind({})
 
-Button.args = {
-  isLocked: false,
-}
+Default.args = {}
