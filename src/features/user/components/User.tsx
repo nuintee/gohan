@@ -5,6 +5,7 @@ import { colors } from '@/config/colors'
 import { User as UserIcon, PulseLoader } from '@/components/icons'
 import { Session } from 'next-auth'
 import { SessionContextValue, useSession } from 'next-auth/react'
+import { MouseEventHandler } from 'react'
 
 // Types
 type Props = {
@@ -63,7 +64,7 @@ type Props = {
 // }
 
 type UserProps = {
-  onClick: Function
+  onClick: MouseEventHandler<HTMLButtonElement>
   isLoading: boolean
   session: SessionContextValue
 }
@@ -73,6 +74,7 @@ const User = (props: UserProps) => {
 
   return (
     <button
+      onClick={onClick}
       className={`flex bg-white rounded-full p-1 items-center gap-4 w-fit z-[1] ${
         !isLoading && 'active:bg-opacity-90 active:scale-90'
       }`}
@@ -82,19 +84,23 @@ const User = (props: UserProps) => {
           isLoading && 'animate-pulse'
         }`}
       >
-        {!isLoading && <UserIcon.Guest />}
-        {isLoading ? (
-          <PulseLoader
-            color={colors['gh-l-gray']}
-            loading={true}
-            size={5}
-            speedMultiplier={0.5}
-            className='mr-4'
-          />
+        {session?.status === 'authenticated' ? (
+          <img src={''} alt='Profile Image' />
         ) : (
-          <p className='select-none font-medium mr-4'>{session?.data?.user?.name || 'Guest'}</p>
+          <UserIcon.Guest />
         )}
       </span>
+      {isLoading ? (
+        <PulseLoader
+          color={colors['gh-l-gray']}
+          loading={true}
+          size={5}
+          speedMultiplier={0.5}
+          className='mr-4'
+        />
+      ) : (
+        <p className='select-none font-medium mr-4'>{session?.data?.user?.name || 'Guest'}</p>
+      )}
     </button>
   )
   //   if (!session || session?.status === 'unauthenticated') return <div>Unauthed User</div>
