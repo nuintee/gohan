@@ -79,7 +79,8 @@ import { RestaurantProps, RestaurantData } from '../types'
 //   )
 // }
 
-const Card = (props: RestaurantData) => {
+const Card = (props: RestaurantProps) => {
+  const { isLocked, data } = props
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
@@ -96,14 +97,15 @@ const Card = (props: RestaurantData) => {
         <Texts main={'data?.name'} sub={"data?.types?.join('・')"} />
         <footer className='flex w-full gap-4'>
           <Button text='ASS' />
-          <LikeButton isLiked={true} isLocked={true} />
+          <LikeButton isLiked={true} isLocked={isLocked} />
         </footer>
       </div>
     </div>
   )
 }
 
-const Compact = (props: RestaurantData) => {
+const Compact = (props: RestaurantProps) => {
+  const { isLocked, data } = props
   return (
     <div
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
@@ -119,18 +121,18 @@ const Compact = (props: RestaurantData) => {
           <Texts main={'data?.name'} sub={"data?.types?.join('・')"} size='small' />
           <Label text='200' />
         </div>
-        <LikeButton onClick={() => {}} isLiked={true} isLocked={true} />
+        <LikeButton onClick={() => {}} isLiked={true} isLocked={isLocked} />
       </div>
     </div>
   )
 }
 
-const RestaurantCard = (props: RestaurantProps) => {
+const RestaurantCard = (props: RestaurantProps<{ compact?: boolean }>) => {
   const { data, isLocked, compact } = props
   if (compact) {
-    return <Compact {...data} />
+    return <Compact {...props} />
   } else {
-    return <Card {...data} />
+    return <Card {...props} />
   }
 }
 

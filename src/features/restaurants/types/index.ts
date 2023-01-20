@@ -61,8 +61,7 @@ export interface PlusCode {
 export type RestaurantData = ActivityEntity<ResultsEntity>
 
 // Data to pass Renderer
-export type RestaurantProps = {
+export type RestaurantProps<T extends { compact?: boolean } = {}> = {
   isLocked: boolean
-  compact?: boolean
   data?: RestaurantData
-}
+} & T
