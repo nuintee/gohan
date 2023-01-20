@@ -1,8 +1,11 @@
-// Components
-import Button from '@/components/ui/Button'
-import LikeButton from '@/features/activities/components/LikeButton'
+// config
+import { colors } from '@/config/colors'
 
-// Icons
+// components
+import { Button, Texts, Label } from '@/components/ui'
+import LikeButton from './LikeButton'
+
+// icons
 import { Close } from '@/components/icons'
 
 // const _Small = (props: SmallProps) => {
@@ -77,8 +80,20 @@ const RestaurantCard = (props) => {
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
-        <Close fill={"colors['gh-white']"} />
+        {/* <Close fill={colors['gh-white']} /> */}
       </button>
+      <img
+        src={'getImageURL(props?.data?.photos)'}
+        alt={`'s thumbnail`}
+        className={`select-none max-h-52 w-full object-cover h-52`}
+        draggable={false}
+      />
+      <div className='p-4 flex flex-col gap-4'>
+        <footer className='flex w-full gap-4'>
+          <Button text='ASS' />
+          <LikeButton isLiked={true} isLocked={true} />
+        </footer>
+      </div>
     </div>
   )
 }
