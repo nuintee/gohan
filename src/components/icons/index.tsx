@@ -9,6 +9,7 @@ import Logo from './Logo'
 import Copy from './Copy'
 import ActivityLocked from './ActivityLocked'
 import ActivityPlain from './ActivityPlain'
+import RouteArrow from './RouteArrow'
 
 export {
   Check,
@@ -22,4 +23,5 @@ export {
   Copy,
   ActivityLocked,
   ActivityPlain,
+  RouteArrow,
 }

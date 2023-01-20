@@ -1,10 +1,6 @@
-// Icons
-import { ReactNode } from 'react'
-import Route from './icons/Route'
-
 type Props = {
   text?: string
-  icon: ReactNode
+  icon: JSX.Element
   extraClassName?: string
 }
 

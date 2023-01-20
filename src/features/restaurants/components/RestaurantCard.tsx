@@ -6,7 +6,7 @@ import { Button, Texts, Label } from '@/components/ui'
 import LikeButton from './LikeButton'
 
 // icons
-import { Close } from '@/components/icons'
+import { Close, RouteArrow } from '@/components/icons'
 
 // const _Small = (props: SmallProps) => {
 //   const { data, isLiked, isLocked, distance, onLike, onClick } = props
@@ -89,7 +89,7 @@ const RestaurantCard = (props) => {
         draggable={false}
       />
       <div className='p-4 flex flex-col gap-4'>
-        <Label text={'2000M'} extraClassName={''} />
+        <Label text={'2000M'} extraClassName={''} icon={<RouteArrow />} />
         <Texts main={'data?.name'} sub={"data?.types?.join('・')"} />
         <footer className='flex w-full gap-4'>
           <Button text='ASS' />

@@ -3,7 +3,7 @@ type Props = {
   height?: number
 }
 
-const Route = (props: Props) => {
+const RouteArrow = (props: Props) => {
   const { width, height } = props
   return (
     <svg
@@ -21,4 +21,4 @@ const Route = (props: Props) => {
   )
 }
 
-export default Route
+export default RouteArrow
