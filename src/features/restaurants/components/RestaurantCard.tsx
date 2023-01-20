@@ -66,7 +66,7 @@ const Compact = (props: RestaurantProps<{ compact?: boolean }>) => {
             sub={CARD_CONFIG.textsSub(data?.types?.join('・'))}
             size={CARD_CONFIG.textsSize(compact)}
           />
-          <Label text={CARD_CONFIG.labelDistance()} />
+          <Label text={CARD_CONFIG.labelDistance()} icon={CARD_CONFIG.labelIcon} />
         </div>
         <LikeButton onClick={() => {}} isLiked={Boolean(data?.is_liked)} isLocked={isLocked} />
       </div>
