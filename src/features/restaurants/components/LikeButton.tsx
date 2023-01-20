@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { LIKE_BUTTON_CONFIG } from '../config'
+import { likeButtonConfig } from '../config'
 
 type Props = {
   isLocked: boolean
@@ -16,7 +16,7 @@ const LikeButton = (props: Props) => {
       className='bg-gh-l-orange w-12 h-12 shrink-0 rounded-full flex items-center justify-center'
       onClick={onClick}
     >
-      {LIKE_BUTTON_CONFIG.icon({ isLiked, isLocked })}
+      {likeButtonConfig.icon({ isLiked, isLocked })}
     </button>
   )
 }

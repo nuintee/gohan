@@ -5,7 +5,7 @@ import { RestaurantData } from '../types'
 // config
 import { GCP_API_KEY } from '@/config/env'
 
-export const LIKE_BUTTON_CONFIG = {
+export const likeButtonConfig = {
   icon: ({ isLiked, isLocked }: { isLiked: boolean; isLocked: boolean }) => {
     if (isLocked) return Like.Locked()
     if (isLiked) return Like.Filled()
@@ -13,7 +13,7 @@ export const LIKE_BUTTON_CONFIG = {
   },
 }
 
-export const CARD_CONFIG = {
+export const cardConfig = {
   CLOSE_COLOR: colors['gh-white'],
   imgSrc: (photos?: RestaurantData['photos']) =>
     photos?.length

@@ -9,7 +9,7 @@ import { Close } from '@/components/icons'
 import { RestaurantProps } from '../types'
 
 // Constants
-import { CARD_CONFIG } from '../config'
+import { cardConfig } from '../config'
 
 // 共通部分
 const RestaurantCard = (props: RestaurantProps) => {
@@ -40,25 +40,25 @@ const RestaurantCard = (props: RestaurantProps) => {
     <div className={theme.container}>
       {!compact && (
         <button className={theme.closeButton} onClick={() => {}}>
-          <Close fill={CARD_CONFIG.CLOSE_COLOR} />
+          <Close fill={cardConfig.CLOSE_COLOR} />
         </button>
       )}
       <img
-        src={CARD_CONFIG.imgSrc(data?.photos)}
-        alt={CARD_CONFIG.imgAlt(data?.name)}
+        src={cardConfig.imgSrc(data?.photos)}
+        alt={cardConfig.imgAlt(data?.name)}
         className={theme.img}
       />
       <div className={theme.contents}>
         <div className={theme.infoContainer}>
           <Texts
-            main={CARD_CONFIG.textsMain(data?.name)}
-            sub={CARD_CONFIG.textsSub(data?.types?.join('・'))}
-            size={CARD_CONFIG.textsSize(compact)}
+            main={cardConfig.textsMain(data?.name)}
+            sub={cardConfig.textsSub(data?.types?.join('・'))}
+            size={cardConfig.textsSize(compact)}
           />
-          <Label text={CARD_CONFIG.labelDistance()} icon={CARD_CONFIG.labelIcon} />
+          <Label text={cardConfig.labelDistance()} icon={cardConfig.labelIcon} />
         </div>
         <div className={theme.actionsContainer}>
-          {!compact && <Button text={CARD_CONFIG.buttonText()} />}
+          {!compact && <Button text={cardConfig.buttonText()} />}
           <LikeButton onClick={() => {}} isLiked={Boolean(data?.is_liked)} isLocked={isLocked} />
         </div>
       </div>
