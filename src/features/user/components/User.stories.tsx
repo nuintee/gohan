@@ -16,6 +16,4 @@ const Template: ComponentStory<typeof User> = (args) => <User {...args} />
 
 export const Default = Template.bind({})
 
-Default.args = {
-  compact: false,
-}
+Default.args = {}
