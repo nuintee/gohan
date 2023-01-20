@@ -1,4 +1,5 @@
 import { Activity } from '@prisma/client'
+import { MouseEventHandler } from 'react'
 
 export interface PlacesAPI {
   html_attributions?: null[] | null
@@ -63,6 +64,9 @@ export type RestaurantData = Activity & ResultsEntity
 // Data to pass Renderer
 export type RestaurantProps = {
   compact?: boolean
+  isNavigating?: boolean
   isLocked: boolean
   data?: RestaurantData
+  onLike?: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
