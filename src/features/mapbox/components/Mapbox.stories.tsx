@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import MapBox from './MapBox'
 
 export default {
-  title: 'MapBox',
+  title: 'Features/MapBox/MapBox',
   component: MapBox,
 } as ComponentMeta<typeof MapBox>
 

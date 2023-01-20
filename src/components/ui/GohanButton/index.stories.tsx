@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import GohanButton from './index'
 
 export default {
-  title: 'GohanButton',
+  title: 'UI/GohanButton',
   component: GohanButton,
 } as ComponentMeta<typeof GohanButton>
 
