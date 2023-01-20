@@ -10,20 +10,23 @@ import { user } from '@/data/user'
 export default {
   title: 'Features/Users/User',
   component: User,
-  args: {
-    _isAuthed: false,
-  },
-  argTypes: {
-    _isAuthed: {
-      control: 'boolean',
-    },
-  },
 } as ComponentMeta<typeof User>
 
 const Template: ComponentStory<typeof User> = (args) => {
-  return <User {...args} isLoading={args.isLoading} />
+  return <User {...args} />
 }
 
-export const Default = Template.bind({})
+export const Guest = Template.bind({})
+export const Authed = Template.bind({})
 
-Default.args = {}
+Guest.args = {}
+
+Authed.args = {
+  session: {
+    status: 'authenticated',
+    data: {
+      expires: '60000',
+      user,
+    },
+  },
+}

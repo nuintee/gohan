@@ -85,7 +85,11 @@ const User = (props: UserProps) => {
         }`}
       >
         {session?.status === 'authenticated' ? (
-          <img src={''} alt='Profile Image' />
+          <img
+            src={`https://ui-avatars.com/api/?name=${session.data.user?.name}`}
+            alt='Profile Image'
+            className='h-10 w-10 rounded-full bg-gh-l-gray'
+          />
         ) : (
           <UserIcon.Guest />
         )}
