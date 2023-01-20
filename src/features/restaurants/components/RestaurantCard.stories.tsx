@@ -15,5 +15,11 @@ export default {
 const Template: ComponentStory<typeof RestaurantCard> = (args) => <RestaurantCard {...args} />
 
 export const Default = Template.bind({})
+export const Compact = Template.bind({})
 
-Default.args = {}
+Default.args = {
+  compact: false,
+}
+Compact.args = {
+  compact: true,
+}
