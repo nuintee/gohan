@@ -11,6 +11,7 @@ import ActivityLocked from './ActivityLocked'
 import ActivityPlain from './ActivityPlain'
 import RouteArrow from './RouteArrow'
 import LocateUser from './LocateUser'
+import PulseLoader from './PulseLoader'
 
 export {
   Check,
@@ -26,4 +27,5 @@ export {
   ActivityPlain,
   RouteArrow,
   LocateUser,
+  PulseLoader,
 }
