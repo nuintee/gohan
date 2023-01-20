@@ -75,14 +75,15 @@ const Compact = (props: RestaurantProps<{ compact?: boolean }>) => {
 }
 
 // 共通部分
-const Layout = (props: RestaurantProps<{ compact?: boolean }>) => {
+const QRestaurantCard = (props: RestaurantProps<{ compact?: boolean }>) => {
   const { compact, data } = props
 
   const cardStyle = {
     container: 'max-w-[20rem] rounded-md overflow-hidden bg-white relative',
     img: `select-none max-h-52 w-full object-cover h-52`,
+    closeButton: 'absolute left-[1rem] top-[1rem] outline-none z-10',
     contents: 'p-4 flex flex-col gap-4',
-    infoContainer: 'flex flex-row-reverse gap-2',
+    infoContainer: 'flex flex-col-reverse gap-2',
     actionsContainer: 'flex w-full gap-4',
   }
 
@@ -90,6 +91,7 @@ const Layout = (props: RestaurantProps<{ compact?: boolean }>) => {
     container:
       'flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95',
     img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
+    closeButton: '',
     contents: 'flex flex-1 gap-4 items-start justify-between',
     infoContainer: 'flex flex-col gap-2',
     actionsContainer: '',
@@ -100,11 +102,15 @@ const Layout = (props: RestaurantProps<{ compact?: boolean }>) => {
   return (
     <div className={theme.container}>
       {!compact && (
-        <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
+        <button className={theme.closeButton} onClick={() => {}}>
           <Close fill={CARD_CONFIG.CLOSE_COLOR} />
         </button>
       )}
-      <img className={theme.img} />
+      <img
+        src={'getImageURL(props?.data?.photos)'}
+        alt={CARD_CONFIG.imgAlt(data?.name)}
+        className={theme.img}
+      />
       <div className={theme.contents}>
         <div className={theme.infoContainer}>
           <Texts
@@ -126,12 +132,10 @@ const Layout = (props: RestaurantProps<{ compact?: boolean }>) => {
 const RestaurantCard = (props: RestaurantProps<{ compact?: boolean }>) => {
   const { compact } = props
 
-  return <Layout {...props} />
-
   if (compact) {
-    return <Compact {...props} />
+    return <QRestaurantCard {...props} />
   } else {
-    return <Card {...props} />
+    return <QRestaurantCard {...props} />
   }
 }
 
