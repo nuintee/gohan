@@ -10,6 +10,7 @@ import Copy from './Copy'
 import ActivityLocked from './ActivityLocked'
 import ActivityPlain from './ActivityPlain'
 import RouteArrow from './RouteArrow'
+import LocateUser from './LocateUser'
 
 export {
   Check,
@@ -24,4 +25,5 @@ export {
   ActivityLocked,
   ActivityPlain,
   RouteArrow,
+  LocateUser,
 }
