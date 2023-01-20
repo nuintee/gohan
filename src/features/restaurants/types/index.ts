@@ -1,3 +1,5 @@
+import { ActivityEntity } from '@/features/activities/types'
+
 export interface PlacesAPI {
   html_attributions?: null[] | null
   results?: ResultsEntity[] | null
@@ -55,18 +57,10 @@ export interface PlusCode {
   global_code: string
 }
 
-// Response from DB
-export type RestaurantEntity<T = {}> = {
-  id: string
-  user_id: string
-  place_id: string
-  is_liked: boolean
-  discovered_at: Date
-} & T
+// Data to pass UI Component
+export type RestaurantData = ActivityEntity<ResultsEntity>
 
-// Data to pass ui
-export type RestaurantData = RestaurantEntity<RestaurantEntity>
-
+// Data to pass Renderer
 export type RestaurantProps = {
   isLocked: boolean
   compact?: boolean
