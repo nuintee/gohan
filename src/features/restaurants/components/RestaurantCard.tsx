@@ -76,7 +76,7 @@ import { Close, RouteArrow } from '@/components/icons'
 //   )
 // }
 
-const RestaurantCard = (props) => {
+const Card = (props) => {
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
@@ -98,6 +98,32 @@ const RestaurantCard = (props) => {
       </div>
     </div>
   )
+}
+
+const Compact = (props) => {
+  return (
+    <div
+      className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
+      onClick={() => {}}
+    >
+      <img
+        src={'getImageURL(data?.photos)'}
+        alt={`'s thumbnail`}
+        className={`max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md`}
+      />
+      <div className='flex flex-1 gap-4 items-start justify-between'>
+        <div className='flex flex-col gap-2'>
+          <Texts main={'data?.name'} sub={"data?.types?.join('・')"} size='small' />
+          <Label text='200' />
+        </div>
+        <LikeButton onClick={() => {}} isLiked={true} isLocked={true} />
+      </div>
+    </div>
+  )
+}
+
+const RestaurantCard = () => {
+  return <Compact />
 }
 
 export default RestaurantCard

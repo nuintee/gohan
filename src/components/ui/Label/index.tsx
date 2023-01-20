@@ -1,6 +1,6 @@
 type Props = {
   text?: string
-  icon: JSX.Element
+  icon?: JSX.Element
   extraClassName?: string
 }
 
