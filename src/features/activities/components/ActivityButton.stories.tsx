@@ -16,4 +16,6 @@ const TemplateButton: ComponentStory<typeof AcitvityButton> = (args) => <Acitvit
 
 export const Button = TemplateButton.bind({})
 
-Button.args = {}
+Button.args = {
+  locked: false,
+}

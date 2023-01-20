@@ -7,5 +7,19 @@ import Signout from './Signout'
 import CurrentPostion from './CurrentPostion'
 import Logo from './Logo'
 import Copy from './Copy'
+import ActivityLocked from './ActivityLocked'
+import ActivityPlain from './ActivityPlain'
 
-export { Check, Close, Search, Signout, Like, User, CurrentPostion, Logo, Copy }
+export {
+  Check,
+  Close,
+  Search,
+  Signout,
+  Like,
+  User,
+  CurrentPostion,
+  Logo,
+  Copy,
+  ActivityLocked,
+  ActivityPlain,
+}
