@@ -17,3 +17,6 @@ const Template: ComponentStory<typeof MapBox> = (args) => <MapBox {...args} />
 export const Default = Template.bind({})
 
 Default.args = {}
+Default.parameters = {
+  layout: 'fullscreen',
+}
