@@ -28,6 +28,7 @@ module.exports = {
       '@/constants': path.resolve(__dirname, '../src/constants'),
       '@/utils': path.resolve(__dirname, '../src/utils'),
       '@/data': path.resolve(__dirname, '../src/data'),
+      '@/config': path.resolve(__dirname, '../src/config'),
     }
 
     config.resolve.modules = [...(config.resolve.modules || []), path.resolve('./')] // 絶対パスでimportできるようにする

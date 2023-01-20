@@ -1,7 +1,7 @@
 import Map, { Source, Layer } from 'react-map-gl'
 
 // config
-import { MAPBOX_TOKEN } from '../config/env'
+import { MAPBOX_TOKEN } from '@/config/env'
 
 const MapBox = ({}) => {
   return (

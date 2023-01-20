@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import LikeButton from './LikeButton'
 
 export default {
-  title: 'Features/Restaurants/LikeButton',
+  title: 'Features/Activities/LikeButton',
   component: LikeButton,
 } as ComponentMeta<typeof LikeButton>
 

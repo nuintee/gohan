@@ -1,5 +1,5 @@
 // Consts
-import { colors } from 'config/tailwind'
+import { colors } from '@/config/colors'
 
 // Lib
 import PulseLoader from 'react-spinners/PulseLoader'
