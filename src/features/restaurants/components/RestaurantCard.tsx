@@ -8,6 +8,9 @@ import LikeButton from './LikeButton'
 // icons
 import { Close, RouteArrow } from '@/components/icons'
 
+// Types
+import { RestaurantProps, RestaurantData } from '../types'
+
 // const _Small = (props: SmallProps) => {
 //   const { data, isLiked, isLocked, distance, onLike, onClick } = props
 
@@ -76,7 +79,7 @@ import { Close, RouteArrow } from '@/components/icons'
 //   )
 // }
 
-const Card = (props) => {
+const Card = (props: RestaurantData) => {
   return (
     <div className='max-w-[20rem] rounded-md overflow-hidden bg-white relative'>
       <button className='absolute left-[1rem] top-[1rem] outline-none z-10' onClick={() => {}}>
@@ -100,7 +103,7 @@ const Card = (props) => {
   )
 }
 
-const Compact = (props) => {
+const Compact = (props: RestaurantData) => {
   return (
     <div
       className='flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95'
@@ -122,8 +125,13 @@ const Compact = (props) => {
   )
 }
 
-const RestaurantCard = () => {
-  return <Compact />
+const RestaurantCard = (props: RestaurantProps) => {
+  const { data, isLocked, compact } = props
+  if (compact) {
+    return <Compact {...data} />
+  } else {
+    return <Card {...data} />
+  }
 }
 
 export default RestaurantCard
