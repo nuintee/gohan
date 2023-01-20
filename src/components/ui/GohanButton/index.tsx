@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react'
 
 // Icons
 import { Logo, Close } from '@/components/icons'
-import { PulseLoader } from 'react-spinners'
+import { PulseLoader } from '@/components/icons'
 
 type Props = {
   isLoading: boolean

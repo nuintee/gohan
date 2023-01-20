@@ -1,11 +1,8 @@
 // Consts
 import { colors } from 'config/tailwind'
 
-// Lib
-import PulseLoader from 'react-spinners/PulseLoader'
-
 // Icons
-import { User as UserIcon } from '@/components/icons'
+import { User as UserIcon, PulseLoader } from '@/components/icons'
 
 // Types
 type Props = {

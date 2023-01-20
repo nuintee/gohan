@@ -2,7 +2,7 @@
 import { colors } from '@/config/colors'
 
 // Lib
-import PulseLoader from 'react-spinners/PulseLoader'
+import { PulseLoader } from '@/components/icons'
 
 export type Props = {
   text: string
