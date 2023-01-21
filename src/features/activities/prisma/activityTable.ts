@@ -2,6 +2,7 @@ import prisma from '@/libs/prisma'
 import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
+// Replace from with Zod from here ---
 const resultFilter = (listFilters?: ListFilter) => {
   const { offset, limit, ...rest } = listFilters
 
@@ -24,6 +25,15 @@ const handleRequired = <T extends {}>(fields: string[], src: T) => {
     throw new Error(`${missing_fields} ${missing_fields.length > 1 ? 'are' : 'is'} required`)
 }
 
+export type ListFilter = {
+  limit?: number
+  offset?: number
+}
+
+export type ListProps<T extends Id | UserId> = T & ListFilter
+
+// --- to here
+
 export type Id = {
   id: string | undefined
 }
@@ -32,14 +42,7 @@ export type UserId = {
   user_id: string
 }
 
-export type ListFilter = {
-  limit?: number
-  offset?: number
-}
-
 export type MutateProps<T> = Id & T
-
-export type ListProps<T extends Id | UserId> = T & ListFilter
 
 type Data = Activity & UserId
 
