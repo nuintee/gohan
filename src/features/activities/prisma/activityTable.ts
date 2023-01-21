@@ -1,9 +1,28 @@
-import prisma from '@/lib/prisma'
-import { RestaurantProps } from '@/types/Restaurant'
+import prisma from '@/libs/prisma'
 import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
-import { resultFilter, handleRequired } from '..'
-import { Id, UserId, ListFilter, MutateProps, ListProps } from '../types'
+
+const resultFilter = (listFilters?: ListFilter) => {
+  const { offset, limit, ...rest } = listFilters
+
+  return {
+    ...rest,
+    ...(listFilters?.offset && { skip: Number(listFilters?.offset) }),
+    ...(listFilters?.limit && { take: Number(listFilters?.limit) }),
+  }
+}
+
+const handleRequired = <T extends {}>(fields: string[], src: T) => {
+  const missing_fields: string[] = []
+
+  fields.forEach((field) => {
+    if (src.hasOwnProperty(field)) return
+    missing_fields.push(field)
+  })
+
+  if (missing_fields.length)
+    throw new Error(`${missing_fields} ${missing_fields.length > 1 ? 'are' : 'is'} required`)
+}
 
 export type Id = {
   id: string | undefined
