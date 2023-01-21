@@ -1,10 +1,7 @@
 import { ComponentProps } from 'react'
 import Modal from 'react-modal'
 
-// Test
-import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
-
-const ModalLayout = (props: ComponentProps<typeof Modal>) => {
+const ModalLayout = (props: ComponentProps<typeof Modal> & { children: JSX.Element }) => {
   return (
     <Modal
       {...props}
@@ -24,7 +21,7 @@ const ModalLayout = (props: ComponentProps<typeof Modal>) => {
         },
       }}
     >
-      <RestaurantCard />
+      {props.children}
     </Modal>
   )
 }
