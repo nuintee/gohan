@@ -3,65 +3,8 @@ import { colors } from '@/config/colors'
 
 // Icons
 import { User as UserIcon, PulseLoader } from '@/components/icons'
-import { Session } from 'next-auth'
 import { SessionContextValue, useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
-
-// Types
-type Props = {
-  loading: boolean
-  user?: {
-    id: string
-    email?: string
-    name?: string
-    // createdAt: string // Time string
-  }
-  onClick: React.MouseEventHandler<HTMLButtonElement>
-}
-
-// const User = (props: Props) => {
-//   // Authed => User Sidebar state, Unauthed => Signin modal state
-//   const { loading, onClick } = props
-
-//   const isAuthed = session
-//   const icon = isAuthed ? (
-//     <img
-//       className='h-10 w-10 rounded-full bg-gh-l-gray'
-//       src={`https://ui-avatars.com/api/?name=${session?.user?.name}`}
-//     />
-//   ) : (
-//     // <UserIcon.Guest />
-//   )
-
-//   return (
-//     <button
-//       className={`flex bg-white rounded-full p-1 items-center gap-4 w-fit z-[1] ${
-//         !loading && 'active:bg-opacity-90 active:scale-90'
-//       }`}
-//       disabled={loading}
-//       onClick={onClick}
-//     >
-//       <span
-//         className={`h-10 w-10 rounded-full flex items-center justify-center bg-gh-l-gray ${
-//           loading && 'animate-pulse'
-//         }`}
-//       >
-//         {!loading && icon}
-//       </span>
-//       {loading ? (
-//         <PulseLoader
-//           color={colors['gh-l-gray']}
-//           loading={true}
-//           size={5}
-//           speedMultiplier={0.5}
-//           className='mr-4'
-//         />
-//       ) : (
-//         <p className='select-none font-medium mr-4'>{isAuthed ? session?.user?.name : 'Guest'}</p>
-//       )}
-//     </button>
-//   )
-// }
 
 type UserProps = {
   onClick: MouseEventHandler<HTMLButtonElement>
@@ -72,47 +15,26 @@ type UserProps = {
 const User = (props: UserProps) => {
   const { onClick, isLoading, session } = props
 
-  return (
-    <button
-      onClick={onClick}
-      className={`flex bg-white rounded-full p-1 items-center gap-4 w-fit z-[1] ${
-        !isLoading && 'active:bg-opacity-90 active:scale-90'
-      }`}
-    >
-      <span
-        className={`h-10 w-10 rounded-full flex items-center justify-center bg-gh-l-gray ${
-          isLoading && 'animate-pulse'
-        }`}
-      >
-        {session?.status === 'authenticated' ? (
-          <img
-            src={`https://ui-avatars.com/api/?name=${session.data.user?.name}`}
-            alt='Profile Image'
-            className='h-10 w-10 rounded-full bg-gh-l-gray'
-          />
-        ) : (
-          <UserIcon.Guest />
-        )}
-      </span>
-      {isLoading ? (
-        <PulseLoader
-          color={colors['gh-l-gray']}
-          loading={true}
-          size={5}
-          speedMultiplier={0.5}
-          className='mr-4'
+  if (session?.status === 'authenticated')
+    return (
+      <button className='h-12 aspect-square rounded-full overflow-hidden active:scale-90'>
+        <img
+          src={`https://ui-avatars.com/api/?name=${session.data.user?.name}&background=random`}
+          alt='Profile Image'
+          className='h-full w-full'
         />
+      </button>
+    )
+
+  return (
+    <button className='h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-2 bg-gh-white active:scale-90'>
+      {isLoading ? (
+        <PulseLoader color={colors['gh-l-gray']} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
-        <p className='select-none font-medium mr-4'>{session?.data?.user?.name || 'Guest'}</p>
+        'Login'
       )}
     </button>
   )
-  //   if (!session || session?.status === 'unauthenticated') return <div>Unauthed User</div>
-
-  //   if (isLoading) {
-  //     return <div>Loading</div>
-  //   }
-  //   return <div>Authed User</div>
 }
 
 export default User
