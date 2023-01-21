@@ -41,6 +41,7 @@
     "react-icons": "^4.6.0",
     "react-map-gl": "^7.0.19",
     "react-spinners": "^0.13.6",
+    "react-toastify": "^9.1.1",
     "svg-url-loader": "^8.0.0"
   },
   "devDependencies": {
