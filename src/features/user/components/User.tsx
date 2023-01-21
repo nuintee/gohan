@@ -15,20 +15,22 @@ type UserProps = {
 const User = (props: UserProps) => {
   const { onClick, isLoading, session } = props
 
-  if (session?.status === 'authenticated')
-    return (
-      <button className='h-12 aspect-square rounded-full overflow-hidden active:scale-90'>
+  const feedBack = !isLoading && 'active:scale-90 cursor-pointer active:opacity-90'
+
+  const theme =
+    session?.status === 'authenticated'
+      ? `h-12 aspect-square rounded-full overflow-hidden ${feedBack}`
+      : `h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-2 bg-gh-white ${feedBack}`
+
+  return (
+    <button className={theme} onClick={onClick}>
+      {session?.status === 'authenticated' ? (
         <img
           src={`https://ui-avatars.com/api/?name=${session.data.user?.name}&background=random`}
           alt='Profile Image'
           className='h-full w-full'
         />
-      </button>
-    )
-
-  return (
-    <button className='h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-2 bg-gh-white active:scale-90'>
-      {isLoading ? (
+      ) : isLoading ? (
         <PulseLoader color={colors['gh-l-gray']} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
         'Login'
