@@ -1,4 +1,4 @@
-import Map, { Source, Layer } from 'react-map-gl'
+import Map, { Source, Layer, GeolocateControl } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 // config
@@ -12,7 +12,15 @@ const MapBox = ({}) => {
         mapStyle='mapbox://styles/mapbox/streets-v11'
         renderWorldCopies={false}
         pitchWithRotate={false}
-      ></Map>
+      >
+        <GeolocateControl
+          showAccuracyCircle
+          trackUserLocation
+          showUserLocation
+          showUserHeading
+          position='bottom-right'
+        />
+      </Map>
     </div>
   )
 }
