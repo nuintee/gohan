@@ -43,66 +43,48 @@ export type ListProps<T extends Id | UserId> = T & ListFilter
 
 type Data = Activity & UserId
 
-export const activityTable = {
+export const userTable = {
   get: async (props: Id) => {
-    const fetchedActivity = await prisma.activity.findUniqueOrThrow({
+    const fetchedUser = await prisma.user.findUniqueOrThrow({
       where: {
         id: props.id,
       },
     })
-    return fetchedActivity
+    return fetchedUser
   },
-  getUserAll: async (props: ListProps<UserId>) => {
-    const { user_id, ...rest } = props
-
-    const fetchedUserActivities = await prisma.activity.findMany({
-      where: {
-        user_id: props?.user_id,
-      },
-      ...resultFilter(rest),
-    })
-    return fetchedUserActivities
-  },
-  getAll: async (props?: ListFilter) => {
-    const fetchedActivities = await prisma.activity.findMany(resultFilter(props))
-    return fetchedActivities
+  getAll: async (props: ListFilter) => {
+    const fetchedUsers = await prisma.user.findMany(resultFilter(props))
+    return fetchedUsers
   },
   add: async (props: Data) => {
-    const required_fields = ['user_id', 'place_id']
+    const required_fields = ['email', 'username']
+
     handleRequired(required_fields, props)
 
-    const id = props?.place_id || randomUUID()
-    const addedActivity = await prisma.activity.create({
-      data: { ...props, id, discovered_at: new Date().toISOString() },
+    const id = randomUUID()
+    const addedUser = await prisma.user.create({
+      data: { ...props, id, registered_at: new Date().toISOString() },
     })
-    return addedActivity
+    return addedUser
   },
   patch: async (props: MutateProps<Data>) => {
-    const updatedUser = await prisma.activity.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id: props.id,
       },
       data: {
-        is_liked: props?.is_liked,
-        place_id: props?.place_id,
+        email: props?.email,
+        username: props?.username,
       },
     })
     return updatedUser
   },
   delete: async (props: Id) => {
-    const deletedUsers = await prisma.activity.delete({
+    const deletedUsers = await prisma.user.delete({
       where: {
         id: props.id,
       },
     })
     return deletedUsers
-  },
-  deleteUserAll: async (props: UserId) => {
-    const deletedUser = await prisma.activity.deleteMany({
-      where: {
-        user_id: props.user_id,
-      },
-    })
-    return deletedUser
   },
 }
