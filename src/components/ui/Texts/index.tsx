@@ -14,11 +14,10 @@ type Props = {
   main: string
   sub?: string
   size?: 'small' | 'normal'
-  icon?: React.ReactNode
 }
 
 const Texts = (props: Props) => {
-  const { main, sub, size, icon } = props
+  const { main, sub, size } = props
 
   const textSize = sizes[size || 'normal']
 
@@ -28,7 +27,6 @@ const Texts = (props: Props) => {
         <h1 className={`font-bold ${textSize.main}`}>{main || 'Name'}</h1>
         <p className={`text-gh-l-gray ${textSize.sub}`}>{sub || 'Description'}</p>
       </div>
-      {icon}
     </div>
   )
 }
