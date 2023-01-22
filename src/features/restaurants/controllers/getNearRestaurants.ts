@@ -41,7 +41,7 @@ const getNearRestaurants = async (props: Props) => {
   url.searchParams.append('opennow', 'true')
   url.searchParams.append('key', GCP_API_KEY)
 
-  const data = await axios.get<ResultsEntity>(url.toString())
+  const { data } = await axios.get<ResultsEntity>(url.toString())
 
   if (randomOne === false) return data
 
