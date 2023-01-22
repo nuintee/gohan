@@ -27,22 +27,21 @@ const Button = (props: Props) => {
     icon: danger ? 'gh-red' : outline ? 'gh-l-gray' : 'gh-white',
   }
 
-  const className = `bg-gh-dark text-white px-4 py-2 min-h-[2.5rem] rounded-md flex gap-2 items-center justify-center active:bg-opacity-90 w-full z-[100] ${theme.className}`
+  const className = `bg-gh-dark text-white px-4 py-2 rounded-md flex gap-2 items-center justify-center active:bg-opacity-90 w-full z-[100] ${theme.className}`
 
   return (
     <button onClick={onClick} className={className} disabled={loading}>
       {icon?.position === 'before' && icon.src}
-      {loading ? (
+      {text || 'BUTTON'}
+      {icon?.position === 'after' && icon.src}
+      {loading && (
         <PulseLoader
           color={`${colors[theme.icon]}`}
           loading={true}
           size={5}
           speedMultiplier={0.5}
         />
-      ) : (
-        text || 'BUTTON'
       )}
-      {icon?.position === 'after' && icon.src}
     </button>
   )
 }
