@@ -1,16 +1,25 @@
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
 
+export type PlacesSearchStatus = [
+  'OK',
+  'ZERO_RESULTS',
+  'INVALID_REQUEST',
+  'OVER_QUERY_LIMIT',
+  'REQUEST_DENIED',
+  'UNKNOWN_ERROR',
+]
+
 export interface PlacesAPI {
   html_attributions?: null[] | null
   results?: ResultsEntity[] | null
-  status: string
+  status: PlacesSearchStatus[number]
 }
 
 export interface DetailsAPI {
   html_attributions?: null[] | null
   result?: ResultsEntity[] | null
-  status: string
+  status: PlacesSearchStatus[number]
 }
 
 export interface ResultsEntity {
