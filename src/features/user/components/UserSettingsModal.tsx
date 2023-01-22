@@ -43,12 +43,21 @@ const UserSettingsModal = (props: Props) => {
       <section className='min-w-[20rem] bg-white'>
         <Header title='User' onClose={onClose} />
         <main className='p-4 flex flex-col gap-4'>
-          <Input placeholder='ex: john0906' label='Username' value={user.name} disabled />
+          <Input
+            placeholder='ex: john0906'
+            label='Username'
+            value={user.name}
+            disabled
+            action={{
+              label: 'Change',
+            }}
+          />
           <Input placeholder='ex: john@example.com' label='Email' value={user.email} disabled />
+          <Input label='Registered at' value={user.registered_at} disabled />
           <details>
             <summary className='text-gh-gray select-none cursor-pointer'>Danger</summary>
             <div className='flex flex-col pt-4 gap-2'>
-              <Button text='Delete account' />
+              <Button text='Delete account' danger />
             </div>
           </details>
         </main>
