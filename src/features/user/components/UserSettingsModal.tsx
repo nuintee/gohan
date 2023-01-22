@@ -1,6 +1,9 @@
 import { Button, Header, Input } from '@/components/ui'
 import ModalLayout from '@/layouts/ModalLayout'
 
+// lib
+import dayjs from 'dayjs'
+
 import { User } from 'next-auth'
 
 type Props = {
@@ -8,31 +11,6 @@ type Props = {
   onClose: Function
   onClickAction: Function
   user: User
-}
-
-{
-  /* <section
-        className={`bg-white duration-700 rounded-md min-w-[20rem] ${
-          isOpen ? 'scale-100' : 'scale-0'
-        }`}
-      >
-        <Header title='User' onClose={onClose} />
-        <main className='p-4 flex flex-col gap-4'>
-          {users.map((conf, index) => (
-            <Input {...conf} label={conf.label} action={conf.action} key={index} />
-          ))}
-          <details>
-            <summary className='text-gh-gray select-none cursor-pointer'>Advanced</summary>
-            <div className='flex flex-col pt-4 gap-2'>
-              <Regular danger text='Delete account' />
-            </div>
-          </details>
-        </main>
-        <hr></hr>
-        <footer className='p-4 flex flex-col gap-2'>
-          <Regular text='Signout' />
-        </footer>
-      </section> */
 }
 
 const UserSettingsModal = (props: Props) => {
@@ -53,7 +31,11 @@ const UserSettingsModal = (props: Props) => {
             }}
           />
           <Input placeholder='ex: john@example.com' label='Email' value={user.email} disabled />
-          <Input label='Registered at' value={user.registered_at} disabled />
+          <Input
+            label='Registered at'
+            value={dayjs(user.registered_at).format('MMMM D, YYYY h:mm A')}
+            disabled
+          />
           <details>
             <summary className='text-gh-gray select-none cursor-pointer'>Danger</summary>
             <div className='flex flex-col pt-4 gap-2'>
