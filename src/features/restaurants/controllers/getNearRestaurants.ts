@@ -23,6 +23,7 @@ const Schema = z.object({
       },
       { message: 'longitude must be between -180 and 180' },
     ),
+  randomOne: z.optional(z.boolean()),
 })
 
 type Props = z.infer<typeof Schema>
@@ -30,7 +31,7 @@ type Props = z.infer<typeof Schema>
 const getNearRestaurants = async (props: Props) => {
   await Schema.parse(props)
 
-  const { latitude, longitude } = props
+  const { latitude, longitude, randomOne } = props
 
   const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
   url.searchParams.append('location', `${latitude},${longitude}`)
@@ -40,6 +41,9 @@ const getNearRestaurants = async (props: Props) => {
   url.searchParams.append('key', GCP_API_KEY)
 
   const data = await axios.get(url.toString())
+
+  if (randomOne === false) return data
+
   return data
 }
 
