@@ -15,6 +15,4 @@ const Template: ComponentStory<typeof UserAuthModal> = (args) => {
 
 export const Default = Template.bind({})
 
-Default.args = {
-  tab: 'signup',
-}
+Default.args = {}
