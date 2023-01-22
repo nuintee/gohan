@@ -3,6 +3,7 @@ import { z } from 'zod'
 // Env
 import { GCP_API_KEY } from '@/config/env'
 import axios from '@/libs/axios'
+import { ResultsEntity } from '../types'
 
 const Schema = z.object({
   latitude: z
@@ -40,7 +41,7 @@ const getNearRestaurants = async (props: Props) => {
   url.searchParams.append('opennow', 'true')
   url.searchParams.append('key', GCP_API_KEY)
 
-  const data = await axios.get(url.toString())
+  const data = await axios.get<ResultsEntity>(url.toString())
 
   if (randomOne === false) return data
 

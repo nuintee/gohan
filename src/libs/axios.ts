@@ -1,6 +1,6 @@
-import Axios from 'axios'
+import Axios, { AxiosResponse } from 'axios'
 
-// envs
+// env
 import { BASE_URL, AXIOS_FETCH_TIMEOUT } from '@/config/env'
 
 const axios = Axios.create({
@@ -10,7 +10,7 @@ const axios = Axios.create({
 
 axios.interceptors.response.use(
   (response) => {
-    return response.data
+    return response
   },
   (error) => {
     return Promise.reject(error)
