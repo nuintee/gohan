@@ -18,7 +18,7 @@ type Props = {
 const schema = z.object({
   username: z.string().min(1, { message: 'Required' }),
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(1, { message: 'Required' }),
 })
 
 const UserAuthModal = (props: Props) => {
@@ -34,31 +34,38 @@ const UserAuthModal = (props: Props) => {
 
   return (
     <ModalLayout isOpen={isOpen}>
-      <form onSubmit={handleSubmit((d) => console.log(d))} className='flex flex-col gap-2'>
-        <Input
-          label='Username'
-          register={register}
-          registerName='username'
-          placeholder='ex: john0906'
-          errorMessage={errors.username?.message}
-        />
-        <Input
-          label='Email'
-          register={register}
-          registerName='email'
-          placeholder='ex: john@example.com'
-          errorMessage={errors.email?.message}
-        />
-        <Input
-          label='Password'
-          register={register}
-          registerName='password'
-          type={'password'}
-          errorMessage={errors.password?.message}
-        />
-        <hr></hr>
-        <Button text='Signup' />
-      </form>
+      <>
+        <Header title='Auth' />
+        <form
+          onSubmit={handleSubmit((d) => console.log(d))}
+          className='flex flex-col gap-2 bg-white p-4 min-w-[20rem]'
+        >
+          <Input
+            label='Username'
+            register={register}
+            registerName='username'
+            placeholder='ex: john0906'
+            errorMessage={errors.username?.message}
+          />
+          <Input
+            label='Email'
+            register={register}
+            registerName='email'
+            placeholder='ex: john@example.com'
+            errorMessage={errors.email?.message}
+          />
+          <Input
+            label='Password'
+            register={register}
+            registerName='password'
+            type={'password'}
+            errorMessage={errors.password?.message}
+            required
+          />
+          <hr></hr>
+          <Button text='Signup' />
+        </form>
+      </>
     </ModalLayout>
   )
 }
