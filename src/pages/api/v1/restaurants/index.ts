@@ -6,12 +6,13 @@ import getNearRestaurants from '@/features/restaurants/controllers/getNearRestau
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const latitude = req.query?.latitude as string
   const longitude = req.query?.longitude as string
+  const randomOne = req.query?.randomOne as string
 
   if (req.method !== 'GET')
     res.status(405).json({ message: 'Invalid method', code: 405, method: req.method })
 
   try {
-    const data = await getNearRestaurants({ latitude, longitude })
+    const data = await getNearRestaurants({ latitude, longitude, randomOne })
     res.status(200).json(data)
   } catch (error) {
     res.status(500).json(error)

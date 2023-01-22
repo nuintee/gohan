@@ -3,12 +3,12 @@ import { z } from 'zod'
 // Env
 import { GCP_API_KEY } from '@/config/env'
 import axios from '@/libs/axios'
-import { ResultsEntity } from '../types'
+import { PlacesAPI, ResultsEntity } from '../types'
 
 const Schema = z.object({
   latitude: z
     .string()
-    .transform((v) => parseInt(v))
+    .transform((v) => Number(v))
     .refine(
       (v) => {
         return v >= -90 && v <= 90
@@ -17,22 +17,20 @@ const Schema = z.object({
     ),
   longitude: z
     .string()
-    .transform((v) => parseInt(v))
+    .transform((v) => Number(v))
     .refine(
       (v) => {
         return v >= -180 && v <= 180
       },
       { message: 'longitude must be between -180 and 180' },
     ),
-  randomOne: z.optional(z.boolean()),
+  randomOne: z.optional(z.string().transform((v) => Boolean(v))),
 })
 
 type Props = z.infer<typeof Schema>
 
 const getNearRestaurants = async (props: Props) => {
-  await Schema.parse(props)
-
-  const { latitude, longitude, randomOne } = props
+  const { latitude, longitude, randomOne } = await Schema.parse(props)
 
   const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
   url.searchParams.append('location', `${latitude},${longitude}`)
@@ -41,11 +39,11 @@ const getNearRestaurants = async (props: Props) => {
   url.searchParams.append('opennow', 'true')
   url.searchParams.append('key', GCP_API_KEY)
 
-  const { data } = await axios.get<ResultsEntity>(url.toString())
+  const { data } = await axios.get<PlacesAPI>(url.toString())
 
-  if (randomOne === false) return data
+  if (!randomOne) return data
 
-  return data
+  return data.results[0]
 }
 
 export default getNearRestaurants
