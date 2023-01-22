@@ -14,8 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const baseURL = `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${MAPBOX_PUBLIC_TOKEN}`
 
   try {
-    const query = await axios.get(baseURL)
-    const data = query.data
+    const data = await axios.get(baseURL)
     const coordinates = data?.routes[0].geometry.coordinates
     res.status(200).json({ data, coordinates })
   } catch (error) {
