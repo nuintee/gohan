@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import routeData from '@/data/route/index.json'
 import { PlacesAPI, DetailsAPI, ResultsEntity } from '@/hooks/context/Restaurants/types'
 
 import { fetchNearRestaurants } from '@/utils/place'
