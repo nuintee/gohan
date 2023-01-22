@@ -2,6 +2,9 @@ import prisma from '@/libs/prisma'
 import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
+// Schemas
+import { addUserSchema } from '../schema/addUser.schema'
+
 // Replace from with Zod from here ---
 const resultFilter = (listFilters?: ListFilter) => {
   const { offset, limit, ...rest } = listFilters
@@ -11,18 +14,6 @@ const resultFilter = (listFilters?: ListFilter) => {
     ...(listFilters?.offset && { skip: Number(listFilters?.offset) }),
     ...(listFilters?.limit && { take: Number(listFilters?.limit) }),
   }
-}
-
-const handleRequired = <T extends {}>(fields: string[], src: T) => {
-  const missing_fields: string[] = []
-
-  fields.forEach((field) => {
-    if (src.hasOwnProperty(field)) return
-    missing_fields.push(field)
-  })
-
-  if (missing_fields.length)
-    throw new Error(`${missing_fields} ${missing_fields.length > 1 ? 'are' : 'is'} required`)
 }
 
 export type ListFilter = {
@@ -60,9 +51,7 @@ export const userTable = {
     return fetchedUsers
   },
   add: async (props: Data) => {
-    const required_fields = ['email', 'username']
-
-    handleRequired(required_fields, props)
+    await addUserSchema.parse(props)
 
     const id = randomUUID()
     const addedUser = await prisma.user.create({
