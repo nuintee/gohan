@@ -2,6 +2,9 @@ import prisma from '@/libs/prisma'
 import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
+// Schemas
+import { addActivitySchema } from '@/features/activities/schemas/addActivitySchema'
+
 // Replace from with Zod from here ---
 const resultFilter = (listFilters?: ListFilter) => {
   const { offset, limit, ...rest } = listFilters
@@ -11,18 +14,6 @@ const resultFilter = (listFilters?: ListFilter) => {
     ...(listFilters?.offset && { skip: Number(listFilters?.offset) }),
     ...(listFilters?.limit && { take: Number(listFilters?.limit) }),
   }
-}
-
-const handleRequired = <T extends {}>(fields: string[], src: T) => {
-  const missing_fields: string[] = []
-
-  fields.forEach((field) => {
-    if (src.hasOwnProperty(field)) return
-    missing_fields.push(field)
-  })
-
-  if (missing_fields.length)
-    throw new Error(`${missing_fields} ${missing_fields.length > 1 ? 'are' : 'is'} required`)
 }
 
 export type ListFilter = {
@@ -71,8 +62,7 @@ export const activityTable = {
     return fetchedActivities
   },
   add: async (props: Data) => {
-    const required_fields = ['user_id', 'place_id']
-    handleRequired(required_fields, props)
+    await addActivitySchema.parse(props)
 
     const id = props?.place_id || randomUUID()
     const addedActivity = await prisma.activity.create({
