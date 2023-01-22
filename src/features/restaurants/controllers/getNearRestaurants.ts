@@ -33,7 +33,7 @@ const getNearRestaurants = async (props: Props) => {
   const { latitude, longitude } = props
 
   const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
-  url.searchParams.append('location', `${latitude}%2C${longitude}`)
+  url.searchParams.append('location', `${latitude},${longitude}`)
   url.searchParams.append('radius', '500')
   url.searchParams.append('types', 'food')
   url.searchParams.append('opennow', 'true')
