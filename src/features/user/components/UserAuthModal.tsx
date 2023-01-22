@@ -16,7 +16,7 @@ type Props = {
 }
 
 const schema = z.object({
-  username: z.string().min(1, { message: 'Required' }),
+  username: z.optional(z.string().min(1, { message: 'Required' })),
   email: z.string().email(),
   password: z.string().min(1, { message: 'Required' }),
 })
@@ -32,13 +32,27 @@ const UserAuthModal = (props: Props) => {
 
   const { isOpen, onClose, onClickAction } = props
 
+  const [tabination, setTabination] = useState(0)
+
   return (
     <ModalLayout isOpen={isOpen}>
-      <>
+      <section className='min-w-[20rem] bg-white'>
         <Header title='Auth' />
+        {tabs.map((tab, index) => (
+          <button
+            className={`border-b-2 h-full px-4 py-2 text-gh-gray box-border ${
+              tabination === index
+                ? 'border-gh-orange text-gh-dark font-semibold'
+                : 'border-transparent'
+            }`}
+            onClick={() => setTabination(index)}
+          >
+            {tab}
+          </button>
+        ))}
         <form
           onSubmit={handleSubmit((d) => console.log(d))}
-          className='flex flex-col gap-2 bg-white p-4 min-w-[20rem]'
+          className='flex flex-col gap-4 p-4 bg-white'
         >
           <Input
             label='Username'
@@ -65,7 +79,7 @@ const UserAuthModal = (props: Props) => {
           <hr></hr>
           <Button text='Signup' />
         </form>
-      </>
+      </section>
     </ModalLayout>
   )
 }
