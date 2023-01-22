@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
     "@prisma/client": "^4.8.0",
     "@storybook/addon-postcss": "^2.0.0",
     "@svgr/webpack": "^6.5.0",

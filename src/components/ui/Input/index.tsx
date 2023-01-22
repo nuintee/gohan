@@ -1,13 +1,11 @@
-import { forwardRef } from 'react'
+import { forwardRef, InputHTMLAttributes } from 'react'
 
-type Props = {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
-  type?: React.HTMLInputTypeAttribute
   action?: {
     label: string
     onClick: React.MouseEventHandler<HTMLButtonElement>
   }
-  placeholder?: string
 }
 
 const Input = forwardRef((props: Props) => {
