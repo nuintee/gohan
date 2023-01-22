@@ -14,7 +14,7 @@ type Props = z.infer<typeof Schema>
 export const getRestaurantDetails = async (props: Props) => {
   const { place_id } = await Schema.parse(props)
   const url = new URL('https://maps.googleapis.com/maps/api/place/details/json')
-  url.searchParams.append('places_id', place_id)
+  url.searchParams.append('place_id', place_id)
   url.searchParams.append('key', GCP_API_KEY)
 
   const { data } = await axios.get<DetailsAPI>(url.toString())
