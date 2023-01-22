@@ -41,11 +41,11 @@ const getNearRestaurants = async (props: Props) => {
 
   const { data } = await axios.get<PlacesAPI>(url.toString())
 
-  if (data.status !== 'OK') throw new Error(data.status)
+  if (!['OK', 'ZERO_RESULTS'].includes(data.status)) throw new Error(data.status)
 
   if (!randomOne) return data
 
-  return data.results[Math.floor(Math.random() * data.results?.length)]
+  return data?.results[Math.floor(Math.random() * data.results?.length)] || {}
 }
 
 export default getNearRestaurants
