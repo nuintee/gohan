@@ -10,4 +10,6 @@ const InputTemplate: ComponentStory<typeof Input> = (args) => <Input {...args} /
 
 export const Default = InputTemplate.bind({})
 
-Default.args = {}
+Default.args = {
+  placeholder: '',
+}

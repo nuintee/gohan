@@ -8,7 +8,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     label: string
     onClick: React.MouseEventHandler<HTMLButtonElement>
   }
-  register: UseFormRegister<FieldValues>
+  register?: UseFormRegister<FieldValues>
   registerName: string
   required: boolean
   errorMessage?: string
@@ -21,11 +21,14 @@ const Input = forwardRef((props: Props, ref) => {
     placeholder,
     action,
     errorMessage,
-    register,
+    register = () => {},
     registerName,
     required,
     ...rest
   } = props
+
+  const cob = true
+
   return (
     <div className='flex flex-col gap-1'>
       {label && <label className='text-gh-gray'>{label}</label>}

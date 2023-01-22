@@ -4,7 +4,7 @@ import { forwardRef, useState } from 'react'
 
 // lib
 import { z } from 'zod'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 const tabs = ['Signin', 'Login']
@@ -15,21 +15,13 @@ type Props = {
   onClickAction: Function
 }
 
-// const Input = ({ label, register, required, error }) => (
-//   <>
-//     <label>{label}</label>
-//     <input {...register(label, { required })} />
-//     {error && <p>{error.message}</p>}
-//   </>
-// )
-
 const schema = z.object({
   username: z.string().min(1, { message: 'Required' }),
   email: z.string().email(),
   password: z.string(),
 })
 
-const UserAuthModal = () => {
+const UserAuthModal = (props: Props) => {
   const {
     register,
     handleSubmit,
@@ -37,28 +29,37 @@ const UserAuthModal = () => {
   } = useForm({
     resolver: zodResolver(schema),
   })
+
+  const { isOpen, onClose, onClickAction } = props
+
   return (
-    <form onSubmit={handleSubmit((d) => console.log(d))} className='flex flex-col gap-2'>
-      <Input
-        label='Username'
-        register={register}
-        registerName='username'
-        errorMessage={errors.username?.message}
-      />
-      <Input
-        label='Email'
-        register={register}
-        registerName='email'
-        errorMessage={errors.email?.message}
-      />
-      <Input
-        label='Password'
-        register={register}
-        registerName='password'
-        errorMessage={errors.password?.message}
-      />
-      <input type={'submit'} />
-    </form>
+    <ModalLayout isOpen={isOpen}>
+      <form onSubmit={handleSubmit((d) => console.log(d))} className='flex flex-col gap-2'>
+        <Input
+          label='Username'
+          register={register}
+          registerName='username'
+          placeholder='ex: john0906'
+          errorMessage={errors.username?.message}
+        />
+        <Input
+          label='Email'
+          register={register}
+          registerName='email'
+          placeholder='ex: john@example.com'
+          errorMessage={errors.email?.message}
+        />
+        <Input
+          label='Password'
+          register={register}
+          registerName='password'
+          type={'password'}
+          errorMessage={errors.password?.message}
+        />
+        <hr></hr>
+        <Button text='Signup' />
+      </form>
+    </ModalLayout>
   )
 }
 
