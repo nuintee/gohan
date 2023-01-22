@@ -38,6 +38,7 @@ const Input = forwardRef((props: Props, ref) => {
           className='flex-1 outline-none px-2 py-1 bg-transparent'
           placeholder={placeholder}
           ref={ref}
+          type={type}
           {...register(registerName, { required })}
         />
         {action && (

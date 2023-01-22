@@ -18,7 +18,7 @@ type Props = {
 const schema = z.object({
   username: z.optional(z.string().min(1, { message: 'Required' })),
   email: z.string().email(),
-  password: z.string().min(1, { message: 'Required' }),
+  password: z.string().min(6, { message: 'Must be atleast 6 characters' }),
 })
 
 const UserAuthModal = (props: Props) => {
@@ -77,6 +77,12 @@ const UserAuthModal = (props: Props) => {
             registerName='password'
             type={'password'}
             errorMessage={errors.password?.message}
+            action={{
+              label: 'View',
+              onClick: (e) => {
+                e.preventDefault()
+              },
+            }}
             required
           />
           <hr></hr>
