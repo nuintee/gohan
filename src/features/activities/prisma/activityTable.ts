@@ -3,9 +3,13 @@ import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
 // Schemas
-import { addActivitySchema } from '@/features/activities/schemas/addActivitySchema'
+import { addActivitySchema } from '@/features/activities/schemas/addActivity.schema'
 
-// Replace from with Zod from here ---
+export type ListFilter = {
+  limit?: number
+  offset?: number
+}
+
 const resultFilter = (listFilters?: ListFilter) => {
   const { offset, limit, ...rest } = listFilters
 
@@ -14,11 +18,6 @@ const resultFilter = (listFilters?: ListFilter) => {
     ...(listFilters?.offset && { skip: Number(listFilters?.offset) }),
     ...(listFilters?.limit && { take: Number(listFilters?.limit) }),
   }
-}
-
-export type ListFilter = {
-  limit?: number
-  offset?: number
 }
 
 export type ListProps<T extends Id | UserId> = T & ListFilter
