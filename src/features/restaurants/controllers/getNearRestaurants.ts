@@ -5,13 +5,29 @@ import { GCP_API_KEY } from '@/config/env'
 import axios from '@/libs/axios'
 
 const Schema = z.object({
-  latitude: z.string(),
-  longitude: z.string(),
+  latitude: z
+    .string()
+    .transform((v) => parseInt(v))
+    .refine(
+      (v) => {
+        return v >= -90 && v <= 90
+      },
+      { message: 'latitude must be between -90 and 90' },
+    ),
+  longitude: z
+    .string()
+    .transform((v) => parseInt(v))
+    .refine(
+      (v) => {
+        return v >= -180 && v <= 180
+      },
+      { message: 'longitude must be between -180 and 180' },
+    ),
 })
 
 type Props = z.infer<typeof Schema>
 
-export const getNearRestaurants = async (props: Props) => {
+const getNearRestaurants = async (props: Props) => {
   await Schema.parse(props)
 
   const { latitude, longitude } = props
@@ -26,6 +42,8 @@ export const getNearRestaurants = async (props: Props) => {
   const data = await axios.get(url.toString())
   return data
 }
+
+export default getNearRestaurants
 
 // export async function fetchNearRestaurants({
 //     latitude,
