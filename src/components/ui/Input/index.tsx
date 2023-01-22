@@ -1,24 +1,41 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
 
+import { UseFormRegister, FieldValues, FieldError } from 'react-hook-form'
+
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   action?: {
     label: string
     onClick: React.MouseEventHandler<HTMLButtonElement>
   }
+  register: UseFormRegister<FieldValues>
+  registerName: string
+  required: boolean
+  errorMessage?: string
 }
 
-const Input = forwardRef((props: Props) => {
-  const { label, type, placeholder, action, ...rest } = props
+const Input = forwardRef((props: Props, ref) => {
+  const {
+    label,
+    type,
+    placeholder,
+    action,
+    errorMessage,
+    register,
+    registerName,
+    required,
+    ...rest
+  } = props
   return (
     <div className='flex flex-col gap-1'>
       {label && <label className='text-gh-gray'>{label}</label>}
       <div className='w-full flex bg-gh-white rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-gh-l-gray'>
         <input
-          type={type || 'text'}
+          {...rest}
           className='flex-1 outline-none px-2 py-1 bg-transparent'
           placeholder={placeholder}
-          {...rest}
+          ref={ref}
+          {...register(registerName, { required })}
         />
         {action && (
           <button
@@ -29,6 +46,7 @@ const Input = forwardRef((props: Props) => {
           </button>
         )}
       </div>
+      {errorMessage && <span className='text-gh-red'>{errorMessage}</span>}
     </div>
   )
 })

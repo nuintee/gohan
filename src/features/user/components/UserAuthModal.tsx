@@ -1,10 +1,10 @@
 import { Header, Button, Input } from '@/components/ui'
 import ModalLayout from '@/layouts/ModalLayout'
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 
 // lib
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 const tabs = ['Signin', 'Login']
@@ -15,9 +15,18 @@ type Props = {
   onClickAction: Function
 }
 
+// const Input = ({ label, register, required, error }) => (
+//   <>
+//     <label>{label}</label>
+//     <input {...register(label, { required })} />
+//     {error && <p>{error.message}</p>}
+//   </>
+// )
+
 const schema = z.object({
   username: z.string().min(1, { message: 'Required' }),
   email: z.string().email(),
+  password: z.string(),
 })
 
 const UserAuthModal = () => {
@@ -29,13 +38,26 @@ const UserAuthModal = () => {
     resolver: zodResolver(schema),
   })
   return (
-    <form onSubmit={handleSubmit((d) => console.log(d))}>
-      {/* <input {...register('username')} /> */}
-      <Input />
-      {errors.username?.message && <p>{errors.username?.message}</p>}
-      <input {...register('email')} />
-      {errors.email?.message && <p>{errors.email?.message}</p>}
-      <input type='submit' />
+    <form onSubmit={handleSubmit((d) => console.log(d))} className='flex flex-col gap-2'>
+      <Input
+        label='Username'
+        register={register}
+        registerName='username'
+        errorMessage={errors.username?.message}
+      />
+      <Input
+        label='Email'
+        register={register}
+        registerName='email'
+        errorMessage={errors.email?.message}
+      />
+      <Input
+        label='Password'
+        register={register}
+        registerName='password'
+        errorMessage={errors.password?.message}
+      />
+      <input type={'submit'} />
     </form>
   )
 }
