@@ -7,6 +7,9 @@ import axios from '@/libs/axios'
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'GET')
+    res.status(405).json({ message: 'Invalid method', code: 405, method: req.method })
+
   const { profileType, start, end } = req.query
 
   const base_coordinates = encodeURIComponent(`${start};${end}`)
