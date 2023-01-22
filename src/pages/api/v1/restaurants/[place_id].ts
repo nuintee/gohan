@@ -1,19 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { PlacesAPI, DetailsAPI, ResultsEntity } from '@/hooks/context/Restaurants/types'
 
-import { fetchNearRestaurants } from '@/utils/place'
+import { getRestaurantDetails } from '@/features/restaurants/controllers/getRestaurantDetails'
 
-type Data = ResultsEntity | PlacesAPI | DetailsAPI
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const place_id = req.query?.place_id as string
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const latitude = req.query?.latitude
-  const longitude = req.query?.longitude
+  if (req.method !== 'GET')
+    res.status(405).json({ message: 'Invalid method', code: 405, method: req.method })
 
   try {
-    const data = await fetchNearRestaurants({ latitude, longitude })
+    const data = await getRestaurantDetails({ place_id })
     res.status(200).json(data)
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({ message: error.message, code: 500 })
   }
 }

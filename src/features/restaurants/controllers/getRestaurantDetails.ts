@@ -1,23 +1,25 @@
-export const getRestaurantDetails = () => {}
+import { z } from 'zod'
+import axios from '@/libs/axios'
 
-// export async function fetchNearRestaurants({
-//     latitude,
-//     longitude,
-//   }: {
-//     latitude?: string | null
-//     longitude?: string | null
-//   }) {
-//     if (!latitude || !longitude) throw new Error('invalid parameters')
+// env
+import { GCP_API_KEY } from '@/config/env'
+import { DetailsAPI } from '../types'
 
-//     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=500&types=food&opennow=true&key=${GCP_KEY}`
-//     const data: PlacesAPI = await _handleFetch(url)
-//     return data
-//   }
+const Schema = z.object({
+  place_id: z.string(),
+})
 
-//   export async function fetchRestaurantDetail({ place_id }: { place_id?: string | null }) {
-//     if (!place_id) throw new Error('invalid parameters')
+type Props = z.infer<typeof Schema>
 
-//     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GCP_KEY}`
-//     const data: DetailsAPI = await _handleFetch(url)
-//     return data
-//   }
+export const getRestaurantDetails = async (props: Props) => {
+  const { place_id } = await Schema.parse(props)
+  const url = new URL('https://maps.googleapis.com/maps/api/place/details/json')
+  url.searchParams.append('places_id', place_id)
+  url.searchParams.append('key', GCP_API_KEY)
+
+  const { data } = await axios.get<DetailsAPI>(url.toString())
+
+  if (!['OK', 'ZERO_RESULTS'].includes(data.status)) throw new Error(data.status)
+
+  return data
+}
