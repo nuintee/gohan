@@ -10,4 +10,8 @@ export const handlers = [
       ctx.status(200),
     )
   }),
+
+  rest.get('/api/v1/health', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ status: 'ok' }))
+  }),
 ]
