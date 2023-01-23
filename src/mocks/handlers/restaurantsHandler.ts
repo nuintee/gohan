@@ -2,9 +2,6 @@ import places from '@/data/_places.json'
 
 export const restaurantPlacesAPIHandler = async (req, res, ctx) => {
   const query = req.url.searchParams
-  const place_id = query.get('place_id')
-  const latitude = query.get('latitude')
-  const longitude = query.get('longitude')
 
   function _findRandomOne() {
     const onlyOpenNow = places.results.filter((map, index) => map.opening_hours?.open_now)
@@ -19,7 +16,6 @@ export const restaurantPlacesAPIHandler = async (req, res, ctx) => {
 }
 
 export const restaurantDetailsAPIHandler = async (req, res, ctx) => {
-  const query = req.url.searchParams
   const place_id = req.params?.place_id
 
   function _findOneById() {
