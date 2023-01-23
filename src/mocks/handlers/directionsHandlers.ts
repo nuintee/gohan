@@ -3,6 +3,7 @@ import { RestRequest, PathParams, ResponseComposition, DefaultBodyType, RestCont
 import { z } from 'zod'
 
 // Schema
+import { Schema } from '@/features/directions/schema/getDirections.schema'
 
 // data
 import directions from '@/data/_directions.json'
