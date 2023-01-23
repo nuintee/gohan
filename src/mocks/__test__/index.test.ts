@@ -1,3 +1,5 @@
+import places from '@/data/_places.json'
+
 import { server } from '../server'
 
 // handler
@@ -5,6 +7,8 @@ import { handlers } from '../handlers'
 
 // @ts-ignore
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
+
+// data
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
@@ -25,19 +29,18 @@ describe('health', () => {
 
 describe('restaurants', () => {
   test('places API: [success]', async () => {
-    const res = await fetchPolyfill('/api/v1/restaurants')
+    const res = await fetchPolyfill('/api/v1/restaurants?latitude=20&longitude=20')
     const json = await res.json()
-    expect(json).toBeDefined()
+    expect(json).toHaveProperty('place_id')
   })
   test('details API: [success]', async () => {
-    const res = await fetchPolyfill('/api/v1/restaurants')
+    const res = await fetchPolyfill('/api/v1/restaurants/ChIJ58PFO_yGqkAR1a2dnhgIBiQ')
     const json = await res.json()
-    expect(json).toBeDefined()
+    expect(json).toHaveProperty('place_id')
   })
   test('details API: [error]', async () => {
     try {
       const res = await fetchPolyfill('/api/v1/restaurants/INVALID_PLACE_ID')
-      console.log(res)
       const json = await res.json()
       expect(json).toThrowError()
     } catch (error) {}

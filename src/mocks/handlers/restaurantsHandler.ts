@@ -13,8 +13,10 @@ export const restaurantPlacesAPIHandler = async (req, res, ctx) => {
   }
 
   try {
-    const query = req.url.searchParams
-    const { latitude, longitude } = await PlacesAPI.Schema.parse(query)
+    const { latitude, longitude } = await PlacesAPI.Schema.parse({
+      latitude: req?.url?.searchParams?.get('latitude'),
+      longitude: req?.url?.searchParams?.get('longitude'),
+    })
 
     const data = _findRandomOne()
 
@@ -22,7 +24,7 @@ export const restaurantPlacesAPIHandler = async (req, res, ctx) => {
   } catch (error) {
     return res(
       ctx.status(500),
-      cts.json({
+      ctx.json({
         message: error.message,
         code: 500,
       }),
@@ -37,14 +39,14 @@ export const restaurantDetailsAPIHandler = async (req, res, ctx) => {
   }
 
   try {
-    const { place_id } = await DetailsAPI.Schema.parse(req.params?.place_id)
+    const { place_id } = await DetailsAPI.Schema.parse({ place_id: req.params?.place_id })
     const data = _findOneById(place_id)
 
     return res(ctx.status(200), ctx.json(data))
   } catch (error) {
     return res(
       ctx.status(500),
-      cts.json({
+      ctx.json({
         message: error.message,
         code: 500,
       }),
