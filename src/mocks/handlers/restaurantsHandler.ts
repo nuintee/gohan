@@ -3,8 +3,13 @@ import places from '@/data/_places.json'
 // Schemas
 import * as PlacesAPI from '@/features/restaurants/schemas/getNearRestaurants.schema'
 import * as DetailsAPI from '@/features/restaurants/schemas/getRestaurantDetails.schema'
+import { DefaultBodyType, ResponseComposition, RestRequest, RestContext, PathParams } from 'msw'
 
-export const restaurantPlacesAPIHandler = async (req, res, ctx) => {
+export const restaurantPlacesAPIHandler = async (
+  req: RestRequest<never, PathParams<string>>,
+  res: ResponseComposition<DefaultBodyType>,
+  ctx: RestContext,
+) => {
   function _findRandomOne() {
     const onlyOpenNow = places.results.filter((map, index) => map.opening_hours?.open_now)
     const randomIndex = Math.floor(Math.random() * onlyOpenNow.length)
@@ -32,8 +37,12 @@ export const restaurantPlacesAPIHandler = async (req, res, ctx) => {
   }
 }
 
-export const restaurantDetailsAPIHandler = async (req, res, ctx) => {
-  function _findOneById(place_id) {
+export const restaurantDetailsAPIHandler = async (
+  req: RestRequest<never, PathParams<string>>,
+  res: ResponseComposition<DefaultBodyType>,
+  ctx: RestContext,
+) => {
+  function _findOneById(place_id: string) {
     const found = place_id ? places.results.find((v) => v.place_id === place_id) : places[0]
     return found
   }
