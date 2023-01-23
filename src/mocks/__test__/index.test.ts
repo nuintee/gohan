@@ -3,6 +3,7 @@ import { server } from '../server'
 // handler
 import { handlers } from '../handlers'
 
+// @ts-ignore
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
 beforeAll(() => server.listen())

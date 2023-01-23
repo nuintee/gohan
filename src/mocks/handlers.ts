@@ -1,5 +1,13 @@
 import { rest } from 'msw'
 
+// handlers
+import {
+  restaurantDetailsAPIHandler,
+  restaurantPlacesAPIHandler,
+} from './handlers/restaurantsHandler'
+
+const BASE_PATH = '/api/v1'
+
 export const handlers = [
   rest.post('/login', (req, res, ctx) => {
     // Persist user's authentication in the session
@@ -11,7 +19,7 @@ export const handlers = [
     )
   }),
 
-  rest.get('/api/v1/health', (req, res, ctx) => {
+  rest.get(`${BASE_PATH}/health`, (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -20,4 +28,7 @@ export const handlers = [
       }),
     )
   }),
+
+  rest.get(`${BASE_PATH}/place`, restaurantPlacesAPIHandler),
+  rest.get(`${BASE_PATH}/place/:place_id`, restaurantDetailsAPIHandler),
 ]
