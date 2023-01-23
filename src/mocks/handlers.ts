@@ -1,8 +1,5 @@
 import { rest } from 'msw'
 
-// resolvers
-import healthResolver from './resolvers/healthResolver'
-
 export const handlers = [
   rest.post('/login', (req, res, ctx) => {
     // Persist user's authentication in the session
@@ -14,5 +11,13 @@ export const handlers = [
     )
   }),
 
-  healthResolver,
+  rest.get('/api/v1/health', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: 'ok',
+        mock: true,
+      }),
+    )
+  }),
 ]

@@ -1,20 +1,23 @@
 import { server } from '../server'
+
+// handler
+import { handlers } from '../handlers'
+
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
-// resolvers
-import healthResolver from '../resolvers/healthResolver'
-
-// Establish API mocking before all tests.
 beforeAll(() => server.listen())
-
-afterEach(() => server.resetHandlers(healthResolver))
-
-// Clean up after the tests are finished.
+afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-describe('<FancyHomePage />', () => {
-  test('displays homepage data', async () => {
-    // Render homepage with backend data
-    const data = await fetchPolyfill('http://localhost:3000/api/v1/health')
+server.use(...handlers)
+
+describe('/health', () => {
+  test('ping', async () => {
+    const res = await fetchPolyfill('/api/v1/health')
+    const json = await res.json()
+    expect(json).toMatchObject({
+      mock: true,
+      status: 'ok',
+    })
   })
 })
