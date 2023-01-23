@@ -46,3 +46,15 @@ describe('restaurants', () => {
     } catch (error) {}
   })
 })
+
+describe('directions', () => {
+  test('directions API: [success]', async () => {
+    const res = await fetchPolyfill('/api/v1/directions?start=20,20&end=20,20', {
+      headers: {
+        'x-place-id': 'ChIJsV5xkfyGqkARsB1A1aMTxZs',
+      },
+    })
+    const json = await res.json()
+    expect(json).toHaveProperty('routes')
+  })
+})

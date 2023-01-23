@@ -13,15 +13,30 @@ export const directionsAPIHandler = async (
   res: ResponseComposition<DefaultBodyType>,
   ctx: RestContext,
 ) => {
-  //   const { profileType, start, end } = req.query
-  const place_id = req.url.searchParams.get('place_id')
-  if (!place_id) return res(ctx.status(500), ctx.json({})) // Only in mock server
+  const profileType = req?.url.searchParams.get('profileType')
+  const start = req?.url.searchParams.get('start')
+  const end = req?.url.searchParams.get('end')
 
-  const targetData = place_id ? directions.find((v, i) => v.place_id === place_id) : directions[0]
-  const data = targetData.routes
-  const coordinates = data[0].geometry.coordinates
+  const _place_id = req.headers.get('x-place-id')
+  if (!_place_id) return res(ctx.status(500), ctx.json({}))
+
+  const _findById = (place_id: string) => {
+    const randomData = directions[Math.floor(Math.random() * directions.length)]
+
+    const found = directions.find((direction) => direction.place_id === place_id)
+
+    if (!found) return randomData
+
+    return found
+  }
 
   try {
+    await Schema.parse({
+      start,
+      end,
+      ...(profileType && { profileType }),
+    })
+    const data = _findById(_place_id)
     return res(ctx.status(200), ctx.json(data))
   } catch (error) {
     return res(
