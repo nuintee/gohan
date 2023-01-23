@@ -1,7 +1,11 @@
 import places from '@/data/_places.json'
 
+// Schemas
+import * as PlacesAPI from '@/features/restaurants/schemas/getNearRestaurants.schema'
+
 export const restaurantPlacesAPIHandler = async (req, res, ctx) => {
   const query = req.url.searchParams
+  const { latitude, longitude } = await PlacesAPI.Schema.parse(query)
 
   function _findRandomOne() {
     const onlyOpenNow = places.results.filter((map, index) => map.opening_hours?.open_now)

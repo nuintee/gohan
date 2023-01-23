@@ -10,6 +10,7 @@ const customJestConfig = {
   moduleNameMapper: {
     '^@/root(.*)$': '<rootDir>/src$1',
     '^@/data(.*)$': '<rootDir>/src/data$1',
+    '^@/features(.*)$': '<rootDir>/src/features$1',
   },
 }
 

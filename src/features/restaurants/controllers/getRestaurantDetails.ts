@@ -5,11 +5,8 @@ import axios from '@/libs/axios'
 import { GCP_API_KEY } from '@/config/env'
 import { DetailsAPI } from '../types'
 
-const Schema = z.object({
-  place_id: z.string(),
-})
-
-type Props = z.infer<typeof Schema>
+// Schemas
+import { Schema, Props } from '@/features/restaurants/schemas/getRestaurantDetails.schema'
 
 export const getRestaurantDetails = async (props: Props) => {
   const { place_id } = await Schema.parse(props)
