@@ -1,23 +1,23 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import axios from '@/libs/axios'
-
-// env
-import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
+// controllers
+import { getDirections } from '@/features/directions/controllers/getDirections'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const profileType = req.query?.profileType as string
+  const start = req.query?.start as string
+  const end = req.query?.end as string
+
   if (req.method !== 'GET')
     res.status(405).json({ message: 'Invalid method', code: 405, method: req.method })
 
-  const { profileType, start, end } = req.query
-
-  const base_coordinates = encodeURIComponent(`${start};${end}`)
-  const profile = `mapbox/${profileType || 'walking'}`
-  const baseURL = `https://api.mapbox.com/directions/v5/${profile}/${base_coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${MAPBOX_PUBLIC_TOKEN}`
-
   try {
-    const { data } = await axios.get(baseURL)
+    const data = await getDirections({
+      profileType,
+      start,
+      end,
+    })
     res.status(200).json(data)
   } catch (error) {
     res.status(500).json(error)
