@@ -1,18 +1,20 @@
-import Axios from 'axios'
+import Axios, { AxiosResponse } from 'axios'
 
-// envs
+// env
 import { BASE_URL, AXIOS_FETCH_TIMEOUT } from '@/config/env'
 
-export const axios = Axios.create({
+const axios = Axios.create({
   baseURL: BASE_URL,
   timeout: AXIOS_FETCH_TIMEOUT,
 })
 
 axios.interceptors.response.use(
   (response) => {
-    return response.data
+    return response
   },
   (error) => {
     return Promise.reject(error)
   },
 )
+
+export default axios
