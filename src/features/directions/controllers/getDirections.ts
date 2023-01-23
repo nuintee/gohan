@@ -8,7 +8,7 @@ import axios from '@/libs/axios'
 import { Schema, Props } from '@/features/directions/schema/getDirections.schema'
 
 export const getDirections = async (props: Props) => {
-  const { profileType, start, end } = await Schema.parse(props)
+  const { profileType, start, end, place_id } = await Schema.parse(props)
 
   const base_coordinates = encodeURIComponent(`${start};${end}`)
   const profile = `mapbox/${profileType || 'walking'}`

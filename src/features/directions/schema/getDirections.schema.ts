@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+// env
+const isDevelopment = process.env.NODE_ENV === 'development'
+
 export const Schema = z.object({
   profileType: z.optional(
     z.string().refine((v) => ['walking', 'driving-traffic', 'driving', 'cycling'].includes(v)),
@@ -16,6 +19,7 @@ export const Schema = z.object({
     const validLatitude = Number(latitude) >= -90 && Number(latitude) <= 90
     return validLatitude && validLongitude
   }),
+  ...(isDevelopment && { _place_id: z.optional(z.string()) }),
 })
 
 export type Props = z.infer<typeof Schema>
