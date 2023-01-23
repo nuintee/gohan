@@ -18,7 +18,6 @@ export const directionsAPIHandler = async (
   const end = req?.url.searchParams.get('end')
 
   const _place_id = req.headers.get('x-place-id')
-  if (!_place_id) return res(ctx.status(500), ctx.json({}))
 
   const _findById = (place_id: string) => {
     const randomData = directions[Math.floor(Math.random() * directions.length)]
