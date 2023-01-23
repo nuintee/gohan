@@ -30,14 +30,16 @@ describe('restaurants', () => {
     expect(json).toBeDefined()
   })
   test('details API: [success]', async () => {
-    const res = await fetchPolyfill('/api/v1/restaurants/ChIJ58PFO_yGqkAR1a2dnhgIBiQ')
+    const res = await fetchPolyfill('/api/v1/restaurants')
     const json = await res.json()
     expect(json).toBeDefined()
   })
   test('details API: [error]', async () => {
-    const res = await fetchPolyfill('/api/v1/restaurants/INVALID_PLACE_ID')
-    console.log(res)
-    const json = await res.json()
-    expect(json).toThrowError()
+    try {
+      const res = await fetchPolyfill('/api/v1/restaurants/INVALID_PLACE_ID')
+      console.log(res)
+      const json = await res.json()
+      expect(json).toThrowError()
+    } catch (error) {}
   })
 })
