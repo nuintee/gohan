@@ -3,7 +3,7 @@ import { atom } from 'recoil'
 // types
 import { RestaurantData } from '../types'
 
-export const directionsState = atom<RestaurantData | {}>({
-  key: 'directionsState',
+export const restaurantsState = atom<RestaurantData | {}>({
+  key: 'restaurantsState',
   default: {},
 })
