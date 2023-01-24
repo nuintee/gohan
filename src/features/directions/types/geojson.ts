@@ -1,4 +1,4 @@
-export type SourceType = {
+export type Source = {
   type: 'Feature'
   properties: {}
   geometry: {
@@ -7,12 +7,12 @@ export type SourceType = {
   }
 }
 
-export type LayerType = {
+export type Layer = {
   id: string
   type: 'line'
   source: {
     type: 'geojson'
-    data: SourceType
+    data: Source
   }
   layout: {
     'line-join': 'round'
@@ -26,6 +26,6 @@ export type LayerType = {
 }
 
 export type MapBoxDirections = {
-  source: SourceType
-  layer: LayerType
+  source: Source
+  layer: Layer
 }
