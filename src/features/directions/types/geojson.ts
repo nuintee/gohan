@@ -25,7 +25,7 @@ export type Layer = {
   }
 }
 
-export type MapBoxDirections = {
-  source: Source
-  layer: Layer
+export type GEOJSON = {
+  source: Source | {}
+  layer: Layer | {}
 }
