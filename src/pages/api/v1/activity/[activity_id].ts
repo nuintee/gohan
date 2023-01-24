@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { activityTable } from '@/features/activities/prisma/activityTable'
 
 // GET | PATCH | DELETE
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const activity_id = req.query.activity_id as string
 
   try {
