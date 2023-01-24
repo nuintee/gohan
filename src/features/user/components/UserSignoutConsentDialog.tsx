@@ -7,7 +7,7 @@ type Props = {
   onClickAction: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const UserSettingsModal = (props: Props) => {
+const UserSignoutConsentDialog = (props: Props) => {
   const { isOpen, onClose, onClickAction } = props
 
   return (
@@ -23,4 +23,4 @@ const UserSettingsModal = (props: Props) => {
   )
 }
 
-export default UserSettingsModal
+export default UserSignoutConsentDialog

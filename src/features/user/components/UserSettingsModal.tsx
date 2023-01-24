@@ -5,6 +5,7 @@ import ModalLayout from '@/layouts/ModalLayout'
 import dayjs from 'dayjs'
 
 import { User } from 'next-auth'
+import UserAuthModal from './UserAuthModal'
 
 type Props = {
   isOpen: boolean
