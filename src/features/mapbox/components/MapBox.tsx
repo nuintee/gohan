@@ -3,13 +3,14 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 
 // config
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
+import { mapStyles } from '../config'
 
 const MapBox = ({}) => {
   return (
     <div className='w-screen h-screen'>
       <Map
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
-        mapStyle='mapbox://styles/mapbox/streets-v11'
+        mapStyle={mapStyles.MONOCHROME}
         renderWorldCopies={false}
         pitchWithRotate={false}
       >
