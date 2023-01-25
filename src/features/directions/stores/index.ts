@@ -1,9 +1,9 @@
 import { atom } from 'recoil'
 
 // types
-import { GEOJSON } from '../types/geojson'
+import { GeoJSON } from '../types/geojson'
 
-export const directionsState = atom<GEOJSON>({
+export const directionsState = atom<GeoJSON>({
   key: 'directionsState',
   default: {
     source: {},
