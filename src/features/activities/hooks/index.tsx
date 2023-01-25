@@ -6,12 +6,13 @@ import useToast from '@/libs/react-toastify'
 import { Activity } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { ZodError } from 'zod'
+import { AddActivityProps, UpdateActivityProps } from '../schemas/addActivity.schema'
 import { ActivityResolved } from '../types'
 
 const useActivities = () => {
   const { data: session, status } = useSession()
 
-  const add = async (payload: Activity) => {
+  const add = async (payload: AddActivityProps) => {
     try {
       const url = new URL(`${BASE_URL}/api/v1/activities`)
       const { data } = await axios.post<Activity>(url.toString(), payload)
@@ -35,7 +36,7 @@ const useActivities = () => {
     }
   }
 
-  const update = async (activityId: string, payload?: Activity) => {
+  const update = async (activityId: string, payload?: UpdateActivityProps) => {
     try {
       const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
       const { data } = await axios.patch<Activity>(url.toString(), payload)

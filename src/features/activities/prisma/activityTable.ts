@@ -3,7 +3,10 @@ import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
 // Schemas
-import { addActivitySchema } from '@/features/activities/schemas/addActivity.schema'
+import {
+  addActivitySchema,
+  UpdateActivityProps,
+} from '@/features/activities/schemas/addActivity.schema'
 
 export type ListFilter = {
   limit?: number
@@ -67,7 +70,7 @@ export const activityTable = {
     })
     return addedActivity
   },
-  patch: async (props: MutateProps<Activity>) => {
+  patch: async (props: UpdateActivityProps & { id: string }) => {
     const updatedUser = await prisma.activity.update({
       where: {
         id: props.id,
