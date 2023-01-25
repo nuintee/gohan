@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 // env
-const isDevelopment = process.env.NODE_ENV === 'development'
+import { IS_DEVMODE } from '@/config/env'
 
 export const Schema = z.object({
   profileType: z.optional(
@@ -18,6 +18,9 @@ export const Schema = z.object({
     const validLongitude = Number(longitude) >= -180 && Number(longitude) <= 180
     const validLatitude = Number(latitude) >= -90 && Number(latitude) <= 90
     return validLatitude && validLongitude
+  }),
+  ...(IS_DEVMODE && {
+    place_id: z.optional(z.string()),
   }),
 })
 

@@ -25,7 +25,15 @@ export type Layer = {
   }
 }
 
-export type GEOJSON = {
+export type GeoJSON = {
   source: Source | {}
   layer: Layer | {}
+}
+
+export type GeoJSONCreatorProps = {
+  coordinates: number[][]
+  id?: string
+  lineColor?: string
+  lineWidth?: number
+  lineOpacity?: number
 }
