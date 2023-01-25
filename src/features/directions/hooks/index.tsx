@@ -67,7 +67,14 @@ const useDirections = () => {
       url.searchParams.append('start', start)
       url.searchParams.append('end', end)
 
-      const { data } = await axios.get(url.toString())
+      const options = {
+        headers:
+          (props?.place_id && {
+            'x-place-id': props?.place_id,
+          }) ||
+          {},
+      }
+      const { data } = await axios.get(url.toString(), options)
       return data
     } catch (error) {
       console.error(error)
