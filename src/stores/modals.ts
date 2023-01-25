@@ -1,7 +1,9 @@
 import { atom } from 'recoil'
 
+const modalKeys = ['userauth', 'usersettings', 'usersignout', 'restaurantdiscovered', ''] as const
+
 export const modalState = atom<{
-  modalKey: ['userauth' | 'usersettings' | 'usersignout' | 'restaurantdiscovered' | '']
+  modalKey: typeof modalKeys[number][]
 }>({
   key: 'modalState',
   default: {
