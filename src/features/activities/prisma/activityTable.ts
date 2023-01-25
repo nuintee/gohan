@@ -34,8 +34,6 @@ export type UserId = {
 
 export type MutateProps<T> = Id & T
 
-type Data = Activity & UserId
-
 export const activityTable = {
   get: async (props: Id) => {
     const fetchedActivity = await prisma.activity.findUniqueOrThrow({
@@ -60,7 +58,7 @@ export const activityTable = {
     const fetchedActivities = await prisma.activity.findMany(resultFilter(props))
     return fetchedActivities
   },
-  add: async (props: Data) => {
+  add: async (props: Activity) => {
     await addActivitySchema.parse(props)
 
     const id = props?.place_id || randomUUID()
@@ -69,7 +67,7 @@ export const activityTable = {
     })
     return addedActivity
   },
-  patch: async (props: MutateProps<Data>) => {
+  patch: async (props: MutateProps<Activity>) => {
     const updatedUser = await prisma.activity.update({
       where: {
         id: props.id,

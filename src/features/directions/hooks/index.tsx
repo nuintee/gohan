@@ -12,7 +12,7 @@ import { ZodError } from 'zod'
 import { Props, Schema } from '../schema/getDirections.schema'
 
 // Env
-import { BASE_URL, IS_DEVMODE } from '@/config/env'
+import { BASE_URL } from '@/config/env'
 
 // Functions
 import useToast from '@/libs/react-toastify'
