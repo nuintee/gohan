@@ -23,7 +23,7 @@ const useActivities = () => {
     }
   }
 
-  const get = async (activityId: string): Activity => {
+  const get = async (activityId: string) => {
     try {
       const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
       const { data } = await axios.get<ActivityResolved>(url.toString())
@@ -35,7 +35,7 @@ const useActivities = () => {
     }
   }
 
-  const update = async (activityId: string, payload: Activity) => {
+  const update = async (activityId: string, payload?: Activity) => {
     try {
       const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
       const { data } = await axios.patch<Activity>(url.toString(), payload)
@@ -50,7 +50,7 @@ const useActivities = () => {
   const getUserAll = async () => {
     try {
       if (status !== 'authenticated') throw new Error('Must be authed to operate this action')
-      const url = new URL(`${BASE_URL}/api/v1/activities/${session?.user?.id}`)
+      const url = new URL(`${BASE_URL}/api/v1/activities/user/${session?.user?.id}`)
       const { data } = await axios.get<ActivityResolved[]>(url.toString())
       return data
     } catch (error) {
