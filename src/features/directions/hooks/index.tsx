@@ -5,6 +5,11 @@ import { useRecoilState } from 'recoil'
 // Types
 import { GeoJSON, GeoJSONCreatorProps } from '../types/geojson'
 import { Source, Layer } from '../types/geojson'
+import axios from '@/libs/axios'
+
+// Env
+import { BASE_URL } from '@/config/env'
+import { Props, Schema } from '../schema/getDirections.schema'
 
 const useDirections = () => {
   const [directions, setDirections] = useRecoilState(directionsState)
@@ -47,13 +52,23 @@ const useDirections = () => {
     }
   }
 
-  const set = () => {
-    const geojson = _createGeoJSON({
-      coordinates: [
-        [0, 0],
-        [2, 2],
-      ],
-    })
+  const get = async (props: Props) => {
+    const { profileType, start, end } = Schema.parse(props)
+
+    const url = new URL(`${BASE_URL}/api/v1/directions`)
+    url.searchParams.append('profileType', profileType as string)
+    url.searchParams.append('start', start)
+    url.searchParams.append('end', end)
+
+    const { data, status } = await axios.get(url.toString())
+
+    if (status !== 200) throw new Error('Failed to fetch directions')
+
+    return data
+  }
+
+  const set = (coordinates: number[][]) => {
+    const geojson = _createGeoJSON({ coordinates })
     setDirections(geojson)
   }
 
@@ -61,7 +76,7 @@ const useDirections = () => {
     setDirections((prev) => ({ source: {}, layer: {} }))
   }
 
-  return { hasDirections, set, clear }
+  return { hasDirections, set, clear, get, directions }
 }
 
 export default useDirections
