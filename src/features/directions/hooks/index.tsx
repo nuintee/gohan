@@ -12,7 +12,7 @@ import { ZodError } from 'zod'
 import { Props, Schema } from '../schema/getDirections.schema'
 
 // Env
-import { BASE_URL } from '@/config/env'
+import { BASE_URL, IS_DEVMODE } from '@/config/env'
 
 // Functions
 import useToast from '@/libs/react-toastify'
@@ -63,14 +63,11 @@ const useDirections = () => {
       const { profileType, start, end } = Schema.parse(props)
 
       const url = new URL(`${BASE_URL}/api/v1/directions`)
-      url.searchParams.append('profileType', profileType as string)
+      profileType && url.searchParams.append('profileType', profileType as string)
       url.searchParams.append('start', start)
       url.searchParams.append('end', end)
 
-      const { data, status } = await axios.get(url.toString())
-
-      if (status !== 200) throw new Error('Failed to fetch directions')
-
+      const { data } = await axios.get(url.toString())
       return data
     } catch (error) {
       console.error(error)

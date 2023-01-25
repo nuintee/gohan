@@ -10,7 +10,9 @@ const Index = () => {
       <div className='flex flex-col gap-4'>
         <p>hasDirections: {hasDirections.toString()}</p>
         <p>{JSON.stringify(directions)}</p>
-        <button onClick={() => get({ start: '', end: '' })}>GET</button>
+        <button onClick={async () => console.log(await get({ start: '20,20', end: '30,30' }))}>
+          GET
+        </button>
         <button onClick={() => set([])}>SET</button>
         <button onClick={clear}>CLEAR</button>
         {/* <MapBox /> */}
