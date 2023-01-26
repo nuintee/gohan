@@ -1,7 +1,5 @@
 import { RestRequest, PathParams, ResponseComposition, DefaultBodyType, RestContext } from 'msw'
 
-import { z } from 'zod'
-
 // Schema
 import { Schema } from '@/features/directions/schema/getDirections.schema'
 
