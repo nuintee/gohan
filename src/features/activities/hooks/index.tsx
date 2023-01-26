@@ -12,17 +12,22 @@ import { ActivityResolved } from '../types'
 const useActivities = () => {
   const { data: session, status } = useSession()
 
-  const add = async (payload: AddActivityProps) => {
+  const _handleFetchActivities = async (fetcher) => {
     try {
       if (status !== 'authenticated') throw new Error('Must be authed to operate this action')
-      const url = new URL(`${BASE_URL}/api/v1/activities`)
-      const { data } = await axios.post<Activity>(url.toString(), payload)
+      const { data } = await fetcher()
       return data
     } catch (error) {
-      console.error(error)
       if (error instanceof ZodError) return useToast.info('Invalid parameters')
       useToast.error(error.message)
     }
+  }
+
+  const add = async (payload: AddActivityProps) => {
+    const url = new URL(`${BASE_URL}/api/v1/activities`)
+    const fetcher = axios.post<Activity>(url.toString(), payload)
+    const data = await _handleFetchActivities(fetcher)
+    return data
   }
 
   const get = async (activityId: string) => {
