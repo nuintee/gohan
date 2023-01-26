@@ -5,6 +5,7 @@ import { SessionProvider, signIn } from 'next-auth/react'
 import 'whatwg-fetch'
 
 describe('useHoge Custom Hooks Test', () => {
+  // Add Test data in prisma to delete it later
   test('Custom Hooks の返り値は hoge になること', async () => {
     const { result } = renderHook(() => useActivities().getUserAll(), {
       wrapper: SessionProvider,
