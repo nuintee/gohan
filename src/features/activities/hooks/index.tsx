@@ -14,6 +14,7 @@ const useActivities = () => {
 
   const add = async (payload: AddActivityProps) => {
     try {
+      if (status !== 'authenticated') throw new Error('Must be authed to operate this action')
       const url = new URL(`${BASE_URL}/api/v1/activities`)
       const { data } = await axios.post<Activity>(url.toString(), payload)
       return data
@@ -26,6 +27,7 @@ const useActivities = () => {
 
   const get = async (activityId: string) => {
     try {
+      if (status !== 'authenticated') throw new Error('Must be authed to operate this action')
       const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
       const { data } = await axios.get<ActivityResolved>(url.toString())
       return data
@@ -38,6 +40,7 @@ const useActivities = () => {
 
   const update = async (activityId: string, payload?: UpdateActivityProps) => {
     try {
+      if (status !== 'authenticated') throw new Error('Must be authed to operate this action')
       const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
       const { data } = await axios.patch<Activity>(url.toString(), payload)
       return data
@@ -63,6 +66,7 @@ const useActivities = () => {
 
   const remove = async (activityId: string) => {
     try {
+      if (status !== 'authenticated') throw new Error('Must be authed to operate this action')
       const url = new URL(`${BASE_URL}/api/v1/activitiy/${activityId}`)
       const { data } = await axios.delete<Activity>(url.toString())
       return data
