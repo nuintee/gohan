@@ -77,6 +77,7 @@ const useActivities = () => {
     //   if (error instanceof ZodError) return useToast.info('Invalid parameters')
     //   useToast.error(error.message)
     // }
+
     const url = new URL(`${BASE_URL}/api/v1/activities/user/${session?.user?.id}`)
     const fetcher = async () => axios.get<ActivityResolved[]>(url.toString())
     const response = await _handleFetchActivities(fetcher)
