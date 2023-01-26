@@ -9,10 +9,12 @@ import { ZodError } from 'zod'
 import { AddActivityProps, UpdateActivityProps } from '../schemas/addActivity.schema'
 import { ActivityResolved } from '../types'
 
+type HandleFetchActivities<T = {}> = (fetcher: () => Promise<any>) => T
+
 const useActivities = () => {
   const { data: session, status } = useSession()
 
-  const _handleFetchActivities = async (fetcher) => {
+  const _handleFetchActivities: HandleFetchActivities = async (fetcher) => {
     try {
       if (status !== 'authenticated') throw new Error('Must be authed to operate this action')
       const { data } = await fetcher()
