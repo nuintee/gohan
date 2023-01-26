@@ -44,12 +44,25 @@ const useActivities = () => {
     //   useToast.error(error.message)
     // }
     // const response = await _handleFetchActivities(fetcher)
+
+    // try {
+    //   const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
+    //   const { data, status } = await axios.get<ActivityResolved>(url.toString())
+    //   if (status !== 200) throw new Error('Invalid Request')
+    //   return data
+    // } catch (error) {
+    //   throw error
+    // }
+
     try {
       const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
-      const { data } = await axios.get<ActivityResolved>(url.toString())
-      return data
+      const response = await axios.get<ActivityResolved>(url.toString())
+      return response
     } catch (error) {
-      return error
+      if (error) {
+        useToast.error(error.message)
+        return { message: error.message, code: error?.response?.status || 500 }
+      }
     }
   }
 
@@ -81,11 +94,10 @@ const useActivities = () => {
     //   if (error instanceof ZodError) return useToast.info('Invalid parameters')
     //   useToast.error(error.message)
     // }
-
-    const url = new URL(`${BASE_URL}/api/v1/activities/user/${session?.user?.id}`)
-    const fetcher = async () => axios.get<ActivityResolved[]>(url.toString())
-    const response = await _handleFetchActivities(fetcher)
-    return response
+    // const url = new URL(`${BASE_URL}/api/v1/activities/user/${session?.user?.id}`)
+    // const fetcher = async () => axios.get<ActivityResolved[]>(url.toString())
+    // const response = await _handleFetchActivities(fetcher)
+    // return response
   }
 
   const remove = async (activityId: string) => {
