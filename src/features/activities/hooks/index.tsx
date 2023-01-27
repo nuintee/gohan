@@ -52,11 +52,10 @@ const useActivities = () => {
     )
   }
 
-  const update = async (activityId: string, payload?: UpdateActivityProps) => {
-    const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
-    const fetcher = async () => axios.patch<Activity>(url.toString(), payload)
-    const response = await _handleFetchActivities(fetcher)
-    return response
+  const update = (activityId: string, payload?: UpdateActivityProps) => {
+    return useMutation(() =>
+      axios.patch(`${BASE_URL}/api/v1/activity/${activityId}`, payload).then((res) => res.data),
+    )
   }
 
   const getUserAll = async () => {}

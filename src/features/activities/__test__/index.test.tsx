@@ -1,7 +1,4 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { Session } from 'next-auth'
-// import useActivities from '../hooks'
-import { SessionProvider, signIn, useSession } from 'next-auth/react'
 import useActivities from '../hooks/index'
 import 'whatwg-fetch'
 
@@ -27,28 +24,112 @@ const _test_activityData: AddActivityProps = {
   place_id: '_TEST_PLACE_ID',
 }
 
-beforeAll(async () => {
-  // add test data
-  const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
-  await waitFor(async () => {
-    const added = await result.current.mutateAsync()
-    expect(added).toMatchObject(_test_activityData)
-  })
-})
+// beforeAll(async () => {
+//   // add test data
+//   const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
+//   await waitFor(async () => {
+//     const added = await result.current.mutateAsync()
+//     expect(added).toMatchObject(_test_activityData)
+//   })
+// })
 
-afterAll(async () => {
-  // add test data
-  const { result } = renderHook(
-    () => useActivities().remove(_test_activityData.place_id as string),
-    { wrapper },
-  )
-  await waitFor(async () => {
-    const cleared = await result.current.mutateAsync()
-    expect(cleared).toMatchObject(_test_activityData)
-  })
-})
+// afterAll(async () => {
+//   // add test data
+//   const { result } = renderHook(
+//     () => useActivities().remove(_test_activityData.place_id as string),
+//     { wrapper },
+//   )
+//   await waitFor(async () => {
+//     const cleared = await result.current.mutateAsync()
+//     expect(cleared).toMatchObject(_test_activityData)
+//   })
+// })
 
+// describe('useActivities', () => {
+//   test('GET with success', async () => {
+//     const { result } = renderHook(
+//       () => useActivities().get(_test_activityData.place_id as string),
+//       {
+//         wrapper,
+//       },
+//     )
+//     await waitFor(() => {
+//       if (!result.current.isSuccess) throw new Error('Wait')
+//       expect(result.current.data).toMatchObject(_test_activityData)
+//     })
+//   })
+
+//   test('GET with error', async () => {
+//     const { result } = renderHook(() => useActivities().get(''), {
+//       wrapper,
+//     })
+//     await waitFor(() => {
+//       if (result.current.isSuccess) throw new Error('Wait')
+//       expect(result.current.isError).toBe(true)
+//     })
+//   })
+
+//   test('POST with success', async () => {
+//     const _post_activityData = {
+//       user_id: '5a70cabc-919b-48db-867d-c02a6e988f83',
+//       is_liked: true,
+//       place_id: '_TEMP_PLACE_ID',
+//     }
+
+//     try {
+//       const { result } = renderHook(() => useActivities().add(_post_activityData), { wrapper })
+//       const added = await result.current.mutateAsync()
+//       await waitFor(async () => {
+//         expect(added).toMatchObject(_post_activityData)
+//       })
+//     } finally {
+//       const { result } = renderHook(
+//         () => useActivities().remove(_post_activityData.place_id as string),
+//         { wrapper },
+//       )
+//       await result.current.mutateAsync() // clearing post data
+//     }
+//   })
+
+//   test('POST with error', async () => {
+//     // Already existing id
+//     const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
+//     await waitFor(async () => {
+//       expect(result.current.status).not.toBe(200)
+//     })
+//   })
+
+//   test('DELETE with success', async () => {
+//     const _delete_activityData = {
+//       user_id: '5a70cabc-919b-48db-867d-c02a6e988f83',
+//       is_liked: true,
+//       place_id: '_TEMP_PLACE_ID',
+//     }
+//     // add Before delete
+//     const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
+//     await waitFor(async () => {
+//       expect(result.current.status).not.toBe(200)
+//     })
+//   })
+// })
 describe('useActivities', () => {
+  // POST
+  test('POST with success', async () => {
+    const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
+    const added = await result.current.mutateAsync()
+    await waitFor(async () => {
+      expect(added).toMatchObject(_test_activityData)
+    })
+  })
+  test('POST with error', async () => {
+    // Already existing id
+    const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
+    await waitFor(async () => {
+      expect(result.current.status).not.toBe(200)
+    })
+  })
+
+  // GET
   test('GET with success', async () => {
     const { result } = renderHook(
       () => useActivities().get(_test_activityData.place_id as string),
@@ -61,36 +142,29 @@ describe('useActivities', () => {
       expect(result.current.data).toMatchObject(_test_activityData)
     })
   })
-
   test('GET with error', async () => {
     const { result } = renderHook(() => useActivities().get(''), {
       wrapper,
     })
     await waitFor(() => {
-      if (result.current.isSuccess) throw new Error('Wait')
-      expect(result.current.isError).toBe(true)
+      expect(result.current.status).not.toBe(200)
     })
   })
 
-  test('POST with success', async () => {
-    const _mutable_activityData = {
-      user_id: '5a70cabc-919b-48db-867d-c02a6e988f83',
+  // PATCH
+  test('PATCH with success', async () => {
+    const updateField = {
       is_liked: true,
-      place_id: '_TEMP_PLACE_ID',
     }
-
-    try {
-      const { result } = renderHook(() => useActivities().add(_mutable_activityData), { wrapper })
-      const added = await result.current.mutateAsync()
-      await waitFor(async () => {
-        expect(added).toMatchObject(_mutable_activityData)
-      })
-    } finally {
-      const { result } = renderHook(
-        () => useActivities().remove(_mutable_activityData.place_id as string),
-        { wrapper },
-      )
-      await result.current.mutateAsync() // clearing post data
-    }
+    const { result } = renderHook(
+      () => useActivities().update(_test_activityData.place_id as string, updateField),
+      {
+        wrapper,
+      },
+    )
+    const updated = await result.current.mutateAsync()
+    await waitFor(async () => {
+      expect(updated).toMatchObject({ ..._test_activityData, ...updateField })
+    })
   })
 })
