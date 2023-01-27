@@ -54,9 +54,9 @@ describe('useActivities', () => {
         wrapper,
       },
     )
-    // await waitFor(() => {
-    //   if (!result.current.isSuccess) throw new Error('Wait')
-    //   console.log(result.current.data)
-    // })
+    await waitFor(() => {
+      if (!result.current.isSuccess) throw new Error('Wait')
+      expect(result.current.data).toMatchObject(_test_activityData)
+    })
   })
 })

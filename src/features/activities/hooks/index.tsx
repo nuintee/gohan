@@ -33,7 +33,7 @@ const useActivities = () => {
   }
 
   const get = (activityId: string) => {
-    const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
+    // const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
     // const fetcher = async () => axios.get<Activity>(url.toString())
 
     // const response = useQuery({
@@ -42,10 +42,15 @@ const useActivities = () => {
     // })
     // return response
 
-    return useQuery({
-      queryKey: ['activity'],
-      queryFn: () => fetch(`${BASE_URL}/api/v1/activity/${activityId}`).then((data) => data.json()),
-    })
+    // return useQuery({
+    //   queryKey: ['activity'],
+    //   queryFn: () => fetch(`${BASE_URL}/api/v1/activity/${activityId}`).then((data) => data.json()),
+    // })
+    return useQuery(['activity'], () =>
+      axios.get(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => {
+        return res.data
+      }),
+    )
   }
 
   const update = async (activityId: string, payload?: UpdateActivityProps) => {
