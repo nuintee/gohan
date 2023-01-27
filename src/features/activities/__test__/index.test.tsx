@@ -63,7 +63,7 @@ describe('useActivities', () => {
   })
 
   test('GET with error', async () => {
-    const { result } = renderHook(() => useActivities().get('un'), {
+    const { result } = renderHook(() => useActivities().get(''), {
       wrapper,
     })
     await waitFor(() => {
