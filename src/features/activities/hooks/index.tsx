@@ -4,6 +4,7 @@ import { BASE_URL } from '@/config/env'
 import axios from '@/libs/axios'
 import useToast from '@/libs/react-toastify'
 import { Activity } from '@prisma/client'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { ZodError } from 'zod'
 import { AddActivityProps, UpdateActivityProps } from '../schemas/addActivity.schema'
@@ -25,14 +26,27 @@ const useActivities = () => {
     }
   }
 
-  const add = async (payload: AddActivityProps) => {
-    const url = new URL(`${BASE_URL}/api/v1/activities`)
-    const fetcher = async () => axios.post<Activity>(url.toString(), payload)
-    const response = await _handleFetchActivities(fetcher)
-    return response
+  const add = (payload: AddActivityProps) => {
+    return useMutation(() =>
+      axios.post(`${BASE_URL}/api/v1/activities`, payload).then((res) => res.data),
+    )
   }
 
-  const get = async (activityId: string) => {}
+  const get = (activityId: string) => {
+    const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
+    // const fetcher = async () => axios.get<Activity>(url.toString())
+
+    // const response = useQuery({
+    //   queryKey: ['activity'],
+    //   queryFn: () => 'Hello',
+    // })
+    // return response
+
+    return useQuery({
+      queryKey: ['activity'],
+      queryFn: () => fetch(`${BASE_URL}/api/v1/activity/${activityId}`).then((data) => data.json()),
+    })
+  }
 
   const update = async (activityId: string, payload?: UpdateActivityProps) => {
     const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
@@ -43,15 +57,28 @@ const useActivities = () => {
 
   const getUserAll = async () => {}
 
-  const remove = async (activityId: string) => {
+  const remove = (activityId: string) => {
     // return response
-    try {
-      const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
-      const { data } = await axios.delete(url.toString())
-      return data
-    } catch (error) {
-      return error
-    }
+    // try {
+    //   const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
+    //   const { data } = await axios.delete(url.toString())
+    //   return data
+    // } catch (error) {
+    //   return error
+    // }
+    return useMutation(() =>
+      fetch(`${BASE_URL}/api/v1/activity/${activityId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(`${res.status} ${res.statusText}`)
+        }
+        return res.json()
+      }),
+    )
   }
 
   return { add, get, getUserAll, remove, update }
