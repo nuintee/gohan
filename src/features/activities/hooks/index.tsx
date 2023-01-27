@@ -9,13 +9,15 @@ import { AddActivityProps, UpdateActivityProps } from '../schemas/addActivity.sc
 import { ActivityResolved } from '../types'
 
 const useActivities = () => {
-  // const { data: session, status } = useSession()
+  const { data: session, status } = useSession()
 
   const add = (payload: AddActivityProps) => {
-    console.log(`${BASE_URL}/api/v1/activities`)
     return useMutation(
       () => axios.post(`${BASE_URL}/api/v1/activities`, payload).then((res) => res.data),
       {
+        onMutate: () => {
+          if (status !== 'authenticated') throw Error('Unauthorized')
+        },
         onError: (error) => {
           useToast.error(error.message)
         },
@@ -26,7 +28,27 @@ const useActivities = () => {
   const get = (activityId: string) => {
     return useQuery(
       [activityId],
-      () => axios.get(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data),
+      () => {
+        if (status !== 'authenticated') throw Error('Unauthorized')
+        return axios.get(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data)
+      },
+      {
+        onError: (error) => {
+          useToast.error(error.message)
+        },
+      },
+    )
+  }
+
+  const getUserAll = () => {
+    return useQuery<Activity[]>(
+      ['allUserActivity'],
+      () => {
+        if (status !== 'authenticated') throw Error('Unauthorized')
+        return axios
+          .get(`${BASE_URL}/api/v1/activities/user/${session.user?.id}`)
+          .then((res) => res.data)
+      },
       {
         onError: (error) => {
           useToast.error(error.message)
@@ -40,6 +62,9 @@ const useActivities = () => {
       () =>
         axios.patch(`${BASE_URL}/api/v1/activity/${activityId}`, payload).then((res) => res.data),
       {
+        onMutate: () => {
+          if (status !== 'authenticated') throw Error('Unauthorized')
+        },
         onError: (error) => {
           useToast.error(error.message)
         },
@@ -51,6 +76,9 @@ const useActivities = () => {
     return useMutation(
       () => axios.delete(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data),
       {
+        onMutate: () => {
+          if (status !== 'authenticated') throw Error('Unauthorized')
+        },
         onError: (error) => {
           useToast.error(error.message)
         },
@@ -58,7 +86,7 @@ const useActivities = () => {
     )
   }
 
-  return { add, get, remove, update }
+  return { add, get, getUserAll, remove, update }
 }
 
 export default useActivities
