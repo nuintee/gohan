@@ -27,6 +27,7 @@ const useActivities = () => {
   }
 
   const add = (payload: AddActivityProps) => {
+    console.log(`${BASE_URL}/api/v1/activities`)
     return useMutation(() =>
       axios.post(`${BASE_URL}/api/v1/activities`, payload).then((res) => res.data),
     )

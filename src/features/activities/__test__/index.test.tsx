@@ -71,4 +71,26 @@ describe('useActivities', () => {
       expect(result.current.isError).toBe(true)
     })
   })
+
+  test('POST with success', async () => {
+    const _mutable_activityData = {
+      user_id: '5a70cabc-919b-48db-867d-c02a6e988f83',
+      is_liked: true,
+      place_id: '_TEMP_PLACE_ID',
+    }
+
+    try {
+      const { result } = renderHook(() => useActivities().add(_mutable_activityData), { wrapper })
+      const added = await result.current.mutateAsync()
+      await waitFor(async () => {
+        expect(added).toMatchObject(_mutable_activityData)
+      })
+    } finally {
+      const { result } = renderHook(
+        () => useActivities().remove(_mutable_activityData.place_id as string),
+        { wrapper },
+      )
+      await result.current.mutateAsync() // clearing post data
+    }
+  })
 })
