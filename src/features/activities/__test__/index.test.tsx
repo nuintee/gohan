@@ -61,4 +61,14 @@ describe('useActivities', () => {
       expect(result.current.data).toMatchObject(_test_activityData)
     })
   })
+
+  test('GET with error', async () => {
+    const { result } = renderHook(() => useActivities().get('un'), {
+      wrapper,
+    })
+    await waitFor(() => {
+      if (result.current.isSuccess) throw new Error('Wait')
+      expect(result.current.isError).toBe(true)
+    })
+  })
 })

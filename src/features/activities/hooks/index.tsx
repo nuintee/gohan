@@ -46,10 +46,8 @@ const useActivities = () => {
     //   queryKey: ['activity'],
     //   queryFn: () => fetch(`${BASE_URL}/api/v1/activity/${activityId}`).then((data) => data.json()),
     // })
-    return useQuery(['activity'], () =>
-      axios.get(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => {
-        return res.data
-      }),
+    return useQuery([activityId], () =>
+      axios.get(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data),
     )
   }
 
