@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react'
 import ErrorBoundary from '@/components/fallback/ErrorBoundary'
 import { Session } from 'next-auth'
 import { RecoilRoot } from 'recoil'
+import { QueryClientProvider } from '@/libs/tanstack-query'
 
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
@@ -16,9 +17,11 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
   return (
     <ErrorBoundary>
       <RecoilRoot>
-        <SessionProvider session={pageProps.session}>
-          <Component {...pageProps} />
-        </SessionProvider>
+        <QueryClientProvider>
+          <SessionProvider session={pageProps.session}>
+            <Component {...pageProps} />
+          </SessionProvider>
+        </QueryClientProvider>
       </RecoilRoot>
     </ErrorBoundary>
   )

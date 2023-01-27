@@ -3,7 +3,10 @@ import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
 // Schemas
-import { addActivitySchema } from '@/features/activities/schemas/addActivity.schema'
+import {
+  addActivitySchema,
+  UpdateActivityProps,
+} from '@/features/activities/schemas/addActivity.schema'
 
 export type ListFilter = {
   limit?: number
@@ -34,8 +37,6 @@ export type UserId = {
 
 export type MutateProps<T> = Id & T
 
-type Data = Activity & UserId
-
 export const activityTable = {
   get: async (props: Id) => {
     const fetchedActivity = await prisma.activity.findUniqueOrThrow({
@@ -60,7 +61,7 @@ export const activityTable = {
     const fetchedActivities = await prisma.activity.findMany(resultFilter(props))
     return fetchedActivities
   },
-  add: async (props: Data) => {
+  add: async (props: Activity) => {
     await addActivitySchema.parse(props)
 
     const id = props?.place_id || randomUUID()
@@ -69,7 +70,7 @@ export const activityTable = {
     })
     return addedActivity
   },
-  patch: async (props: MutateProps<Data>) => {
+  patch: async (props: UpdateActivityProps & { id: string }) => {
     const updatedUser = await prisma.activity.update({
       where: {
         id: props.id,
