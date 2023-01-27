@@ -58,26 +58,8 @@ const useActivities = () => {
   const getUserAll = async () => {}
 
   const remove = (activityId: string) => {
-    // return response
-    // try {
-    //   const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
-    //   const { data } = await axios.delete(url.toString())
-    //   return data
-    // } catch (error) {
-    //   return error
-    // }
     return useMutation(() =>
-      fetch(`${BASE_URL}/api/v1/activity/${activityId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(`${res.status} ${res.statusText}`)
-        }
-        return res.json()
-      }),
+      axios.delete(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data),
     )
   }
 

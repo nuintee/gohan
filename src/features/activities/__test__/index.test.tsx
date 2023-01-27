@@ -33,35 +33,18 @@ beforeAll(async () => {
   await waitFor(() => {
     result.current.mutate()
   })
-  // await waitFor(async () => {
-  //   if (!result.current.isSuccess) throw new Error('Wait')
-  //   expect(result.current.isSuccess).toBe(true)
-  // })
 })
-// afterAll(async () => {
-//   // add test data
-//   const { result } = renderHook(
-//     () => useActivities().remove(_test_activityData.place_id as string),
-//     { wrapper },
-//   )
-//   await waitFor(() => {
-//     result.current.mutate()
-//     if (!result.current.isSuccess) throw new Error('Wait')
-//     expect(result.current.isSuccess).toBe(true)
-//   })
-// })
 
-// afterAll(async () => {
-//   // remove test data
-//   const { result } = renderHook(
-//     () => useActivities().remove(_test_activityData.place_id as string),
-//     { wrapper },
-//   )
-//   await waitFor(() => {
-//     if (!result.current.isSuccess) throw new Error('Wait')
-//     expect(result.current.isSuccess).toBe(true)
-//   })
-// })
+afterAll(async () => {
+  // add test data
+  const { result } = renderHook(
+    () => useActivities().remove(_test_activityData.place_id as string),
+    { wrapper },
+  )
+  await waitFor(() => {
+    result.current.mutate()
+  })
+})
 
 describe('useActivities', () => {
   test('GET with success', async () => {
@@ -71,9 +54,9 @@ describe('useActivities', () => {
         wrapper,
       },
     )
-    await waitFor(() => {
-      if (!result.current.isSuccess) throw new Error('Wait')
-      console.log(result.current.data)
-    })
+    // await waitFor(() => {
+    //   if (!result.current.isSuccess) throw new Error('Wait')
+    //   console.log(result.current.data)
+    // })
   })
 })
