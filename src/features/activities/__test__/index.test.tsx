@@ -30,8 +30,9 @@ const _test_activityData: AddActivityProps = {
 beforeAll(async () => {
   // add test data
   const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
-  await waitFor(() => {
-    result.current.mutate()
+  await waitFor(async () => {
+    const added = await result.current.mutateAsync()
+    expect(added).toMatchObject(_test_activityData)
   })
 })
 
@@ -41,8 +42,9 @@ afterAll(async () => {
     () => useActivities().remove(_test_activityData.place_id as string),
     { wrapper },
   )
-  await waitFor(() => {
-    result.current.mutate()
+  await waitFor(async () => {
+    const cleared = await result.current.mutateAsync()
+    expect(cleared).toMatchObject(_test_activityData)
   })
 })
 
