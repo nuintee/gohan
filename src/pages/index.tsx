@@ -3,15 +3,10 @@ import MapBox from '@/features/mapbox/components/MapBox'
 import useRestaurants from '@/features/restaurants/hooks'
 
 const Index = () => {
-  const { get, clear, getDetails } = useRestaurants()
-
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <p>{JSON.stringify(get().data)}</p>
-        <p>{JSON.stringify(getDetails(get().data?.place_id).data)}</p>
-        <button onClick={clear}>CLEAR</button>
-        {/* <MapBox /> */}
+        <MapBox />
       </div>
       <ToastCatcher position='top-center' />
     </>
