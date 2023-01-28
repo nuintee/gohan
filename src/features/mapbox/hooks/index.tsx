@@ -7,6 +7,7 @@ import { mapBoxState } from '../stores'
 
 const useMapBox = () => {
   const [mapbox, setMapBox] = useRecoilState(mapBoxState)
+  const { coords, viewState } = mapbox
 
   const updateCoords = (coords: GeolocationCoordinates) => {
     setMapBox((prev) => ({ ...prev, coords }))
@@ -16,7 +17,7 @@ const useMapBox = () => {
     setMapBox((prev) => ({ ...prev, viewState }))
   }
 
-  return { updateCoords, updateViewState, state: mapbox }
+  return { updateCoords, updateViewState, state: mapbox, coords, viewState }
 }
 
 export default useMapBox

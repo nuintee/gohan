@@ -9,7 +9,6 @@ import { useRecoilValue } from 'recoil'
 const Index = () => {
   const { get, revoke } = useDirections()
   const directions = get({
-    start: '42.64903396598628,23.405960892317047',
     end: '42.6481422486837, 23.40411553266531',
   })
   const revoking = revoke()

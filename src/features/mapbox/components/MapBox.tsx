@@ -30,7 +30,7 @@ const MapBox = ({}) => {
           onGeolocate={(e) => updateCoords(e.coords)}
         />
         {hasDirections && (
-          <Source type='geojson' data={formattedDirections?.source}>
+          <Source type='geojson' data={formattedDirections.source}>
             <Layer {...formattedDirections?.layer} />
           </Source>
         )}

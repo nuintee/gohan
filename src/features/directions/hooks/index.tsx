@@ -13,9 +13,11 @@ const BASE_KEY = 'directions'
 import useToast from '@/libs/react-toastify'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { DirectionsAPI } from '../types/api'
+import useMapBox from '@/features/mapbox/hooks'
 
 const useDirections = () => {
   const queryClient = useQueryClient()
+  const { coords } = useMapBox()
 
   const _createGeoJSON = (payload: GeoJSONCreatorProps): GeoJSON => {
     const { coordinates, id, lineColor, lineWidth, lineOpacity } = payload
@@ -53,14 +55,16 @@ const useDirections = () => {
     }
   }
 
-  const get = (props: Props) => {
+  const get = (props: Pick<Partial<Props>, 'start'> & Omit<Props, 'start'>) => {
     const { start, end } = props
+
+    const startValue = start || `${coords.latitude},${coords.longitude}`
 
     return useQuery({
       queryKey: [BASE_KEY],
       queryFn: () => {
         return axios
-          .get(`${BASE_URL}/api/v1/directions?start=${start}&end=${end}`)
+          .get(`${BASE_URL}/api/v1/directions?start=${startValue}&end=${end}`)
           .then((res) => res.data)
       },
       enabled: false,
@@ -88,8 +92,9 @@ const useDirections = () => {
 
   const directions = queryClient.getQueryData<DirectionsAPI>([BASE_KEY])
   const hasDirections = Boolean(directions && directions?.routes?.length > 0)
-  const formattedDirections =
-    hasDirections && _createGeoJSON({ coordinates: directions?.routes[0].geometry.coordinates })
+  const formattedDirections = hasDirections
+    ? _createGeoJSON({ coordinates: directions?.routes[0].geometry.coordinates })
+    : {}
 
   return { get, revoke, directions, hasDirections, formattedDirections }
 }
