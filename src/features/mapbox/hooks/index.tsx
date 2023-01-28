@@ -6,13 +6,13 @@ import { useRecoilState } from 'recoil'
 import { mapBoxState } from '../stores'
 
 const useMapBox = () => {
-  const { hasDirections, get, set } = useDirections()
+  const { hasDirections, get, set, directions } = useDirections()
   const [mapbox, setMapBox] = useRecoilState(mapBoxState)
 
   const updateCoords = (coords: GeolocationCoordinates) => {
     setMapBox((prev) => ({ ...prev, coords }))
     // update route if exists
-    if (hasDirections) return
+    if (!hasDirections) return
   }
 
   const updateViewState = (viewState: ViewState) => {

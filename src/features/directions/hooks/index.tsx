@@ -88,11 +88,12 @@ const useDirections = () => {
 
   const set = (coordinates: number[][]) => {
     const geojson = _createGeoJSON({ coordinates })
-    setDirections(geojson)
+    const destination = coordinates?.pop() || []
+    setDirections((prev) => ({ ...geojson, destination }))
   }
 
   const clear = () => {
-    setDirections((prev) => ({ source: {}, layer: {} }))
+    setDirections((prev) => ({ destination: [], source: {}, layer: {} }))
   }
 
   return { hasDirections, set, clear, get, directions }
