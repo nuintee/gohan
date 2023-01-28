@@ -21,6 +21,7 @@ const useRestaurants = () => {
       onError: (error) => {
         useToast.error(error.message)
       },
+      refetchOnWindowFocus: false,
     })
   }
 
@@ -32,6 +33,7 @@ const useRestaurants = () => {
         onError: (error) => {
           useToast.error(error.message)
         },
+        refetchOnWindowFocus: false,
       },
     )
   }
