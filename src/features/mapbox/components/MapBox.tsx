@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 const MapBox = ({}) => {
   const { updateViewState, updateCoords } = useMapBox()
-  const { directions } = useDirections()
+  const { hasDirections, formattedDirections } = useDirections()
 
   return (
     <div className='w-screen h-screen'>
@@ -29,11 +29,11 @@ const MapBox = ({}) => {
           position='bottom-right'
           onGeolocate={(e) => updateCoords(e.coords)}
         />
-        {/* {hasDirections && (
-          <Source type='geojson' data={directions.source}>
-            <Layer {...directions.layer} />
+        {hasDirections && (
+          <Source type='geojson' data={formattedDirections?.source}>
+            <Layer {...formattedDirections?.layer} />
           </Source>
-        )} */}
+        )}
       </Map>
     </div>
   )

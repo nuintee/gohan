@@ -12,6 +12,7 @@ const Index = () => {
     start: '42.64903396598628,23.405960892317047',
     end: '42.6481422486837, 23.40411553266531',
   })
+  const revoking = revoke()
 
   return (
     <>
@@ -20,7 +21,7 @@ const Index = () => {
           <button onClick={() => directions.refetch()} disabled={directions.isFetching}>
             GET
           </button>
-          <button onClick={revoke} disabled={!directions.isSuccess}>
+          <button onClick={() => revoking.mutate()} disabled={!directions.isSuccess}>
             Revoke
           </button>
         </div>

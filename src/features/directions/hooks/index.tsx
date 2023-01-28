@@ -1,14 +1,8 @@
-// Stores
-import { directionsState } from '../stores'
-import { useRecoilState } from 'recoil'
-
 // Types
 import { GeoJSON, GeoJSONCreatorProps } from '../types/geojson'
 import { Source, Layer } from '../types/geojson'
 import axios from '@/libs/axios'
 
-// Schemas
-import { ZodError } from 'zod'
 import { Props, Schema } from '../schema/getDirections.schema'
 
 // Env
@@ -17,8 +11,8 @@ const BASE_KEY = 'directions'
 
 // Functions
 import useToast from '@/libs/react-toastify'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import useMapBox from '@/features/mapbox/hooks'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { DirectionsAPI } from '../types/api'
 
 const useDirections = () => {
   const queryClient = useQueryClient()
@@ -60,7 +54,7 @@ const useDirections = () => {
   }
 
   const get = (props: Props) => {
-    const { start, end, profileType } = props
+    const { start, end } = props
 
     return useQuery({
       queryKey: [BASE_KEY],
@@ -77,18 +71,27 @@ const useDirections = () => {
   }
 
   const revoke = () => {
-    queryClient.setQueryData([BASE_KEY], () => {
-      return {}
-    })
+    return useMutation(
+      async () => {
+        queryClient.setQueryData([BASE_KEY], () => ({}))
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([BASE_KEY])
+        },
+        onError: (error) => {
+          return useToast.error(error.message)
+        },
+      },
+    )
   }
 
-  const drawRoute = () => {}
+  const directions = queryClient.getQueryData<DirectionsAPI>([BASE_KEY])
+  const hasDirections = Boolean(directions && directions?.routes?.length > 0)
+  const formattedDirections =
+    hasDirections && _createGeoJSON({ coordinates: directions?.routes[0].geometry.coordinates })
 
-  const clearRoute = () => {}
-
-  const directions = queryClient.getQueryData([BASE_KEY])
-
-  return { get, revoke, directions }
+  return { get, revoke, directions, hasDirections, formattedDirections }
 }
 
 export default useDirections
