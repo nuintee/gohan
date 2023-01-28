@@ -5,8 +5,10 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { mapStyles } from '../config'
 import useMapBox from '../hooks'
+import useDirections from '@/features/directions/hooks'
 
 const MapBox = ({}) => {
+  const { hasDirections, directions } = useDirections()
   const { updateViewState, updateCoords } = useMapBox()
 
   return (
@@ -26,6 +28,11 @@ const MapBox = ({}) => {
           position='bottom-right'
           onGeolocate={(e) => updateCoords(e.coords)}
         />
+        {hasDirections && (
+          <Source type='geojson' data={directions.source}>
+            <Layer {...directions.layer} />
+          </Source>
+        )}
       </Map>
     </div>
   )

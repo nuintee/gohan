@@ -95,7 +95,7 @@ const useDirections = () => {
     setDirections((prev) => ({ source: {}, layer: {} }))
   }
 
-  return { hasDirections, set, clear, get }
+  return { hasDirections, set, clear, get, directions }
 }
 
 export default useDirections

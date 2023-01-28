@@ -8,5 +8,6 @@ export const directionsState = atom<GeoJSON>({
   default: {
     source: {},
     layer: {},
+    destination: [],
   },
 })
