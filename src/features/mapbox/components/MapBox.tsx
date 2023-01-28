@@ -28,11 +28,11 @@ const MapBox = ({}) => {
           position='bottom-right'
           onGeolocate={(e) => updateCoords(e.coords)}
         />
-        {hasDirections && (
+        {/* {hasDirections && (
           <Source type='geojson' data={directions.source}>
             <Layer {...directions.layer} />
           </Source>
-        )}
+        )} */}
       </Map>
     </div>
   )

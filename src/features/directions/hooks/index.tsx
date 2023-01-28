@@ -13,90 +13,47 @@ import { Props, Schema } from '../schema/getDirections.schema'
 
 // Env
 import { BASE_URL } from '@/config/env'
+const BASE_KEY = 'directions'
 
 // Functions
 import useToast from '@/libs/react-toastify'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 const useDirections = () => {
-  const [directions, setDirections] = useRecoilState(directionsState)
+  const queryClient = useQueryClient()
 
-  const hasDirections = Boolean(directions?.source && Object.keys(directions?.source).length > 0)
+  const get = (props: Props) => {
+    const { place_id, profileType, start, end } = props
 
-  const _createGeoJSON = (payload: GeoJSONCreatorProps): GeoJSON => {
-    const { coordinates, id, lineColor, lineWidth, lineOpacity } = payload
+    const url = new URL(`${BASE_URL}/api/v1/directions`)
 
-    const source: Source = {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'LineString',
-        coordinates,
+    profileType && url.searchParams.append('profileType', profileType)
+    url.searchParams.append('start', start)
+    url.searchParams.append('end', end)
+
+    const options =
+      (place_id && {
+        headers: {
+          'Content-type': 'application/json',
+          ...(!!place_id && { 'x-place-id': place_id }),
+        },
+      }) ||
+      {}
+
+    return useQuery({
+      queryKey: [BASE_KEY],
+      queryFn: () => {
+        return axios.get(url.toString(), options).then((res) => res.data)
       },
-    }
-
-    const layer: Layer = {
-      id: id || 'base-route',
-      type: 'line',
-      source: {
-        type: 'geojson',
-        data: source,
-      },
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: {
-        'line-color': lineColor || 'orange',
-        'line-width': lineWidth || 5,
-        'line-opacity': lineOpacity || 0.75,
-      },
-    }
-
-    return {
-      source,
-      layer,
-    }
+    })
   }
 
-  const get = async (props: Props) => {
-    try {
-      const { profileType, start, end } = Schema.parse(props)
-
-      const url = new URL(`${BASE_URL}/api/v1/directions`)
-      profileType && url.searchParams.append('profileType', profileType as string)
-      url.searchParams.append('start', start)
-      url.searchParams.append('end', end)
-
-      const options = {
-        headers:
-          (props?.place_id && {
-            'x-place-id': props?.place_id,
-          }) ||
-          {},
-      }
-      const { data } = await axios.get(url.toString(), options)
-      return data
-    } catch (error) {
-      console.error(error)
-      if (error instanceof ZodError) {
-        useToast.info('Invalid Parameters')
-      } else {
-        useToast.error(error.message)
-      }
-    }
+  const revoke = () => {
+    queryClient.setQueryData([BASE_KEY], {})
   }
 
-  const set = (coordinates: number[][]) => {
-    const geojson = _createGeoJSON({ coordinates })
-    const destination = coordinates?.pop() || []
-    setDirections((prev) => ({ ...geojson, destination }))
-  }
-
-  const clear = () => {
-    setDirections((prev) => ({ destination: [], source: {}, layer: {} }))
-  }
-
-  return { hasDirections, set, clear, get, directions }
+  const hasDirections = true
+  return { hasDirections, get, revoke }
 }
 
 export default useDirections
