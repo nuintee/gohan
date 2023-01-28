@@ -18,6 +18,9 @@ const useRestaurants = () => {
             `${BASE_URL}/api/v1/restaurants?latitude=42.64775203224244&longitude=23.40559939582422&randomOne=true`,
           )
           .then((res) => res.data),
+      onError: (error) => {
+        useToast.error(error.message)
+      },
     })
   }
 
