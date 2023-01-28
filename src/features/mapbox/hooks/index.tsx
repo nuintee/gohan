@@ -15,11 +15,7 @@ const useMapBox = () => {
     setMapBox((prev) => ({ ...prev, viewState }))
   }
 
-  const state = mapbox
-  const coords = mapbox.coords
-  const viewState = mapbox.viewState
-
-  return { updateCoords, updateViewState, state, coords, viewState }
+  return { updateCoords, updateViewState, state: mapbox }
 }
 
 export default useMapBox
