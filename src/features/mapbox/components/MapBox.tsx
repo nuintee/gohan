@@ -6,9 +6,11 @@ import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { mapStyles } from '../config'
 import useMapBox from '../hooks'
 import useDirections from '@/features/directions/hooks'
+import { useQueryClient } from '@tanstack/react-query'
 
 const MapBox = ({}) => {
   const { updateViewState, updateCoords } = useMapBox()
+  const { directions } = useDirections()
 
   return (
     <div className='w-screen h-screen'>

@@ -23,6 +23,42 @@ import useMapBox from '@/features/mapbox/hooks'
 const useDirections = () => {
   const queryClient = useQueryClient()
 
+  const _createGeoJSON = (payload: GeoJSONCreatorProps): GeoJSON => {
+    const { coordinates, id, lineColor, lineWidth, lineOpacity } = payload
+
+    const source: Source = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates,
+      },
+    }
+
+    const layer: Layer = {
+      id: id || 'base-route',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: source,
+      },
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': lineColor || 'orange',
+        'line-width': lineWidth || 5,
+        'line-opacity': lineOpacity || 0.75,
+      },
+    }
+
+    return {
+      source,
+      layer,
+    }
+  }
+
   const get = (props: Props) => {
     const { start, end, profileType } = props
 
@@ -50,7 +86,9 @@ const useDirections = () => {
 
   const clearRoute = () => {}
 
-  return { get, revoke }
+  const directions = queryClient.getQueryData([BASE_KEY])
+
+  return { get, revoke, directions }
 }
 
 export default useDirections
