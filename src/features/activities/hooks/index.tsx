@@ -8,8 +8,11 @@ import { ZodError } from 'zod'
 import { AddActivityProps, UpdateActivityProps } from '../schemas/addActivity.schema'
 import { ActivityResolved } from '../types'
 
+const BASE_KEY = 'activities'
+
 const useActivities = () => {
   const { data: session, status } = useSession()
+  const queryClient = useQueryClient()
 
   const add = (payload: AddActivityProps) => {
     return useMutation(
@@ -17,6 +20,9 @@ const useActivities = () => {
       {
         onMutate: () => {
           if (status !== 'authenticated') throw Error('Unauthorized')
+        },
+        onSuccess: () => {
+          queryClient.invalidateQueries([BASE_KEY, 'user', session.user?.id])
         },
         onError: (error) => {
           useToast.error(error.message)
@@ -27,7 +33,7 @@ const useActivities = () => {
 
   const get = (activityId: string) => {
     return useQuery(
-      [activityId],
+      [BASE_KEY, activityId],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
         return axios.get(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data)
@@ -42,7 +48,7 @@ const useActivities = () => {
 
   const getUserAll = () => {
     return useQuery<Activity[]>(
-      ['allUserActivity'],
+      [BASE_KEY, 'user', session.user?.id],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
         return axios
@@ -65,6 +71,9 @@ const useActivities = () => {
         onMutate: () => {
           if (status !== 'authenticated') throw Error('Unauthorized')
         },
+        onSuccess: () => {
+          queryClient.invalidateQueries([BASE_KEY, activityId])
+        },
         onError: (error) => {
           useToast.error(error.message)
         },
@@ -78,6 +87,9 @@ const useActivities = () => {
       {
         onMutate: () => {
           if (status !== 'authenticated') throw Error('Unauthorized')
+        },
+        onSuccess: () => {
+          queryClient.invalidateQueries([BASE_KEY, activityId])
         },
         onError: (error) => {
           useToast.error(error.message)
