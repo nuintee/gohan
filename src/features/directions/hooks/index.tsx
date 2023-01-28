@@ -18,42 +18,39 @@ const BASE_KEY = 'directions'
 // Functions
 import useToast from '@/libs/react-toastify'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import useMapBox from '@/features/mapbox/hooks'
 
 const useDirections = () => {
   const queryClient = useQueryClient()
 
   const get = (props: Props) => {
-    const { place_id, profileType, start, end } = props
-
-    const url = new URL(`${BASE_URL}/api/v1/directions`)
-
-    profileType && url.searchParams.append('profileType', profileType)
-    url.searchParams.append('start', start)
-    url.searchParams.append('end', end)
-
-    const options =
-      (place_id && {
-        headers: {
-          'Content-type': 'application/json',
-          ...(!!place_id && { 'x-place-id': place_id }),
-        },
-      }) ||
-      {}
+    const { start, end, profileType } = props
 
     return useQuery({
       queryKey: [BASE_KEY],
       queryFn: () => {
-        return axios.get(url.toString(), options).then((res) => res.data)
+        return axios
+          .get(`${BASE_URL}/api/v1/directions?start=${start}&end=${end}`)
+          .then((res) => res.data)
+      },
+      enabled: false,
+      onError: (error) => {
+        return useToast.error(error.message)
       },
     })
   }
 
   const revoke = () => {
-    queryClient.setQueryData([BASE_KEY], {})
+    queryClient.setQueryData([BASE_KEY], () => {
+      return {}
+    })
   }
 
-  const hasDirections = true
-  return { hasDirections, get, revoke }
+  const drawRoute = () => {}
+
+  const clearRoute = () => {}
+
+  return { get, revoke }
 }
 
 export default useDirections

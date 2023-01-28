@@ -8,7 +8,6 @@ import useMapBox from '../hooks'
 import useDirections from '@/features/directions/hooks'
 
 const MapBox = ({}) => {
-  const { hasDirections, directions } = useDirections()
   const { updateViewState, updateCoords } = useMapBox()
 
   return (
