@@ -17,7 +17,23 @@ const useMapBox = () => {
     setMapBox((prev) => ({ ...prev, viewState }))
   }
 
-  return { updateCoords, updateViewState, state: mapbox, coords, viewState }
+  const coordAsArray = (coords: Pick<GeolocationCoordinates, 'latitude' | 'longitude'>) => {
+    return [coords.latitude, coords.longitude]
+  }
+
+  const coordAsString = (coords: Pick<GeolocationCoordinates, 'latitude' | 'longitude'>) => {
+    return `${coords.latitude},${coords.longitude}`
+  }
+
+  return {
+    updateCoords,
+    updateViewState,
+    state: mapbox,
+    coords,
+    viewState,
+    coordAsString,
+    coordAsArray,
+  }
 }
 
 export default useMapBox

@@ -1,4 +1,4 @@
-import Map, { Source, Layer, GeolocateControl, useMap } from 'react-map-gl'
+import Map, { Source, Layer, GeolocateControl, useMap, GeolocateResultEvent } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 // config
@@ -9,8 +9,8 @@ import useDirections from '@/features/directions/hooks'
 import { useQueryClient } from '@tanstack/react-query'
 
 const MapBox = ({}) => {
-  const { updateViewState, updateCoords } = useMapBox()
-  const { hasDirections, formattedDirections } = useDirections()
+  const { updateViewState, updateCoords, coords } = useMapBox()
+  const { hasDirections, formattedDirections, get, directions } = useDirections()
 
   return (
     <div className='w-screen h-screen'>

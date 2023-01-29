@@ -17,7 +17,6 @@ import useMapBox from '@/features/mapbox/hooks'
 
 const useDirections = () => {
   const queryClient = useQueryClient()
-  const { coords } = useMapBox()
 
   const _createGeoJSON = (payload: GeoJSONCreatorProps): GeoJSON => {
     const { coordinates, id, lineColor, lineWidth, lineOpacity } = payload
@@ -58,13 +57,11 @@ const useDirections = () => {
   const get = (props: Pick<Partial<Props>, 'start'> & Omit<Props, 'start'>) => {
     const { start, end } = props
 
-    const startValue = start || `${coords.latitude},${coords.longitude}`
-
     return useQuery({
       queryKey: [BASE_KEY],
       queryFn: () => {
         return axios
-          .get(`${BASE_URL}/api/v1/directions?start=${startValue}&end=${end}`)
+          .get(`${BASE_URL}/api/v1/directions?start=${start}&end=${end}`)
           .then((res) => res.data)
       },
       enabled: false,
