@@ -36,6 +36,7 @@ const Index = () => {
           >
             {status === 'authenticated' ? 'signout' : 'signin'}
           </button>
+          <button onClick={() => {}}>getToken</button>
         </div>
         {/* <MapBox /> */}
       </div>
