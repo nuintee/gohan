@@ -57,7 +57,7 @@ model VerificationToken {
 model Activity { 
   id            String @id @default(uuid())
   userId       String 
-  user          User   @relation(fields: [userId], references: [id]) 
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade) 
   place_id      String
   is_liked      Boolean @default(false)
   discovered_at DateTime @default(now())
