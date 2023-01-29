@@ -74,12 +74,11 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, user, token }) {
-      session.user = {
-        ...session.user,
-        id: token.sub,
-        userId: token.sub,
-      }
+      session.user = user
       return session
+    },
+    async signOut(e) {
+      console.log('SIGNOUT')
     },
   },
   adapter: PrismaAdapter(prisma),
