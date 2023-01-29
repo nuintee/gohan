@@ -24,9 +24,7 @@ const Index = () => {
         <div className='absolute top-0 left-0'>
           <p>{JSON.stringify(getUser?.data)}</p>
           <button onClick={() => updateUser.mutate()}>Update</button>
-          <button
-            onClick={status === 'authenticated' ? () => signOut() : () => signIn('credentials')}
-          >
+          <button onClick={status === 'authenticated' ? () => signOut() : () => signIn('auth0')}>
             {status === 'authenticated' ? 'signout' : 'signin'}
           </button>
         </div>
