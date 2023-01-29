@@ -17,6 +17,10 @@ import { DirectionsAPI } from '../types/api'
 const useDirections = () => {
   const queryClient = useQueryClient()
 
+  function extractCoordinates(directions: DirectionsAPI) {
+    return directions.routes[0].geometry.coordinates
+  }
+
   const _createGeoJSON = (payload: GeoJSONCreatorProps): GeoJSON => {
     const { coordinates, id, lineColor, lineWidth, lineOpacity } = payload
 
@@ -92,7 +96,7 @@ const useDirections = () => {
     ? _createGeoJSON({ coordinates: directions?.routes[0].geometry.coordinates })
     : {}
 
-  return { get, revoke, directions, hasDirections, formattedDirections }
+  return { get, revoke, directions, hasDirections, formattedDirections, extractCoordinates }
 }
 
 export default useDirections

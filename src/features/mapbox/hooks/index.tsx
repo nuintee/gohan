@@ -7,7 +7,6 @@ import { mapBoxState } from '../stores'
 
 const useMapBox = () => {
   const [mapbox, setMapBox] = useRecoilState(mapBoxState)
-  const { hasDirections } = useDirections()
   const { coords, viewState } = mapbox
 
   function coordAsArray(coords: Pick<GeolocationCoordinates, 'latitude' | 'longitude'>) {
@@ -20,9 +19,6 @@ const useMapBox = () => {
 
   const updateCoords = (coords: GeolocationCoordinates) => {
     setMapBox((prev) => ({ ...prev, coords }))
-
-    if (!hasDirections) return
-    // Recalculate Position
   }
 
   const updateViewState = (viewState: ViewState) => {
