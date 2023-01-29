@@ -13,7 +13,6 @@ const BASE_KEY = 'directions'
 import useToast from '@/libs/react-toastify'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { DirectionsAPI } from '../types/api'
-import useMapBox from '@/features/mapbox/hooks'
 
 const useDirections = () => {
   const queryClient = useQueryClient()
