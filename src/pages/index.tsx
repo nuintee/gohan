@@ -1,15 +1,16 @@
 import { ToastCatcher } from '@/components/ui'
+import useDirections from '@/features/directions/hooks'
 import MapBox from '@/features/mapbox/components/MapBox'
-import useRestaurants from '@/features/restaurants/hooks'
+import useMapBox from '@/features/mapbox/hooks'
+import { mapBoxState } from '@/features/mapbox/stores'
+import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 
 const Index = () => {
-  const { get } = useRestaurants()
-
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <p>{JSON.stringify(get().data)}</p>
-        {/* <MapBox /> */}
+        <MapBox />
       </div>
       <ToastCatcher position='top-center' />
     </>
