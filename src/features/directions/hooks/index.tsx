@@ -1,26 +1,25 @@
-// Stores
-import { directionsState } from '../stores'
-import { useRecoilState } from 'recoil'
-
 // Types
 import { GeoJSON, GeoJSONCreatorProps } from '../types/geojson'
 import { Source, Layer } from '../types/geojson'
 import axios from '@/libs/axios'
 
-// Schemas
-import { ZodError } from 'zod'
 import { Props, Schema } from '../schema/getDirections.schema'
 
 // Env
 import { BASE_URL } from '@/config/env'
+const BASE_KEY = 'directions'
 
 // Functions
 import useToast from '@/libs/react-toastify'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { DirectionsAPI } from '../types/api'
 
 const useDirections = () => {
-  const [directions, setDirections] = useRecoilState(directionsState)
+  const queryClient = useQueryClient()
 
-  const hasDirections = Boolean(directions?.source && Object.keys(directions?.source).length > 0)
+  function extractCoordinates(directions: DirectionsAPI) {
+    return directions.routes[0].geometry.coordinates
+  }
 
   const _createGeoJSON = (payload: GeoJSONCreatorProps): GeoJSON => {
     const { coordinates, id, lineColor, lineWidth, lineOpacity } = payload
@@ -58,45 +57,46 @@ const useDirections = () => {
     }
   }
 
-  const get = async (props: Props) => {
-    try {
-      const { profileType, start, end } = Schema.parse(props)
+  const get = (props: Pick<Partial<Props>, 'start'> & Omit<Props, 'start'>) => {
+    const { start, end } = props
 
-      const url = new URL(`${BASE_URL}/api/v1/directions`)
-      profileType && url.searchParams.append('profileType', profileType as string)
-      url.searchParams.append('start', start)
-      url.searchParams.append('end', end)
-
-      const options = {
-        headers:
-          (props?.place_id && {
-            'x-place-id': props?.place_id,
-          }) ||
-          {},
-      }
-      const { data } = await axios.get(url.toString(), options)
-      return data
-    } catch (error) {
-      console.error(error)
-      if (error instanceof ZodError) {
-        useToast.info('Invalid Parameters')
-      } else {
-        useToast.error(error.message)
-      }
-    }
+    return useQuery({
+      queryKey: [BASE_KEY],
+      queryFn: () => {
+        return axios
+          .get(`${BASE_URL}/api/v1/directions?start=${start}&end=${end}`)
+          .then((res) => res.data)
+      },
+      enabled: false,
+      onError: (error) => {
+        return useToast.error(error.message)
+      },
+    })
   }
 
-  const set = (coordinates: number[][]) => {
-    const geojson = _createGeoJSON({ coordinates })
-    const destination = coordinates?.pop() || []
-    setDirections((prev) => ({ ...geojson, destination }))
+  const revoke = () => {
+    return useMutation(
+      async () => {
+        queryClient.setQueryData([BASE_KEY], () => ({}))
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([BASE_KEY])
+        },
+        onError: (error) => {
+          return useToast.error(error.message)
+        },
+      },
+    )
   }
 
-  const clear = () => {
-    setDirections((prev) => ({ destination: [], source: {}, layer: {} }))
-  }
+  const directions = queryClient.getQueryData<DirectionsAPI>([BASE_KEY])
+  const hasDirections = Boolean(directions && directions?.routes?.length > 0)
+  const formattedDirections = hasDirections
+    ? _createGeoJSON({ coordinates: directions?.routes[0].geometry.coordinates })
+    : {}
 
-  return { hasDirections, set, clear, get, directions }
+  return { get, revoke, directions, hasDirections, formattedDirections, extractCoordinates }
 }
 
 export default useDirections
