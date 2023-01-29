@@ -6,3 +6,4 @@ export const IS_DEVMODE = process.env.NODE_ENV === 'development'
 export const AUTH0_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID as string
 export const AUTH0_CLIENT_SECRET = process.env.NEXT_PUBLIC_AUTH0_CLIENT_SECRET as string
 export const AUTH0_ISSUER = process.env.NEXT_PUBLIC_AUTH0_ISSUER as string
+export const AUTH0_DOMAIN = process.env.NEXT_PUBLIC_AUTH0_DOMAIN as string
