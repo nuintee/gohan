@@ -31,6 +31,7 @@ module.exports = {
       '@/config': path.resolve(__dirname, '../src/config'),
       '@/features': path.resolve(__dirname, '../src/features'),
       '@/layouts': path.resolve(__dirname, '../src/layouts'),
+      '@/libs': path.resolve(__dirname, '../src/libs'),
     }
 
     config.resolve.modules = [...(config.resolve.modules || []), path.resolve('./')] // 絶対パスでimportできるようにする
