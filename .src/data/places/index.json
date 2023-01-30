@@ -1,0 +1,907 @@
+{
+  "html_attributions": [],
+  "next_page_token": "AW30NDzcTTk_C0RUSx6oc0m2KlGXLi4vzM6pGW85maqJ0iBBYCqtQoDP70Ax6Y8wF8ynHL0K2uLTlZbM8Dn4fj4_qx9YBzwQhqzKV54odIzVCMgJClZZledseki0xEdyoumt1s3VncO2eDqzlllgi8TfNptewjBW2CGL3ov8vdpvKc4bHPdv8I4TvPx1cIk7jYM_Z0ncSEGCzYhyOpTpJUMeRCCSuBM7udtW8-en52LFXM2qiI9Vhoo5nQsZ_ABon0Szl_ADqRmq2civ_PFkRahCPME67YG9rELsHN85RttYdfgFpxITnVMwb9XKwj0Y-OHvNK3CLoP59LZ68AGcUhB27Hyt96-hMXDA3Xa_KtVLRtpzc_gMhyQaWdD3eAgKxByzNGmCaozMHG_Z5anvz0UhcaY1yvzmvAcTXpq22eFlxDmdfnU46Os",
+  "results": [
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6485419,
+          "lng": 23.4086112
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6496963302915,
+            "lng": 23.4099625302915
+          },
+          "southwest": {
+            "lat": 42.6469983697085,
+            "lng": 23.4072645697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+      "name": "Alpino 1",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 1200,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/104232757213504339043\">Георги Георгиев</a>"
+          ],
+          "photo_reference": "AW30NDxvKc7TyIy3HNSB341H37Ko8QCvgw0Y_Sce2VckopexysrHz3r-T-_1N7O_K3JE1vmPBpNqpG6cuiToXAxvVrFwFOJrWFq8V9mFrLOBcdEdUARdm6XRE2nNoZacyYjUdZr9VZwpsMtMVy0tSAzTavpDcZmoNNs7Az7sjEgyxjIKI8bT",
+          "width": 1920
+        }
+      ],
+      "place_id": "ChIJBTBBRKiaqkARRgOZXBkrduI",
+      "plus_code": {
+        "compound_code": "JCX5+CC Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+CC"
+      },
+      "rating": 1.4,
+      "reference": "ChIJBTBBRKiaqkARRgOZXBkrduI",
+      "scope": "GOOGLE",
+      "types": ["point_of_interest", "establishment"],
+      "user_ratings_total": 10,
+      "vicinity": "Жилищен комплекс Дружба 2 бл.322, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.64867,
+          "lng": 23.40835
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6497595302915,
+            "lng": 23.4097021302915
+          },
+          "southwest": {
+            "lat": 42.6470615697085,
+            "lng": 23.4070041697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+      "name": "Speednet.BG",
+      "opening_hours": {
+        "open_now": true
+      },
+      "place_id": "ChIJ58PFO_yGqkAR1a2dnhgIBiQ",
+      "plus_code": {
+        "compound_code": "JCX5+F8 Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+F8"
+      },
+      "reference": "ChIJ58PFO_yGqkAR1a2dnhgIBiQ",
+      "scope": "GOOGLE",
+      "types": ["point_of_interest", "establishment"],
+      "vicinity": "Sofia, Drujba-2, bl. 304 ent. \"G\" - ground floor, вх. \"Г\" - партер, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6507358,
+          "lng": 23.4063853
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6521331302915,
+            "lng": 23.4077938302915
+          },
+          "southwest": {
+            "lat": 42.6494351697085,
+            "lng": 23.4050958697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "icon_background_color": "#4B96F3",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+      "name": "Авточасти и Масла Ен Джи Ти ЕООД",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 435,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/112284777287149114987\">MASLATABG NGT Ltd</a>"
+          ],
+          "photo_reference": "AW30NDwJrgVkcVCpn4krhXVN3m1Ob5Au26iiSM0KwwYH6BSCMgbdfV8NEflu87S0BIbiGSqU5hWsiU5EB_6Xe8m0rTF5LM8xmkUNhe2RF7AuvgHaMG_p0x6R9JXC6pOma7yFywSxroHUvXpV8xGQuPBro-UkAHoH2m_Kc4kz5aVdaxmsPmje",
+          "width": 580
+        }
+      ],
+      "place_id": "ChIJh-yhRPmGqkARrtiAV035cnI",
+      "plus_code": {
+        "compound_code": "MC24+7H Sofia, Bulgaria",
+        "global_code": "8GJ5MC24+7H"
+      },
+      "rating": 4.7,
+      "reference": "ChIJh-yhRPmGqkARrtiAV035cnI",
+      "scope": "GOOGLE",
+      "types": ["car_repair", "store", "point_of_interest", "establishment"],
+      "user_ratings_total": 75,
+      "vicinity": "Boulevard \"Professor Tsvetan Lazarov\" 132, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6470072,
+          "lng": 23.4057662
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.64835613029149,
+            "lng": 23.40720433029151
+          },
+          "southwest": {
+            "lat": 42.6456581697085,
+            "lng": 23.4045063697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+      "name": "Veterinary Office \"Druzhba\"",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 4000,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/108511629275545531239\">Спас Андреев</a>"
+          ],
+          "photo_reference": "AW30NDyjIGy0WcR5UbtamfKkCEfXOcnad_86LAdNR6UHcF03GYuaBBrtXJ1-w9m7Ha8Gf6v7SDz_uhw28BtQkwQo8TKZtT6AsTdIflIMJ8ltkIjiKP_tUjoVfQJe4WVpqWLoQF9GJhO1DzGcFIIfWWKyKc5HeyJ-JJNH1pRXbcsrzvHYecuh",
+          "width": 3000
+        }
+      ],
+      "place_id": "ChIJsV5xkfyGqkARsB1A1aMTxZs",
+      "plus_code": {
+        "compound_code": "JCW4+R8 Sofia, Bulgaria",
+        "global_code": "8GJ5JCW4+R8"
+      },
+      "rating": 4.8,
+      "reference": "ChIJsV5xkfyGqkARsB1A1aMTxZs",
+      "scope": "GOOGLE",
+      "types": ["veterinary_care", "point_of_interest", "establishment"],
+      "user_ratings_total": 59,
+      "vicinity": "ж.к. Дружба 311Г, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6491627,
+          "lng": 23.40519969999999
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6504595802915,
+            "lng": 23.4065470802915
+          },
+          "southwest": {
+            "lat": 42.6477616197085,
+            "lng": 23.40384911970849
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "icon_background_color": "#4B96F3",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+      "name": "Pet Shop Animal",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 3088,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/117069425028806459408\">Зоо магазин &quot;Животното&quot;</a>"
+          ],
+          "photo_reference": "AW30NDwH-onUqmtuIlvTAKAbYq4gid3qs9FM7qV4sEhFieamWgkvSnOieQeqa37i0eLB8n5UBTdoudp3KEjTPU1c_HigfaN4yC89cvHlCYW75z0lhreRQRQf8dtHCw4gyebEawIbPNhvmpu9q0pF1OdCOAAskijfT5zRvUCRcJmAJcGteAke",
+          "width": 3088
+        }
+      ],
+      "place_id": "ChIJzdIWCP2GqkAR4wCobfmZAvo",
+      "plus_code": {
+        "compound_code": "JCX4+M3 Sofia, Bulgaria",
+        "global_code": "8GJ5JCX4+M3"
+      },
+      "rating": 4.8,
+      "reference": "ChIJzdIWCP2GqkAR4wCobfmZAvo",
+      "scope": "GOOGLE",
+      "types": ["pet_store", "store", "point_of_interest", "establishment"],
+      "user_ratings_total": 318,
+      "vicinity": "до бл, 306, София"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.648814,
+          "lng": 23.407833
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6501628802915,
+            "lng": 23.4090741302915
+          },
+          "southwest": {
+            "lat": 42.6474649197085,
+            "lng": 23.4063761697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "icon_background_color": "#4B96F3",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+      "name": "Loyal Marketing",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 1840,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/116925628334545264605\">tcetci dzorgov</a>"
+          ],
+          "photo_reference": "AW30NDxl7rZ3Hzds8oNeMHWGF2hDU6PAGU96CKfNWU8kSYgyLQ6mzs9U6UK6caZ6csxm9fL9oM5f-sG_98lKcN2-68yUshqs2Y-DKDTR8v94MYOJDFoJcesXHqWTMpSHB8v0cpHnDd9VF6vExjx9agM9waBPNK0Kc_A90TZcad6aAjOCCXJw",
+          "width": 3264
+        }
+      ],
+      "place_id": "ChIJO6gjFvyGqkARFyT5QusoRHw",
+      "plus_code": {
+        "compound_code": "JCX5+G4 Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+G4"
+      },
+      "rating": 4.6,
+      "reference": "ChIJO6gjFvyGqkARFyT5QusoRHw",
+      "scope": "GOOGLE",
+      "types": ["clothing_store", "store", "point_of_interest", "establishment"],
+      "user_ratings_total": 23,
+      "vicinity": "гр. София, жк. бл. 304, до вх. А, Дружба 2, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6494968,
+          "lng": 23.4066187
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6508502802915,
+            "lng": 23.4078456802915
+          },
+          "southwest": {
+            "lat": 42.64815231970851,
+            "lng": 23.4051477197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+      "name": "МДЦ \"Артес\"",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 2180,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/105575496097581581506\">Gogata Stoev</a>"
+          ],
+          "photo_reference": "AW30NDwuG_lV_cfSeMLZKQtoUZ_FvcknLSJuMA0uzIJEURLrq4Ev_bqL679Y55zJxh4Levm8uYuuJOyXqORPwV3NFYiQTkB2yZS7MbOmkJ1mB2k4NfWSsRkn5vjbQ40vxhNb3AiNihbW_6qgJCO4K5MI0xewoYOjyswpYihpPQIq-kB8bAxz",
+          "width": 3876
+        }
+      ],
+      "place_id": "ChIJxxv_APyGqkARSZHIUSgrkgI",
+      "plus_code": {
+        "compound_code": "JCX4+QJ Sofia, Bulgaria",
+        "global_code": "8GJ5JCX4+QJ"
+      },
+      "rating": 3.8,
+      "reference": "ChIJxxv_APyGqkARSZHIUSgrkgI",
+      "scope": "GOOGLE",
+      "types": ["dentist", "health", "point_of_interest", "establishment"],
+      "user_ratings_total": 25,
+      "vicinity": "302-Г, ж.к. Дружба 302Г, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6496679,
+          "lng": 23.4064629
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.65071818029151,
+            "lng": 23.4081302802915
+          },
+          "southwest": {
+            "lat": 42.64802021970851,
+            "lng": 23.4054323197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "icon_background_color": "#4B96F3",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+      "name": "Магазин Джиев",
+      "opening_hours": {
+        "open_now": true
+      },
+      "place_id": "ChIJgZC8_vuGqkARhe2xu7w1ZrE",
+      "plus_code": {
+        "compound_code": "JCX4+VH Sofia, Bulgaria",
+        "global_code": "8GJ5JCX4+VH"
+      },
+      "rating": 4.8,
+      "reference": "ChIJgZC8_vuGqkARhe2xu7w1ZrE",
+      "scope": "GOOGLE",
+      "types": ["store", "point_of_interest", "establishment"],
+      "user_ratings_total": 6,
+      "vicinity": "302-Б, ж.к. Дружба 302Б, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.64967900000001,
+          "lng": 23.406417
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6507236302915,
+            "lng": 23.4081073302915
+          },
+          "southwest": {
+            "lat": 42.6480256697085,
+            "lng": 23.4054093697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "icon_background_color": "#4B96F3",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+      "name": "Grocery Djiev Online",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 270,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/112535114256208820410\">Хранителни стоки &quot;ДЖИЕВ&quot;</a>"
+          ],
+          "photo_reference": "AW30NDzKRysYbT2-IUbEBxK3orK9EsvKfuUY8ATPO_Dm1AqpQ0QizEx1SHeoWL7iVlqlBXINbGQl7DP-v-NQpFbglqYIw3_KtkiaHKbPh35R-i4TRfaTTXvdK4ny1R_XFO1C6UYhOVzCpVoHo3JJY_DSZY9bn6KOP2g49-p8SJaUpoYbcNti",
+          "width": 480
+        }
+      ],
+      "place_id": "ChIJb5i3ks2GqkARaqKa7VoDsFY",
+      "plus_code": {
+        "compound_code": "JCX4+VH Sofia, Bulgaria",
+        "global_code": "8GJ5JCX4+VH"
+      },
+      "rating": 4.7,
+      "reference": "ChIJb5i3ks2GqkARaqKa7VoDsFY",
+      "scope": "GOOGLE",
+      "types": ["store", "point_of_interest", "establishment"],
+      "user_ratings_total": 3,
+      "vicinity": "Дружба 2, Бл.302, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6488573,
+          "lng": 23.4082919
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.65020593029149,
+            "lng": 23.4093035302915
+          },
+          "southwest": {
+            "lat": 42.64750796970849,
+            "lng": 23.4066055697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/civic_building-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/civic-bldg_pinlet",
+      "name": "Пощенски клон Дружба 2",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 2304,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/116550603620572301045\">Nadejda Jeljazkova</a>"
+          ],
+          "photo_reference": "AW30NDwPBaf8qFPeoNJycto117QjDIYvwz4NDLq7OFaOYFQD_oEBpWYpfj1M8Nm4mD7Q7ZYd2Edd--duDOI4JdmGUAOU33CsSO9WNaFk4cWD4iqU7KwxXnciOzF2eAQ2sfwTmtOmKIzlCyF47IrZjv8rrDYXNWAqAOHbmwuQVGQhRZ6tMdV4",
+          "width": 4096
+        }
+      ],
+      "place_id": "ChIJ5xi9PPyGqkARdCz28PPqQmo",
+      "plus_code": {
+        "compound_code": "JCX5+G8 Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+G8"
+      },
+      "rating": 3.1,
+      "reference": "ChIJ5xi9PPyGqkARdCz28PPqQmo",
+      "scope": "GOOGLE",
+      "types": ["post_office", "finance", "point_of_interest", "establishment"],
+      "user_ratings_total": 31,
+      "vicinity": "ж.к. Дружба 304Б, 304-Б, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6483297,
+          "lng": 23.4088365
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6495909302915,
+            "lng": 23.4101868802915
+          },
+          "southwest": {
+            "lat": 42.6468929697085,
+            "lng": 23.40748891970849
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+      "name": "QR Media ltd. - Дигитален и офсетов печат. Рекламни услуги.",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 3008,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/116474075557289033768\">QR Media ltd. - Дигитален и офсетов печат. Рекламни услуги.</a>"
+          ],
+          "photo_reference": "AW30NDy74CLXxe72JsoddjPZZFhZUlqkezDrmx4s2M56K3IVxiexc_nG6x4-cUggqQ_KL1DGDKQ8f7ORkRnUYxevuWnMVq-HJZ9v4A8I3Z7E-Gtd9nAgd6TcK-BA3OHtvfIVKaf7LeaE4cq4ZblceYUkP6nijEVf-m8agvOi4lTLhYwAVEYK",
+          "width": 5344
+        }
+      ],
+      "place_id": "ChIJ6_7BNfyGqkAR-N0pM-lbono",
+      "plus_code": {
+        "compound_code": "JCX5+8G Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+8G"
+      },
+      "rating": 4.9,
+      "reference": "ChIJ6_7BNfyGqkAR-N0pM-lbono",
+      "scope": "GOOGLE",
+      "types": ["store", "point_of_interest", "establishment"],
+      "user_ratings_total": 123,
+      "vicinity": "бл. 304, вх. Г, търговска зала № 3, Жилищен комплекс Дружба 2, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.64855900000001,
+          "lng": 23.408743
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.64970528029151,
+            "lng": 23.4100944302915
+          },
+          "southwest": {
+            "lat": 42.64700731970851,
+            "lng": 23.40739646970849
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "icon_background_color": "#4B96F3",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+      "name": "BestPC.BG",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 1536,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/116254871617110740031\">BestPC.BG</a>"
+          ],
+          "photo_reference": "AW30NDy1EMuL5SeVcOyNBq6F9qBqoKB20XJ9PIFw4Te1sN6yunkRQhK1zjxJbZ-JYwzK_t6drYMFlGJMLhKgiP4RB7rr7_ZTwMy4L7HTyClp5660k7xb3A6iRiNGl9raHzz8xXWlaW489Hfjt5loCea51rBvfvtA9spnNPUI49KOPWAszwM",
+          "width": 2048
+        }
+      ],
+      "place_id": "ChIJq_rWMPyGqkARb8fcs-5360E",
+      "plus_code": {
+        "compound_code": "JCX5+CF Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+CF"
+      },
+      "rating": 4.5,
+      "reference": "ChIJq_rWMPyGqkARb8fcs-5360E",
+      "scope": "GOOGLE",
+      "types": ["electronics_store", "store", "point_of_interest", "establishment"],
+      "user_ratings_total": 12,
+      "vicinity": "Дружба 2, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.648469,
+          "lng": 23.40879
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6496604302915,
+            "lng": 23.4101408802915
+          },
+          "southwest": {
+            "lat": 42.64696246970851,
+            "lng": 23.40744291970849
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "icon_background_color": "#4B96F3",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+      "name": "Gifts for every occasion",
+      "opening_hours": {
+        "open_now": true
+      },
+      "place_id": "ChIJO63ANvyGqkARJiAtX4Rrlc0",
+      "plus_code": {
+        "compound_code": "JCX5+9G Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+9G"
+      },
+      "rating": 3.3,
+      "reference": "ChIJO63ANvyGqkARJiAtX4Rrlc0",
+      "scope": "GOOGLE",
+      "types": ["store", "point_of_interest", "establishment"],
+      "user_ratings_total": 4,
+      "vicinity": "кв. бл.304, вх. Г, ет.2, ап.1, ulitsa \"Druzhba\" 2, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.64920149999999,
+          "lng": 23.4008812
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6506741802915,
+            "lng": 23.4022310802915
+          },
+          "southwest": {
+            "lat": 42.6479762197085,
+            "lng": 23.3995331197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/school-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/school_pinlet",
+      "name": "Driving Courses Boby Auto",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 533,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/115829123346611524558\">Шофьорски курсове - BobyAuto Опреснителни Курсове</a>"
+          ],
+          "photo_reference": "AW30NDy-CEx9Lh7-tJoMi21h8gIeUcXivH0VkBoKAzWQIHQD5JbjZF57aZpYdhaPzv8BuAMT4BlpkLRuC_e52LKCEQXx9wycKEu4oD1PrZXs0HMIvEhMuQPqJjPwWLRejvQd8N1S05TvLjJJxWYANstsf1q_6nQxSb5nU1TlJTKWTgPjfbhK",
+          "width": 800
+        }
+      ],
+      "place_id": "ChIJl5Pbq_CGqkARlsqsXiZ00Bc",
+      "plus_code": {
+        "compound_code": "JCX2+M9 Sofia, Bulgaria",
+        "global_code": "8GJ5JCX2+M9"
+      },
+      "rating": 4.7,
+      "reference": "ChIJl5Pbq_CGqkARlsqsXiZ00Bc",
+      "scope": "GOOGLE",
+      "types": ["point_of_interest", "establishment"],
+      "user_ratings_total": 28,
+      "vicinity": "ж.к. Дружба 2, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.64985,
+          "lng": 23.4076
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.65116843029151,
+            "lng": 23.4090028802915
+          },
+          "southwest": {
+            "lat": 42.64847046970851,
+            "lng": 23.4063049197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/atm-71.png",
+      "icon_background_color": "#909CE1",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/atm_pinlet",
+      "name": "UNICREDIT BULBANK",
+      "opening_hours": {
+        "open_now": true
+      },
+      "place_id": "ChIJq90Qqf6GqkAR0HJNM7WwR0E",
+      "plus_code": {
+        "compound_code": "JCX5+W2 Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+W2"
+      },
+      "rating": 4,
+      "reference": "ChIJq90Qqf6GqkAR0HJNM7WwR0E",
+      "scope": "GOOGLE",
+      "types": ["atm", "finance", "point_of_interest", "establishment"],
+      "user_ratings_total": 5,
+      "vicinity": "140 Prof. Tsv. Lazarov blvd., Supermarket - Fantastiko, София"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6475598,
+          "lng": 23.40939299999999
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6489083302915,
+            "lng": 23.4106720802915
+          },
+          "southwest": {
+            "lat": 42.6462103697085,
+            "lng": 23.40797411970849
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+      "name": "Econt office Sofia Deliiska mill",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 2268,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111563778542756382855\">Еконт офис София Делийска воденица</a>"
+          ],
+          "photo_reference": "AW30NDxHX06iDS351WwZolWjlLfvlrCW8_elaIKQB6GJhB-8FgnWni6pnPMlqkSQ156PP8pA4Kf_TP0Dk_URooFoYTEONZvDIyy647b-G9Y9S7tFrAwwvJ5_bG7ijT0FhOuosqHptE557uqthWWDoLji9yfeRTW2YahhfBNAgXqZmtk4kLzL",
+          "width": 4032
+        }
+      ],
+      "place_id": "ChIJy0wBsP2GqkARySLOEUbT0yc",
+      "plus_code": {
+        "compound_code": "JCX5+2Q Sofia, Bulgaria",
+        "global_code": "8GJ5JCX5+2Q"
+      },
+      "rating": 4.4,
+      "reference": "ChIJy0wBsP2GqkARySLOEUbT0yc",
+      "scope": "GOOGLE",
+      "types": ["finance", "point_of_interest", "establishment"],
+      "user_ratings_total": 257,
+      "vicinity": "жк. Дружба-2, ул. Делийска воденица №5, срещу блок 314, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6501176,
+          "lng": 23.4046746
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6514331802915,
+            "lng": 23.4061313802915
+          },
+          "southwest": {
+            "lat": 42.6487352197085,
+            "lng": 23.4034334197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+      "icon_background_color": "#FF9E67",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+      "name": "Turkish restaurant Saray",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 1702,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/117334139845878691179\">Turkish restaurant Saray</a>"
+          ],
+          "photo_reference": "AW30NDwOxYlX7MOImNPzA9oFNG5hCPdX949H9a_ZHhhLms96w3gZtIXGiAWjpWBI5Y4aWBlEQ98ikELtG1424lroDssh4qmDpnpek2lLNKig9623M_sLD21JMm5Zk1EKSFeIEcgekoOnzx5kG3VLPLdDjhxNa0fmL-lI42kIILBPkCT76_rg",
+          "width": 3024
+        }
+      ],
+      "place_id": "ChIJU8sB2fuGqkARUsWSGC_2_24",
+      "plus_code": {
+        "compound_code": "MC23+2V Sofia, Bulgaria",
+        "global_code": "8GJ5MC23+2V"
+      },
+      "price_level": 2,
+      "rating": 4,
+      "reference": "ChIJU8sB2fuGqkARUsWSGC_2_24",
+      "scope": "GOOGLE",
+      "types": ["restaurant", "food", "point_of_interest", "establishment"],
+      "user_ratings_total": 843,
+      "vicinity": "bulevard \"Kopenhagen\" 17, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.647803,
+          "lng": 23.4022668
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.64915413029149,
+            "lng": 23.4035581802915
+          },
+          "southwest": {
+            "lat": 42.64645616970849,
+            "lng": 23.4008602197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+      "icon_background_color": "#FF9E67",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+      "name": "Пица Лъчони - Дружба",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 638,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/115425732225978179595\">Пица Лъчони - Дружба</a>"
+          ],
+          "photo_reference": "AW30NDyu5Qf2FS70VjKF3SatpZJf4sR-ybZq8hyFIJCgP600Tny6dd0yVpGXnALMMh5JUcGT5ut2c5rQ4UUqZlUN_E1b2vNlVEaO2SMuO3BHf_TbEN-1aIQsTyauDCcrOIuu5o7oBqmaHW8OJr047cEjMzN5Hx8SbEvC5O7KOzTDcPtD8rNX",
+          "width": 1132
+        }
+      ],
+      "place_id": "ChIJa4EHI_uGqkARpklBvYelCWE",
+      "plus_code": {
+        "compound_code": "JCX2+4W Sofia, Bulgaria",
+        "global_code": "8GJ5JCX2+4W"
+      },
+      "price_level": 2,
+      "rating": 4,
+      "reference": "ChIJa4EHI_uGqkARpklBvYelCWE",
+      "scope": "GOOGLE",
+      "types": ["restaurant", "food", "point_of_interest", "establishment"],
+      "user_ratings_total": 1798,
+      "vicinity": "Блок 287, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6474974,
+          "lng": 23.4022359
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.6487750302915,
+            "lng": 23.4036863802915
+          },
+          "southwest": {
+            "lat": 42.6460770697085,
+            "lng": 23.4009884197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+      "name": "Econt Express Courier Services",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 900,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111346440740156169878\">Еконт офис София Цариградски комплекс</a>"
+          ],
+          "photo_reference": "AW30NDxiNzcc3DD3zTWg0poPC0vrFORWa2Srui6q5tVwOhK1rI6hNKD2m_eH9DFK1mHz7QcYZxemsIwWEBQH5e8QQjtm7jNueKOpsEw1SohyCsuVaY8b67viWoh08r07h4wBHqLMKA2ySXjNwp8C50LPeBCyCTCLCDH87YD0mpyVtVCUQMa8",
+          "width": 1600
+        }
+      ],
+      "place_id": "ChIJJ3x0-vqGqkARe5ksSnYlHSM",
+      "plus_code": {
+        "compound_code": "JCW2+XV Sofia, Bulgaria",
+        "global_code": "8GJ5JCW2+XV"
+      },
+      "rating": 4.3,
+      "reference": "ChIJJ3x0-vqGqkARe5ksSnYlHSM",
+      "scope": "GOOGLE",
+      "types": ["finance", "point_of_interest", "establishment"],
+      "user_ratings_total": 201,
+      "vicinity": "жк. Дружба-2, бл.284, до вх. Ж, Sofia"
+    },
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 42.6477187,
+          "lng": 23.4019277
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 42.64887643029149,
+            "lng": 23.4035942802915
+          },
+          "southwest": {
+            "lat": 42.6461784697085,
+            "lng": 23.4008963197085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/school-71.png",
+      "icon_background_color": "#7B9EB0",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/school_pinlet",
+      "name": "Private kindergarten Smurfs",
+      "opening_hours": {
+        "open_now": true
+      },
+      "photos": [
+        {
+          "height": 3712,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/100956365692058856732\">Частна детска градина и ясла Смърфовете</a>"
+          ],
+          "photo_reference": "AW30NDzjxzcfocx9qSACkjndTAay8p7rBHMfb2NZdy233WbZpPMGR8K6g8vh3p5W1q6JoALmC8iIqG9d1gSaVh3M3z-OEcLy65BFCi-Fw5tB1CUg45oM0Xkdjbx5QOh7XG4RzYnaQrDTVZoqQrrhLZtbl0hJtubIiJCcUShPTLA5bAnHgHQ",
+          "width": 5568
+        }
+      ],
+      "place_id": "ChIJZenC8PqGqkARsz9Y4CRjrN0",
+      "plus_code": {
+        "compound_code": "JCX2+3Q Sofia, Bulgaria",
+        "global_code": "8GJ5JCX2+3Q"
+      },
+      "rating": 3.6,
+      "reference": "ChIJZenC8PqGqkARsz9Y4CRjrN0",
+      "scope": "GOOGLE",
+      "types": ["school", "point_of_interest", "establishment"],
+      "user_ratings_total": 8,
+      "vicinity": "Комплекс Цариградски, Sofia"
+    }
+  ],
+  "status": "OK"
+}

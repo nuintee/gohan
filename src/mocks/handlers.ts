@@ -1,8 +1,14 @@
 import { rest } from 'msw'
 
-// Data
-import mapData from '@/data/places/index.json'
-import routeData from '@/data/route/index.json'
+// handlers
+import {
+  restaurantDetailsAPIHandler,
+  restaurantPlacesAPIHandler,
+} from './handlers/restaurantsHandler'
+
+import { directionsAPIHandler } from './handlers/directionsHandlers'
+
+const BASE_PATH = '/api/v1'
 
 export const handlers = [
   rest.post('/login', (req, res, ctx) => {
@@ -15,28 +21,17 @@ export const handlers = [
     )
   }),
 
-  rest.get('/api/place', (req, res, ctx) => {
-    const onlyOpenNow = mapData.results.filter((map, index) => map.opening_hours?.open_now)
-    const randomIndex = Math.floor(Math.random() * onlyOpenNow.length)
-    const randomOne = onlyOpenNow[randomIndex]
-
-    return res(ctx.status(200), ctx.json(randomOne))
-  }),
-
-  rest.get('/api/route', (req, res, ctx) => {
-    const place_id = req.url.searchParams.get('place_id')
-    if (!place_id) return res(ctx.status(500), ctx.json({}))
-
-    const targetData = place_id ? routeData.find((v, i) => v.place_id === place_id) : routeData[0]
-    const data = targetData.routes
-    const coordinates = data[0].geometry.coordinates
-
+  rest.get(`${BASE_PATH}/health`, (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        data,
-        coordinates,
+        status: 'ok',
+        mock: true,
       }),
     )
   }),
+
+  rest.get(`${BASE_PATH}/restaurants`, restaurantPlacesAPIHandler),
+  rest.get(`${BASE_PATH}/restaurants/:place_id`, restaurantDetailsAPIHandler),
+  rest.get(`${BASE_PATH}/directions`, directionsAPIHandler),
 ]

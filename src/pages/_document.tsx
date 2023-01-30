@@ -6,6 +6,8 @@ class MyDocument extends Document {
     return { ...initialProps }
   }
 
+  componentDidMount(): void {}
+
   render() {
     return (
       <Html>

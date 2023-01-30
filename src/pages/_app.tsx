@@ -2,10 +2,11 @@ import '../styles/globals.css'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
-
-// Context
-import { MapBox, Modals, Sidebar, Toast, GPS, Restaurants } from '@/context'
+import ErrorBoundary from '@/components/fallback/ErrorBoundary'
 import { Session } from 'next-auth'
+import { RecoilRoot } from 'recoil'
+import { QueryClientProvider } from '@/libs/tanstack-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
@@ -15,21 +16,16 @@ if (process.env.NODE_ENV === 'development') {
 
 function App({ Component, pageProps }: AppProps<{ session: Session }>) {
   return (
-    <SessionProvider session={pageProps.session}>
-      <GPS.GPSProvider>
-        <Toast.ToastProvider>
-          <MapBox.MapBoxProvider>
-            <Modals.ModalsProvider>
-              <Sidebar.SidebarProvider>
-                <Restaurants.RestaurantsProvider>
-                  <Component {...pageProps} />
-                </Restaurants.RestaurantsProvider>
-              </Sidebar.SidebarProvider>
-            </Modals.ModalsProvider>
-          </MapBox.MapBoxProvider>
-        </Toast.ToastProvider>
-      </GPS.GPSProvider>
-    </SessionProvider>
+    <ErrorBoundary>
+      <RecoilRoot>
+        <QueryClientProvider>
+          <SessionProvider session={pageProps.session}>
+            <Component {...pageProps} />
+            <ReactQueryDevtools />
+          </SessionProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
+    </ErrorBoundary>
   )
 }
 
