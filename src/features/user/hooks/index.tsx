@@ -31,9 +31,8 @@ const useUser = () => {
   const get = () => {
     return useQuery({
       queryKey: [BASE_KEY],
-      queryFn: async () => {
-        return user
-      },
+      queryFn: () =>
+        axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data || user),
       enabled: status === 'authenticated',
     })
   }

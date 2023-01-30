@@ -67,7 +67,7 @@ export const userTable = {
       },
       data: {
         email: props?.email,
-        username: props?.username,
+        name: props?.name,
       },
     })
     return updatedUser
