@@ -2,6 +2,17 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { userTable } from '@/features/user/prisma/userTable'
 
+// Env
+import {
+  AUTH0_AUDIENCE,
+  AUTH0_ISSUER,
+  AUTH0_CLIENT_ID,
+  AUTH0_CLIENT_SECRET,
+  AUTH0_DOMAIN,
+} from '@/config/env'
+import axios from '@/libs/axios'
+import prisma from '@/libs/prisma'
+
 // GET | PATCH | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const user_id = req.query.user_id as string

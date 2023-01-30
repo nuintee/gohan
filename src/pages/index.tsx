@@ -9,6 +9,9 @@ import { useRecoilValue } from 'recoil'
 
 import { signOut, useSession, signIn } from 'next-auth/react'
 
+// ENV
+import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, BASE_URL } from '@/config/env'
+
 const Index = () => {
   const { status } = useSession()
   const { update, get } = useUser()
@@ -25,10 +28,15 @@ const Index = () => {
           <p>{JSON.stringify(getUser?.data)}</p>
           <button onClick={() => updateUser.mutate()}>Update</button>
           <button
-            onClick={status === 'authenticated' ? () => signOut() : () => signIn('credentials')}
+            onClick={
+              status === 'authenticated'
+                ? () => signOut({ callbackUrl: `${BASE_URL}/api/federate-logout` })
+                : () => signIn('auth0')
+            }
           >
             {status === 'authenticated' ? 'signout' : 'signin'}
           </button>
+          <button onClick={() => {}}>getToken</button>
         </div>
         {/* <MapBox /> */}
       </div>
