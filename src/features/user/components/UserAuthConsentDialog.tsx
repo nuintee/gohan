@@ -25,7 +25,7 @@ const consents = {
   },
 }
 
-const UserSignoutConsentDialog = (props: Props) => {
+const UserAuthConsentDialog = (props: Props) => {
   const { isOpen, onClose, type } = props
 
   return (
@@ -44,4 +44,4 @@ const UserSignoutConsentDialog = (props: Props) => {
   )
 }
 
-export default UserSignoutConsentDialog
+export default UserAuthConsentDialog
