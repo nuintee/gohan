@@ -12,7 +12,7 @@ import { RestaurantProps } from '../types'
 import { cardConfig } from '../config'
 
 const RestaurantCard = (props: RestaurantProps) => {
-  const { compact, data, isLocked, isNavigating, onLike, onClick } = props
+  const { compact, data, isLocked, isNavigating, onLike, onClick, onNavigate } = props
 
   const cardStyle = {
     container: 'w-[20rem] rounded-md overflow-hidden bg-white relative',
@@ -36,7 +36,7 @@ const RestaurantCard = (props: RestaurantProps) => {
   const theme = compact ? compactStyle : cardStyle
 
   return (
-    <div className={theme.container}>
+    <div className={theme.container} onClick={compact && onClick}>
       {!compact && (
         <button className={theme.closeButton} onClick={onClick}>
           <Close fill={cardConfig.CLOSE_COLOR} />
@@ -57,7 +57,7 @@ const RestaurantCard = (props: RestaurantProps) => {
           <Label text={cardConfig.labelDistance()} icon={cardConfig.labelIcon} />
         </div>
         <div className={theme.actionsContainer}>
-          {!compact && <Button text={cardConfig.buttonText(isNavigating)} />}
+          {!compact && <Button text={cardConfig.buttonText(isNavigating)} onClick={onNavigate} />}
           <LikeButton onClick={onLike} isLiked={Boolean(data?.is_liked)} isLocked={isLocked} />
         </div>
       </div>

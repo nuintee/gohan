@@ -78,4 +78,5 @@ export type RestaurantProps = {
   data?: RestaurantData
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
+  onNavigate?: MouseEventHandler<HTMLButtonElement>
 }

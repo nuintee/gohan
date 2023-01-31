@@ -4,23 +4,37 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 // Env
 import { BASE_URL } from '@/config/env'
+import useMapBox from '@/features/mapbox/hooks'
+import useModals from '@/hooks/modals'
+import { ResultsEntity } from '../types'
+
 const BASE_KEY = 'restaurants'
 
 const useRestaurants = () => {
   const queryClient = useQueryClient()
+  const { coords } = useMapBox()
+  const { open } = useModals()
 
   const get = () => {
-    return useQuery({
+    const isGPSAvailable = !!coords.latitude && !!coords.longitude
+    return useQuery<ResultsEntity>({
       queryKey: [BASE_KEY],
-      queryFn: () =>
-        axios
+      queryFn: () => {
+        if (!isGPSAvailable) throw Error('Please allow tracking user position')
+        return axios
           .get(
-            `${BASE_URL}/api/v1/restaurants?latitude=42.64775203224244&longitude=23.40559939582422&randomOne=true`,
+            `${BASE_URL}/api/v1/restaurants?latitude=${coords?.latitude}&longitude=${coords?.longitude}&randomOne=true`,
           )
-          .then((res) => res.data),
+          .then((res) => res.data)
+      },
       onError: (error) => {
         useToast.error(error.message)
       },
+      onSuccess: () => {
+        open('restaurantdiscovered')
+      },
+      retry: !isGPSAvailable ? 0 : 3,
+      enabled: false,
       refetchOnWindowFocus: false,
     })
   }
