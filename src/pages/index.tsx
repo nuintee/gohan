@@ -17,10 +17,16 @@ import UserAuthConsentDialog from '@/features/user/components/UserAuthConsentDia
 import AcitvityButton from '@/features/activities/components/ActivityButton'
 import useActivities from '@/features/activities/hooks'
 import UserSettingsModal from '@/features/user/components/UserSettingsModal'
+import ActivityPanel from '@/features/activities/components/ActivityPanel'
+import useRestaurants from '@/features/restaurants/hooks'
+import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
+import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 
 const Index = () => {
   const session = useSession()
   const { open, close, isOpen } = useModals()
+  const { get: getRestaurants } = useRestaurants()
+  const { refetch, isLoading, isFetching, data: restaurant } = getRestaurants()
 
   return (
     <>
@@ -35,9 +41,14 @@ const Index = () => {
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4'>
-          <GohanButton />
+          <GohanButton onClick={() => refetch()} isLoading={isLoading || isFetching} />
         </section>
       </div>
+      <RestaurantDiscoveredModal
+        isOpen={isOpen('restaurantdiscovered')}
+        onClose={() => close('restaurantdiscovered')}
+        data={restaurant}
+      />
       <UserAuthConsentDialog
         isOpen={isOpen('userauth')}
         onClose={() => close('userauth')}
