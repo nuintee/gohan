@@ -8,7 +8,6 @@ import useMapBox from '../hooks'
 import useDirections from '@/features/directions/hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
-import { useEffect } from 'react'
 
 const MapBox = ({}) => {
   const { updateViewState, updateCoords } = useMapBox()

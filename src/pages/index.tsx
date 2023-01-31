@@ -27,6 +27,7 @@ const Index = () => {
   const { open, close, isOpen } = useModals()
   const { get: getRestaurants } = useRestaurants()
   const { refetch, isFetching, data: restaurant } = getRestaurants()
+  const { hasDirections } = useDirections()
 
   return (
     <>
@@ -40,8 +41,20 @@ const Index = () => {
           <AcitvityButton isLocked={session.status === 'unauthenticated'} />
         </section>
         <MapBox />
-        <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4'>
-          <GohanButton onClick={() => refetch()} isLoading={isFetching} />
+        <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
+          {hasDirections && (
+            <RestaurantCard
+              compact
+              isLocked={session.status === 'unauthenticated'}
+              isNavigating={hasDirections}
+              data={restaurant}
+            />
+          )}
+          <GohanButton
+            onClick={() => refetch()}
+            isLoading={isFetching}
+            isNavigating={hasDirections}
+          />
         </section>
       </div>
       <RestaurantDiscoveredModal
