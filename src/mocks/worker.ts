@@ -9,5 +9,3 @@ export const initMocks = async () => {
     server.listen()
   }
 }
-
-// initMocks()
