@@ -17,6 +17,8 @@ type Props = {
 const UserSettingsModal = (props: Props) => {
   const { isOpen, onClose, user } = props
 
+  if (!user) return <></>
+
   return (
     <ModalLayout isOpen={isOpen}>
       <section className='min-w-[20rem] bg-white'>

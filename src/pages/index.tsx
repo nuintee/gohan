@@ -16,13 +16,21 @@ import useModals from '@/hooks/modals'
 import UserAuthConsentDialog from '@/features/user/components/UserAuthConsentDialog'
 import AcitvityButton from '@/features/activities/components/ActivityButton'
 import useActivities from '@/features/activities/hooks'
+import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 
 const Index = () => {
+  const session = useSession()
+  const { open, close, isOpen } = useModals()
+
   return (
     <>
       <div className='flex flex-col gap-4'>
         <section className='absolute top-0 left-0 z-[1] w-full p-4 flex gap-4 justify-between'>
-          <User />
+          <User
+            session={session}
+            isLoading={session.status === 'loading'}
+            onClick={() => open(session.status === 'authenticated' ? 'usersettings' : 'userauth')}
+          />
           <AcitvityButton />
         </section>
         <MapBox />
@@ -30,6 +38,16 @@ const Index = () => {
           <GohanButton />
         </section>
       </div>
+      <UserAuthConsentDialog
+        isOpen={isOpen('userauth')}
+        onClose={() => close('userauth')}
+        type={session.status === 'authenticated' ? 'signout' : 'login'}
+      />
+      <UserSettingsModal
+        user={session.data?.user}
+        isOpen={isOpen('usersettings')}
+        onClose={() => close('usersettings')}
+      />
       <ToastCatcher position='top-center' />
     </>
   )
