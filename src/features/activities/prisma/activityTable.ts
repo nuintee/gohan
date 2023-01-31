@@ -51,7 +51,7 @@ export const activityTable = {
 
     const fetchedUserActivities = await prisma.activity.findMany({
       where: {
-        user_id: props?.user_id,
+        userId: props?.user_id,
       },
       ...resultFilter(rest),
     })
