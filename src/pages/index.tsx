@@ -34,7 +34,7 @@ const Index = () => {
   const { refetch, isFetching, data: restaurant } = getRestaurants()
 
   // GPS
-  const { coords, coordAsString } = useMapBox()
+  const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
 
   // Directions
   const { hasDirections, directions, revoke, get: getDirections } = useDirections()
@@ -68,7 +68,7 @@ const Index = () => {
           )}
           <GohanButton
             onClick={hasDirections ? () => revokeDirections.mutate() : () => refetch()}
-            isLoading={isFetching}
+            isLoading={isLoadingUserLocation || isFetching}
             isNavigating={hasDirections}
           />
         </section>

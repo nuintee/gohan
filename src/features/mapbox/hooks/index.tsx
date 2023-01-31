@@ -7,7 +7,7 @@ import { mapBoxState } from '../stores'
 
 const useMapBox = () => {
   const [mapbox, setMapBox] = useRecoilState(mapBoxState)
-  const { coords, viewState } = mapbox
+  const { coords, viewState, isLoadingUserLocation } = mapbox
 
   function coordAsArray(coords: Pick<GeolocationCoordinates, 'latitude' | 'longitude'>) {
     return [coords.latitude, coords.longitude]
@@ -19,6 +19,10 @@ const useMapBox = () => {
 
   const updateCoords = (coords: GeolocationCoordinates) => {
     setMapBox((prev) => ({ ...prev, coords }))
+
+    if (isLoadingUserLocation) {
+      updateIsLoadingUserLocation(false)
+    }
   }
 
   const updateViewState = (viewState: ViewState) => {
@@ -36,6 +40,7 @@ const useMapBox = () => {
     state: mapbox,
     coords,
     viewState,
+    isLoadingUserLocation,
     coordAsString,
     coordAsArray,
   }

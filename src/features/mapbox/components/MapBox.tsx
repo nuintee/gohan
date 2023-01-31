@@ -25,7 +25,6 @@ const MapBox = ({}) => {
   const handleLoad = () => {
     updateIsLoadingUserLocation(true)
     geoLocateRef?.current?.trigger()
-    updateIsLoadingUserLocation(false)
   }
 
   return (
