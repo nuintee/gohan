@@ -19,12 +19,21 @@ import { useRef } from 'react'
 
 const MapBox = ({}) => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
-  const { updateViewState, updateCoords, updateIsLoadingUserLocation } = useMapBox()
+  const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
+    useMapBox()
   const { hasDirections, formattedDirections } = useDirections()
 
   const handleLoad = () => {
     updateIsLoadingUserLocation(true)
     geoLocateRef?.current?.trigger()
+  }
+
+  const handleError = (error) => {
+    useToast.error(error.message)
+
+    if (isLoadingUserLocation) {
+      updateIsLoadingUserLocation(false)
+    }
   }
 
   return (
@@ -35,7 +44,7 @@ const MapBox = ({}) => {
         renderWorldCopies={false}
         pitchWithRotate={false}
         onMoveEnd={(e) => updateViewState(e.viewState)}
-        onError={(e) => useToast.error(e.error.message)}
+        onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
       >
         <GeolocateControl
@@ -45,7 +54,7 @@ const MapBox = ({}) => {
           showUserHeading
           position='bottom-right'
           onGeolocate={(e) => updateCoords(e.coords)}
-          onError={(e) => useToast.error(e.message)}
+          onError={handleError}
           style={{
             padding: '0.5rem',
             borderRadius: '100%',
