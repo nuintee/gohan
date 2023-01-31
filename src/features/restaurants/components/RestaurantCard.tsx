@@ -36,7 +36,7 @@ const RestaurantCard = (props: RestaurantProps) => {
   const theme = compact ? compactStyle : cardStyle
 
   return (
-    <div className={theme.container}>
+    <div className={theme.container} onClick={compact && onClick}>
       {!compact && (
         <button className={theme.closeButton} onClick={onClick}>
           <Close fill={cardConfig.CLOSE_COLOR} />

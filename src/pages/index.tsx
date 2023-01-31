@@ -54,6 +54,7 @@ const Index = () => {
               isLocked={session.status === 'unauthenticated'}
               isNavigating={hasDirections}
               data={restaurant}
+              onClick={() => open('restaurantdiscovered')}
             />
           )}
           <GohanButton
@@ -69,6 +70,7 @@ const Index = () => {
         onClose={() => close('restaurantdiscovered')}
         data={restaurant}
         onNavigate={hasDirections ? () => revokeDirections.mutate() : () => refetchDirections()}
+        isNavigating={hasDirections}
       />
       <UserAuthConsentDialog
         isOpen={isOpen('userauth')}
