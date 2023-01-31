@@ -23,11 +23,20 @@ import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 
 const Index = () => {
+  // User
   const session = useSession()
+
+  // Modals
   const { open, close, isOpen } = useModals()
+
+  // Restaurants
   const { get: getRestaurants, clear } = useRestaurants()
   const { refetch, isFetching, data: restaurant } = getRestaurants()
+
+  // GPS
   const { coords, coordAsString } = useMapBox()
+
+  // Directions
   const { hasDirections, directions, revoke, get: getDirections } = useDirections()
   const { refetch: refetchDirections } = getDirections({
     start: coordAsString(coords),
