@@ -41,6 +41,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  registered_at DateTime @default(now())
   accounts      Account[]
   sessions      Session[]
   activity      Activity[]

@@ -5,6 +5,7 @@ import ModalLayout from '@/layouts/ModalLayout'
 import dayjs from 'dayjs'
 
 import { User } from 'next-auth'
+import { signOut } from 'next-auth/react'
 import UserAuthModal from './UserAuthModal'
 
 type Props = {
@@ -48,7 +49,7 @@ const UserSettingsModal = (props: Props) => {
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
-          <Button text='Signout' />
+          <Button text='Signout' onClick={signOut} />
         </footer>
       </section>
     </ModalLayout>
