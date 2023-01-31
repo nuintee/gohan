@@ -28,6 +28,7 @@ const useRestaurants = () => {
       onSuccess: () => {
         open('restaurantdiscovered')
       },
+      enabled: false,
       refetchOnWindowFocus: false,
     })
   }
