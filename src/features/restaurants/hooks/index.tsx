@@ -14,20 +14,24 @@ const useRestaurants = () => {
   const { open } = useModals()
 
   const get = () => {
+    const isGPSAvailable = !!coords.latitude && !!coords.longitude
     return useQuery({
       queryKey: [BASE_KEY],
-      queryFn: () =>
-        axios
+      queryFn: () => {
+        if (!isGPSAvailable) throw Error('Please allow tracking user position')
+        return axios
           .get(
             `${BASE_URL}/api/v1/restaurants?latitude=${coords?.latitude}&longitude=${coords?.longitude}&randomOne=true`,
           )
-          .then((res) => res.data),
+          .then((res) => res.data)
+      },
       onError: (error) => {
         useToast.error(error.message)
       },
       onSuccess: () => {
         open('restaurantdiscovered')
       },
+      retry: !isGPSAvailable ? 0 : 3,
       enabled: false,
       refetchOnWindowFocus: false,
     })
