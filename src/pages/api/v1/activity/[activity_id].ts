@@ -1,16 +1,29 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { activityTable } from '@/features/activities/prisma/activityTable'
+import axios from 'axios'
+import { BASE_URL } from '@/config/env'
+import { DetailsAPI } from '@/features/restaurants/types'
 
 // GET | PATCH | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const activity_id = req.query.activity_id as string
+  const details = req.query.details as string
 
   try {
     switch (req.method) {
       case 'GET':
         const fetchedActivity = await activityTable.get({ id: activity_id })
-        res.status(200).json(fetchedActivity)
+        let detailedActivity = {}
+
+        if (details) {
+          const { data } = await axios.get<DetailsAPI>(
+            `${BASE_URL}/api/v1/restaurants/${fetchedActivity.place_id}`,
+          )
+          detailedActivity = data.result || {}
+        }
+
+        res.status(200).json({ ...fetchedActivity, ...detailedActivity })
         break
       case 'PATCH':
         const updatedActivity = await activityTable.patch({

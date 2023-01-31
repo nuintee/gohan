@@ -16,7 +16,7 @@ export const getRestaurantDetails = async (props: Props) => {
 
   const { data } = await axios.get<DetailsAPI>(url.toString())
 
-  if (!['OK', 'ZERO_RESULTS'].includes(data.status)) throw new Error(data.status)
+  if (!['OK', 'ZERO_RESULTS', 'INVALID_REQUEST'].includes(data.status)) throw new Error(data.status)
 
   return data
 }

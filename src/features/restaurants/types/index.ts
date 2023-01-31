@@ -18,7 +18,7 @@ export interface PlacesAPI {
 
 export interface DetailsAPI {
   html_attributions?: null[] | null
-  result?: ResultsEntity[] | null
+  result?: ResultsEntity | null
   status: PlacesSearchStatus[number]
 }
 
