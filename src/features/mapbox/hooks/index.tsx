@@ -25,9 +25,14 @@ const useMapBox = () => {
     setMapBox((prev) => ({ ...prev, viewState }))
   }
 
+  const updateIsLoadingUserLocation = (isLoading: boolean) => {
+    setMapBox((prev) => ({ ...prev, isLoadingUserLocation: isLoading }))
+  }
+
   return {
     updateCoords,
     updateViewState,
+    updateIsLoadingUserLocation,
     state: mapbox,
     coords,
     viewState,

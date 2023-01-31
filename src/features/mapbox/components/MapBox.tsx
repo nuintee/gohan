@@ -19,8 +19,14 @@ import { useRef } from 'react'
 
 const MapBox = ({}) => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
-  const { updateViewState, updateCoords } = useMapBox()
+  const { updateViewState, updateCoords, updateIsLoadingUserLocation } = useMapBox()
   const { hasDirections, formattedDirections } = useDirections()
+
+  const handleLoad = () => {
+    updateIsLoadingUserLocation(true)
+    geoLocateRef?.current?.trigger()
+    updateIsLoadingUserLocation(false)
+  }
 
   return (
     <div className='w-screen h-screen'>
@@ -31,7 +37,7 @@ const MapBox = ({}) => {
         pitchWithRotate={false}
         onMoveEnd={(e) => updateViewState(e.viewState)}
         onError={(e) => useToast.error(e.error.message)}
-        onLoad={(e) => geoLocateRef?.current?.trigger()}
+        onLoad={handleLoad}
       >
         <GeolocateControl
           showAccuracyCircle
