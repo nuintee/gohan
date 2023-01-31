@@ -32,7 +32,7 @@ const ActivityPanel = (props: Props) => {
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[2] ${slideIn}`}
+      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[0] ${slideIn}`}
     >
       <Header title={'ActivityPanel'} onClose={() => {}} />
       {/* <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
