@@ -10,7 +10,7 @@ export const neededDetailsFields = [
   'geometry',
   'photos',
   'opening_hours',
-]
+] as const
 
 export type Props = z.infer<typeof Schema>
 

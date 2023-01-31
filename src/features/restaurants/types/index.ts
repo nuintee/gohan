@@ -1,5 +1,6 @@
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
+import { neededDetailsFields } from '../schemas/getRestaurantDetails.schema'
 
 export type PlacesSearchStatus = [
   'OK',
@@ -68,8 +69,7 @@ export interface PlusCode {
 }
 
 // Data to pass UI Component
-export type RestaurantData = Activity &
-  Pick<ResultsEntity, 'name' | 'business_status' | 'geometry' | 'photos' | 'opening_hours'>
+export type RestaurantData = Activity & Pick<ResultsEntity, typeof neededDetailsFields[number]>
 
 // Data to pass Renderer
 export type RestaurantProps = {
