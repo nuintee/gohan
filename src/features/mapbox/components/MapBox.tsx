@@ -8,8 +8,10 @@ import useMapBox from '../hooks'
 import useDirections from '@/features/directions/hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
+import { useRef } from 'react'
 
 const MapBox = ({}) => {
+  const geoLocateRef = useRef(null)
   const { updateViewState, updateCoords } = useMapBox()
   const { hasDirections, formattedDirections } = useDirections()
 
@@ -22,6 +24,7 @@ const MapBox = ({}) => {
         pitchWithRotate={false}
         onMoveEnd={(e) => updateViewState(e.viewState)}
         onError={(e) => useToast.error(e.error.message)}
+        onLoad={(e) => geoLocateRef?.current?.trigger()}
       >
         <GeolocateControl
           showAccuracyCircle
@@ -35,6 +38,7 @@ const MapBox = ({}) => {
             padding: '0.5rem',
             borderRadius: '100%',
           }}
+          ref={geoLocateRef}
         />
         {hasDirections && (
           <Source type='geojson' data={formattedDirections.source}>
