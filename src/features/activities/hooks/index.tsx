@@ -31,12 +31,16 @@ const useActivities = () => {
     )
   }
 
-  const get = (activityId: string) => {
+  const get = (activityId: string, details?: boolean, onlyNeeded?: boolean) => {
     return useQuery<ActivityResolved>(
       [BASE_KEY, activityId],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
-        return axios.get(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data)
+
+        const url = new URL(`${BASE_URL}/api/v1/activity/${activityId}`)
+        url.searchParams.append('details', String(details))
+        url.searchParams.append('onlyNeeded', String(onlyNeeded))
+        return axios.get(url.toString()).then((res) => res.data)
       },
       {
         onError: (error) => {
