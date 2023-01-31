@@ -8,6 +8,7 @@ import useMapBox from '../hooks'
 import useDirections from '@/features/directions/hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
+import { useEffect } from 'react'
 
 const MapBox = ({}) => {
   const { updateViewState, updateCoords } = useMapBox()
@@ -31,6 +32,10 @@ const MapBox = ({}) => {
           position='bottom-right'
           onGeolocate={(e) => updateCoords(e.coords)}
           onError={(e) => useToast.error(e.message)}
+          style={{
+            padding: '0.5rem',
+            borderRadius: '100%',
+          }}
         />
         {hasDirections && (
           <Source type='geojson' data={formattedDirections.source}>
