@@ -4,6 +4,7 @@ import { activityTable } from '@/features/activities/prisma/activityTable'
 import axios from 'axios'
 import { BASE_URL } from '@/config/env'
 import { DetailsAPI } from '@/features/restaurants/types'
+import { getRestaurantDetails } from '@/features/restaurants/controllers/getRestaurantDetails'
 
 // GET | PATCH | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -17,9 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         let detailedActivity = {}
 
         if (details) {
-          const { data } = await axios.get<DetailsAPI>(
-            `${BASE_URL}/api/v1/restaurants/${fetchedActivity.place_id}`,
-          )
+          const data = await getRestaurantDetails({ place_id: fetchedActivity.place_id })
           detailedActivity = data.result || {}
         }
 
