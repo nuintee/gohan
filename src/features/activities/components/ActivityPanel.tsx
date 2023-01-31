@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 // Components
 import Header from '@/components/ui/Header'
+import useActivities from '../hooks'
 
 // Constants
 const tabs = [
@@ -26,6 +27,8 @@ type Props = {
 const ActivityPanel = (props: Props) => {
   const { isOpen } = props
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
+  const { getUserAll } = useActivities()
+  const { data } = getUserAll()
 
   return (
     <div
@@ -34,6 +37,7 @@ const ActivityPanel = (props: Props) => {
       <Header title={'ActivityPanel'} onClose={() => {}} />
       {/* <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
       <Renderer data={activityList} isLocked={status !== 'authenticated'} onLike={handleOnLike} /> */}
+      <p>{JSON.stringify(data)}</p>
     </div>
   )
 }

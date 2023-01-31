@@ -48,7 +48,7 @@ const useActivities = () => {
 
   const getUserAll = () => {
     return useQuery<Activity[]>(
-      [BASE_KEY, 'user', session.user?.id],
+      [BASE_KEY, 'user', session?.user?.id],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
         return axios
@@ -59,6 +59,7 @@ const useActivities = () => {
         onError: (error) => {
           useToast.error(error.message)
         },
+        enabled: status === 'authenticated',
       },
     )
   }
