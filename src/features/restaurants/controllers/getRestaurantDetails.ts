@@ -18,7 +18,7 @@ export const getRestaurantDetails = async (props: Props) => {
   url.searchParams.append('place_id', place_id)
   url.searchParams.append('key', GCP_API_KEY)
 
-  if (onlyNeeded) {
+  if (onlyNeeded !== false) {
     url.searchParams.append('fields', neededDetailsFields.join(',')) // Needed Fields
   }
 
