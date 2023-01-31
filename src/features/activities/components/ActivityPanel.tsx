@@ -5,6 +5,7 @@ import Header from '@/components/ui/Header'
 import useActivities from '../hooks'
 import { Activity } from '@prisma/client'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
+import { ActivityResolved } from '../types'
 
 // Constants
 const tabs = [
@@ -27,7 +28,7 @@ type Props = {
 }
 
 type ListProps = {
-  activities: Activity[]
+  activities: ActivityResolved[]
   isLocked: boolean
   onLike: Funtion
 }

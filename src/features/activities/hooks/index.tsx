@@ -32,7 +32,7 @@ const useActivities = () => {
   }
 
   const get = (activityId: string) => {
-    return useQuery(
+    return useQuery<ActivityResolved>(
       [BASE_KEY, activityId],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
@@ -47,7 +47,7 @@ const useActivities = () => {
   }
 
   const getUserAll = (props?: { details?: boolean; onlyNeeded?: boolean }) => {
-    return useQuery<Activity[]>(
+    return useQuery<ActivityResolved[]>(
       [BASE_KEY, 'user', session?.user?.id],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
