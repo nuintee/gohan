@@ -46,14 +46,17 @@ const useActivities = () => {
     )
   }
 
-  const getUserAll = () => {
+  const getUserAll = (props?: { details?: boolean; onlyNeeded?: boolean }) => {
     return useQuery<Activity[]>(
       [BASE_KEY, 'user', session?.user?.id],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
-        return axios
-          .get(`${BASE_URL}/api/v1/activities/user/${session.user?.id}?details=true`)
-          .then((res) => res.data)
+
+        const url = new URL(`${BASE_URL}/api/v1/activities/user/${session.user?.id}`)
+        url.searchParams.append('details', props?.details)
+        url.searchParams.append('onlyNeeded', props?.onlyNeeded)
+
+        return axios.get(url.toString()).then((res) => res.data)
       },
       {
         onError: (error) => {

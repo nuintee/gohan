@@ -7,7 +7,11 @@ import { Activity } from '@prisma/client'
 
 // GET | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user_id, details, ...queries } = req.query as { user_id: string; details: string }
+  const { user_id, details, onlyNeeded, ...queries } = req.query as {
+    user_id: string
+    details: string
+    onlyNeeded: string
+  }
 
   try {
     switch (req.method) {
@@ -18,7 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (details) {
           detailsUserActivities = await Promise.all(
             fetchedUserActivities.map(async (activity) => {
-              const data = await getRestaurantDetails({ place_id: activity.place_id })
+              const data = await getRestaurantDetails({
+                place_id: activity.place_id,
+                ...(onlyNeeded !== 'false' && { onlyNeeded: false }),
+              })
               return data.result
             }),
           )
