@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 const Schema = z.object({
   place_id: z.string(),
+  onlyNeeded: z.optional(z.boolean()),
 })
 
 export const neededDetailsFields = [
@@ -10,6 +11,7 @@ export const neededDetailsFields = [
   'geometry',
   'photos',
   'opening_hours',
+  'website',
 ] as const
 
 export type Props = z.infer<typeof Schema>
