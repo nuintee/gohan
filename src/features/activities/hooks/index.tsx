@@ -52,7 +52,7 @@ const useActivities = () => {
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
         return axios
-          .get(`${BASE_URL}/api/v1/activities/user/${session.user?.id}`)
+          .get(`${BASE_URL}/api/v1/activities/user/${session.user?.id}?details=true`)
           .then((res) => res.data)
       },
       {

@@ -68,7 +68,8 @@ export interface PlusCode {
 }
 
 // Data to pass UI Component
-export type RestaurantData = Activity & ResultsEntity
+export type RestaurantData = Activity &
+  Pick<ResultsEntity, 'name' | 'business_status' | 'geometry' | 'photos' | 'opening_hours'>
 
 // Data to pass Renderer
 export type RestaurantProps = {
