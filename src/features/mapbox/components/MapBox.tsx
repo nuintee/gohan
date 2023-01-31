@@ -1,4 +1,11 @@
-import Map, { Source, Layer, GeolocateControl, useMap, GeolocateResultEvent } from 'react-map-gl'
+import Map, {
+  Source,
+  Layer,
+  GeolocateControl,
+  useMap,
+  GeolocateResultEvent,
+  GeolocateControlRef,
+} from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 // config
@@ -11,7 +18,7 @@ import useToast from '@/libs/react-toastify'
 import { useRef } from 'react'
 
 const MapBox = ({}) => {
-  const geoLocateRef = useRef(null)
+  const geoLocateRef = useRef<GeolocateControlRef>(null)
   const { updateViewState, updateCoords } = useMapBox()
   const { hasDirections, formattedDirections } = useDirections()
 
