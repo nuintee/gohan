@@ -10,6 +10,7 @@ import { getRestaurantDetails } from '@/features/restaurants/controllers/getRest
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const activity_id = req.query.activity_id as string
   const details = req.query.details as string
+  const onlyNeeded = req.query.onlyNeeded as string
 
   try {
     switch (req.method) {
@@ -18,7 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         let detailedActivity = {}
 
         if (details) {
-          const data = await getRestaurantDetails({ place_id: fetchedActivity.place_id })
+          const data = await getRestaurantDetails({
+            place_id: fetchedActivity.place_id,
+            onlyNeeded: onlyNeeded !== 'false',
+          })
           detailedActivity = data.result || {}
         }
 
