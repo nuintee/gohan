@@ -6,6 +6,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { BASE_URL } from '@/config/env'
 import useMapBox from '@/features/mapbox/hooks'
 import useModals from '@/hooks/modals'
+import { ResultsEntity } from '../types'
+
 const BASE_KEY = 'restaurants'
 
 const useRestaurants = () => {
@@ -15,7 +17,7 @@ const useRestaurants = () => {
 
   const get = () => {
     const isGPSAvailable = !!coords.latitude && !!coords.longitude
-    return useQuery({
+    return useQuery<ResultsEntity>({
       queryKey: [BASE_KEY],
       queryFn: () => {
         if (!isGPSAvailable) throw Error('Please allow tracking user position')

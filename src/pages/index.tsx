@@ -25,9 +25,15 @@ import RestaurantDiscoveredModal from '@/features/restaurants/components/Restaur
 const Index = () => {
   const session = useSession()
   const { open, close, isOpen } = useModals()
-  const { get: getRestaurants } = useRestaurants()
+  const { get: getRestaurants, clear } = useRestaurants()
   const { refetch, isFetching, data: restaurant } = getRestaurants()
-  const { hasDirections } = useDirections()
+  const { coords, coordAsString } = useMapBox()
+  const { hasDirections, directions, revoke, get: getDirections } = useDirections()
+  const { refetch: refetchDirections } = getDirections({
+    start: coordAsString(coords),
+    end: `${restaurant?.geometry?.location?.lat},${restaurant?.geometry?.location?.lng}`,
+  })
+  const revokeDirections = revoke()
 
   return (
     <>
@@ -51,7 +57,7 @@ const Index = () => {
             />
           )}
           <GohanButton
-            onClick={() => refetch()}
+            onClick={hasDirections ? () => revokeDirections.mutate() : () => refetch()}
             isLoading={isFetching}
             isNavigating={hasDirections}
           />
@@ -62,6 +68,7 @@ const Index = () => {
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         data={restaurant}
+        onNavigate={hasDirections ? () => revokeDirections.mutate() : () => refetchDirections()}
       />
       <UserAuthConsentDialog
         isOpen={isOpen('userauth')}
