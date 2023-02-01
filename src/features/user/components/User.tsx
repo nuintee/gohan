@@ -23,8 +23,8 @@ const User = (props: UserProps) => {
   }
 
   const {
-    isLoading = status === 'loading',
-    session = { ...data, status },
+    isLoading = status === 'loading' ?? false,
+    session = { ...data, status } ?? {},
     onClick = handleOnClick,
   } = props
 
