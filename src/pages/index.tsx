@@ -21,6 +21,7 @@ import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import useRestaurants from '@/features/restaurants/hooks'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
+import calculateDistance from '@/libs/haversine-distance'
 
 const Index = () => {
   // User
@@ -30,7 +31,7 @@ const Index = () => {
   const { isPanelOpen, openPanel, closePanel } = useActivities()
 
   // Modals
-  const { open, close, isOpen } = useModals()
+  const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
   const { get: getRestaurants, clear } = useRestaurants()
@@ -66,6 +67,7 @@ const Index = () => {
               isLocked={session.status === 'unauthenticated'}
               isNavigating={hasDirections}
               data={restaurant}
+              distance={calculateDistance(coords, restaurant?.geometry?.location).auto}
               onClick={() => open('restaurantdiscovered')}
             />
           )}
@@ -81,7 +83,8 @@ const Index = () => {
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
-        data={restaurant}
+        distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
+        data={getPayload('restaurantdiscovered')}
         onNavigate={hasDirections ? () => revokeDirections.mutate() : () => refetchDirections()}
         isNavigating={hasDirections}
       />

@@ -31,7 +31,7 @@ const useRestaurants = () => {
         useToast.error(error.message)
       },
       onSuccess: () => {
-        open('restaurantdiscovered')
+        // open('restaurantdiscovered')
       },
       retry: !isGPSAvailable ? 0 : 3,
       enabled: false,
