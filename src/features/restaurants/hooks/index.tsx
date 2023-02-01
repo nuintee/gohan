@@ -14,13 +14,15 @@ const BASE_KEY = 'restaurants'
 
 const useRestaurants = () => {
   const queryClient = useQueryClient()
+  const { open } = useModals()
   const { coords } = useMapBox()
 
   const clear = () => {
     return queryClient.setQueryData([BASE_KEY], {})
   }
 
-  const set = (payload) => {
+  const set = (payload: ResultsEntity) => {
+    open('restaurantdiscovered', payload)
     return queryClient.setQueryData([BASE_KEY], payload)
   }
 
@@ -40,7 +42,8 @@ const useRestaurants = () => {
         useToast.error(error.message)
       },
       onSuccess: (data) => {
-        set(data)
+        // OpenModal
+        open('restaurantdiscovered', data)
       },
       retry: !isGPSAvailable ? 0 : 3,
       enabled: false,

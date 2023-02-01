@@ -59,10 +59,26 @@ const useDirections = () => {
     }
   }
 
-  const get = () => {
-    return useQuery({
+  // const getDirections = () => {
+  //   return useQuery({
+  //     queryKey: [BASE_KEY],
+  //     queryFn: (props: Pick<Partial<Props>, 'start'> & Omit<Props, 'start'>) => {
+  //       const { start = coordAsString(coords), end } = props
+
+  //       return axios
+  //         .get(`${BASE_URL}/api/v1/directions?start=${start}&end=${end}`)
+  //         .then((res) => res.data)
+  //     },
+  //     enabled: false,
+  //     onError: (error) => {
+  //       return useToast.error(error.message)
+  //     },
+  //   })
+  // }
+  const getDirections = (props: Partial<Props>) => {
+    return useQuery<DirectionsAPI>({
       queryKey: [BASE_KEY],
-      queryFn: (props: Pick<Partial<Props>, 'start'> & Omit<Props, 'start'>) => {
+      queryFn: () => {
         const { start = coordAsString(coords), end } = props
 
         return axios
@@ -73,10 +89,13 @@ const useDirections = () => {
       onError: (error) => {
         return useToast.error(error.message)
       },
+      onSuccess: (data) => {
+        console.log(data)
+      },
     })
   }
 
-  const revoke = () => {
+  const revokeDirections = () => {
     return useMutation(
       async () => {
         queryClient.setQueryData([BASE_KEY], () => ({}))
@@ -98,7 +117,14 @@ const useDirections = () => {
     ? _createGeoJSON({ coordinates: directions?.routes[0].geometry.coordinates })
     : {}
 
-  return { get, revoke, directions, hasDirections, formattedDirections, extractCoordinates }
+  return {
+    getDirections,
+    revokeDirections,
+    directions,
+    hasDirections,
+    formattedDirections,
+    extractCoordinates,
+  }
 }
 
 export default useDirections

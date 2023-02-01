@@ -17,19 +17,19 @@ type Props = {
 }
 
 const GohanButton = (props: Props) => {
-  const { hasDirections, revoke } = useDirections()
-  const directions = revoke()
+  const { hasDirections, revokeDirections } = useDirections()
+  const directions = revokeDirections()
 
   const { isLoadingUserLocation } = useMapBox()
 
-  const { get } = useRestaurants()
+  const { get, clear } = useRestaurants()
   const restaurants = get()
 
   const {
     isLoading = isLoadingUserLocation ?? false,
     isNavigating = hasDirections ?? false,
     disabled = isLoadingUserLocation ?? false,
-    onClick = hasDirections ? () => directions.mutate() : () => restaurants.refetch(),
+    onClick = hasDirections ? () => clear() : () => restaurants.refetch(),
   } = props
 
   const ui = () =>

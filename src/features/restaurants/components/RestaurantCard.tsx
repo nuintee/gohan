@@ -57,7 +57,9 @@ const RestaurantCard = (props: RestaurantProps) => {
           <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} />
         </div>
         <div className={theme.actionsContainer}>
-          {!compact && <Button text={cardConfig.buttonText(isNavigating)} onClick={onNavigate} />}
+          {!compact && (
+            <Button text={cardConfig.buttonText(isNavigating)} onClick={() => onNavigate(data)} />
+          )}
           <LikeButton onClick={onLike} isLiked={Boolean(data?.is_liked)} isLocked={isLocked} />
         </div>
       </div>
