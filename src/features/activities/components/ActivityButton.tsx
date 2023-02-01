@@ -5,15 +5,14 @@ import useActivities from '../hooks'
 
 type Props = {
   isLocked?: boolean
+  onClick?: Function
 }
 
 const AcitvityButton = (props: Props) => {
-  const { isLocked: locked } = props
   const { openPanel } = useActivities()
   const { status } = useSession()
 
-  // Flag
-  const isLocked = locked ?? status === 'unauthenticated'
+  const { isLocked = status === 'unauthenticated' } = props
 
   return (
     <button

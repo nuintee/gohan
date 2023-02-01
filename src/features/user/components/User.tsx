@@ -9,7 +9,7 @@ import useModals from '@/hooks/modals'
 
 type UserProps = {
   isLoading?: boolean
-  session: SessionContextValue
+  session?: SessionContextValue
   onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
