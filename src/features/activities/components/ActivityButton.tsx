@@ -17,7 +17,7 @@ const AcitvityButton = (props: Props) => {
   return (
     <button
       onClick={openPanel}
-      className={`bg-white h-12 w-12 rounded-full flex justify-center items-center active:bg-opacity-90 shrink-0 z-[1] active:scale-90`}
+      className={`bg-white h-12 w-12 rounded-full flex justify-center items-center active:bg-opacity-90 shrink-0 z-[1] border-2 border-gh-white active:scale-90`}
       disabled={isLocked}
     >
       {isLocked ? <ActivityLocked /> : <ActivityPlain />}
