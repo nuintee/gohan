@@ -51,7 +51,7 @@ const List = (props: ListProps) => {
       {activities?.map((activity) => (
         <RestaurantCard
           data={activity}
-          distance={calculateDistance(coords, activity.geometry.location).auto}
+          distance={calculateDistance(coords, activity.geometry.location, true).auto}
           compact
           key={activity.id}
           isLocked={isLocked}
