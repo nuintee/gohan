@@ -1,22 +1,29 @@
 import { Button, Header, Input } from '@/components/ui'
+import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
 
 // lib
 import dayjs from 'dayjs'
 
 import { User } from 'next-auth'
-import { signOut } from 'next-auth/react'
-import UserAuthModal from './UserAuthModal'
+import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
-  isOpen: boolean
-  onClose: Function
-  onClickAction: Function
-  user: User
+  isOpen?: boolean
+  onClose?: Function
+  onClickAction?: React.MouseEventHandler<HTMLButtonElement>
+  user?: User
 }
 
 const UserSettingsModal = (props: Props) => {
-  const { isOpen, onClose, user } = props
+  const { data: session } = useSession()
+  const { isOpen: isSettingsOpen, close } = useModals()
+
+  const {
+    isOpen = isSettingsOpen('usersettings') ?? false,
+    onClose = () => close('usersettings'),
+    user = session?.user ?? {},
+  } = props
 
   if (!user) return <></>
 

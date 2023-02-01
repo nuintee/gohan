@@ -82,11 +82,7 @@ const Index = () => {
         isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />
-      <UserSettingsModal
-        user={session.data?.user}
-        isOpen={isOpen('usersettings')}
-        onClose={() => close('usersettings')}
-      />
+      <UserSettingsModal />
       <ToastCatcher position='top-center' />
     </>
   )
