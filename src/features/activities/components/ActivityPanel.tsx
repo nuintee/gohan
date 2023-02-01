@@ -42,7 +42,7 @@ const List = (props: ListProps) => {
   if (!activities?.length) return <>No contents</>
 
   return (
-    <div>
+    <div className='flex flex-col overflow-auto'>
       {activities?.map((activity) => (
         <RestaurantCard
           data={activity}
