@@ -31,8 +31,7 @@ const placeholder_data = Array.from(Array(100).keys()).map((v) => ({
 }))
 
 type Props = {
-  isOpen: boolean
-  onClose: Function
+  isOpen?: boolean
 }
 
 type ListProps = {
@@ -68,18 +67,19 @@ const List = (props: ListProps) => {
 }
 
 const ActivityPanel = (props: Props) => {
-  const { isOpen, onClose } = props
-  const { getUserAll, update } = useActivities()
-  const { data, refetch } = getUserAll()
-  const { data: session, status } = useSession()
-  const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
+  const { isOpen } = props
+  const { getUserAll, update, isPanelOpen, closePanel } = useActivities()
+  const { data } = getUserAll()
+  const { status } = useSession()
+  const openState = isOpen ?? isPanelOpen
+  const slideIn = openState ? '-transform-x-full' : 'translate-x-full'
   const updateActity = update()
 
   return (
     <div
       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
     >
-      <Header title={'ActivityPanel'} onClose={onClose} />
+      <Header title={'ActivityPanel'} onClose={closePanel} />
       <List activities={data} isLocked={status === 'unauthenticated'} updater={updateActity} />
     </div>
   )

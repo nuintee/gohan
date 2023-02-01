@@ -74,7 +74,7 @@ const Index = () => {
           />
         </section>
       </div>
-      <ActivityPanel isOpen={isPanelOpen} onClose={closePanel} />
+      <ActivityPanel />
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
