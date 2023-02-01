@@ -4,15 +4,28 @@ import useToast from '@/libs/react-toastify'
 import { Activity } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import { useRecoilState } from 'recoil'
 import { ZodError } from 'zod'
 import { AddActivityProps, UpdateActivityProps } from '../schemas/addActivity.schema'
+import { activityPanelState } from '../stores'
 import { ActivityResolved } from '../types'
 
 const BASE_KEY = 'activities'
 
 const useActivities = () => {
   const { data: session, status } = useSession()
+  const [activities, setActivitties] = useRecoilState(activityPanelState)
   const queryClient = useQueryClient()
+
+  const openPanel = () => {
+    setActivitties((prev) => ({ isOpen: true }))
+  }
+
+  const closePanel = () => {
+    setActivitties((prev) => ({ isOpen: false }))
+  }
+
+  const isPanelOpen = activities.isOpen
 
   const add = (payload: AddActivityProps) => {
     return useMutation(
@@ -50,26 +63,6 @@ const useActivities = () => {
     )
   }
 
-  // const getUserAll = (props?: { details?: boolean; onlyNeeded?: boolean }) => {
-  //   return useQuery<ActivityResolved[]>(
-  //     [BASE_KEY, 'user', session?.user?.id],
-  //     () => {
-  //       if (status !== 'authenticated') throw Error('Unauthorized')
-
-  //       const url = new URL(`${BASE_URL}/api/v1/activities/user/${session.user?.id}`)
-  //       url.searchParams.append('details', props?.details)
-  //       url.searchParams.append('onlyNeeded', props?.onlyNeeded)
-
-  //       return axios.get(url.toString()).then((res) => res.data)
-  //     },
-  //     {
-  //       onError: (error) => {
-  //         useToast.error(error.message)
-  //       },
-  //       enabled: status === 'authenticated',
-  //     },
-  //   )
-  // }
   const getUserAll = (props = { details: true, onlyNeeded: true }) => {
     return useQuery<ActivityResolved[]>(
       [BASE_KEY, 'user', session?.user?.id],
@@ -126,7 +119,7 @@ const useActivities = () => {
     )
   }
 
-  return { add, get, getUserAll, remove, update }
+  return { add, get, getUserAll, remove, update, openPanel, closePanel, isPanelOpen }
 }
 
 export default useActivities
