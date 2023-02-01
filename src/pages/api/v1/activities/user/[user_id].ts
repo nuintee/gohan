@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             fetchedUserActivities.map(async (activity) => {
               const data = await getRestaurantDetails({
                 place_id: activity.place_id,
-                onlyNeeded: onlyNeeded !== 'false',
+                // onlyNeeded: onlyNeeded !== 'false',
               })
               return data.result
             }),

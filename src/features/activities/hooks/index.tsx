@@ -50,15 +50,35 @@ const useActivities = () => {
     )
   }
 
-  const getUserAll = (props?: { details?: boolean; onlyNeeded?: boolean }) => {
+  // const getUserAll = (props?: { details?: boolean; onlyNeeded?: boolean }) => {
+  //   return useQuery<ActivityResolved[]>(
+  //     [BASE_KEY, 'user', session?.user?.id],
+  //     () => {
+  //       if (status !== 'authenticated') throw Error('Unauthorized')
+
+  //       const url = new URL(`${BASE_URL}/api/v1/activities/user/${session.user?.id}`)
+  //       url.searchParams.append('details', props?.details)
+  //       url.searchParams.append('onlyNeeded', props?.onlyNeeded)
+
+  //       return axios.get(url.toString()).then((res) => res.data)
+  //     },
+  //     {
+  //       onError: (error) => {
+  //         useToast.error(error.message)
+  //       },
+  //       enabled: status === 'authenticated',
+  //     },
+  //   )
+  // }
+  const getUserAll = (props = { details: true, onlyNeeded: true }) => {
     return useQuery<ActivityResolved[]>(
       [BASE_KEY, 'user', session?.user?.id],
       () => {
         if (status !== 'authenticated') throw Error('Unauthorized')
 
         const url = new URL(`${BASE_URL}/api/v1/activities/user/${session.user?.id}`)
-        url.searchParams.append('details', props?.details)
-        url.searchParams.append('onlyNeeded', props?.onlyNeeded)
+        url.searchParams.append('details', String(props?.details !== false))
+        url.searchParams.append('onlyNeeded', String(props?.onlyNeeded !== false))
 
         return axios.get(url.toString()).then((res) => res.data)
       },
@@ -71,16 +91,16 @@ const useActivities = () => {
     )
   }
 
-  const update = (activityId: string, payload?: UpdateActivityProps) => {
+  const update = () => {
     return useMutation(
-      () =>
+      ({ activityId, payload }: { activityId: string; payload?: UpdateActivityProps }) =>
         axios.patch(`${BASE_URL}/api/v1/activity/${activityId}`, payload).then((res) => res.data),
       {
         onMutate: () => {
           if (status !== 'authenticated') throw Error('Unauthorized')
         },
-        onSuccess: () => {
-          queryClient.invalidateQueries([BASE_KEY, activityId])
+        onSuccess: (data, payload) => {
+          queryClient.invalidateQueries([BASE_KEY, payload.activityId])
         },
         onError: (error) => {
           useToast.error(error.message)

@@ -6,6 +6,8 @@ import useActivities from '../hooks'
 import { Activity } from '@prisma/client'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { ActivityResolved } from '../types'
+import { useSession } from 'next-auth/react'
+import { UseMutationResult } from '@tanstack/react-query'
 
 // Constants
 const tabs = [
@@ -30,20 +32,24 @@ type Props = {
 type ListProps = {
   activities: ActivityResolved[]
   isLocked: boolean
-  onLike: Funtion
+  updater: UseMutationResult
 }
 
 const List = (props: ListProps) => {
-  const { activities, isLocked, onLike } = props
-
-  console.log({ activities })
+  const { activities, isLocked, updater } = props
 
   if (!activities?.length) return <>No contents</>
 
   return (
     <div>
       {activities?.map((activity) => (
-        <RestaurantCard data={activity} compact key={activity.id} />
+        <RestaurantCard
+          data={activity}
+          compact
+          key={activity.id}
+          isLocked={isLocked}
+          onLike={() => updater.mutate({ activityId: activity.id, payload: { is_liked: false } })}
+        />
       ))}
     </div>
   )
@@ -51,9 +57,11 @@ const List = (props: ListProps) => {
 
 const ActivityPanel = (props: Props) => {
   const { isOpen } = props
-  const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
-  const { getUserAll } = useActivities()
+  const { getUserAll, update } = useActivities()
   const { data } = getUserAll()
+  const { data: session, status } = useSession()
+  const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
+  const updateActity = update()
 
   return (
     <div
@@ -62,7 +70,7 @@ const ActivityPanel = (props: Props) => {
       <Header title={'ActivityPanel'} onClose={() => {}} />
       {/* <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
       <Renderer data={activityList} isLocked={status !== 'authenticated'} onLike={handleOnLike} /> */}
-      <List activities={data} />
+      <List activities={data} isLocked={status === 'unauthenticated'} updater={updateActity} />
     </div>
   )
 }
