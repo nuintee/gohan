@@ -18,3 +18,13 @@ const Template: ComponentStory<typeof User> = (args) => {
 
 export const Guest = Template.bind({})
 export const Authed = Template.bind({})
+
+Authed.args = {
+  session: {
+    status: 'authenticated',
+    data: {
+      user,
+      expires: '',
+    },
+  },
+}

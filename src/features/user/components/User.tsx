@@ -31,13 +31,13 @@ const User = (props: UserProps) => {
   const feedBack = !isLoading && 'active:scale-90 cursor-pointer active:opacity-90'
 
   const theme =
-    status === 'authenticated'
+    session.status === 'authenticated'
       ? `h-12 aspect-square rounded-full overflow-hidden ${feedBack}`
       : `h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-2 bg-gh-white ${feedBack}`
 
   return (
     <button className={theme} onClick={onClick}>
-      {status === 'authenticated' ? (
+      {session.status === 'authenticated' ? (
         <img
           src={`https://ui-avatars.com/api/?name=${session.user?.name}&background=random`}
           alt='Profile Image'
