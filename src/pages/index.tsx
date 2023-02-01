@@ -34,8 +34,8 @@ const Index = () => {
   const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  const { get: getRestaurants, clear } = useRestaurants()
-  const { refetch, isFetching, data: restaurant } = getRestaurants()
+  const { get: getRestaurants, clear, restaurant } = useRestaurants()
+  const { refetch, isFetching } = getRestaurants()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
@@ -84,7 +84,7 @@ const Index = () => {
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
-        data={getPayload('restaurantdiscovered')}
+        data={restaurant}
         onNavigate={hasDirections ? () => revokeDirections.mutate() : () => refetchDirections()}
         isNavigating={hasDirections}
       />
