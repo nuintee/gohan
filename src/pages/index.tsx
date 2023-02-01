@@ -28,7 +28,7 @@ const Index = () => {
   const session = useSession()
 
   // Modals
-  const { open, close, isOpen } = useModals()
+  const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
   const { restaurant } = useRestaurants()
@@ -77,7 +77,7 @@ const Index = () => {
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
-        data={restaurant}
+        data={getPayload('restaurantdiscovered')}
         // onNavigate={hasDirections ? () => revoke.mutate() : () => refetchDirections()}
         onNavigate={(activity) => {}}
         isNavigating={hasDirections}
