@@ -8,6 +8,7 @@ import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { ActivityResolved } from '../types'
 import { useSession } from 'next-auth/react'
 import { UseMutationResult } from '@tanstack/react-query'
+import useMapBox from '@/features/mapbox/hooks'
 
 // Constants
 const tabs = [
@@ -38,6 +39,11 @@ type ListProps = {
 
 const List = (props: ListProps) => {
   const { activities, isLocked, updater } = props
+  const { coords, coordAsString } = useMapBox()
+
+  const calculateDistance = (geometry: ActivityResolved['geometry']) => {
+    return coordAsString(coords)
+  }
 
   if (!activities?.length) return <>No contents</>
 
@@ -46,6 +52,7 @@ const List = (props: ListProps) => {
       {activities?.map((activity) => (
         <RestaurantCard
           data={activity}
+          distance={calculateDistance(activity.geometry)}
           compact
           key={activity.id}
           isLocked={isLocked}

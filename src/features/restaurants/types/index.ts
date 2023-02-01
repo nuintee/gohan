@@ -77,6 +77,7 @@ export type RestaurantProps = {
   isNavigating?: boolean
   isLocked: boolean
   data?: RestaurantData
+  distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
   onNavigate?: MouseEventHandler<HTMLButtonElement>
