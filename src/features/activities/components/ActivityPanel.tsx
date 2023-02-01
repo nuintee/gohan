@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
+// Function
+import calculateDistance from '@/libs/haversine-distance'
+
 // Components
 import Header from '@/components/ui/Header'
 import useActivities from '../hooks'
@@ -39,11 +42,7 @@ type ListProps = {
 
 const List = (props: ListProps) => {
   const { activities, isLocked, updater } = props
-  const { coords, coordAsString } = useMapBox()
-
-  const calculateDistance = (geometry: ActivityResolved['geometry']) => {
-    return coordAsString(coords)
-  }
+  const { coords } = useMapBox()
 
   if (!activities?.length) return <>No contents</>
 
@@ -52,7 +51,7 @@ const List = (props: ListProps) => {
       {activities?.map((activity) => (
         <RestaurantCard
           data={activity}
-          distance={calculateDistance(activity.geometry)}
+          distance={calculateDistance(coords, activity.geometry.location).auto}
           compact
           key={activity.id}
           isLocked={isLocked}
