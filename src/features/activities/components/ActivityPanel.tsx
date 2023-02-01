@@ -48,7 +48,9 @@ const List = (props: ListProps) => {
           compact
           key={activity.id}
           isLocked={isLocked}
-          onLike={() => updater.mutate({ activityId: activity.id, payload: { is_liked: false } })}
+          onLike={() =>
+            updater.mutate({ activityId: activity.id, payload: { is_liked: !activity.is_liked } })
+          }
         />
       ))}
     </div>

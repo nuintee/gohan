@@ -33,5 +33,6 @@ export const handlers = [
 
   rest.get(`${BASE_PATH}/restaurants`, restaurantPlacesAPIHandler),
   rest.get(`${BASE_PATH}/restaurants/:place_id`, restaurantDetailsAPIHandler),
+  rest.get(`${BASE_PATH}/details/:place_id`, restaurantDetailsAPIHandler),
   rest.get(`${BASE_PATH}/directions`, directionsAPIHandler),
 ]
