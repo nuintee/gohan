@@ -23,11 +23,11 @@ import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 
 const Index = () => {
-  // Test
-  const [isSBOpen, setIsSBOpen] = useState(false)
-
   // User
   const session = useSession()
+
+  // Activity
+  const { isPanelOpen, openPanel, closePanel } = useActivities()
 
   // Modals
   const { open, close, isOpen } = useModals()
@@ -56,10 +56,7 @@ const Index = () => {
             isLoading={session.status === 'loading'}
             onClick={() => open(session.status === 'authenticated' ? 'usersettings' : 'userauth')}
           />
-          <AcitvityButton
-            isLocked={session.status === 'unauthenticated'}
-            onClick={() => setIsSBOpen(true)}
-          />
+          <AcitvityButton isLocked={session.status === 'unauthenticated'} onClick={openPanel} />
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
@@ -79,7 +76,7 @@ const Index = () => {
           />
         </section>
       </div>
-      <ActivityPanel isOpen={isSBOpen} onClose={() => setIsSBOpen(false)} />
+      <ActivityPanel isOpen={isPanelOpen} onClose={closePanel} />
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
