@@ -8,15 +8,18 @@ import { MouseEventHandler } from 'react'
 import useModals from '@/hooks/modals'
 
 type UserProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>
-  isLoading: boolean
-  session: SessionContextValue
+  isLoading?: boolean
 }
 
 const User = (props: UserProps) => {
+  const { isLoading: loading } = props
+
+  // Contexts
   const { status, data: session } = useSession()
   const { open } = useModals()
-  const isLoading = status === 'loading'
+
+  // flag
+  const isLoading = loading || status === 'loading'
 
   const handleOnClick = () => {
     open(status === 'authenticated' ? 'usersettings' : 'userauth')

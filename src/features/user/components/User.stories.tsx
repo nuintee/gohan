@@ -12,9 +12,8 @@ import { SessionProvider } from 'next-auth/react'
 import { RecoilRoot } from 'recoil'
 
 const decorator = (Story, ctx, authed) => {
-  console.log(ctx.args.session)
   return (
-    <SessionProvider session={authed && ctx.args.session.data}>
+    <SessionProvider session={authed && { user }}>
       <RecoilRoot>
         <Story />
       </RecoilRoot>
@@ -37,17 +36,5 @@ const Template: ComponentStory<typeof User> = (args) => {
 
 export const Guest = Template.bind({})
 export const Authed = Template.bind({})
-
-Guest.args = {}
-
-Authed.args = {
-  session: {
-    status: 'authenticated',
-    data: {
-      expires: '60000',
-      user,
-    },
-  },
-}
 
 Authed.decorators = authedDecorators
