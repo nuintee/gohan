@@ -79,7 +79,7 @@ const useActivities = () => {
         onError: (error) => {
           useToast.error(error.message)
         },
-        enabled: status === 'authenticated',
+        enabled: status === 'authenticated' && activities.isOpen,
       },
     )
   }
