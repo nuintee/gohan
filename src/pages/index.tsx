@@ -81,11 +81,7 @@ const Index = () => {
         onNavigate={hasDirections ? () => revokeDirections.mutate() : () => refetchDirections()}
         isNavigating={hasDirections}
       />
-      <UserAuthConsentDialog
-        isOpen={isOpen('userauth')}
-        onClose={() => close('userauth')}
-        type={session.status === 'authenticated' ? 'signout' : 'login'}
-      />
+      <UserAuthConsentDialog />
       <UserSettingsModal
         user={session.data?.user}
         isOpen={isOpen('usersettings')}
