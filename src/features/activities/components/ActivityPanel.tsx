@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 // Components
 import Header from '@/components/ui/Header'
@@ -27,6 +27,7 @@ const placeholder_data = Array.from(Array(100).keys()).map((v) => ({
 
 type Props = {
   isOpen: boolean
+  onClose: Function
 }
 
 type ListProps = {
@@ -58,18 +59,18 @@ const List = (props: ListProps) => {
 }
 
 const ActivityPanel = (props: Props) => {
-  const { isOpen } = props
+  const { isOpen, onClose } = props
   const { getUserAll, update } = useActivities()
-  const { data } = getUserAll()
+  const { data, refetch } = getUserAll()
   const { data: session, status } = useSession()
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
   const updateActity = update()
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[0] ${slideIn}`}
+      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
     >
-      <Header title={'ActivityPanel'} onClose={() => {}} />
+      <Header title={'ActivityPanel'} onClose={onClose} />
       {/* <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
       <Renderer data={activityList} isLocked={status !== 'authenticated'} onLike={handleOnLike} /> */}
       <List activities={data} isLocked={status === 'unauthenticated'} updater={updateActity} />

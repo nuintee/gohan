@@ -18,17 +18,17 @@ export const userActivitiesHandler = async (
   const details = req?.url.searchParams.get('details')
   const onlyNeeded = req?.url.searchParams.get('onlyNeeded')
 
-  async function _findUserAllById(user_id: string) {
+  function _findUserAllById(user_id: string) {
     const found = activities.filter((activity) => activity.userId === user_id)
     return found || []
   }
 
-  async function _findDetailsById(place_id: string) {
+  function _findDetailsById(place_id: string) {
     return detailsData.result(place_id)
   }
 
   try {
-    const fetchedUserActivities = await _findUserAllById(user_id)
+    const fetchedUserActivities = _findUserAllById(user_id)
     let detailedActivities: Activity[] = []
 
     if (details) {
