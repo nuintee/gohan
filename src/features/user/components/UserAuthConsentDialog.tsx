@@ -1,11 +1,12 @@
-import { signIn, signOut } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button, Header, Input, Texts } from '@/components/ui'
 import ModalLayout from '@/layouts/ModalLayout'
+import useModals from '@/hooks/modals'
 
 type Props = {
-  isOpen: boolean
-  type: 'signout' | 'login'
-  onClose: React.MouseEventHandler<HTMLButtonElement>
+  isOpen?: boolean
+  type?: 'signout' | 'login'
+  onClose?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const consents = {
@@ -26,7 +27,14 @@ const consents = {
 }
 
 const UserAuthConsentDialog = (props: Props) => {
-  const { isOpen, onClose, type } = props
+  const { status } = useSession()
+  const { isOpen: isUserAuthOpen, close } = useModals()
+
+  const {
+    isOpen = isUserAuthOpen('userauth'),
+    onClose = () => close('userauth'),
+    type = status === 'authenticated' ? 'signout' : 'login',
+  } = props
 
   return (
     <ModalLayout isOpen={isOpen}>

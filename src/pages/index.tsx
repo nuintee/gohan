@@ -27,9 +27,6 @@ const Index = () => {
   // User
   const session = useSession()
 
-  // Activity
-  const { isPanelOpen, openPanel, closePanel } = useActivities()
-
   // Modals
   const { open, close, isOpen, getPayload } = useModals()
 
