@@ -31,7 +31,7 @@ const Index = () => {
   const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  const { restaurant } = useRestaurants()
+  const { restaurant, set } = useRestaurants()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
@@ -43,11 +43,6 @@ const Index = () => {
     revokeDirections,
     getDirections: getDirections,
   } = useDirections()
-
-  const { refetch } = getDirections({
-    end: `${restaurant?.geometry?.location?.lat},${restaurant?.geometry?.location?.lng}`,
-  })
-  const revoke = revokeDirections()
 
   return (
     <>
@@ -77,9 +72,7 @@ const Index = () => {
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
-        data={getPayload('restaurantdiscovered')}
-        // onNavigate={hasDirections ? () => revoke.mutate() : () => refetchDirections()}
-        onNavigate={(activity) => {}}
+        data={restaurant}
         isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />

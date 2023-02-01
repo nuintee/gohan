@@ -22,8 +22,9 @@ const useRestaurants = () => {
   }
 
   const set = (payload: ResultsEntity) => {
+    console.log(payload)
     open('restaurantdiscovered', payload)
-    return queryClient.setQueryData([BASE_KEY], payload)
+    queryClient.setQueryData([BASE_KEY], payload)
   }
 
   const get = () => {
@@ -43,7 +44,7 @@ const useRestaurants = () => {
       },
       onSuccess: (data) => {
         // OpenModal
-        open('restaurantdiscovered', data)
+        set(data)
       },
       retry: !isGPSAvailable ? 0 : 3,
       enabled: false,
