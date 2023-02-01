@@ -1,12 +1,18 @@
 import { atom } from 'recoil'
 
-const modalKeys = ['userauth', 'usersettings', 'usersignout', 'restaurantdiscovered', ''] as const
+export const modalKeys = [
+  'userauth',
+  'usersettings',
+  'usersignout',
+  'restaurantdiscovered',
+] as const
 
-export const modalState = atom<{
-  modalKey: typeof modalKeys[number][]
-}>({
+type Managed = {
+  key: typeof modalKeys[number]
+  payload?: {}
+}[]
+
+export const modalState = atom<Managed>({
   key: 'modalState',
-  default: {
-    modalKey: [''],
-  },
+  default: [],
 })

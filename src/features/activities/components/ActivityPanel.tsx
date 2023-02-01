@@ -77,8 +77,6 @@ const ActivityPanel = (props: Props) => {
       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
     >
       <Header title={'ActivityPanel'} onClose={onClose} />
-      {/* <Tab tabs={tabs} selectedId={selectedId} onSelect={setTabs} />
-      <Renderer data={activityList} isLocked={status !== 'authenticated'} onLike={handleOnLike} /> */}
       <List activities={data} isLocked={status === 'unauthenticated'} updater={updateActity} />
     </div>
   )

@@ -1,5 +1,5 @@
 // Stores
-import { modalState } from '@/stores/modals'
+import { modalKeys, modalState } from '@/stores/modals'
 import { useRecoilState } from 'recoil'
 
 const useModals = () => {
@@ -8,38 +8,38 @@ const useModals = () => {
   /**
    * Checks if the target modal is open by given key
    */
-  const isOpen = (key: typeof modals.modalKey[number]) => {
-    return modals.modalKey.includes(key)
+  const isOpen = (key: typeof modalKeys[number]) => {
+    return modals.find((v) => v.key === key)
   }
 
-  const _appendKey = (key: typeof modals.modalKey[number]) => {
-    setModals((prev) => ({ ...prev, modalKey: [...prev.modalKey.filter((v) => v !== key), key] })) // appending while keeping unique
+  const _append = (key: typeof modalKeys[number], payload) => {
+    setModals((prev) => [...prev, { key, payload }])
   }
 
-  const _removeKey = (key: typeof modals.modalKey[number]) => {
-    setModals((prev) => ({ ...prev, modalKey: prev.modalKey.filter((v) => v != key) }))
+  const _remove = (key: typeof modalKeys[number]) => {
+    setModals((prev) => prev.filter((v) => v.key !== key))
   }
 
-  const open = (key: typeof modals.modalKey[number]) => {
+  const open = (key: typeof modalKeys[number], payload) => {
     if (isOpen(key)) return
-    _appendKey(key)
+    _append(key, payload)
   }
 
-  const close = (key: typeof modals.modalKey[number]) => {
+  const close = (key: typeof modalKeys[number]) => {
     if (!isOpen(key)) return
-    _removeKey(key)
+    _remove(key)
   }
 
-  const toggle = (key: typeof modals.modalKey[number]) => {
-    if (modals.modalKey.includes(key)) {
+  const toggle = (key: typeof modalKeys[number], payload) => {
+    if (isOpen(key)) {
       close(key)
     } else {
-      open(key)
+      open(key, payload)
     }
   }
 
   const closeAll = () => {
-    setModals((prev) => ({ ...prev, modalKey: [''] }))
+    setModals((prev) => [])
   }
 
   return { open, close, toggle, closeAll, isOpen }
