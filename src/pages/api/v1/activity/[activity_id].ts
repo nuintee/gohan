@@ -9,8 +9,8 @@ import { getRestaurantDetails } from '@/features/restaurants/controllers/getRest
 // GET | PATCH | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const activity_id = req.query.activity_id as string
-  const details = req.query.details as string
-  const onlyNeeded = req.query.onlyNeeded as string
+  const details = req.query?.details as string
+  const onlyNeeded = req.query?.onlyNeeded as string
 
   try {
     switch (req.method) {
