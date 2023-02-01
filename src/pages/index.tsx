@@ -64,11 +64,7 @@ const Index = () => {
               onClick={() => open('restaurantdiscovered')}
             />
           )}
-          <GohanButton
-            onClick={hasDirections ? () => revokeDirections.mutate() : () => refetch()}
-            isLoading={isLoadingUserLocation || isFetching}
-            isNavigating={hasDirections}
-          />
+          <GohanButton />
         </section>
       </div>
       <ActivityPanel />
