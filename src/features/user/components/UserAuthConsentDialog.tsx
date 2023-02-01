@@ -31,9 +31,9 @@ const UserAuthConsentDialog = (props: Props) => {
   const { isOpen: isUserAuthOpen, close } = useModals()
 
   const {
-    isOpen = isUserAuthOpen('userauth'),
+    isOpen = isUserAuthOpen('userauth') ?? false,
     onClose = () => close('userauth'),
-    type = status === 'authenticated' ? 'signout' : 'login',
+    type = status === 'authenticated' ? 'signout' : 'login' ?? 'login',
   } = props
 
   return (
