@@ -12,7 +12,7 @@ const AcitvityButton = (props: Props) => {
   const { openPanel } = useActivities()
   const { status } = useSession()
 
-  const { isLocked = status === 'unauthenticated' } = props
+  const { isLocked = status === 'unauthenticated' ?? false } = props
 
   return (
     <button
