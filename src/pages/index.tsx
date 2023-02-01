@@ -52,11 +52,7 @@ const Index = () => {
     <>
       <div className='flex flex-col gap-4'>
         <section className='absolute top-0 left-0 z-[1] w-full p-4 flex gap-4 justify-between'>
-          <User
-            session={session}
-            isLoading={session.status === 'loading'}
-            onClick={() => open(session.status === 'authenticated' ? 'usersettings' : 'userauth')}
-          />
+          <User />
           <AcitvityButton isLocked={session.status === 'unauthenticated'} onClick={openPanel} />
         </section>
         <MapBox />
