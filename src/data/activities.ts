@@ -3,7 +3,7 @@ import { RestaurantData } from '@/features/restaurants/types'
 export const activities: RestaurantData[] = [
   {
     id: '1',
-    user_id: 'UuIbw4',
+    userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad',
     discovered_at: new Date(2022, 9, 6),
     is_liked: false,
     business_status: 'OPERATIONAL',
@@ -55,7 +55,7 @@ export const activities: RestaurantData[] = [
   },
   {
     id: '2',
-    user_id: 'UuIbw4',
+    userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad',
     discovered_at: new Date(2022, 12, 31),
     is_liked: false,
     business_status: 'OPERATIONAL',
@@ -96,7 +96,7 @@ export const activities: RestaurantData[] = [
   },
   {
     id: '3',
-    user_id: 'UuIbw4',
+    userId: 'UuIbw4',
     discovered_at: new Date(2022, 10, 12),
     is_liked: true,
     business_status: 'OPERATIONAL',

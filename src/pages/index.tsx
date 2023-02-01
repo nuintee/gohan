@@ -21,17 +21,21 @@ import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import useRestaurants from '@/features/restaurants/hooks'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
+import calculateDistance from '@/libs/haversine-distance'
 
 const Index = () => {
   // User
   const session = useSession()
 
+  // Activity
+  const { isPanelOpen, openPanel, closePanel } = useActivities()
+
   // Modals
-  const { open, close, isOpen } = useModals()
+  const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  const { get: getRestaurants, clear } = useRestaurants()
-  const { refetch, isFetching, data: restaurant } = getRestaurants()
+  const { get: getRestaurants, clear, restaurant } = useRestaurants()
+  const { refetch, isFetching } = getRestaurants()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
@@ -48,12 +52,8 @@ const Index = () => {
     <>
       <div className='flex flex-col gap-4'>
         <section className='absolute top-0 left-0 z-[1] w-full p-4 flex gap-4 justify-between'>
-          <User
-            session={session}
-            isLoading={session.status === 'loading'}
-            onClick={() => open(session.status === 'authenticated' ? 'usersettings' : 'userauth')}
-          />
-          <AcitvityButton isLocked={session.status === 'unauthenticated'} />
+          <User />
+          <AcitvityButton isLocked={session.status === 'unauthenticated'} onClick={openPanel} />
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
@@ -63,6 +63,7 @@ const Index = () => {
               isLocked={session.status === 'unauthenticated'}
               isNavigating={hasDirections}
               data={restaurant}
+              distance={calculateDistance(coords, restaurant?.geometry?.location).auto}
               onClick={() => open('restaurantdiscovered')}
             />
           )}
@@ -73,10 +74,12 @@ const Index = () => {
           />
         </section>
       </div>
+      <ActivityPanel isOpen={isPanelOpen} onClose={closePanel} />
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
+        distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
         data={restaurant}
         onNavigate={hasDirections ? () => revokeDirections.mutate() : () => refetchDirections()}
         isNavigating={hasDirections}

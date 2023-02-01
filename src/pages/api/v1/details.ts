@@ -2,22 +2,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 // controllers
-import { getDirections } from '@/features/directions/controllers/getDirections'
+import { getRestaurantDetails } from '@/features/restaurants/controllers/getRestaurantDetails'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const profileType = req.query?.profileType as string
-  const start = req.query?.start as string
-  const end = req.query?.end as string
+  const place_id = req.query?.place_id as string
+  const onlyNeeded = req.query?.onlyNeeded !== 'false'
 
   if (req.method !== 'GET')
     res.status(405).json({ message: 'Invalid method', code: 405, method: req.method })
 
   try {
-    const data = await getDirections({
-      profileType,
-      start,
-      end,
-    })
+    const data = await getRestaurantDetails({ place_id, onlyNeeded })
     res.status(200).json(data)
   } catch (error) {
     res.status(500).json(error)

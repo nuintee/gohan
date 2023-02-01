@@ -7,13 +7,22 @@ import { BASE_URL } from '@/config/env'
 import useMapBox from '@/features/mapbox/hooks'
 import useModals from '@/hooks/modals'
 import { ResultsEntity } from '../types'
+import { useRecoilState } from 'recoil'
+import { restaurantsState } from '../stores'
 
 const BASE_KEY = 'restaurants'
 
 const useRestaurants = () => {
   const queryClient = useQueryClient()
   const { coords } = useMapBox()
-  const { open } = useModals()
+
+  const clear = () => {
+    return queryClient.setQueryData([BASE_KEY], {})
+  }
+
+  const set = (payload) => {
+    return queryClient.setQueryData([BASE_KEY], payload)
+  }
 
   const get = () => {
     const isGPSAvailable = !!coords.latitude && !!coords.longitude
@@ -30,8 +39,8 @@ const useRestaurants = () => {
       onError: (error) => {
         useToast.error(error.message)
       },
-      onSuccess: () => {
-        open('restaurantdiscovered')
+      onSuccess: (data) => {
+        set(data)
       },
       retry: !isGPSAvailable ? 0 : 3,
       enabled: false,
@@ -52,11 +61,9 @@ const useRestaurants = () => {
     )
   }
 
-  const clear = () => {
-    return queryClient.setQueryData([BASE_KEY], {})
-  }
+  const restaurant = queryClient.getQueryData([BASE_KEY])
 
-  return { get, getDetails, clear }
+  return { get, getDetails, clear, set, restaurant }
 }
 
 export default useRestaurants

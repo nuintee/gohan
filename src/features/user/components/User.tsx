@@ -5,28 +5,38 @@ import { colors } from '@/config/colors'
 import { User as UserIcon, PulseLoader } from '@/components/icons'
 import { SessionContextValue, useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
+import useModals from '@/hooks/modals'
 
 type UserProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>
-  isLoading: boolean
-  session: SessionContextValue
+  isLoading?: boolean
 }
 
 const User = (props: UserProps) => {
-  const { onClick, isLoading, session } = props
+  const { isLoading: loading } = props
+
+  // Contexts
+  const { status, data: session } = useSession()
+  const { open } = useModals()
+
+  // flag
+  const isLoading = loading || status === 'loading'
+
+  const handleOnClick = () => {
+    open(status === 'authenticated' ? 'usersettings' : 'userauth')
+  }
 
   const feedBack = !isLoading && 'active:scale-90 cursor-pointer active:opacity-90'
 
   const theme =
-    session?.status === 'authenticated'
+    status === 'authenticated'
       ? `h-12 aspect-square rounded-full overflow-hidden ${feedBack}`
       : `h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-2 bg-gh-white ${feedBack}`
 
   return (
-    <button className={theme} onClick={onClick}>
-      {session?.status === 'authenticated' ? (
+    <button className={theme} onClick={handleOnClick}>
+      {status === 'authenticated' ? (
         <img
-          src={`https://ui-avatars.com/api/?name=${session.data.user?.name}&background=random`}
+          src={`https://ui-avatars.com/api/?name=${session.user?.name}&background=random`}
           alt='Profile Image'
           className='h-full w-full'
         />

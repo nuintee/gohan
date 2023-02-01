@@ -1,5 +1,6 @@
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
+import { neededDetailsFields } from '../schemas/getRestaurantDetails.schema'
 
 export type PlacesSearchStatus = [
   'OK',
@@ -18,7 +19,7 @@ export interface PlacesAPI {
 
 export interface DetailsAPI {
   html_attributions?: null[] | null
-  result?: ResultsEntity[] | null
+  result?: ResultsEntity | null
   status: PlacesSearchStatus[number]
 }
 
@@ -68,7 +69,7 @@ export interface PlusCode {
 }
 
 // Data to pass UI Component
-export type RestaurantData = Activity & ResultsEntity
+export type RestaurantData = Activity & Pick<ResultsEntity, typeof neededDetailsFields[number]>
 
 // Data to pass Renderer
 export type RestaurantProps = {
@@ -76,6 +77,7 @@ export type RestaurantProps = {
   isNavigating?: boolean
   isLocked: boolean
   data?: RestaurantData
+  distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
   onNavigate?: MouseEventHandler<HTMLButtonElement>

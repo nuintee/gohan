@@ -21,7 +21,7 @@ export const cardConfig = {
       : 'https://source.unsplash.com/random',
   imgAlt: (name?: string) => `${name && "'s"} cover image`,
   IMG_DRAGGABLE: false,
-  labelDistance: (distance?: string) => distance || '906m',
+  labelDistance: (distance?: string) => distance,
   labelIcon: RouteArrow(),
   textsMain: (main?: string) => main || 'Restaurant Name',
   textsSub: (sub?: string) => sub || 'Restaurant・Types',
