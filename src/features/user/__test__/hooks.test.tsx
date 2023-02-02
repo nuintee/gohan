@@ -4,8 +4,8 @@ import { SessionProvider } from 'next-auth/react'
 import 'whatwg-fetch'
 
 // hooks
-import useUserMutation from '../hooks/useUserMutation'
-import useUserQuery from '../hooks/useUserQuery'
+import useUserMutation from '../hooks/useUpdateUser'
+import useUserQuery from '../hooks/useGetUser'
 import useToast from '@/libs/react-toastify'
 
 const queryClient = new QueryClient({

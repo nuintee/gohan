@@ -15,7 +15,7 @@ const fetcher = (user?: User) => {
   return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data)
 }
 
-const useUserQuery = () => {
+const useGetUser = () => {
   const { status, data: session } = useSession()
 
   return useQuery({
@@ -31,4 +31,4 @@ const useUserQuery = () => {
   })
 }
 
-export default useUserQuery
+export default useGetUser

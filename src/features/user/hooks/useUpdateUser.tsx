@@ -13,7 +13,7 @@ const fetcher = (userId?: string, payload?: Pick<User, 'name'>) => {
   return axios.patch(`${BASE_URL}/api/v1/user/${userId}`, payload).then((res) => res.data)
 }
 
-const useUserMutation = () => {
+const useUpdateUser = () => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
 
@@ -32,4 +32,4 @@ const useUserMutation = () => {
   })
 }
 
-export default useUserMutation
+export default useUpdateUser
