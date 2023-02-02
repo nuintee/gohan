@@ -6,10 +6,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { QUERY_KEY } from '../constants'
 
 const fetcher = (activityId: string) => {
-  return axios.delete(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data),
+  return axios.delete(`${BASE_URL}/api/v1/activity/${activityId}`).then((res) => res.data)
 }
 
-const useDeleteActivity = ({ activityId = "" }) => {
+const useDeleteActivity = ({ activityId = '' }) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -22,7 +22,7 @@ const useDeleteActivity = ({ activityId = "" }) => {
       }
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id}])
+      queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id }])
     },
   })
 }
