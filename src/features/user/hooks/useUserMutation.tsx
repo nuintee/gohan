@@ -6,7 +6,7 @@ import axios from 'axios'
 import useToast from '@/libs/react-toastify'
 
 // Env
-const BASE_KEY = 'user'
+import { QUERY_KEY } from '../constants'
 import { BASE_URL } from '@/config/env'
 
 const fetcher = (userId?: string, payload?: Pick<User, 'name'>) => {
@@ -18,7 +18,7 @@ const useUserMutation = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: [BASE_KEY, { user: session?.user }],
+    mutationKey: [QUERY_KEY, { user: session?.user }],
     mutationFn: (payload?: Pick<User, 'name'>) => fetcher(session?.user.id, payload),
     onError: (error) => {
       if (error instanceof Error) {
@@ -27,7 +27,7 @@ const useUserMutation = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([BASE_KEY])
+      queryClient.invalidateQueries([QUERY_KEY])
     },
   })
 }

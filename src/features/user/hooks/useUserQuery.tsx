@@ -6,7 +6,7 @@ import axios from 'axios'
 import useToast from '@/libs/react-toastify'
 
 // Env
-const BASE_KEY = 'user'
+import { QUERY_KEY } from '../constants'
 import { BASE_URL } from '@/config/env'
 
 const fetcher = (user?: User) => {
@@ -19,7 +19,7 @@ const useUserQuery = () => {
   const { status, data: session } = useSession()
 
   return useQuery({
-    queryKey: [BASE_KEY, { user: session?.user }],
+    queryKey: [QUERY_KEY, { user: session?.user }],
     queryFn: () => fetcher(session?.user),
     enabled: status === 'authenticated',
     onError: (error) => {
