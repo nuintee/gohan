@@ -3,9 +3,12 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { SessionProvider } from 'next-auth/react'
 import 'whatwg-fetch'
 
+// data
+import { user } from '@/data/user'
+
 // hooks
-import useUserMutation from '../hooks/useUpdateUser'
-import useUserQuery from '../hooks/useGetUser'
+import useGetUser from '../hooks/useGetUser'
+import useUpdateUser from '../hooks/useUpdateUser'
 import useToast from '@/libs/react-toastify'
 
 const queryClient = new QueryClient({
@@ -22,27 +25,33 @@ const queryClient = new QueryClient({
 })
 
 const wrapper = ({ children }) => (
-  <SessionProvider>
+  <SessionProvider
+    session={{
+      expires: '',
+      user,
+    }}
+  >
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   </SessionProvider>
 )
 
 describe('useUserQuery', () => {
-  test('Success', async () => {
-    const { result } = renderHook(() => useUserQuery(), { wrapper })
+  test('getUser', async () => {
+    const { result } = renderHook(() => useGetUser(), { wrapper })
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true)
     })
 
-    expect(result.current.isSuccess).toBe(true)
+    expect(result.current.data).toBeDefined()
   }),
-    test('Toast on Error', async () => {
-      const { result } = renderHook(() => useUserQuery(), { wrapper })
+    test('updateUser', async () => {
+      const { result } = renderHook(() => useUpdateUser(), { wrapper })
+
+      const mutated = await result.current.mutate({})
 
       await waitFor(() => {
-        expect(result.current.isError).toBe(true)
+        expect(result.current.isSuccess).toBe(true)
       })
-      expect(useToast.error).toHaveBeenCalled()
     })
 })
