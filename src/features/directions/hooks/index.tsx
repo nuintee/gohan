@@ -59,22 +59,6 @@ const useDirections = () => {
     }
   }
 
-  // const getDirections = () => {
-  //   return useQuery({
-  //     queryKey: [BASE_KEY],
-  //     queryFn: (props: Pick<Partial<Props>, 'start'> & Omit<Props, 'start'>) => {
-  //       const { start = coordAsString(coords), end } = props
-
-  //       return axios
-  //         .get(`${BASE_URL}/api/v1/directions?start=${start}&end=${end}`)
-  //         .then((res) => res.data)
-  //     },
-  //     enabled: false,
-  //     onError: (error) => {
-  //       return useToast.error(error.message)
-  //     },
-  //   })
-  // }
   const getDirections = (props: Partial<Props>) => {
     return useQuery<DirectionsAPI>({
       queryKey: [BASE_KEY],
