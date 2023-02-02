@@ -55,8 +55,8 @@ const useGetRestaurants = (props?: { coords: Partial<GeolocationCoordinates> }) 
     queryKey: [QUERY_KEY, { coords }],
     queryFn: () => fetcher(coords),
     onError: (error) => {
+      console.error(error)
       if (error instanceof Error) {
-        console.error(error)
         useToast.error(error.message)
       }
     },

@@ -14,7 +14,7 @@ export const restaurantPlacesAPIHandler = async (
     const onlyOpenNow = places.results.filter((map, index) => map.opening_hours?.open_now)
     const randomIndex = Math.floor(Math.random() * onlyOpenNow.length)
     const responseData = onlyOpenNow[randomIndex]
-    return responseData
+    return responseData || places.results[0]
   }
 
   try {

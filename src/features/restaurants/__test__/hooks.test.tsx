@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import 'whatwg-fetch'
 
 // data
-import { user } from '@/data/user'
+import geolocation from '@/data/geolocation.json'
 
 // hooks
 import useGetRestaurants from '../hooks/useRestaurants/useGetRestaurants'
@@ -13,11 +13,6 @@ import useRestaurantDetails from '../hooks/useRestaurantDetails'
 import { RecoilRoot } from 'recoil'
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
   logger: {
     log: console.log,
     warn: console.warn,
@@ -34,30 +29,26 @@ const wrapper = ({ children }) => (
 )
 
 describe('hooks/restaurants', () => {
-  // test('getRestaurants', async () => {
-  //   const { result } = renderHook(() => useGetRestaurants()), { wrapper })
-  //   await waitFor(() => {
-  //     expect(result.current.isSuccess).toBe(true)
-  //   })
-  //   expect(result.current.data).toMatchObject(user)
-  //   })
-  // test('updateUser', async () => {
-  //   const UPDATE_NAME = 'UPDATED_USER_NAME'
-  //   const { result } = renderHook(() => useUpdateUser(), { wrapper })
-  //   await result.current.mutateAsync({
-  //     name: UPDATE_NAME,
-  //   })
-  //   await waitFor(() => {
-  //     expect(result.current.isSuccess).toBe(true)
-  //   })
-  //   expect(result.current.data.name).toBe(UPDATE_NAME)
-  // })
   test('getRestaurants', async () => {
-    const { result } = renderHook(() => useGetRestaurants(), { wrapper })
+    const { result } = renderHook(
+      () =>
+        useGetRestaurants({
+          coords: {
+            latitude: geolocation.coords.latitude,
+            longitude: geolocation.coords.longitude,
+          },
+        }),
+      {
+        wrapper,
+      },
+    )
+
+    const refetched = await result.current.refetch()
 
     await waitFor(() => {
-      expect(result.current.isSuccess).toBe(true)
+      expect(refetched.isSuccess).toBe(true)
     })
-    expect(result.current.data).toBeDefined()
+
+    expect(refetched.data).toBeDefined()
   })
 })
