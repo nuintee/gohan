@@ -47,8 +47,9 @@ const fetcher = (coords: Partial<GeolocationCoordinates>) => {
     .then((res) => res.data)
 }
 
-const useGetRestaurants = () => {
-  const { coords } = useMapBox()
+const useGetRestaurants = (props: { coords: Partial<GeolocationCoordinates> }) => {
+  const { coords: c } = useMapBox()
+  const coords = props?.coords || c
 
   return useQuery({
     queryKey: [QUERY_KEY, { coords }],
