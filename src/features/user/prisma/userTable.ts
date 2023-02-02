@@ -51,7 +51,7 @@ export const userTable = {
   add: async (props: AddUserProps) => {
     await addUserSchema.parse(props)
 
-    const id = randomUUID()
+    const id = props.id || randomUUID()
     const addedUser = await prisma.user.create({
       data: { ...props, id, registered_at: new Date().toISOString() },
     })

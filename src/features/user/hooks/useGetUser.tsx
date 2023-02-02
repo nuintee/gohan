@@ -15,12 +15,13 @@ const fetcher = (user?: User) => {
   return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data)
 }
 
-const useGetUser = () => {
+const useGetUser = (props?: { user: User | {} }) => {
   const { status, data: session } = useSession()
+  const { user = session?.user ?? {} } = props
 
   return useQuery({
-    queryKey: [QUERY_KEY, { user: session?.user }],
-    queryFn: () => fetcher(session?.user),
+    queryKey: [QUERY_KEY, { user }],
+    queryFn: () => fetcher(user),
     enabled: status === 'authenticated',
     onError: (error) => {
       if (error instanceof Error) {

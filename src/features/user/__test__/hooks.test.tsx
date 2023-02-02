@@ -41,7 +41,7 @@ const wrapper = ({ children }) => (
 )
 
 const addTestUser = async (payload: AddUserProps) => {
-  const query = await fetch(`http://localhost:3000/api/v1/users`, {
+  const query = await fetch(`${BASE_URL}/api/v1/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const addTestUser = async (payload: AddUserProps) => {
 }
 
 const removeTestUser = async (userId: string) => {
-  const query = await fetch(`http://localhost:3000/api/v1/user/${userId}`, {
+  const query = await fetch(`${BASE_URL}/api/v1/user/${userId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -69,12 +69,13 @@ beforeAll(async () => {
   const data = await addTestUser({
     name: user.name as string,
     email: user.email as string,
+    id: user.id as string,
   })
 })
 
 describe('useUserQuery', () => {
   test('getUser', async () => {
-    const { result } = renderHook(() => useGetUser(), { wrapper })
+    const { result } = renderHook(() => useGetUser({ user }), { wrapper })
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true)
