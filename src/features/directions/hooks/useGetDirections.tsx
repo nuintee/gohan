@@ -16,17 +16,23 @@ const fetcher = ({ start, end }: { start: string; end: string }) => {
     .then((res) => res.data)
 }
 
-const useGetDirections = (points: Pick<Props, 'start' | 'end'>) => {
+const useGetDirections = (points: Partial<Pick<Props, 'start' | 'end'>>) => {
   const { coords, coordAsString } = useMapBox()
   const {
     start = coordAsString(coords as Pick<GeolocationCoordinates, 'latitude' | 'longitude'>),
     end,
   } = points
 
+  const isGPSAvailable = coords.latitude && coords.longitude
+
   return useQuery<DirectionsAPI>({
     queryKey: [QUERY_KEY, { start, end }],
-    queryFn: () => fetcher({ start, end }),
+    queryFn: () => {
+      if (!isGPSAvailable) throw Error('Please allow user location tracking')
+      return fetcher({ start, end })
+    },
     enabled: false,
+    ...(!isGPSAvailable && { retry: 0 }),
     onError: (error) => {
       console.error(error)
 

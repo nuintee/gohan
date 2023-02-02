@@ -67,7 +67,7 @@ export const activityHandler = async (
 
   function _findOneById(activity_id: string): ActivityResolved | {} {
     const found = activities.find((activity) => activity.id === activity_id)
-    return found || {}
+    return found ?? {}
   }
 
   async function _findDetailsById(place_id: string) {

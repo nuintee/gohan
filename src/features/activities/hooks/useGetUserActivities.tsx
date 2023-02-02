@@ -29,7 +29,7 @@ const useGetUserActivities = (props: {
   onlyNeeded?: boolean
 }) => {
   const { data: session } = useSession()
-  const { userId = session?.user.id ?? '', details = true, onlyNeeded = true } = props
+  const { userId = session?.user.id, details = true, onlyNeeded = true } = props
 
   return useQuery<ActivityResolved[]>({
     queryKey: [QUERY_KEY, 'user', { userId }],
