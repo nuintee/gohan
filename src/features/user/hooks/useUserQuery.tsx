@@ -1,13 +1,17 @@
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import { User } from 'next-auth'
 import { useSession } from 'next-auth/react'
+
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import useToast from '@/libs/react-toastify'
 
 // Env
 const BASE_KEY = 'user'
 import { BASE_URL } from '@/config/env'
 
-const fetcher = (user: User) => {
+const fetcher = (user?: User) => {
+  if (!user) throw Error('Unauthed Request', { cause: 'User Must be Authed' })
+
   return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data || user)
 }
 
@@ -18,6 +22,12 @@ const useUserQuery = () => {
     queryKey: [BASE_KEY, { user: session?.user }],
     queryFn: () => fetcher(session?.user),
     enabled: status === 'authenticated',
+    onError: (error) => {
+      if (error instanceof Error) {
+        console.error(error)
+        useToast.error(error.message)
+      }
+    },
   })
 }
 
