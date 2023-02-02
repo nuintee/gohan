@@ -30,6 +30,9 @@ import useClearDirections from '@/features/directions/hooks/useClearDirections'
 import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
 import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
 import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useClearRestaurant'
+import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
+import useGetUser from '@/features/user/hooks/useGetUser'
+import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 
 // const Index = () => {
 //   // User
@@ -100,9 +103,14 @@ const Index = () => {
   const clearDirections = useClearDirections({ end: `23.408622,42.648763` })
   const formatToGeoJSON = useGeoJSON() // OK
 
-  // Restaurants
+  // Restaurants [OK]
   const getRestaurants = useGetRestaurants()
   const clearRestaurants = useClearRestaurant()
+  const getRestaurantDetail = useRestaurantDetails({ place_id: 'ChIJzdIWCP2GqkAR4wCobfmZAvo' })
+
+  // User [OK]
+  const getUser = useGetUser()
+  const updateUser = useUpdateUser()
 
   return (
     <>
@@ -135,6 +143,17 @@ const Index = () => {
           <p>{getRestaurants.isFetching ? '...' : JSON.stringify(getRestaurants.data)}</p>
           <button onClick={getRestaurants.refetch}>Get Restaurants</button>
           <button onClick={clearRestaurants.mutate}>Clear Restaurants</button>
+          <hr></hr>
+
+          <p>{getRestaurantDetail.isFetching ? '...' : JSON.stringify(getRestaurantDetail.data)}</p>
+          <button onClick={getRestaurantDetail.refetch}>Log Restaurant Detail</button>
+          <hr></hr>
+
+          <p>{getUser.isFetching ? '...' : JSON.stringify(getUser.data)}</p>
+          <button onClick={getUser.refetch}>Get User</button>
+          <button onClick={() => updateUser.mutate({ name: new Date().toISOString() })}>
+            Update User
+          </button>
           <hr></hr>
 
           <button onClick={() => useToast('S')}>useToast</button>
