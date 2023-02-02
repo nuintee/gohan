@@ -9,19 +9,22 @@ import useModals from '@/hooks/modals'
 import { ResultsEntity } from '../types'
 import { useRecoilState } from 'recoil'
 import { restaurantsState } from '../stores'
+import useDirections from '@/features/directions/hooks'
 
 const BASE_KEY = 'restaurants'
 
 const useRestaurants = () => {
   const queryClient = useQueryClient()
+  const { open } = useModals()
   const { coords } = useMapBox()
 
   const clear = () => {
-    return queryClient.setQueryData([BASE_KEY], {})
+    queryClient.setQueryData([BASE_KEY], {})
   }
 
-  const set = (payload) => {
-    return queryClient.setQueryData([BASE_KEY], payload)
+  const set = (payload: ResultsEntity) => {
+    open('restaurantdiscovered', payload)
+    queryClient.setQueryData([BASE_KEY], payload)
   }
 
   const get = () => {
@@ -40,6 +43,7 @@ const useRestaurants = () => {
         useToast.error(error.message)
       },
       onSuccess: (data) => {
+        // OpenModal
         set(data)
       },
       retry: !isGPSAvailable ? 0 : 3,

@@ -31,19 +31,18 @@ const Index = () => {
   const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  const { get: getRestaurants, clear, restaurant } = useRestaurants()
-  const { refetch, isFetching } = getRestaurants()
+  const { restaurant, set } = useRestaurants()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
 
   // Directions
-  const { hasDirections, directions, revoke, get: getDirections } = useDirections()
-  const { refetch: refetchDirections } = getDirections({
-    start: coordAsString(coords),
-    end: `${restaurant?.geometry?.location?.lat},${restaurant?.geometry?.location?.lng}`,
-  })
-  const revokeDirections = revoke()
+  const {
+    hasDirections,
+    directions,
+    revokeDirections,
+    getDirections: getDirections,
+  } = useDirections()
 
   return (
     <>
@@ -64,11 +63,7 @@ const Index = () => {
               onClick={() => open('restaurantdiscovered')}
             />
           )}
-          <GohanButton
-            onClick={hasDirections ? () => revokeDirections.mutate() : () => refetch()}
-            isLoading={isLoadingUserLocation || isFetching}
-            isNavigating={hasDirections}
-          />
+          <GohanButton />
         </section>
       </div>
       <ActivityPanel />
@@ -78,7 +73,6 @@ const Index = () => {
         onClose={() => close('restaurantdiscovered')}
         distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
         data={restaurant}
-        onNavigate={hasDirections ? () => revokeDirections.mutate() : () => refetchDirections()}
         isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />

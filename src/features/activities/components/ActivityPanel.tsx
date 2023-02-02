@@ -13,6 +13,7 @@ import { useSession } from 'next-auth/react'
 import { UseMutationResult } from '@tanstack/react-query'
 import useMapBox from '@/features/mapbox/hooks'
 import useModals from '@/hooks/modals'
+import useRestaurants from '@/features/restaurants/hooks'
 
 // Constants
 const tabs = [
@@ -45,7 +46,7 @@ type ListProps = {
 const List = (props: ListProps) => {
   const { activities, isLocked, updater } = props
   const { coords } = useMapBox()
-  const { open } = useModals()
+  const { set } = useRestaurants()
 
   if (!activities?.length) return <>No contents</>
 
@@ -61,7 +62,7 @@ const List = (props: ListProps) => {
           onLike={() =>
             updater.mutate({ activityId: activity.id, payload: { is_liked: !activity.is_liked } })
           }
-          onClick={() => open('restaurantdiscovered', activity)}
+          onClick={() => set(activity)}
         />
       ))}
     </div>
