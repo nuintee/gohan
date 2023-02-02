@@ -8,7 +8,7 @@ const BASE_KEY = 'user'
 import { BASE_URL } from '@/config/env'
 
 const fetcher = (user: User) => {
-  return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data || user),
+  return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data || user)
 }
 
 const useUserQuery = () => {
