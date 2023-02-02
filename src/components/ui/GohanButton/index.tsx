@@ -22,14 +22,14 @@ const GohanButton = (props: Props) => {
 
   const { isLoadingUserLocation } = useMapBox()
 
-  const { get, clear } = useRestaurants()
+  const { get } = useRestaurants()
   const restaurants = get()
 
   const {
     isLoading = (isLoadingUserLocation || restaurants.isFetching) ?? false,
     isNavigating = hasDirections ?? false,
     disabled = isLoadingUserLocation ?? false,
-    onClick = hasDirections ? () => clear() : () => restaurants.refetch(),
+    onClick = hasDirections ? () => directions.mutate() : () => restaurants.refetch(),
   } = props
 
   const ui = () =>
