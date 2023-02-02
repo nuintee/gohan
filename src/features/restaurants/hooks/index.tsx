@@ -18,11 +18,10 @@ const useRestaurants = () => {
   const { coords } = useMapBox()
 
   const clear = () => {
-    return queryClient.setQueryData([BASE_KEY], {})
+    queryClient.setQueryData([BASE_KEY], {})
   }
 
   const set = (payload: ResultsEntity) => {
-    console.log(payload)
     open('restaurantdiscovered', payload)
     queryClient.setQueryData([BASE_KEY], payload)
   }

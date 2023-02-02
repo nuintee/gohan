@@ -26,10 +26,8 @@ const RestaurantDiscoveredModal = (props: Props) => {
     onNavigate = isNavigating
       ? () => {
           revoke.mutate()
-          console.log('YE')
         }
       : () => {
-          console.log('NO')
           get.refetch()
         },
     ...rest

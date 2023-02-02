@@ -26,7 +26,7 @@ const GohanButton = (props: Props) => {
   const restaurants = get()
 
   const {
-    isLoading = isLoadingUserLocation ?? false,
+    isLoading = (isLoadingUserLocation || restaurants.isFetching) ?? false,
     isNavigating = hasDirections ?? false,
     disabled = isLoadingUserLocation ?? false,
     onClick = hasDirections ? () => clear() : () => restaurants.refetch(),
