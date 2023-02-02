@@ -9,23 +9,27 @@ import useToast from '@/libs/react-toastify'
 import { QUERY_KEY } from '../constants'
 import { BASE_URL } from '@/config/env'
 
-const fetcher = (user?: User) => {
-  if (!user) throw Error('Unauthed Request', { cause: 'User Must be Authed' })
+const fetcher = (userId?: string) => {
+  if (!userId) throw Error('Unauthed Request', { cause: 'User Must be Authed' })
 
-  return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data)
+  return axios.get(`${BASE_URL}/api/v1/user/${userId}`).then((res) => res.data)
 }
 
-const useGetUser = (props?: { user: User }) => {
+type Props = {
+  userId: string
+}
+
+const useGetUser = (props?: Props) => {
   const { status, data: session } = useSession()
-  const { user = session?.user ?? {} } = props
+  const userId = props?.userId || session?.user.id
 
   return useQuery({
-    queryKey: [QUERY_KEY, { user }],
-    queryFn: () => fetcher(user),
+    queryKey: [QUERY_KEY, { user: userId }],
+    queryFn: () => fetcher(userId),
     enabled: status === 'authenticated',
     onError: (error) => {
+      console.error(error)
       if (error instanceof Error) {
-        console.error(error)
         useToast.error(error.message)
       }
     },
