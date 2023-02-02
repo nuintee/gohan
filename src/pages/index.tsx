@@ -92,7 +92,7 @@ const Index = () => {
   const getUserActivities = useGetUserActivities({ userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad' })
 
   // Directions
-  const getDirections = useGetDirections({ end: 's' })
+  const getDirections = useGetDirections({ end: `23.408622,42.648763` })
 
   return (
     <>

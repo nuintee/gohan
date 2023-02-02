@@ -17,13 +17,14 @@ export const directionsAPIHandler = async (
 
   const _place_id = req.headers.get('x-place-id') as string
 
-  const _findById = (place_id: string) => {
-    const randomData = directions[Math.floor(Math.random() * directions.length)]
-
-    const found = directions.find((direction) => direction.place_id === place_id)
-
-    if (!found) return randomData
-
+  const _findByCoords = (coords: string) => {
+    const parse = coords.split(',').map((v) => Number(v))
+    const found = directions.find((v) => {
+      const coordinates = v.routes[0].geometry.coordinates
+      const lastCoordinates = coordinates[coordinates.length - 1]
+      return JSON.stringify(lastCoordinates) === JSON.stringify(parse)
+    })
+    console.log(found, parse)
     return found
   }
 
@@ -33,7 +34,7 @@ export const directionsAPIHandler = async (
       end,
       ...(profileType && { profileType }),
     })
-    const data = _findById(_place_id)
+    const data = _findByCoords(end)
     return res(ctx.status(200), ctx.json(data))
   } catch (error) {
     return res(
