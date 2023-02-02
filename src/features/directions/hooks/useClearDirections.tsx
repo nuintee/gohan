@@ -7,7 +7,7 @@ import { Props } from '../schema/getDirections.schema'
 import { QUERY_KEY } from '@/features/directions/constants'
 import useMapBox from '@/features/mapbox/hooks'
 
-const useClearDirections = (points: Pick<Props, 'start' | 'end'>) => {
+const useClearDirections = (points: Partial<Pick<Props, 'start' | 'end'>>) => {
   const queryClient = useQueryClient()
   const { coords, coordAsString } = useMapBox()
 

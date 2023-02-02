@@ -27,6 +27,9 @@ import useGetUserActivities from '@/features/activities/hooks/useGetUserActiviti
 import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useToast from '@/libs/react-toastify'
 import useClearDirections from '@/features/directions/hooks/useClearDirections'
+import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
+import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
+import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useClearRestaurant'
 
 // const Index = () => {
 //   // User
@@ -92,9 +95,14 @@ const Index = () => {
   const getActivity = useGetActivity({ activityId: '2' })
   const getUserActivities = useGetUserActivities({ userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad' })
 
-  // Directions
+  // Directions [OK]
   const getDirections = useGetDirections({ end: `23.408622,42.648763` })
   const clearDirections = useClearDirections({ end: `23.408622,42.648763` })
+  const formatToGeoJSON = useGeoJSON() // OK
+
+  // Restaurants
+  const getRestaurants = useGetRestaurants()
+  const clearRestaurants = useClearRestaurant()
 
   return (
     <>
@@ -103,13 +111,32 @@ const Index = () => {
           <p>{getActivity.isFetching ? '...' : JSON.stringify(getActivity.data)}</p>
           <button onClick={getActivity.refetch}>GetActivity</button>
           <hr></hr>
+
           <p>{getUserActivities.isFetching ? '...' : JSON.stringify(getUserActivities.data)}</p>
           <button onClick={getUserActivities.refetch}>GetActivities</button>
           <hr></hr>
+
           <p>{getDirections.isFetching ? '...' : JSON.stringify(getDirections.data)}</p>
           <button onClick={getDirections.refetch}>GetDirections</button>
           <button onClick={clearDirections.mutate}>ClearDirections</button>
+          <button
+            onClick={() =>
+              console.log(
+                formatToGeoJSON({
+                  coordinates: getDirections.data?.routes[0].geometry.coordinates,
+                }),
+              )
+            }
+          >
+            Format
+          </button>
           <hr></hr>
+
+          <p>{getRestaurants.isFetching ? '...' : JSON.stringify(getRestaurants.data)}</p>
+          <button onClick={getRestaurants.refetch}>Get Restaurants</button>
+          <button onClick={clearRestaurants.mutate}>Clear Restaurants</button>
+          <hr></hr>
+
           <button onClick={() => useToast('S')}>useToast</button>
         </div>
         <MapBox />

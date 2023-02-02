@@ -16,7 +16,7 @@ const useClearRestaurant = () => {
   return useMutation({
     mutationKey: [QUERY_KEY, { coords }],
     mutationFn: async () => {
-      return {} // clear restaurant
+      queryClient.setQueryData([QUERY_KEY, { coords }], () => ({}))
     },
     onError: (error) => {
       if (error instanceof Error) {
