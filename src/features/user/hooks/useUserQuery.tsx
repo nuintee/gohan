@@ -12,7 +12,7 @@ import { BASE_URL } from '@/config/env'
 const fetcher = (user?: User) => {
   if (!user) throw Error('Unauthed Request', { cause: 'User Must be Authed' })
 
-  return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data || user)
+  return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data)
 }
 
 const useUserQuery = () => {
