@@ -87,4 +87,20 @@ describe('useUserQuery', () => {
 
     expect(result.current.data).toMatchObject(user)
   })
+
+  test('updateUser', async () => {
+    const UPDATE_NAME = 'UPDATED_USER_NAME'
+
+    const { result } = renderHook(() => useUpdateUser(), { wrapper })
+
+    await result.current.mutateAsync({
+      name: UPDATE_NAME,
+    })
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true)
+    })
+
+    expect(result.current.data.name).toBe(UPDATE_NAME)
+  })
 })
