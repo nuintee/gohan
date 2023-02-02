@@ -26,6 +26,7 @@ import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
 import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useToast from '@/libs/react-toastify'
+import useClearDirections from '@/features/directions/hooks/useClearDirections'
 
 // const Index = () => {
 //   // User
@@ -93,6 +94,7 @@ const Index = () => {
 
   // Directions
   const getDirections = useGetDirections({ end: `23.408622,42.648763` })
+  const clearDirections = useClearDirections({ end: `23.408622,42.648763` })
 
   return (
     <>
@@ -106,6 +108,7 @@ const Index = () => {
           <hr></hr>
           <p>{getDirections.isFetching ? '...' : JSON.stringify(getDirections.data)}</p>
           <button onClick={getDirections.refetch}>GetDirections</button>
+          <button onClick={clearDirections.mutate}>ClearDirections</button>
           <hr></hr>
           <button onClick={() => useToast('S')}>useToast</button>
         </div>

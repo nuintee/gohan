@@ -19,7 +19,7 @@ const useClearDirections = (points: Pick<Props, 'start' | 'end'>) => {
   return useMutation({
     mutationKey: [QUERY_KEY, { start, end }],
     mutationFn: async () => {
-      return {} // clear restaurant
+      queryClient.setQueryData([QUERY_KEY, { start, end }], () => ({}))
     },
     onError: (error) => {
       console.error(error)
