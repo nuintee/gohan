@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react'
 import ErrorBoundary from '@/components/fallback/ErrorBoundary'
 import { Session } from 'next-auth'
 import { RecoilRoot } from 'recoil'
-import { QueryClientProvider } from '@/libs/tanstack-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 if (process.env.NODE_ENV === 'development') {
@@ -14,11 +14,13 @@ if (process.env.NODE_ENV === 'development') {
   })
 }
 
+const queryClient = new QueryClient()
+
 function App({ Component, pageProps }: AppProps<{ session: Session }>) {
   return (
     <ErrorBoundary>
       <RecoilRoot>
-        <QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
             <Component {...pageProps} />
             <ReactQueryDevtools />
