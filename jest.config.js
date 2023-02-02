@@ -17,6 +17,7 @@ const customJestConfig = {
     '^@/features(.*)$': '<rootDir>/src/features$1',
     '^@/config(.*)$': '<rootDir>/src/config$1',
     '^@/libs(.*)$': '<rootDir>/src/libs$1',
+    '^@/mocks(.*)$': '<rootDir>/src/mocks$1',
   },
 }
 

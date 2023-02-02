@@ -33,6 +33,7 @@ import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useC
 import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
 import useGetUser from '@/features/user/hooks/useGetUser'
 import useUpdateUser from '@/features/user/hooks/useUpdateUser'
+import useAddUser from '@/features/user/hooks/useAddUser'
 
 // const Index = () => {
 //   // User
@@ -111,6 +112,7 @@ const PlayGround = () => {
   // User [OK]
   const getUser = useGetUser()
   const updateUser = useUpdateUser()
+  const addUser = useAddUser()
 
   return (
     <>
@@ -153,6 +155,13 @@ const PlayGround = () => {
           <button onClick={getUser.refetch}>Get User</button>
           <button onClick={() => updateUser.mutate({ name: new Date().toISOString() })}>
             Update User
+          </button>
+          <button
+            onClick={() =>
+              addUser.mutate({ name: new Date().toISOString(), email: new Date().toISOString() })
+            }
+          >
+            Add User
           </button>
           <hr></hr>
 

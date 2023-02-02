@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const addUserSchema = z.object({
   email: z.string().email(),
   name: z.string(),
+  id: z.optional(z.string()),
 })
 
 export const updateUserSchema = z.object({

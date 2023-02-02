@@ -10,6 +10,11 @@ import { user } from '@/data/user'
 import useGetUser from '../hooks/useGetUser'
 import useUpdateUser from '../hooks/useUpdateUser'
 import useToast from '@/libs/react-toastify'
+import useAddUser from '../hooks/useAddUser'
+import { act } from 'react-dom/test-utils'
+import { BASE_URL } from '@/config/env'
+import { AddUserProps } from '../schema'
+import axios from '@/libs/axios'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +39,38 @@ const wrapper = ({ children }) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   </SessionProvider>
 )
+
+const addTestUser = async (payload: AddUserProps) => {
+  const query = await fetch(`http://localhost:3000/api/v1/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+
+  const data = await query.json()
+  return data
+}
+
+const removeTestUser = async (userId: string) => {
+  const query = await fetch(`http://localhost:3000/api/v1/user/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const data = await query.json()
+  return data
+}
+
+beforeAll(async () => {
+  const data = await addTestUser({
+    name: user.name as string,
+    email: user.email as string,
+  })
+})
 
 describe('useUserQuery', () => {
   test('getUser', async () => {
