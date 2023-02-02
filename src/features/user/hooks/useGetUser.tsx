@@ -15,7 +15,7 @@ const fetcher = (user?: User) => {
   return axios.get(`${BASE_URL}/api/v1/user/${user?.id}`).then((res) => res.data)
 }
 
-const useGetUser = (props?: { user: User | {} }) => {
+const useGetUser = (props?: { user: User }) => {
   const { status, data: session } = useSession()
   const { user = session?.user ?? {} } = props
 

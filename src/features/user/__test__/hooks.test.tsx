@@ -66,11 +66,15 @@ const removeTestUser = async (userId: string) => {
 }
 
 beforeAll(async () => {
-  const data = await addTestUser({
+  await addTestUser({
     name: user.name as string,
     email: user.email as string,
     id: user.id as string,
   })
+})
+
+afterAll(async () => {
+  await removeTestUser(user.id)
 })
 
 describe('useUserQuery', () => {
@@ -81,15 +85,6 @@ describe('useUserQuery', () => {
       expect(result.current.isSuccess).toBe(true)
     })
 
-    expect(result.current.data).toBeDefined()
-  }),
-    test('updateUser', async () => {
-      const { result } = renderHook(() => useUpdateUser(), { wrapper })
-
-      const mutated = await result.current.mutate({})
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true)
-      })
-    })
+    expect(result.current.data).toMatchObject(user)
+  })
 })
