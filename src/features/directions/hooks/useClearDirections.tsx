@@ -1,8 +1,4 @@
-import { User } from 'next-auth'
-import { useSession } from 'next-auth/react'
-
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
 import useToast from '@/libs/react-toastify'
 
 import { Props } from '../schema/getDirections.schema'
