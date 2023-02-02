@@ -4,18 +4,18 @@ import useToast from '@/libs/react-toastify'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { QUERY_KEY } from '../constants'
-import { AddActivityProps } from '../schemas/addActivity.schema'
+import { UpdateActivityProps } from '../schemas/addActivity.schema'
 
-const fetcher = (payload: AddActivityProps) => {
-  return axios.post(`${BASE_URL}/api/v1/activities`, payload).then((res) => res.data)
+const fetcher = (activityId: string, payload: UpdateActivityProps) => {
+  return axios.patch(`${BASE_URL}/api/v1/activity/${activityId}`, payload).then((res) => res.data),
 }
 
-const useAddActivity = ({ activityId = '' }) => {
+const usePatchActivity = ({ activityId = "" }) => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationKey: [QUERY_KEY, { activityId }],
-    mutationFn: async (payload: AddActivityProps) => fetcher(payload),
+    mutationFn: async (payload: UpdateActivityProps) => fetcher(activityId, payload),
     onError: (error) => {
       console.error(error)
       if (error instanceof Error) {
@@ -23,9 +23,9 @@ const useAddActivity = ({ activityId = '' }) => {
       }
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id }])
+      queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id}])
     },
   })
 }
 
-export default useAddActivity
+export default usePatchActivity
