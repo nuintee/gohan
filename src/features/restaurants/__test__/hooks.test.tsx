@@ -13,6 +13,11 @@ import useRestaurantDetails from '../hooks/useRestaurantDetails'
 import { RecoilRoot } from 'recoil'
 
 const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
   logger: {
     log: console.log,
     warn: console.warn,
@@ -28,8 +33,10 @@ const wrapper = ({ children }) => (
   </RecoilRoot>
 )
 
-describe('hooks/restaurants', () => {
-  test('getRestaurants', async () => {
+jest.useRealTimers()
+
+describe('getRestaurants', () => {
+  test('to return random restaurant properly', async () => {
     const { result } = renderHook(
       () =>
         useGetRestaurants({
@@ -50,5 +57,24 @@ describe('hooks/restaurants', () => {
     })
 
     expect(refetched.data).toBeDefined()
+  })
+
+  test('to throw error on invalid latitude', async () => {
+    const { result } = renderHook(
+      () =>
+        useGetRestaurants({
+          coords: {
+            latitude: undefined,
+            longitude: undefined,
+          },
+        }),
+      {
+        wrapper,
+      },
+    )
+
+    const refetched = await result.current.refetch()
+
+    expect(refetched.isError).toBe(true)
   })
 })
