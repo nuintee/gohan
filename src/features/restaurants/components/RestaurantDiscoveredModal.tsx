@@ -11,24 +11,37 @@ type Props = {
 } & RestaurantProps
 
 const RestaurantDiscoveredModal = (props: Props) => {
-  const { isOpen, onClose, data, onNavigate, ...rest } = props
-  const { getDirections, revokeDirections, hasDirections } = useDirections()
+  const { getDirections, revokeDirections } = useDirections()
 
   const get = getDirections({
-    end: `${data?.geometry.location.lat},${data?.geometry.location.lng}`,
+    end: `${props.data?.geometry?.location?.lat},${props.data?.geometry?.location?.lng}`,
   })
   const revoke = revokeDirections()
 
-  const navigateAlter = (activity) => {
-    hasDirections ? () => revoke.mutate() : () => get.refetch()
-  }
+  const {
+    isOpen,
+    onClose,
+    data,
+    isNavigating,
+    onNavigate = isNavigating
+      ? () => {
+          revoke.mutate()
+          console.log('YE')
+        }
+      : () => {
+          console.log('NO')
+          get.refetch()
+        },
+    ...rest
+  } = props
 
   return (
     <ModalLayout isOpen={isOpen}>
       <RestaurantCard
         onClick={onClose}
-        onNavigate={onNavigate ?? navigateAlter}
-        data={data}
+        onNavigate={onNavigate}
+        data={props.data}
+        isNavigating={isNavigating}
         {...rest}
       />
     </ModalLayout>

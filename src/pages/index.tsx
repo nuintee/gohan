@@ -73,6 +73,7 @@ const Index = () => {
         onClose={() => close('restaurantdiscovered')}
         distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
         data={restaurant}
+        // onNavigate={() => console.log('PASSED')}
         isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />
