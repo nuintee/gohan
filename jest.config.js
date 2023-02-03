@@ -1,4 +1,5 @@
 const nextJest = require('next/jest')
+const path = require('path')
 
 const createJestConfig = nextJest({
   dir: './',
@@ -10,7 +11,6 @@ const customJestConfig = {
   testEnvironmentOptions: {
     url: 'http://localhost:3000',
   },
-  setupFiles: ['dotenv/config'],
   moduleNameMapper: {
     '^@/root(.*)$': '<rootDir>/src$1',
     '^@/data(.*)$': '<rootDir>/src/data$1',
@@ -19,6 +19,8 @@ const customJestConfig = {
     '^@/libs(.*)$': '<rootDir>/src/libs$1',
     '^@/mocks(.*)$': '<rootDir>/src/mocks$1',
   },
+  setupFiles: ['dotenv/config'],
+  setupFilesAfterEnv: ['<rootDir>/src/config/jest/setup.ts'],
 }
 
 module.exports = createJestConfig(customJestConfig)
