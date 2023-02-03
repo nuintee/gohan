@@ -9,8 +9,6 @@ import { user } from '@/data/user'
 // hooks
 import useGetUser from '../hooks/useGetUser'
 import useUpdateUser from '../hooks/useUpdateUser'
-import useToast from '@/libs/react-toastify'
-import useAddUser from '../hooks/useAddUser'
 import { act } from 'react-dom/test-utils'
 import { BASE_URL } from '@/config/env'
 import { AddUserProps } from '../schema'
