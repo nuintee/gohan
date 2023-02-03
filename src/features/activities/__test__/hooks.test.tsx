@@ -1,129 +1,71 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import useActivities from '../hooks/index'
-import 'whatwg-fetch'
 
-// Types
-import { AddActivityProps } from '@/features/activities/schemas/addActivity.schema'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { SessionProvider } from 'next-auth/react'
+// hooks
+import useAddActivity from '../hooks/useAddActivity'
+import usePatchActivity from '../hooks/usePatchActivity'
 
-// data
-import { user } from '@/data/user'
-
-// config
 import { setUpWrapper } from '@/config/jest/wrapper'
 const wrapper = setUpWrapper({ isAuthed: true })
 
-const _test_activityData: AddActivityProps = {
+import { AddActivityProps } from '../schemas/addActivity.schema'
+
+// data
+import { user } from '@/data/user'
+import useGetActivity from '../hooks/useGetActivity'
+
+const _test_activityData: Required<AddActivityProps> = {
+  id: 'd30b89de-6743-4d51-b6f0-b7865926b8d6',
   userId: user.id,
   is_liked: false,
   place_id: '_TEST_PLACE_ID',
 }
 
-const _updateField = {
-  is_liked: true,
-}
+describe('hooks/activities', () => {
+  const UPDATED_ACTIVITY = { ..._test_activityData, is_liked: !_test_activityData.is_liked }
 
-describe('useActivities', () => {
-  // POST
-  test('POST with success', async () => {
-    const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
-    const added = await result.current.mutateAsync()
-    await waitFor(async () => {
-      expect(added).toMatchObject(_test_activityData)
-    })
-  })
-  test('POST with error', async () => {
-    // Already existing id
-    const { result } = renderHook(() => useActivities().add(_test_activityData), { wrapper })
-    await waitFor(async () => {
-      expect(result.current.status).not.toBe(200)
-    })
-  })
+  describe('useAddActivity', () => {
+    test('to add activity succesfully', async () => {
+      const { result } = renderHook(() => useAddActivity({}), { wrapper })
 
-  // GET
-  test('GET with success', async () => {
-    const { result } = renderHook(
-      () => useActivities().get(_test_activityData.place_id as string),
-      {
-        wrapper,
-      },
-    )
-    await waitFor(() => {
-      if (!result.current.isSuccess) throw new Error('Wait')
+      await result.current.mutateAsync(_test_activityData)
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true)
+      })
+
       expect(result.current.data).toMatchObject(_test_activityData)
     })
   })
-  test('GET with error', async () => {
-    const { result } = renderHook(() => useActivities().get(''), {
-      wrapper,
-    })
-    await waitFor(() => {
-      expect(result.current.status).not.toBe(200)
-    })
-  })
 
-  test('GET all with success', async () => {
-    const { result } = renderHook(() => useActivities().getUserAll(), {
-      wrapper,
-    })
-    await waitFor(() => {
-      if (!result.current.isSuccess) throw new Error('Wait')
-      const hasUserId = result.current.data.filter((activity) => activity.userId === user.id)
-      const isAllUsersData = result.current.data.length === hasUserId.length
-      expect(isAllUsersData).toBe(true)
-    })
-  })
-  test('GET all with error', async () => {
-    const { result } = renderHook(() => useActivities().getUserAll(), {
-      wrapper,
-    })
-    await waitFor(() => {
-      expect(result.current.status).not.toBe(200)
-    })
-  })
-
-  // PATCH
-  test('PATCH with success', async () => {
-    const { result } = renderHook(
-      () => useActivities().update(_test_activityData.place_id as string, _updateField),
-      {
+  describe('usePatchActivity', () => {
+    test('to update activity succesfully', async () => {
+      const { result } = renderHook(() => usePatchActivity({ activityId: _test_activityData.id }), {
         wrapper,
-      },
-    )
-    const updated = await result.current.mutateAsync()
-    await waitFor(async () => {
-      expect(updated).toMatchObject({ ..._test_activityData, ..._updateField })
+      })
+
+      await result.current.mutateAsync({ is_liked: UPDATED_ACTIVITY.is_liked })
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true)
+      })
+
+      expect(result.current.data).toMatchObject(UPDATED_ACTIVITY)
     })
   })
 
-  test('PATCH with error', async () => {
-    const { result } = renderHook(() => useActivities().update(''), {
-      wrapper,
-    })
-    await waitFor(() => {
-      expect(result.current.status).not.toBe(200)
-    })
-  })
+  describe('useGetActivity', () => {
+    test('to get activity succesfully', async () => {
+      const { result } = renderHook(() => useGetActivity({ activityId: _test_activityData.id }), {
+        wrapper,
+      })
 
-  // DELETE
-  test('DELETE with error', async () => {
-    const { result } = renderHook(() => useActivities().remove(''), {
-      wrapper,
-    })
-    await waitFor(() => {
-      expect(result.current.status).not.toBe(200)
-    })
-  })
+      const refetched = await result.current.refetch()
 
-  test('DELETE with success', async () => {
-    const { result } = renderHook(
-      () => useActivities().remove(_test_activityData.place_id as string),
-      { wrapper },
-    )
-    const removed = await result.current.mutateAsync()
-    await waitFor(async () => {
-      expect(removed).toMatchObject({ ..._test_activityData, ..._updateField })
+      await waitFor(() => {
+        expect(refetched.isSuccess).toBe(true)
+      })
+
+      expect(refetched.data).toMatchObject(UPDATED_ACTIVITY)
     })
   })
 })

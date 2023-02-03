@@ -1,4 +1,18 @@
+import { AddActivityProps } from '@/features/activities/schemas/addActivity.schema'
 import { RestaurantData } from '@/features/restaurants/types'
+
+// env
+import { IS_TESTMODE } from '@/config/env'
+
+// data
+import { user } from './user'
+
+export const _testActivity: Required<AddActivityProps> = {
+  id: 'd30b89de-6743-4d51-b6f0-b7865926b8d6',
+  userId: user.id,
+  is_liked: false,
+  place_id: '_TEST_PLACE_ID',
+}
 
 export const activities: RestaurantData[] = [
   {
@@ -148,3 +162,56 @@ export const activities: RestaurantData[] = [
     vicinity: 'Блок 287, Sofia',
   },
 ]
+
+if (IS_TESTMODE) {
+  activities.push({
+    ..._testActivity,
+    business_status: 'OPERATIONAL',
+    geometry: {
+      location: {
+        lat: 42.647803,
+        lng: 23.4022668,
+      },
+      viewport: {
+        northeast: {
+          lat: 42.64915413029149,
+          lng: 23.4035581802915,
+        },
+        southwest: {
+          lat: 42.64645616970849,
+          lng: 23.4008602197085,
+        },
+      },
+    },
+    icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png',
+    icon_background_color: '#FF9E67',
+    icon_mask_base_uri: 'https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet',
+    name: 'Пица Лъчони - Дружба',
+    opening_hours: {
+      open_now: true,
+    },
+    photos: [
+      {
+        height: 638,
+        html_attributions: [
+          '<a href="https://maps.google.com/maps/contrib/115425732225978179595">Пица Лъчони - Дружба</a>',
+        ],
+        photo_reference:
+          'AW30NDyu5Qf2FS70VjKF3SatpZJf4sR-ybZq8hyFIJCgP600Tny6dd0yVpGXnALMMh5JUcGT5ut2c5rQ4UUqZlUN_E1b2vNlVEaO2SMuO3BHf_TbEN-1aIQsTyauDCcrOIuu5o7oBqmaHW8OJr047cEjMzN5Hx8SbEvC5O7KOzTDcPtD8rNX',
+        width: 1132,
+      },
+    ],
+    place_id: _testActivity.place_id,
+    plus_code: {
+      compound_code: 'JCX2+4W Sofia, Bulgaria',
+      global_code: '8GJ5JCX2+4W',
+    },
+    price_level: 2,
+    rating: 4,
+    reference: _testActivity.place_id,
+    scope: 'GOOGLE',
+    types: ['restaurant', 'food', 'point_of_interest', 'establishment'],
+    user_ratings_total: 1798,
+    vicinity: 'Блок 287, Sofia',
+  })
+}

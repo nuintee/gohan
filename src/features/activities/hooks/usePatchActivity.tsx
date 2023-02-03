@@ -7,10 +7,10 @@ import { QUERY_KEY } from '../constants'
 import { UpdateActivityProps } from '../schemas/addActivity.schema'
 
 const fetcher = (activityId: string, payload: UpdateActivityProps) => {
-  return axios.patch(`${BASE_URL}/api/v1/activity/${activityId}`, payload).then((res) => res.data),
+  return axios.patch(`${BASE_URL}/api/v1/activity/${activityId}`, payload).then((res) => res.data)
 }
 
-const usePatchActivity = ({ activityId = "" }) => {
+const usePatchActivity = ({ activityId = '' }) => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -23,7 +23,7 @@ const usePatchActivity = ({ activityId = "" }) => {
       }
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id}])
+      queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id }])
     },
   })
 }

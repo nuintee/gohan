@@ -7,7 +7,13 @@ import {
 } from './handlers/restaurantsHandler'
 
 import { directionsAPIHandler } from './handlers/directionsHandlers'
-import { userActivitiesHandler, activityHandler } from './handlers/activitiesHandlers'
+import {
+  userActivitiesHandler,
+  activityHandler,
+  postActivityHandler,
+  patchActivityHandler,
+  getActivityHandler,
+} from './handlers/activitiesHandlers'
 
 const BASE_PATH = '/api/v1'
 
@@ -36,5 +42,7 @@ export const handlers = [
   rest.get(`${BASE_PATH}/restaurants/:place_id`, restaurantDetailsAPIHandler),
   rest.get(`${BASE_PATH}/directions`, directionsAPIHandler),
   rest.all(`${BASE_PATH}/activities/user/:user_id`, userActivitiesHandler),
-  rest.all(`${BASE_PATH}/activity/:activity_id`, activityHandler),
+  rest.post(`${BASE_PATH}/activities`, postActivityHandler),
+  rest.patch(`${BASE_PATH}/activity/:activity_id`, patchActivityHandler),
+  rest.get(`${BASE_PATH}/activity/:activity_id`, getActivityHandler),
 ]

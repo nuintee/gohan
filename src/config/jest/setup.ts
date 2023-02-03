@@ -1,9 +1,10 @@
 import { handlers } from '@/mocks/handlers'
 import { server } from '@/mocks/server'
+import 'whatwg-fetch'
 
 global.console = {
   ...console,
-  log: jest.fn(),
+  // log: jest.fn(),
   debug: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),

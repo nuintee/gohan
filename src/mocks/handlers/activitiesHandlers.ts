@@ -8,6 +8,7 @@ import { activities } from '@/data/activities'
 // Schema
 import { Schema } from '@/features/restaurants/schemas/getRestaurantDetails.schema'
 import { ActivityResolved } from '@/features/activities/types'
+import { activityTable } from '@/features/activities/prisma/activityTable'
 
 export const userActivitiesHandler = async (
   req: RestRequest<never, PathParams<string>>,
@@ -57,7 +58,7 @@ export const userActivitiesHandler = async (
   }
 }
 
-export const activityHandler = async (
+export const getActivityHandler = async (
   req: RestRequest<never, PathParams<string>>,
   res: ResponseComposition<DefaultBodyType>,
   ctx: RestContext,
@@ -83,6 +84,48 @@ export const activityHandler = async (
     }
 
     return res(ctx.status(200), ctx.json({ ...foundActivity, ...detaildActivity }))
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        message: error.message,
+        code: 500,
+      }),
+    )
+  }
+}
+
+export const postActivityHandler = async (
+  req: RestRequest<never, PathParams<string>>,
+  res: ResponseComposition<DefaultBodyType>,
+  ctx: RestContext,
+) => {
+  const activity = await req.json()
+  try {
+    const added = await activityTable.add(activity)
+    return res(ctx.status(200), ctx.json(added))
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        message: error.message,
+        code: 500,
+      }),
+    )
+  }
+}
+
+export const patchActivityHandler = async (
+  req: RestRequest<never, PathParams<string>>,
+  res: ResponseComposition<DefaultBodyType>,
+  ctx: RestContext,
+) => {
+  const payload = await req.json()
+  const activityId = req.params.activity_id
+
+  try {
+    const patched = await activityTable.patch({ id: activityId, ...payload })
+    return res(ctx.status(200), ctx.json(patched))
   } catch (error) {
     return res(
       ctx.status(500),
