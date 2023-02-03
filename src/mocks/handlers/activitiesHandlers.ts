@@ -66,17 +66,14 @@ export const getActivityHandler = async (
   const activity_id = req?.params.activity_id as string
   const details = req?.url.searchParams.get('details')
 
-  function _findOneById(activity_id: string): ActivityResolved | {} {
-    const found = activities.find((activity) => activity.id === activity_id)
-    return found ?? {}
-  }
-
-  async function _findDetailsById(place_id: string) {
-    return detailsData.result(place_id)
-  }
-
   try {
-    const foundActivity = _findOneById(activity_id)
+    const fetched = await activityTable.get({ id: activity_id })
+
+    function _findDetailsById(place_id: string) {
+      return detailsData.result(place_id)
+    }
+
+    const foundActivity = fetched
     let detaildActivity = {}
 
     if (details) {

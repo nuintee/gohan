@@ -10,36 +10,29 @@ const wrapper = setUpWrapper({ isAuthed: true })
 import { AddActivityProps } from '../schemas/addActivity.schema'
 
 // data
-import { user } from '@/data/user'
+import { _testActivity } from '@/data/activities'
 import useGetActivity from '../hooks/useGetActivity'
 
-const _test_activityData: Required<AddActivityProps> = {
-  id: 'd30b89de-6743-4d51-b6f0-b7865926b8d6',
-  userId: user.id,
-  is_liked: false,
-  place_id: '_TEST_PLACE_ID',
-}
-
 describe('hooks/activities', () => {
-  const UPDATED_ACTIVITY = { ..._test_activityData, is_liked: !_test_activityData.is_liked }
+  const UPDATED_ACTIVITY = { ..._testActivity, is_liked: !_testActivity.is_liked }
 
   describe('useAddActivity', () => {
     test('to add activity succesfully', async () => {
       const { result } = renderHook(() => useAddActivity({}), { wrapper })
 
-      await result.current.mutateAsync(_test_activityData)
+      await result.current.mutateAsync(_testActivity)
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true)
       })
 
-      expect(result.current.data).toMatchObject(_test_activityData)
+      expect(result.current.data).toMatchObject(_testActivity)
     })
   })
 
   describe('usePatchActivity', () => {
     test('to update activity succesfully', async () => {
-      const { result } = renderHook(() => usePatchActivity({ activityId: _test_activityData.id }), {
+      const { result } = renderHook(() => usePatchActivity({ activityId: _testActivity.id }), {
         wrapper,
       })
 
@@ -55,7 +48,7 @@ describe('hooks/activities', () => {
 
   describe('useGetActivity', () => {
     test('to get activity succesfully', async () => {
-      const { result } = renderHook(() => useGetActivity({ activityId: _test_activityData.id }), {
+      const { result } = renderHook(() => useGetActivity({ activityId: _testActivity.id }), {
         wrapper,
       })
 
