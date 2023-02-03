@@ -18,7 +18,7 @@ const queryClient = new QueryClient({
   },
 })
 
-const wrapper = ({ children, isAuthed }) => (
+export const wrapper = ({ children, isAuthed }) => (
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>
       <SessionProvider {...(isAuthed && { session: { expires: '', user } })}>
@@ -28,4 +28,6 @@ const wrapper = ({ children, isAuthed }) => (
   </RecoilRoot>
 )
 
-export default wrapper
+export const setUpWrapper = (options?: { isAuthed: boolean }) => {
+  return ({ children }) => wrapper({ children, isAuthed: options?.isAuthed })
+}

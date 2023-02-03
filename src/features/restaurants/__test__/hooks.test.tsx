@@ -16,33 +16,9 @@ import { RecoilRoot } from 'recoil'
 import { server } from '@/mocks/server'
 import { handlers } from '@/mocks/handlers'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-  logger: {
-    log: console.log,
-    warn: console.warn,
-    error: process.env.NODE_ENV === 'test' ? () => {} : console.error,
-  },
-})
-
-const wrapper = ({ children }) => (
-  <RecoilRoot>
-    <QueryClientProvider client={queryClient}>
-      <SessionProvider
-        session={{
-          expires: '',
-          user,
-        }}
-      >
-        {children}
-      </SessionProvider>
-    </QueryClientProvider>
-  </RecoilRoot>
-)
+// config
+import { setUpWrapper } from '@/config/jest/wrapper'
+const wrapper = setUpWrapper({ isAuthed: true })
 
 describe('getRestaurants', () => {
   test('to return random restaurant properly', async () => {
