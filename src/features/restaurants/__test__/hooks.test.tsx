@@ -44,12 +44,6 @@ const wrapper = ({ children }) => (
   </RecoilRoot>
 )
 
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
-
-server.use(...handlers)
-
 describe('getRestaurants', () => {
   test('to return random restaurant properly', async () => {
     const { result } = renderHook(
