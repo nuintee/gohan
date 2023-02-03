@@ -6,12 +6,15 @@ import 'whatwg-fetch'
 // data
 import geolocation from '@/data/geolocation.json'
 import { details } from '@/data/details'
+import { user } from '@/data/user'
 
 // hooks
 import useGetRestaurants from '../hooks/useRestaurants/useGetRestaurants'
 import useClearRestaurant from '../hooks/useRestaurants/useClearRestaurant'
 import useRestaurantDetails from '../hooks/useRestaurantDetails'
 import { RecoilRoot } from 'recoil'
+import { server } from '@/mocks/server'
+import { handlers } from '@/mocks/handlers'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,12 +32,23 @@ const queryClient = new QueryClient({
 const wrapper = ({ children }) => (
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>
-      <SessionProvider>{children}</SessionProvider>
+      <SessionProvider
+        session={{
+          expires: '',
+          user,
+        }}
+      >
+        {children}
+      </SessionProvider>
     </QueryClientProvider>
   </RecoilRoot>
 )
 
-jest.useRealTimers()
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+
+server.use(...handlers)
 
 describe('getRestaurants', () => {
   test('to return random restaurant properly', async () => {
@@ -104,6 +118,7 @@ describe('getRestaurantDetail', () => {
       expect(refetched.isSuccess).toBe(true)
     })
 
+    console.log(refetched.data)
     expect(refetched.data.result.place_id).toBe(PLACE_ID)
   })
 })
