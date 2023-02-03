@@ -5,6 +5,7 @@ import 'whatwg-fetch'
 
 // data
 import geolocation from '@/data/geolocation.json'
+import { details } from '@/data/details'
 
 // hooks
 import useGetRestaurants from '../hooks/useRestaurants/useGetRestaurants'
@@ -76,5 +77,34 @@ describe('getRestaurants', () => {
     const refetched = await result.current.refetch()
 
     expect(refetched.isError).toBe(true)
+  })
+})
+
+describe('clearRestaurants', () => {
+  test('to reset restaurants state', async () => {
+    const { result } = renderHook(() => useClearRestaurant(), { wrapper })
+
+    await result.current.mutateAsync()
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true)
+    })
+  })
+})
+
+describe('getRestaurantDetail', () => {
+  const PLACE_ID = 'ChIJBTBBRKiaqkARRgOZXBkrduI'
+
+  test('to return restaurants details', async () => {
+    const { result } = renderHook(() => useRestaurantDetails({ place_id: PLACE_ID }), { wrapper })
+
+    const refetched = await result.current.refetch()
+
+    await waitFor(() => {
+      expect(refetched.isSuccess).toBe(true)
+    })
+
+    console.log(refetched.data)
+    expect(refetched.data).toBeDefined()
   })
 })
