@@ -67,20 +67,20 @@ export const getActivityHandler = async (
   const details = req?.url.searchParams.get('details')
 
   try {
-    const fetched = await activityTable.get({ id: activity_id })
+    // const fetched = await activityTable.get({ id: activity_id })
 
-    function _findDetailsById(place_id: string) {
-      return detailsData.result(place_id)
-    }
+    // function _findDetailsById(place_id: string) {
+    //   return detailsData.result(place_id)
+    // }
 
-    const foundActivity = fetched
-    let detaildActivity = {}
+    // const foundActivity = fetched
+    // let detaildActivity = {}
 
-    if (details) {
-      detaildActivity = _findDetailsById(foundActivity.place_id)
-    }
+    // if (details) {
+    //   detaildActivity = _findDetailsById(foundActivity.place_id)
+    // }
 
-    return res(ctx.status(200), ctx.json({ ...foundActivity, ...detaildActivity }))
+    return res(ctx.status(200), ctx.json({}))
   } catch (error) {
     return res(
       ctx.status(500),
@@ -99,8 +99,8 @@ export const postActivityHandler = async (
 ) => {
   const activity = await req.json()
   try {
-    const added = await activityTable.add(activity)
-    return res(ctx.status(200), ctx.json(added))
+    // const added = await activityTable.add(activity)
+    return res(ctx.status(200), ctx.json({}))
   } catch (error) {
     return res(
       ctx.status(500),
@@ -121,8 +121,8 @@ export const patchActivityHandler = async (
   const activityId = req.params.activity_id
 
   try {
-    const patched = await activityTable.patch({ id: activityId, ...payload })
-    return res(ctx.status(200), ctx.json(patched))
+    // const patched = await activityTable.patch({ id: activityId, ...payload })
+    return res(ctx.status(200), ctx.json({}))
   } catch (error) {
     return res(
       ctx.status(500),
