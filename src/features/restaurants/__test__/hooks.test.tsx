@@ -93,7 +93,7 @@ describe('clearRestaurants', () => {
 })
 
 describe('getRestaurantDetail', () => {
-  const PLACE_ID = 'ChIJBTBBRKiaqkARRgOZXBkrduI'
+  const PLACE_ID = 'ChIJzdIWCP2GqkAR4wCobfmZAvo'
 
   test('to return restaurants details', async () => {
     const { result } = renderHook(() => useRestaurantDetails({ place_id: PLACE_ID }), { wrapper })
@@ -104,7 +104,6 @@ describe('getRestaurantDetail', () => {
       expect(refetched.isSuccess).toBe(true)
     })
 
-    console.log(refetched.data)
-    expect(refetched.data).toBeDefined()
+    expect(refetched.data.result.place_id).toBe(PLACE_ID)
   })
 })
