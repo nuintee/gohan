@@ -16,29 +16,9 @@ import { BASE_URL } from '@/config/env'
 import { AddUserProps } from '../schema'
 import axios from '@/libs/axios'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-  logger: {
-    log: console.log,
-    warn: console.warn,
-    error: process.env.NODE_ENV === 'test' ? () => {} : console.error,
-  },
-})
-
-const wrapper = ({ children }) => (
-  <SessionProvider
-    session={{
-      expires: '',
-      user,
-    }}
-  >
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  </SessionProvider>
-)
+// config
+import { setUpWrapper } from '@/config/jest/wrapper'
+const wrapper = setUpWrapper({ isAuthed: true })
 
 const addTestUser = async (payload: AddUserProps) => {
   const query = await fetch(`${BASE_URL}/api/v1/users`, {
