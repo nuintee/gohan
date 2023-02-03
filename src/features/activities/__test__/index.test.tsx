@@ -7,16 +7,15 @@ import { AddActivityProps } from '@/features/activities/schemas/addActivity.sche
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-})
+// data
+import { user } from '@/data/user'
+
+// config
+import { setUpWrapper } from '@/config/jest/wrapper'
+const wrapper = setUpWrapper({ isAuthed: true })
 
 const _test_activityData: AddActivityProps = {
-  user_id: '5a70cabc-919b-48db-867d-c02a6e988f83',
+  userId: user.id,
   is_liked: false,
   place_id: '_TEST_PLACE_ID',
 }
@@ -24,21 +23,6 @@ const _test_activityData: AddActivityProps = {
 const _updateField = {
   is_liked: true,
 }
-
-const _session = {
-  expires: new Date().toISOString(),
-  user: {
-    id: '5a70cabc-919b-48db-867d-c02a6e988f83',
-    name: 'JE',
-    email: 'JE@example.com',
-  },
-}
-
-const wrapper = ({ children }) => (
-  <SessionProvider session={_session}>
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  </SessionProvider>
-)
 
 describe('useActivities', () => {
   // POST
@@ -85,9 +69,7 @@ describe('useActivities', () => {
     })
     await waitFor(() => {
       if (!result.current.isSuccess) throw new Error('Wait')
-      const hasUserId = result.current.data.filter(
-        (activity) => activity.user_id === _session.user.id,
-      )
+      const hasUserId = result.current.data.filter((activity) => activity.userId === user.id)
       const isAllUsersData = result.current.data.length === hasUserId.length
       expect(isAllUsersData).toBe(true)
     })
