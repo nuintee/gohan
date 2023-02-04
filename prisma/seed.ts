@@ -2,14 +2,23 @@ import prisma from '@/libs/prisma'
 
 // data
 import { user } from '@/data/user'
+import { _testActivity } from '@/data/activities'
 
 async function main() {
-  const devUser = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: {
       id: user.id,
     },
     update: {},
     create: user,
+  })
+
+  await prisma.activity.upsert({
+    where: {
+      id: _testActivity.id,
+    },
+    update: {},
+    create: _testActivity,
   })
 }
 
