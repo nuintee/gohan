@@ -25,17 +25,17 @@ const fetcher = ({
 }
 
 const useGetUserActivities = (props: {
-  userId: string
+  userId?: string
   details?: boolean
   onlyNeeded?: boolean
 }) => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const { userId = session?.user.id, details = true, onlyNeeded = true } = props
 
   return useQuery<ActivityResolved[]>({
     queryKey: [QUERY_KEY, 'user', { userId }],
     queryFn: () => fetcher({ userId, details, onlyNeeded }),
-    enabled: !!userId,
+    enabled: status === 'authenticated',
     onError: (error) => {
       console.error(error)
 
