@@ -15,8 +15,6 @@ export const directionsAPIHandler = async (
   const start = req?.url.searchParams.get('start')
   const end = req?.url.searchParams.get('end')
 
-  const _place_id = req.headers.get('x-place-id') as string
-
   const _findByCoords = (coords: string) => {
     const parse = coords.split(',').map((v) => Number(v))
     const found = directions.find((v) => {

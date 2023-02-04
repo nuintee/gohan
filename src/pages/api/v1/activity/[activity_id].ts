@@ -19,11 +19,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         let detailedActivity = {}
 
         if (details) {
-          const data = await getRestaurantDetails({
-            place_id: fetchedActivity.place_id,
-            onlyNeeded: onlyNeeded !== 'false',
-          })
-          detailedActivity = data.result || {}
+          const url = new URL(`${BASE_URL}/api/v1/details`)
+          url.searchParams.append('place_id', fetchedActivity.place_id)
+          url.searchParams.append('onlyNeeded', onlyNeeded)
+
+          const { data } = await axios.get(
+            `${BASE_URL}/api/v1/details?place_id=${fetchedActivity.place_id}`,
+          )
+          detailedActivity = data
         }
 
         res.status(200).json({ ...fetchedActivity, ...detailedActivity })
