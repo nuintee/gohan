@@ -15,6 +15,7 @@ import useMapBox from '@/features/mapbox/hooks'
 import useModals from '@/hooks/modals'
 import useRestaurants from '@/features/restaurants/hooks'
 import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
+import usePatchActivity from '../hooks/usePatchActivity'
 
 // Constants
 const tabs = [
@@ -49,6 +50,9 @@ const List = (props: ListProps) => {
   const { coords } = useMapBox()
   const { open } = useModals()
 
+  // Update
+  const patchActivity = usePatchActivity({})
+
   if (!activities?.length) return <>No contents</>
 
   return (
@@ -60,9 +64,7 @@ const List = (props: ListProps) => {
           compact
           key={activity.id}
           isLocked={isLocked}
-          onLike={() =>
-            updater.mutate({ activityId: activity.id, payload: { is_liked: !activity.is_liked } })
-          }
+          onLike={() => patchActivity.mutate({ id: activity.id, is_liked: !activity.is_liked })}
           onClick={() => open('restaurantdiscovered', activity)}
         />
       ))}
