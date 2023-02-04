@@ -23,6 +23,7 @@ const usePatchActivity = ({ activityId = '' }) => {
       }
     },
     onSuccess: (data) => {
+      console.log(data)
       queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id }])
     },
   })
