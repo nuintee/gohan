@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/modals.css'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'

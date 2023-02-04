@@ -4,6 +4,7 @@ import { activityTable } from '@/features/activities/prisma/activityTable'
 import axios from 'axios'
 import { getRestaurantDetails } from '@/features/restaurants/controllers/getRestaurantDetails'
 import { Activity } from '@prisma/client'
+import { BASE_URL } from '@/config/env'
 
 // GET | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -33,6 +33,7 @@ export const userActivitiesHandler = async (
     let detailedActivities: Activity[] = []
 
     if (details) {
+      console.log(fetchedUserActivities)
       detailedActivities = await Promise.all(
         fetchedUserActivities.map(async (activity) => {
           const data = await _findDetailsById(activity.place_id)
@@ -121,8 +122,7 @@ export const patchActivityHandler = async (
   const activityId = req.params.activity_id
 
   try {
-    // const patched = await activityTable.patch({ id: activityId, ...payload })
-    return res(ctx.status(200), ctx.json({}))
+    return res(ctx.status(200), ctx.json(payload))
   } catch (error) {
     return res(
       ctx.status(500),

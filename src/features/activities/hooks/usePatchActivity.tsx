@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { QUERY_KEY } from '../constants'
 import { UpdateActivityProps } from '../schemas/addActivity.schema'
+import { ActivityResolved } from '../types'
 
 const fetcher = (activityId: string, payload: UpdateActivityProps) => {
   return axios.patch(`${BASE_URL}/api/v1/activity/${activityId}`, payload).then((res) => res.data)
@@ -23,8 +24,8 @@ const usePatchActivity = ({ activityId = '' }) => {
       }
     },
     onSuccess: (data) => {
-      console.log(data)
-      queryClient.invalidateQueries([QUERY_KEY, { activityId: data.id }])
+      console.dir(data)
+      queryClient.setQueryData([QUERY_KEY], (prev) => ({ ...prev, ...data }))
     },
   })
 }
