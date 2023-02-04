@@ -46,6 +46,6 @@ export const handlers = [
   rest.get(`${BASE_PATH}/details`, restaurantDetailsAPIHandler),
   rest.all(`${BASE_PATH}/activities/user/:user_id`, userActivitiesHandler),
   // rest.post(`${BASE_PATH}/activities`, postActivityHandler),
-  // rest.patch(`${BASE_PATH}/activity/:activity_id`, patchActivityHandler),
+  rest.patch(`${BASE_PATH}/activity/:activity_id`, patchActivityHandler),
   // rest.get(`${BASE_PATH}/activity/:activity_id`, getActivityHandler),
 ]
