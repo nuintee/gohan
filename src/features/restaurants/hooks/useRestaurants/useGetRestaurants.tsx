@@ -63,7 +63,7 @@ const useGetRestaurants = (props?: { coords: Partial<GeolocationCoordinates> }) 
       }
     },
     onSuccess: (data) => {
-      console.log(data)
+      open('restaurantdiscovered', data)
     },
     enabled: false,
     refetchOnWindowFocus: false,

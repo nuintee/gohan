@@ -84,7 +84,7 @@ const Index = () => {
         isOpen={isOpen('restaurantdiscovered')}
         onClose={clearRestaurant.mutate}
         distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
-        data={getRestaurants.data}
+        data={getPayload('restaurantdiscovered')}
         isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />
