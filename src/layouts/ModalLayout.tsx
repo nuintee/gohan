@@ -5,6 +5,7 @@ const ModalLayout = (props: ComponentProps<typeof Modal> & { children: JSX.Eleme
   return (
     <Modal
       {...props}
+      closeTimeoutMS={2000}
       style={{
         overlay: {
           background: `rgba(0,0,0, 0.5)`,
