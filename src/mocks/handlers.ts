@@ -14,6 +14,7 @@ import {
   patchActivityHandler,
   getActivityHandler,
 } from './handlers/activitiesHandlers'
+import { googlePhotosAPIHandler } from './handlers/googlePhotosAPIHandlers'
 
 const BASE_PATH = '/api/v1'
 
@@ -38,6 +39,7 @@ export const handlers = [
     )
   }),
 
+  rest.get(`https://maps.googleapis.com/maps/api/place/photo`, googlePhotosAPIHandler),
   rest.get(`${BASE_PATH}/restaurants`, restaurantPlacesAPIHandler),
   rest.get(`${BASE_PATH}/restaurants/:place_id`, restaurantDetailsAPIHandler),
   rest.get(`${BASE_PATH}/directions`, directionsAPIHandler),
