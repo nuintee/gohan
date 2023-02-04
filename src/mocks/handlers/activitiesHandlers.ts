@@ -122,8 +122,7 @@ export const patchActivityHandler = async (
   const activityId = req.params.activity_id
 
   try {
-    // const patched = await activityTable.patch({ id: activityId, ...payload })
-    return res(ctx.status(200), ctx.json({}))
+    return res(ctx.status(200), ctx.json(payload))
   } catch (error) {
     return res(
       ctx.status(500),

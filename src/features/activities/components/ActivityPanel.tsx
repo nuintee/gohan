@@ -60,7 +60,7 @@ const List = (props: ListProps) => {
     if (!activityId) return
 
     patchActivity.mutate({
-      is_liked: !activity.is_liked,
+      is_liked: true,
     })
   }
 
