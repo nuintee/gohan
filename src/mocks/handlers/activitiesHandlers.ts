@@ -8,6 +8,7 @@ import { activities } from '@/data/activities'
 // Schema
 import { Schema } from '@/features/restaurants/schemas/getRestaurantDetails.schema'
 import { ActivityResolved } from '@/features/activities/types'
+import { activityTable } from '@/features/activities/prisma/activityTable'
 
 export const userActivitiesHandler = async (
   req: RestRequest<never, PathParams<string>>,
@@ -57,7 +58,7 @@ export const userActivitiesHandler = async (
   }
 }
 
-export const activityHandler = async (
+export const getActivityHandler = async (
   req: RestRequest<never, PathParams<string>>,
   res: ResponseComposition<DefaultBodyType>,
   ctx: RestContext,
@@ -65,24 +66,63 @@ export const activityHandler = async (
   const activity_id = req?.params.activity_id as string
   const details = req?.url.searchParams.get('details')
 
-  function _findOneById(activity_id: string): ActivityResolved | {} {
-    const found = activities.find((activity) => activity.id === activity_id)
-    return found || {}
-  }
+  try {
+    // const fetched = await activityTable.get({ id: activity_id })
 
-  async function _findDetailsById(place_id: string) {
-    return detailsData.result(place_id)
+    // function _findDetailsById(place_id: string) {
+    //   return detailsData.result(place_id)
+    // }
+
+    // const foundActivity = fetched
+    // let detaildActivity = {}
+
+    // if (details) {
+    //   detaildActivity = _findDetailsById(foundActivity.place_id)
+    // }
+
+    return res(ctx.status(200), ctx.json({}))
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        message: error.message,
+        code: 500,
+      }),
+    )
   }
+}
+
+export const postActivityHandler = async (
+  req: RestRequest<never, PathParams<string>>,
+  res: ResponseComposition<DefaultBodyType>,
+  ctx: RestContext,
+) => {
+  const activity = await req.json()
+  try {
+    // const added = await activityTable.add(activity)
+    return res(ctx.status(200), ctx.json({}))
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        message: error.message,
+        code: 500,
+      }),
+    )
+  }
+}
+
+export const patchActivityHandler = async (
+  req: RestRequest<never, PathParams<string>>,
+  res: ResponseComposition<DefaultBodyType>,
+  ctx: RestContext,
+) => {
+  const payload = await req.json()
+  const activityId = req.params.activity_id
 
   try {
-    const foundActivity = _findOneById(activity_id)
-    let detaildActivity = {}
-
-    if (details) {
-      detaildActivity = _findDetailsById(foundActivity.place_id)
-    }
-
-    return res(ctx.status(200), ctx.json({ ...foundActivity, ...detaildActivity }))
+    // const patched = await activityTable.patch({ id: activityId, ...payload })
+    return res(ctx.status(200), ctx.json({}))
   } catch (error) {
     return res(
       ctx.status(500),

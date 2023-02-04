@@ -64,7 +64,7 @@ export const activityTable = {
   add: async (props: Activity) => {
     await addActivitySchema.parse(props)
 
-    const id = props?.place_id || randomUUID()
+    const id = props?.id || randomUUID()
     const addedActivity = await prisma.activity.create({
       data: { ...props, id, discovered_at: new Date().toISOString() },
     })

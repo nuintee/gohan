@@ -16,6 +16,7 @@ import prisma from '@/libs/prisma'
 // GET | PATCH | DELETE
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const user_id = req.query.user_id as string
+
   try {
     switch (req.method) {
       case 'GET':

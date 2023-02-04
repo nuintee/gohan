@@ -3,7 +3,7 @@ import { Activity } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
 // Schemas
-import { addUserSchema, updateUserSchema } from '../schema'
+import { AddUserProps, addUserSchema, updateUserSchema } from '../schema'
 
 // Replace from with Zod from here ---
 const resultFilter = (listFilters?: ListFilter) => {
@@ -35,8 +35,6 @@ export type UserId = {
 
 export type MutateProps<T> = Id & T
 
-type Data = Activity & UserId
-
 export const userTable = {
   get: async (props: Id) => {
     const fetchedUser = await prisma.user.findUniqueOrThrow({
@@ -50,10 +48,10 @@ export const userTable = {
     const fetchedUsers = await prisma.user.findMany(resultFilter(props))
     return fetchedUsers
   },
-  add: async (props: Data) => {
+  add: async (props: AddUserProps) => {
     await addUserSchema.parse(props)
 
-    const id = randomUUID()
+    const id = props.id || randomUUID()
     const addedUser = await prisma.user.create({
       data: { ...props, id, registered_at: new Date().toISOString() },
     })

@@ -22,6 +22,17 @@ import useRestaurants from '@/features/restaurants/hooks'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 import calculateDistance from '@/libs/haversine-distance'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
+import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
+import useGetDirections from '@/features/directions/hooks/useGetDirections'
+import useToast from '@/libs/react-toastify'
+import useClearDirections from '@/features/directions/hooks/useClearDirections'
+import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
+import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
+import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useClearRestaurant'
+import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
+import useGetUser from '@/features/user/hooks/useGetUser'
+import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 
 const Index = () => {
   // User

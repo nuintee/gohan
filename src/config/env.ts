@@ -3,6 +3,7 @@ export const GCP_API_KEY = process.env.NEXT_PUBLIC_GCP_API_KEY as string
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 export const AXIOS_FETCH_TIMEOUT = parseInt(process.env.NEXT_PUBLIC_AXIOS_FETCH_TIMEOUT as string)
 export const IS_DEVMODE = process.env.NODE_ENV === 'development'
+export const IS_TESTMODE = process.env.NODE_ENV === 'test'
 export const AUTH0_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID as string
 export const AUTH0_CLIENT_SECRET = process.env.NEXT_PUBLIC_AUTH0_CLIENT_SECRET as string
 export const AUTH0_ISSUER = process.env.NEXT_PUBLIC_AUTH0_ISSUER as string
