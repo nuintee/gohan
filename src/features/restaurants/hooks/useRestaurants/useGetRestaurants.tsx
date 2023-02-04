@@ -9,6 +9,7 @@ import useToast from '@/libs/react-toastify'
 import { QUERY_KEY } from '@/features/restaurants/constants'
 import { BASE_URL } from '@/config/env'
 import useMapBox from '@/features/mapbox/hooks'
+import useModals from '@/hooks/modals'
 
 // const get = () => {
 //   const isGPSAvailable = !!coords.latitude && !!coords.longitude
@@ -49,6 +50,7 @@ const fetcher = (coords: Partial<GeolocationCoordinates>) => {
 
 const useGetRestaurants = (props?: { coords: Partial<GeolocationCoordinates> }) => {
   const { coords: c } = useMapBox()
+  const { open } = useModals()
   const coords = props?.coords || c
 
   return useQuery({
@@ -59,6 +61,9 @@ const useGetRestaurants = (props?: { coords: Partial<GeolocationCoordinates> }) 
       if (error instanceof Error) {
         useToast.error(error.message)
       }
+    },
+    onSuccess: (data) => {
+      open('restaurantdiscovered', data)
     },
     enabled: false,
     refetchOnWindowFocus: false,

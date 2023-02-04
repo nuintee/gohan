@@ -8,6 +8,7 @@ import { PulseLoader } from '@/components/icons'
 import useDirections from '@/features/directions/hooks'
 import useMapBox from '@/features/mapbox/hooks'
 import useRestaurants from '@/features/restaurants/hooks'
+import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
 
 type Props = {
   isLoading?: boolean
@@ -22,14 +23,17 @@ const GohanButton = (props: Props) => {
 
   const { isLoadingUserLocation } = useMapBox()
 
-  const { get } = useRestaurants()
-  const restaurants = get()
+  // const { get } = useRestaurants()
+  // const restaurants = get()
+
+  // Restaurants
+  const getRestaurants = useGetRestaurants()
 
   const {
-    isLoading = (isLoadingUserLocation || restaurants.isFetching) ?? false,
+    isLoading = (isLoadingUserLocation || getRestaurants.isFetching) ?? false,
     isNavigating = hasDirections ?? false,
     disabled = isLoadingUserLocation ?? false,
-    onClick = hasDirections ? () => directions.mutate() : () => restaurants.refetch(),
+    onClick = hasDirections ? () => directions.mutate() : () => getRestaurants.refetch(),
   } = props
 
   const ui = () =>

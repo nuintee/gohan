@@ -42,7 +42,8 @@ const Index = () => {
   const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  const { restaurant, set } = useRestaurants()
+  // const { restaurant, set } = useRestaurants()
+  const getRestaurants = useGetRestaurants()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
@@ -69,8 +70,8 @@ const Index = () => {
               compact
               isLocked={session.status === 'unauthenticated'}
               isNavigating={hasDirections}
-              data={restaurant}
-              distance={calculateDistance(coords, restaurant?.geometry?.location).auto}
+              data={getRestaurants.data}
+              distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
               onClick={() => open('restaurantdiscovered')}
             />
           )}
@@ -82,8 +83,8 @@ const Index = () => {
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
-        distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
-        data={restaurant}
+        distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
+        data={getRestaurants.data}
         isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />
