@@ -8,10 +8,12 @@ import useToast from '@/libs/react-toastify'
 // Env
 import { QUERY_KEY } from '@/features/restaurants/constants'
 import useMapBox from '@/features/mapbox/hooks'
+import useModals from '@/hooks/modals'
 
 const useClearRestaurant = () => {
   const queryClient = useQueryClient()
   const { coords } = useMapBox()
+  const { close } = useModals()
 
   return useMutation({
     mutationKey: [QUERY_KEY, { coords }],
@@ -26,6 +28,7 @@ const useClearRestaurant = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY])
+      close('restaurantdiscovered')
     },
   })
 }

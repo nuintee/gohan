@@ -42,8 +42,8 @@ const Index = () => {
   const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  // const { restaurant, set } = useRestaurants()
   const getRestaurants = useGetRestaurants()
+  const clearRestaurant = useClearRestaurant()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
@@ -82,7 +82,7 @@ const Index = () => {
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
-        onClose={() => close('restaurantdiscovered')}
+        onClose={clearRestaurant.mutate}
         distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         data={getRestaurants.data}
         isNavigating={hasDirections}

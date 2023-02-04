@@ -14,6 +14,7 @@ import { UseMutationResult } from '@tanstack/react-query'
 import useMapBox from '@/features/mapbox/hooks'
 import useModals from '@/hooks/modals'
 import useRestaurants from '@/features/restaurants/hooks'
+import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
 
 // Constants
 const tabs = [
@@ -46,7 +47,7 @@ type ListProps = {
 const List = (props: ListProps) => {
   const { activities, isLocked, updater } = props
   const { coords } = useMapBox()
-  const { set } = useRestaurants()
+  const { open } = useModals()
 
   if (!activities?.length) return <>No contents</>
 
@@ -62,7 +63,7 @@ const List = (props: ListProps) => {
           onLike={() =>
             updater.mutate({ activityId: activity.id, payload: { is_liked: !activity.is_liked } })
           }
-          onClick={() => set(activity)}
+          onClick={() => open('restaurantdiscovered', activity)}
         />
       ))}
     </div>
