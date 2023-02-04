@@ -33,6 +33,7 @@ export const userActivitiesHandler = async (
     let detailedActivities: Activity[] = []
 
     if (details) {
+      console.log(fetchedUserActivities)
       detailedActivities = await Promise.all(
         fetchedUserActivities.map(async (activity) => {
           const data = await _findDetailsById(activity.place_id)

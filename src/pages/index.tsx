@@ -71,7 +71,7 @@ const Index = () => {
               isLocked={session.status === 'unauthenticated'}
               isNavigating={hasDirections}
               data={getRestaurants.data}
-              distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
+              // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
               onClick={() => open('restaurantdiscovered')}
             />
           )}
@@ -83,7 +83,7 @@ const Index = () => {
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={clearRestaurant.mutate}
-        distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
+        // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         data={getPayload('restaurantdiscovered')}
         isNavigating={hasDirections}
       />

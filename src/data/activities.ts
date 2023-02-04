@@ -17,7 +17,7 @@ export const _testActivity: Required<AddActivityProps> = {
 export const activities: RestaurantData[] = [
   {
     id: '1',
-    userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad',
+    userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
     discovered_at: new Date(2022, 9, 6),
     is_liked: false,
     business_status: 'OPERATIONAL',

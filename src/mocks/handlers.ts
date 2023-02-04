@@ -42,7 +42,7 @@ export const handlers = [
   rest.get(`${BASE_PATH}/restaurants/:place_id`, restaurantDetailsAPIHandler),
   rest.get(`${BASE_PATH}/directions`, directionsAPIHandler),
   rest.get(`${BASE_PATH}/details`, restaurantDetailsAPIHandler),
-  // rest.all(`${BASE_PATH}/activities/user/:user_id`, userActivitiesHandler),
+  rest.all(`${BASE_PATH}/activities/user/:user_id`, userActivitiesHandler),
   // rest.post(`${BASE_PATH}/activities`, postActivityHandler),
   // rest.patch(`${BASE_PATH}/activity/:activity_id`, patchActivityHandler),
   // rest.get(`${BASE_PATH}/activity/:activity_id`, getActivityHandler),

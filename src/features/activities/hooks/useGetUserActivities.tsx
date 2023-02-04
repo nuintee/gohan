@@ -1,4 +1,5 @@
 import { BASE_URL } from '@/config/env'
+import useMapBox from '@/features/mapbox/hooks'
 import axios from '@/libs/axios'
 import useToast from '@/libs/react-toastify'
 import { useQuery } from '@tanstack/react-query'
@@ -34,7 +35,7 @@ const useGetUserActivities = (props: {
   return useQuery<ActivityResolved[]>({
     queryKey: [QUERY_KEY, 'user', { userId }],
     queryFn: () => fetcher({ userId, details, onlyNeeded }),
-    enabled: false,
+    enabled: !!userId,
     onError: (error) => {
       console.error(error)
 

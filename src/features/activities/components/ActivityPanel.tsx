@@ -16,6 +16,7 @@ import useModals from '@/hooks/modals'
 import useRestaurants from '@/features/restaurants/hooks'
 import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
 import usePatchActivity from '../hooks/usePatchActivity'
+import useGetUserActivities from '../hooks/useGetUserActivities'
 
 // Constants
 const tabs = [
@@ -42,16 +43,26 @@ type Props = {
 type ListProps = {
   activities: ActivityResolved[]
   isLocked: boolean
-  updater: UseMutationResult
 }
 
 const List = (props: ListProps) => {
-  const { activities, isLocked, updater } = props
+  const [activityId, setActivityId] = useState('')
+  const { activities, isLocked } = props
   const { coords } = useMapBox()
   const { open } = useModals()
 
   // Update
-  const patchActivity = usePatchActivity({})
+  const patchActivity = usePatchActivity({ activityId })
+
+  const handleUpdate = (activity) => {
+    setActivityId(activity.id)
+
+    if (!activityId) return
+
+    patchActivity.mutate({
+      is_liked: !activity.is_liked,
+    })
+  }
 
   if (!activities?.length) return <>No contents</>
 
@@ -60,11 +71,11 @@ const List = (props: ListProps) => {
       {activities?.map((activity) => (
         <RestaurantCard
           data={activity}
-          distance={calculateDistance(coords, activity.geometry.location, true).auto}
+          // distance={calculateDistance(coords, activity.geometry.location, true).auto}
           compact
           key={activity.id}
           isLocked={isLocked}
-          onLike={() => patchActivity.mutate({ id: activity.id, is_liked: !activity.is_liked })}
+          onLike={() => handleUpdate(activity)}
           onClick={() => open('restaurantdiscovered', activity)}
         />
       ))}
@@ -73,15 +84,14 @@ const List = (props: ListProps) => {
 }
 
 const ActivityPanel = (props: Props) => {
-  const { getUserAll, update, isPanelOpen, closePanel } = useActivities()
-  const { data: userAllActivities } = getUserAll()
+  const { isPanelOpen, closePanel } = useActivities()
+  const getUserAll = useGetUserActivities({ details: true })
   const { status } = useSession()
-  const updateActity = update()
 
   const {
     isOpen = isPanelOpen ?? false,
     onClose = closePanel,
-    data = userAllActivities ?? [],
+    data = getUserAll.data ?? [],
   } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
@@ -91,7 +101,7 @@ const ActivityPanel = (props: Props) => {
       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
     >
       <Header title={'ActivityPanel'} onClose={onClose} />
-      <List activities={data} isLocked={status === 'unauthenticated'} updater={updateActity} />
+      <List activities={data} isLocked={status === 'unauthenticated'} />
     </div>
   )
 }
