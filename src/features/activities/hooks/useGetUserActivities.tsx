@@ -4,10 +4,12 @@ import axios from '@/libs/axios'
 import useToast from '@/libs/react-toastify'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import { useRecoilValue } from 'recoil'
 
 // Env
 import { QUERY_KEY } from '../constants'
 import { ActivityResolved } from '../types'
+import useActivityPanel from './useActivityPanel'
 
 const fetcher = ({
   userId,
@@ -30,12 +32,13 @@ const useGetUserActivities = (props: {
   onlyNeeded?: boolean
 }) => {
   const { data: session, status } = useSession()
+  const { isPanelOpen } = useActivityPanel()
   const { userId = session?.user.id, details = true, onlyNeeded = true } = props
 
   return useQuery<ActivityResolved[]>({
     queryKey: [QUERY_KEY, 'user', { userId }],
     queryFn: () => fetcher({ userId, details, onlyNeeded }),
-    enabled: status === 'authenticated',
+    enabled: status === 'authenticated' && isPanelOpen,
     onError: (error) => {
       console.error(error)
 
