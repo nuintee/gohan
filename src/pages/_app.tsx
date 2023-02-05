@@ -8,6 +8,7 @@ import { Session } from 'next-auth'
 import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { trpc } from '@/utils/trpc'
 
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
@@ -32,4 +33,4 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
   )
 }
 
-export default App
+export default trpc.withTRPC(App)
