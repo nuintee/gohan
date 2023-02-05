@@ -12,6 +12,15 @@ export const appRouter = router({
         greeting: `hello ${input.text}`,
       }
     }),
+  postHello: procedure
+    .input(
+      z.object({
+        title: z.string(),
+      }),
+    )
+    .mutation(({ input }) => {
+      return input
+    }),
 })
 // export type definition of API
 export type AppRouter = typeof appRouter

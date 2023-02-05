@@ -33,65 +33,7 @@ import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useC
 import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
 import useGetUser from '@/features/user/hooks/useGetUser'
 import useUpdateUser from '@/features/user/hooks/useUpdateUser'
-
-// const Index = () => {
-//   // User
-//   const session = useSession()
-
-//   // Modals
-//   const { open, close, isOpen, getPayload } = useModals()
-
-//   // Restaurants
-//   const { restaurant, set } = useRestaurants()
-
-//   // GPS
-//   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
-
-//   // Directions
-//   const {
-//     hasDirections,
-//     directions,
-//     revokeDirections,
-//     getDirections: getDirections,
-//   } = useDirections()
-
-//   return (
-//     <>
-//       <div className='flex flex-col gap-4'>
-//         <section className='absolute top-0 left-0 z-[1] w-full p-4 flex gap-4 justify-between'>
-//           <User />
-//           <AcitvityButton />
-//         </section>
-//         <MapBox />
-//         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-//           {hasDirections && (
-//             <RestaurantCard
-//               compact
-//               isLocked={session.status === 'unauthenticated'}
-//               isNavigating={hasDirections}
-//               data={restaurant}
-//               distance={calculateDistance(coords, restaurant?.geometry?.location).auto}
-//               onClick={() => open('restaurantdiscovered')}
-//             />
-//           )}
-//           <GohanButton />
-//         </section>
-//       </div>
-//       <ActivityPanel />
-//       <RestaurantDiscoveredModal
-//         isLocked={session.status === 'unauthenticated'}
-//         isOpen={isOpen('restaurantdiscovered')}
-//         onClose={() => close('restaurantdiscovered')}
-//         distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
-//         data={restaurant}
-//         isNavigating={hasDirections}
-//       />
-//       <UserAuthConsentDialog />
-//       <UserSettingsModal />
-//       <ToastCatcher position='top-center' />
-//     </>
-//   )
-// }
+import { trpc } from '@/libs/trpc'
 
 const PlayGround = () => {
   // Activities [OK]
@@ -111,6 +53,10 @@ const PlayGround = () => {
   // User [OK]
   const getUser = useGetUser()
   const updateUser = useUpdateUser()
+
+  // Trpc
+  const hello = trpc.hello.useQuery({ text: 'Ola' })
+  const postHello = trpc.postHello.useMutation()
 
   return (
     <>
@@ -155,8 +101,11 @@ const PlayGround = () => {
             Update User
           </button>
           <hr></hr>
-
-          <button onClick={() => useToast('S')}>useToast</button>
+          <p>{hello.isFetching ? '...' : JSON.stringify(hello.data)}</p>
+          <p>{postHello.isLoading ? '...' : JSON.stringify(postHello.data)}</p>
+          <button onClick={() => postHello.mutate({ title: 'fe' })}>Post Hello</button>
+          <hr></hr>
+          <button onClick={() => useToast('Toast')}>useToast</button>
         </div>
         <MapBox />
       </div>

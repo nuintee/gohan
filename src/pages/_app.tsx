@@ -8,7 +8,7 @@ import { Session } from 'next-auth'
 import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { trpc } from '@/utils/trpc'
+import { trpc } from '@/libs/trpc'
 
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
