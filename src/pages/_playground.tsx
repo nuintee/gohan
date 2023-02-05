@@ -37,8 +37,8 @@ import { trpc } from '@/libs/trpc'
 
 const PlayGround = () => {
   // Activities [OK]
-  const getActivity = useGetActivity({ activityId: '2' })
-  const getUserActivities = useGetUserActivities({ userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad' })
+  // const getActivity = useGetActivity({ activityId: '2' })
+  // const getUserActivities = useGetUserActivities({ userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad' })
 
   // Directions [OK]
   const getDirections = useGetDirections({ end: `23.408622,42.648763` })
@@ -55,8 +55,12 @@ const PlayGround = () => {
   const updateUser = useUpdateUser()
 
   // Trpc
-  const hello = trpc.hello.useQuery({ text: 'Ola' })
-  const postHello = trpc.postHello.useMutation()
+  const getActivity = trpc.getActivity.useQuery({
+    activityId: '0cad9849-cfea-46c4-9821-39691838986b',
+  })
+  const getUserActivities = trpc.getUserActivities.useQuery({
+    userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
+  })
 
   return (
     <>
@@ -101,9 +105,9 @@ const PlayGround = () => {
             Update User
           </button>
           <hr></hr>
-          <p>{hello.isFetching ? '...' : JSON.stringify(hello.data)}</p>
+          {/* <p>{hello.isFetching ? '...' : JSON.stringify(hello.data)}</p>
           <p>{postHello.isLoading ? '...' : JSON.stringify(postHello.data)}</p>
-          <button onClick={() => postHello.mutate({ title: 'fe' })}>Post Hello</button>
+          <button onClick={() => postHello.mutate({ title: 'fe' })}>Post Hello</button> */}
           <hr></hr>
           <button onClick={() => useToast('Toast')}>useToast</button>
         </div>
