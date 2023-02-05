@@ -17,38 +17,6 @@ if (process.env.NODE_ENV === 'development') {
 
 const queryClient = new QueryClient()
 
-if (typeof window !== 'undefined') {
-  navigator.geolocation.getCurrentPosition = (success, error) => {
-    success({
-      coords: {
-        latitude: 45.4111,
-        longitude: -75.6981,
-        altitude: 10,
-        accuracy: 10,
-        altitudeAccuracy: 10,
-        heading: 10,
-        speed: 10,
-      },
-      timestamp: 10,
-    })
-  }
-
-  navigator.geolocation.watchPosition = (success, error) => {
-    success({
-      coords: {
-        latitude: 45.4111,
-        longitude: -75.6981,
-        altitude: 10,
-        accuracy: 10,
-        altitudeAccuracy: 10,
-        heading: 10,
-        speed: 10,
-      },
-      timestamp: 10,
-    })
-  }
-}
-
 function App({ Component, pageProps }: AppProps<{ session: Session }>) {
   return (
     <ErrorBoundary>
