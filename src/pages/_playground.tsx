@@ -37,11 +37,6 @@ import { trpc } from '@/libs/trpc'
 
 const PlayGround = () => {
   // Activities [OK]
-  // const getActivity = useGetActivity({ activityId: '2' })
-  // const getUserActivities = useGetUserActivities({ userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad' })
-
-  // Directions [OK]
-  const getDirections = useGetDirections({ end: `23.408622,42.648763` })
   const clearDirections = useClearDirections({ end: `23.408622,42.648763` })
   const formatToGeoJSON = useGeoJSON() // OK
 
@@ -49,10 +44,6 @@ const PlayGround = () => {
   const getRestaurants = useGetRestaurants()
   const clearRestaurants = useClearRestaurant()
   const getRestaurantDetail = useRestaurantDetails({ place_id: 'ChIJzdIWCP2GqkAR4wCobfmZAvo' })
-
-  // User [OK]
-  // const getUser = useGetUser()
-  // const updateUser = useUpdateUser()
 
   // Trpc
   const getActivity = trpc.getActivity.useQuery({
@@ -67,6 +58,17 @@ const PlayGround = () => {
   })
 
   const updateUser = trpc.updateUser.useMutation()
+
+  const getDirections = trpc.getDirections.useQuery([
+    {
+      latitude: 42.64775203224244,
+      longitude: 23.40559939582422,
+    },
+    {
+      latitude: 42.64775203224244,
+      longitude: 23.40559939582422,
+    },
+  ])
 
   return (
     <>
