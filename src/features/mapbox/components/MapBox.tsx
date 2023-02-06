@@ -21,7 +21,7 @@ const MapBox = ({}) => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
   const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
     useMapBox()
-  const { hasDirections, formattedDirections } = useDirections()
+  // const { hasDirections, formattedDirections } = useDirections()
 
   const handleLoad = () => {
     updateIsLoadingUserLocation(true)
@@ -61,11 +61,11 @@ const MapBox = ({}) => {
           }}
           ref={geoLocateRef}
         />
-        {hasDirections && (
+        {/* {hasDirections && (
           <Source type='geojson' data={formattedDirections.source}>
             <Layer {...formattedDirections?.layer} />
           </Source>
-        )}
+        )} */}
       </Map>
     </div>
   )
