@@ -4,35 +4,39 @@ import { trpc } from '@/libs/trpc'
 
 // ENV
 import useToast from '@/libs/react-toastify'
-import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
-import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useClearRestaurant'
-import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
 import { UseTRPCMutationResult, UseTRPCQueryResult } from '@trpc/react-query/shared'
 
 type Props = {
   apiResult: UseTRPCQueryResult<any, any> | UseTRPCMutationResult<any, any, any, any>
-  type: 'q' | 'm' // query , mutation
   write?: boolean
   mutationPayload?: Object
 }
 
-const Details = (props: Props) => {
-  const { apiResult, type, write, mutationPayload } = props
+const buttonClass =
+  'p-2 bg-gh-dark text-white rounded-md text-sm hover:bg-opacity-80 active:bg-opacity-80 active:scale-90 font-mono'
 
-  const handleTry = () => {
-    if (type === 'm') {
-      apiResult.refetch()
-    } else if (type === 'q') {
-      apiResult.mutate(mutationPayload)
+const Details = (props: Props) => {
+  const { apiResult, mutationPayload } = props
+
+  const isQuery = apiResult.hasOwnProperty('refetch')
+  const isMutation = apiResult.hasOwnProperty('mutate')
+
+  const handleTry = async () => {
+    if (isQuery) {
+      const refetched = await apiResult.refetch()
+      console.log(refetched)
+    } else if (isMutation) {
+      apiResult.mutateAsync(mutationPayload)
+      console.log(apiResult)
     }
   }
 
-  const loader = () => {
-    if (type === 'm') {
+  const loading = () => {
+    if (isMutation) {
       const l = Boolean(apiResult.isLoading || apiResult.isFetching | apiResult.isRefetching)
-      return l && 'loading...'
+      return l
     } else {
-      return apiResult.isLoading && 'loading...'
+      return apiResult.isLoading
     }
   }
 
@@ -50,18 +54,16 @@ const Details = (props: Props) => {
   }
 
   return (
-    <details className='bg-white min-w-[10rem] p-2 cursor-pointer'>
-      <summary>{props.apiResult.trpc.path}</summary>
+    <details className='bg-white min-w-[10rem] p-2 cursor-pointer group'>
+      <summary className='text-gray-400 group-open:text-black font-mono'>
+        {props.apiResult.trpc.path}
+      </summary>
       <div className='flex gap-2 pt-2 items-center justify-between'>
-        <span className={`p-2 ${statusColor(apiResult.status)} rounded-md text-white`}>
+        <span className={`p-2 ${statusColor(apiResult.status)} rounded-md text-white font-mono`}>
           {apiResult.status}
         </span>
-        <span>{loader()}</span>
-        <button
-          onClick={handleTry}
-          className='p-2 bg-gh-dark text-white rounded-md text-sm hover:bg-opacity-80 active:bg-opacity-80'
-        >
-          TRY
+        <button onClick={handleTry} className={buttonClass}>
+          {loading() ? '...' : 'TRY'}
         </button>
       </div>
     </details>
@@ -70,6 +72,15 @@ const Details = (props: Props) => {
 
 const DetailsRenderer = ({ children }) => {
   return <div className='flex flex-col divide-y'>{children}</div>
+}
+
+const DetailsGroup = ({ children, label }) => {
+  return (
+    <div className='bg-white p-2'>
+      <h1 className='font-semibold font-mono'>{label}</h1>
+      {children}
+    </div>
+  )
 }
 
 const PlayGround = () => {
@@ -111,55 +122,38 @@ const PlayGround = () => {
     <>
       <div>
         <div className='absolute top-0 left-0 z-[2]'>
-          {/* <p>{getActivity.isFetching ? '...' : JSON.stringify(getActivity.data)}</p>
-          <button onClick={getActivity.refetch}>GetActivity</button>
-          <hr></hr>
-
-          <p>{getUserActivities.isFetching ? '...' : JSON.stringify(getUserActivities.data)}</p>
-          <button onClick={getUserActivities.refetch}>GetActivities</button>
-          <hr></hr>
-
-          <p>{getDirections.isFetching ? '...' : JSON.stringify(getDirections.data)}</p>
-          <button onClick={getDirections.refetch}>GetDirections</button>
-          <hr></hr>
-
-          <p>{getRestaurants.isFetching ? '...' : JSON.stringify(getRestaurants.data)}</p>
-          <button onClick={getRestaurants.refetch}>Get Restaurants</button>
-          <hr></hr>
-
-          <p>{getRestaurantDetail.isFetching ? '...' : JSON.stringify(getRestaurantDetail.data)}</p>
-          <button onClick={getRestaurantDetail.refetch}>Log Restaurant Detail</button>
-          <hr></hr>
-
-          <p>{getUser.isFetching ? '...' : JSON.stringify(getUser.data)}</p>
-          <button onClick={getUser.refetch}>Get User</button>
-          <button
-            onClick={() =>
-              updateUser.mutate({
-                payload: {
-                  name: new Date().toISOString(),
-                },
-                userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
-              })
-            }
-          >
-            Update User
-          </button>
-          <hr></hr>
-          <hr></hr> */}
-          <button onClick={() => useToast('Toast')}>useToast</button>
           <DetailsRenderer>
-            <Details apiResult={getActivity} type='m' />
-            <Details
-              apiResult={updateUser}
-              type='q'
-              mutationPayload={{
-                userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
-                payload: {
-                  name: new Date().toISOString(),
-                },
-              }}
-            />
+            <DetailsGroup label={'User'}>
+              <Details apiResult={getUser} />
+              <Details
+                apiResult={updateUser}
+                mutationPayload={{
+                  userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
+                  payload: {
+                    name: new Date().toISOString(),
+                  },
+                }}
+              />
+            </DetailsGroup>
+            <DetailsGroup label={'Restaurants'}>
+              <Details apiResult={getRestaurantDetail} />
+              <Details apiResult={getRestaurants} />
+            </DetailsGroup>
+            <DetailsGroup label={'Activities'}>
+              <Details apiResult={getActivity} />
+              <Details apiResult={getUserActivities} />
+            </DetailsGroup>
+            <DetailsGroup label={'Directions'}>
+              <Details apiResult={getDirections} />
+            </DetailsGroup>
+            <DetailsGroup label={'Toast'}>
+              <div className='flex flex-col gap-2'>
+                <button className={buttonClass}>NORMAL</button>
+                <button className={buttonClass}>INFO</button>
+                <button className={buttonClass}>WARN</button>
+                <button className={buttonClass}>ERROR</button>
+              </div>
+            </DetailsGroup>
           </DetailsRenderer>
         </div>
         <MapBox />
