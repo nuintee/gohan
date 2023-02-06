@@ -1,7 +1,10 @@
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
 import { z } from 'zod'
 import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
+
+// data
+import restaurantsData from '@/data/_places.json'
+import { details } from '@/data/details'
 
 export const getRestaurant = procedure
   .input(

@@ -5,11 +5,13 @@ import { procedure, router } from '../trpc'
 import * as activities from './activities'
 import * as user from './user'
 import * as directions from './directions'
+import * as restaurants from './restaurants'
 
 export const appRouter = router({
   ...activities,
   ...user,
   ...directions,
+  ...restaurants,
 })
 
 export type AppRouter = typeof appRouter
