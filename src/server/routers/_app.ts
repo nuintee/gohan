@@ -2,16 +2,14 @@ import { z } from 'zod'
 import { procedure, router } from '../trpc'
 
 // handlers
-import { getActivity, getUserActivities } from './activities'
-import { getUser, updateUser } from './user'
-import { getDirections } from './directions'
+import * as activities from './activities'
+import * as user from './user'
+import * as directions from './directions'
 
 export const appRouter = router({
-  getActivity,
-  getUserActivities,
-  getUser,
-  updateUser,
-  getDirections,
+  ...activities,
+  ...user,
+  ...directions,
 })
 
 export type AppRouter = typeof appRouter

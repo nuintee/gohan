@@ -36,10 +36,6 @@ import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 import { trpc } from '@/libs/trpc'
 
 const PlayGround = () => {
-  // Activities [OK]
-  const clearDirections = useClearDirections({ end: `23.408622,42.648763` })
-  const formatToGeoJSON = useGeoJSON() // OK
-
   // Restaurants [OK]
   const getRestaurants = useGetRestaurants()
   const clearRestaurants = useClearRestaurant()
@@ -84,18 +80,6 @@ const PlayGround = () => {
 
           <p>{getDirections.isFetching ? '...' : JSON.stringify(getDirections.data)}</p>
           <button onClick={getDirections.refetch}>GetDirections</button>
-          <button onClick={clearDirections.mutate}>ClearDirections</button>
-          <button
-            onClick={() =>
-              console.log(
-                formatToGeoJSON({
-                  coordinates: getDirections.data?.routes[0].geometry.coordinates,
-                }),
-              )
-            }
-          >
-            Format
-          </button>
           <hr></hr>
 
           <p>{getRestaurants.isFetching ? '...' : JSON.stringify(getRestaurants.data)}</p>
