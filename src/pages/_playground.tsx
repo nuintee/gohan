@@ -51,8 +51,8 @@ const PlayGround = () => {
   const getRestaurantDetail = useRestaurantDetails({ place_id: 'ChIJzdIWCP2GqkAR4wCobfmZAvo' })
 
   // User [OK]
-  const getUser = useGetUser()
-  const updateUser = useUpdateUser()
+  // const getUser = useGetUser()
+  // const updateUser = useUpdateUser()
 
   // Trpc
   const getActivity = trpc.getActivity.useQuery({
@@ -61,6 +61,12 @@ const PlayGround = () => {
   const getUserActivities = trpc.getUserActivities.useQuery({
     userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
   })
+
+  const getUser = trpc.getUser.useQuery({
+    userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
+  })
+
+  const updateUser = trpc.updateUser.useMutation()
 
   return (
     <>
@@ -101,7 +107,16 @@ const PlayGround = () => {
 
           <p>{getUser.isFetching ? '...' : JSON.stringify(getUser.data)}</p>
           <button onClick={getUser.refetch}>Get User</button>
-          <button onClick={() => updateUser.mutate({ name: new Date().toISOString() })}>
+          <button
+            onClick={() =>
+              updateUser.mutate({
+                payload: {
+                  name: new Date().toISOString(),
+                },
+                userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
+              })
+            }
+          >
             Update User
           </button>
           <hr></hr>
