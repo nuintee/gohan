@@ -5,17 +5,11 @@ import { z } from 'zod'
 // Env
 import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
 
+// Schema
+import { CoordinatesSchema } from '../schema/getDirections.schema'
+
 export const getDirections = procedure
-  .input(
-    z
-      .array(
-        z.object({
-          latitude: z.number(),
-          longitude: z.number(),
-        }),
-      )
-      .max(2),
-  )
+  .input(z.array(CoordinatesSchema).max(2))
   .query(async ({ input }) => {
     const [a, b] = input
 

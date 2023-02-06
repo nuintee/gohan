@@ -40,3 +40,4 @@ export const Schema = z.object({
 })
 
 export type Props = z.infer<typeof Schema>
+export type Coordinates = z.infer<typeof CoordinatesSchema>
