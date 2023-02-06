@@ -4,9 +4,9 @@ import { procedure, router } from '../trpc'
 // handlers
 // import * as activities from './activities'
 import * as activities from '@/features/activities/api'
-import * as user from './user'
-import * as directions from './directions'
-import * as restaurants from './restaurants'
+import * as user from '@/features/user/api'
+import * as directions from '@/features/directions/api'
+import * as restaurants from '@/features/restaurants/api'
 
 export const appRouter = router({
   ...activities,
