@@ -1,8 +1,6 @@
-import { z } from 'zod'
-import { procedure, router } from '../trpc'
+import { router } from '../trpc'
 
 // handlers
-// import * as activities from './activities'
 import * as activities from '@/features/activities/api'
 import * as user from '@/features/user/api'
 import * as directions from '@/features/directions/api'
