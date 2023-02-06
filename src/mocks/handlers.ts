@@ -16,7 +16,7 @@ import {
 } from './handlers/activitiesHandlers'
 import { googlePhotosAPIHandler } from './handlers/googlePhotosAPIHandlers'
 
-const BASE_PATH = '/api/v1'
+const BASE_PATH = '/api/trpc'
 
 export const handlers = [
   rest.get(`${BASE_PATH}/health`, (req, res, ctx) => {
