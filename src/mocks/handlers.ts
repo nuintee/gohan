@@ -15,6 +15,8 @@ import {
   getActivityHandler,
 } from './handlers/activitiesHandlers'
 import { googlePhotosAPIHandler } from './handlers/googlePhotosAPIHandlers'
+import { googleDetailsAPIHandlers } from './handlers/googleDetailsAPIHandlers'
+import { googlePlacesHandlers } from './handlers/googlePlacesHandlers'
 
 const BASE_PATH = '/api/trpc'
 
@@ -37,5 +39,10 @@ export const handlers = [
   rest.all(`${BASE_PATH}/activities/user/:user_id`, userActivitiesHandler),
   // rest.post(`${BASE_PATH}/activities`, postActivityHandler),
   rest.patch(`${BASE_PATH}/activity/:activity_id`, patchActivityHandler),
+  rest.get(`https://maps.googleapis.com/maps/api/place/details/json`, googleDetailsAPIHandlers),
+  rest.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json`, googlePlacesHandlers),
+  rest.get(`${BASE_PATH}/daice`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ message: 2 }))
+  }),
   // rest.get(`${BASE_PATH}/activity/:activity_id`, getActivityHandler),
 ]
