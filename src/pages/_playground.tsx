@@ -146,12 +146,20 @@ const PlayGround = () => {
             <DetailsGroup label={'Directions'}>
               <Details apiResult={getDirections} />
             </DetailsGroup>
-            <DetailsGroup label={'Toast'}>
+            <DetailsGroup label={'Toasts'}>
               <div className='flex flex-col gap-2'>
-                <button className={buttonClass}>NORMAL</button>
-                <button className={buttonClass}>INFO</button>
-                <button className={buttonClass}>WARN</button>
-                <button className={buttonClass}>ERROR</button>
+                <button className={buttonClass} onClick={() => useToast('NORMAL')}>
+                  NORMAL
+                </button>
+                <button className={buttonClass} onClick={() => useToast.info('INFO')}>
+                  INFO
+                </button>
+                <button className={buttonClass} onClick={() => useToast.error('ERROR')}>
+                  ERROR
+                </button>
+                <button className={buttonClass} onClick={() => useToast.success('NORMAL')}>
+                  SUCCESS
+                </button>
               </div>
             </DetailsGroup>
           </DetailsRenderer>
