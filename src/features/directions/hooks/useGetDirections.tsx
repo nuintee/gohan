@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { DirectionsAPI } from '../types/api'
 import useToast from '@/libs/react-toastify'
 
-import { Props } from '../schema/getDirections.schema'
+import { Coordinates, Props } from '../schema/getDirections.schema'
 
 // Env
 import { QUERY_KEY } from '@/features/directions/constants'
@@ -47,8 +47,23 @@ const fetcher = ({ start, end }: { start: string; end: string }) => {
 //   })
 // }
 
-const useGetDirections = (props: Parameters<typeof trpc.getDirections.useQuery>) => {
-  return trpc.getDirections.useQuery([])
+const useGetDirections = (props: Coordinates[]) => {
+  const { coords } = useMapBox()
+  const [a, b = coords] = props
+
+  return trpc.getDirections.useQuery([a, b], {
+    enabled: false,
+    onError: (error) => {
+      console.error(error)
+
+      if (error instanceof Error) {
+        useToast.error(error.message)
+      }
+    },
+    onSuccess: (data) => {
+      console.log(data)
+    },
+  })
 }
 
 export default useGetDirections
