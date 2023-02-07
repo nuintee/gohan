@@ -25,9 +25,6 @@ import useGetUserActivities from '@/features/activities/hooks/useGetUserActiviti
 import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useToast from '@/libs/react-toastify'
 import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
-import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
-import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useClearRestaurant'
-import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
 import useGetUser from '@/features/user/hooks/useGetUser'
 import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 
@@ -39,8 +36,6 @@ const Index = () => {
   const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  const getRestaurants = useGetRestaurants()
-  const clearRestaurant = useClearRestaurant()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
@@ -79,7 +74,7 @@ const Index = () => {
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
-        onClose={clearRestaurant.mutate}
+        // onClose={clearRestaurant.mutate}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         data={getPayload('restaurantdiscovered')}
         // isNavigating={hasDirections}

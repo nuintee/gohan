@@ -7,7 +7,6 @@ import { PulseLoader } from '@/components/icons'
 // Hooks
 // import useDirections from '@/features/directions/hooks'
 import useMapBox from '@/features/mapbox/hooks'
-import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
 
 type Props = {
   isLoading?: boolean
