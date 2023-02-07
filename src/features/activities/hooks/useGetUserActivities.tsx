@@ -15,6 +15,9 @@ const useGetUserActivities = (props: Parameters<typeof trpc.getUserActivities.us
         useToast.error(error.message)
       }
     },
+    onSuccess: (data) => {
+      console.log(data)
+    },
   })
 }
 

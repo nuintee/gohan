@@ -86,7 +86,7 @@ const List = (props: ListProps) => {
 const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { status, data: session } = useSession()
-  const getUserAll = useGetUserActivities({ userId: session?.user.id })
+  const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
   const {
     isOpen = isPanelOpen ?? false,
