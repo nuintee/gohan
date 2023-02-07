@@ -119,6 +119,10 @@ const PlayGround = () => {
     },
   ])
 
+  const experiments = trpc.getExperiment.useQuery({ a: 1, b: 2 }, { keepPreviousData: true })
+
+  const mExperiments = trpc.getExperimentWithMutation.useMutation()
+
   return (
     <>
       <div>
@@ -146,6 +150,16 @@ const PlayGround = () => {
             </DetailsGroup>
             <DetailsGroup label={'Directions'}>
               <Details apiResult={getDirections} />
+            </DetailsGroup>
+            <DetailsGroup label={'Experiments'}>
+              <Details apiResult={experiments} />
+              <Details
+                apiResult={mExperiments}
+                mutationPayload={{
+                  a: 1,
+                  b: 2,
+                }}
+              />
             </DetailsGroup>
             <DetailsGroup label={'Toasts'}>
               <div className='flex flex-col gap-2'>
