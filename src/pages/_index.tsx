@@ -19,7 +19,7 @@ const Index = () => {
   // Session
   const session = useSession()
   // Modals
-  const { isOpen } = useModals()
+  const { isOpen, close } = useModals()
 
   // GPS
   const { coords } = useMapBox()
@@ -62,6 +62,7 @@ const Index = () => {
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
+        onClose={() => close('restaurantdiscovered')}
         // onClose={clearRestaurant.mutate}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         // isNavigating={hasDirections}

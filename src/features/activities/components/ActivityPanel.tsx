@@ -46,19 +46,21 @@ type ListProps = {
 const List = (props: ListProps) => {
   const [activityId, setActivityId] = useState('')
   const { activities, isLocked } = props
-  const { coords } = useMapBox()
   const { open } = useModals()
 
   // Update
-  const patchActivity = usePatchActivity({ activityId })
+  const patchActivity = usePatchActivity()
 
-  const handleUpdate = (activity) => {
+  const handleUpdate = (activity: ActivityResolved) => {
     setActivityId(activity.id)
 
     if (!activityId) return
 
     patchActivity.mutate({
-      is_liked: true,
+      activityId: activity.id,
+      payload: {
+        is_liked: !activity.is_liked,
+      },
     })
   }
 
@@ -83,8 +85,8 @@ const List = (props: ListProps) => {
 
 const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
-  const getUserAll = useGetUserActivities({ details: true })
-  const { status } = useSession()
+  const { status, data: session } = useSession()
+  const getUserAll = useGetUserActivities({ userId: session?.user.id })
 
   const {
     isOpen = isPanelOpen ?? false,
