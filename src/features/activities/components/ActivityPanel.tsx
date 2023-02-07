@@ -5,7 +5,6 @@ import calculateDistance from '@/libs/haversine-distance'
 
 // Components
 import Header from '@/components/ui/Header'
-import useActivities from '../hooks'
 import { Activity } from '@prisma/client'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { ActivityResolved } from '../types'
