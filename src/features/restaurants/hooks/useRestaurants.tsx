@@ -1,8 +1,9 @@
 import useToast from '@/libs/react-toastify'
 import { trpc } from '@/libs/trpc'
 
-const useRestaurant = (props: Parameters<typeof trpc.getRestaurant.useQuery>[0]) => {
+const useRestaurants = (props: Parameters<typeof trpc.getRestaurant.useQuery>[0]) => {
   return trpc.getRestaurant.useQuery(props, {
+    enabled: false,
     onError: (error) => {
       console.error(error)
 
@@ -16,4 +17,4 @@ const useRestaurant = (props: Parameters<typeof trpc.getRestaurant.useQuery>[0])
   })
 }
 
-export default useRestaurant
+export default useRestaurants

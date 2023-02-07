@@ -21,7 +21,6 @@ const MapBox = ({}) => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
   const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
     useMapBox()
-  // const { hasDirections, formattedDirections } = useDirections()
 
   const handleLoad = () => {
     updateIsLoadingUserLocation(true)

@@ -10,7 +10,10 @@ export const mapBoxState = atom<{
   key: 'directionsState',
   default: {
     viewState: {},
-    coords: {},
+    coords: {
+      latitude: undefined,
+      longitude: undefined,
+    },
     isLoadingUserLocation: false,
   },
 })
