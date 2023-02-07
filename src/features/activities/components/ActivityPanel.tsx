@@ -51,8 +51,8 @@ const List = (props: ListProps) => {
 
   const handleClick = (activity) => {
     // manually set restaurant
-    open('restaurantdiscovered', activity)
-    console.log(activity)
+    // open('restaurantdiscovered', activity)
+    // console.log(activity)
   }
 
   // Update
