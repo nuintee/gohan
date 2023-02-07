@@ -17,6 +17,7 @@ import useRestaurants from '@/features/restaurants/hooks'
 import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
 import usePatchActivity from '../hooks/usePatchActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
+import useActivityPanel from '../hooks/useActivityPanel'
 
 // Constants
 const tabs = [
@@ -84,7 +85,7 @@ const List = (props: ListProps) => {
 }
 
 const ActivityPanel = (props: Props) => {
-  const { isPanelOpen, closePanel } = useActivities()
+  const { isPanelOpen, closePanel } = useActivityPanel()
   const getUserAll = useGetUserActivities({ details: true })
   const { status } = useSession()
 

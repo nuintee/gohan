@@ -1,7 +1,7 @@
 // Icons
 import { ActivityLocked, ActivityPlain } from '@/components/icons'
 import { useSession } from 'next-auth/react'
-import useActivities from '../hooks'
+import useActivityPanel from '../hooks/useActivityPanel'
 
 type Props = {
   isLocked?: boolean
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const AcitvityButton = (props: Props) => {
-  const { openPanel } = useActivities()
+  const { openPanel } = useActivityPanel()
   const { status } = useSession()
 
   const { isLocked = status === 'unauthenticated' ?? false } = props
