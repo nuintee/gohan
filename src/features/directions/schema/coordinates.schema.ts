@@ -1,8 +1,5 @@
 import { z } from 'zod'
 
-// env
-import { IS_DEVMODE } from '@/config/env'
-
 export const CoordinatesSchema = z.object({
   latitude: z.number().refine(
     (v) => {

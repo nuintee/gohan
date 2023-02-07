@@ -1,5 +1,5 @@
 import { GohanButton, ToastCatcher } from '@/components/ui'
-import useDirections from '@/features/directions/hooks'
+// import useDirections from '@/features/directions/hooks'
 import MapBox from '@/features/mapbox/components/MapBox'
 import useMapBox from '@/features/mapbox/hooks'
 import { mapBoxState } from '@/features/mapbox/stores'
@@ -49,12 +49,12 @@ const Index = () => {
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
 
   // Directions
-  const {
-    hasDirections,
-    directions,
-    revokeDirections,
-    getDirections: getDirections,
-  } = useDirections()
+  // const {
+  //   hasDirections,
+  //   directions,
+  //   revokeDirections,
+  //   getDirections: getDirections,
+  // } = useDirections()
 
   return (
     <>
@@ -65,7 +65,7 @@ const Index = () => {
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-          {hasDirections && (
+          {/* {hasDirections && (
             <RestaurantCard
               compact
               isLocked={session.status === 'unauthenticated'}
@@ -74,7 +74,7 @@ const Index = () => {
               // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
               onClick={() => open('restaurantdiscovered')}
             />
-          )}
+          )} */}
           <GohanButton />
         </section>
       </div>

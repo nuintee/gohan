@@ -1,4 +1,4 @@
-import useDirections from '@/features/directions/hooks'
+// import useDirections from '@/features/directions/hooks'
 import useMapBox from '@/features/mapbox/hooks'
 import ModalLayout from '@/layouts/ModalLayout'
 import { RestaurantProps } from '../types'
@@ -11,7 +11,7 @@ type Props = {
 } & RestaurantProps
 
 const RestaurantDiscoveredModal = (props: Props) => {
-  const { getDirections, revokeDirections } = useDirections()
+  // const { getDirections, revokeDirections } = useDirections()
 
   const get = getDirections({
     end: `${props.data?.geometry?.location?.lat},${props.data?.geometry?.location?.lng}`,
