@@ -5,7 +5,7 @@ import { Logo, Close } from '@/components/icons'
 import { PulseLoader } from '@/components/icons'
 
 // Hooks
-import useDirections from '@/features/directions/hooks'
+// import useDirections from '@/features/directions/hooks'
 import useMapBox from '@/features/mapbox/hooks'
 import useRestaurants from '@/features/restaurants/hooks'
 import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
@@ -18,7 +18,7 @@ type Props = {
 }
 
 const GohanButton = (props: Props) => {
-  const { hasDirections, revokeDirections } = useDirections()
+  // const { hasDirections, revokeDirections } = useDirections()
   const directions = revokeDirections()
 
   const { isLoadingUserLocation } = useMapBox()

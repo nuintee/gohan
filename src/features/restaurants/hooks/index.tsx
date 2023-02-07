@@ -9,7 +9,7 @@ import useModals from '@/hooks/modals'
 import { ResultsEntity } from '../types'
 import { useRecoilState } from 'recoil'
 import { restaurantsState } from '../stores'
-import useDirections from '@/features/directions/hooks'
+// import useDirections from '@/features/directions/hooks'
 
 const BASE_KEY = 'restaurants'
 

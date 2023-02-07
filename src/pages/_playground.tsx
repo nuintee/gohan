@@ -5,6 +5,7 @@ import { trpc } from '@/libs/trpc'
 // ENV
 import useToast from '@/libs/react-toastify'
 import { UseTRPCMutationResult, UseTRPCQueryResult } from '@trpc/react-query/shared'
+import useGetDirections from '@/features/directions/hooks/useGetDirections'
 
 type Props = {
   apiResult: UseTRPCQueryResult<any, any> | UseTRPCMutationResult<any, any, any, any>
@@ -107,7 +108,7 @@ const PlayGround = () => {
 
   const updateUser = trpc.updateUser.useMutation()
 
-  const getDirections = trpc.getDirections.useQuery([
+  const getDirections = useGetDirections([
     {
       latitude: 42.64775203224244,
       longitude: 23.40559939582422,

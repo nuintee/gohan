@@ -1,7 +1,7 @@
 import { RestRequest, PathParams, ResponseComposition, DefaultBodyType, RestContext } from 'msw'
 
 // Schema
-import { Schema } from '@/features/directions/schema/getDirections.schema'
+import { Schema } from '@/features/directions/schema/coordinates.schema'
 
 // data
 import directions from '@/data/_directions.json'

@@ -1,9 +1,10 @@
+import { Coordinates } from '@/features/directions/schema/coordinates.schema'
 import { ViewState } from 'react-map-gl'
 import { atom } from 'recoil'
 
 export const mapBoxState = atom<{
   viewState: Partial<ViewState>
-  coords: Partial<GeolocationCoordinates>
+  coords: Partial<Coordinates>
   isLoadingUserLocation: boolean
 }>({
   key: 'directionsState',

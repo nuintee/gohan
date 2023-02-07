@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { mapStyles } from '../config'
 import useMapBox from '../hooks'
-import useDirections from '@/features/directions/hooks'
+// import useDirections from '@/features/directions/hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
 import { useRef } from 'react'
@@ -21,7 +21,7 @@ const MapBox = ({}) => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
   const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
     useMapBox()
-  const { hasDirections, formattedDirections } = useDirections()
+  // const { hasDirections, formattedDirections } = useDirections()
 
   const handleLoad = () => {
     updateIsLoadingUserLocation(true)
@@ -61,11 +61,11 @@ const MapBox = ({}) => {
           }}
           ref={geoLocateRef}
         />
-        {hasDirections && (
+        {/* {hasDirections && (
           <Source type='geojson' data={formattedDirections.source}>
             <Layer {...formattedDirections?.layer} />
           </Source>
-        )}
+        )} */}
       </Map>
     </div>
   )
