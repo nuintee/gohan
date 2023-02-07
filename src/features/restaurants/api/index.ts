@@ -12,6 +12,7 @@ import { GCP_API_KEY } from '@/config/env'
 
 // Schema
 import { neededDetailsFields } from '../constants'
+import { sleep } from '@/utils/sleep'
 
 export const getRestaurant = procedure
   .input(
@@ -22,7 +23,8 @@ export const getRestaurant = procedure
   )
   .query(async ({ input }) => {
     if (IS_DEVMODE) {
-      // return restaurantsData
+      await sleep(1000)
+      return restaurantsData
     } else if (IS_PRODMODE) {
       const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
       url.searchParams.append('location', `${input.latitude},${input.longitude}`)
