@@ -5,11 +5,6 @@ import { DefaultBodyType, PathParams, ResponseComposition, RestContext, RestRequ
 import { details as detailsData } from '@/data/details'
 import { activities } from '@/data/activities'
 
-// Schema
-import { Schema } from '@/features/restaurants/schemas/getRestaurantDetails.schema'
-import { ActivityResolved } from '@/features/activities/types'
-import { activityTable } from '@/features/activities/prisma/activityTable'
-
 export const userActivitiesHandler = async (
   req: RestRequest<never, PathParams<string>>,
   res: ResponseComposition<DefaultBodyType>,
