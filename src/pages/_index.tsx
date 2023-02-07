@@ -13,6 +13,7 @@ import AcitvityButton from '@/features/activities/components/ActivityButton'
 import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
+import useGetDirections from '@/features/directions/hooks/useGetDirections'
 
 const Index = () => {
   // Session

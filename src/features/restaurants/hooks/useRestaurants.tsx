@@ -12,7 +12,7 @@ const useRestaurants = (props: Parameters<typeof trpc.getRestaurant.useQuery>[0]
       }
     },
     onSuccess: (data) => {
-      console.log(data)
+      console.log(data) // open modal?
     },
   })
 }
