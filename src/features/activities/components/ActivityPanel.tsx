@@ -9,7 +9,7 @@ import { Activity } from '@prisma/client'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { ActivityResolved } from '../types'
 import { useSession } from 'next-auth/react'
-import { UseMutationResult } from '@tanstack/react-query'
+import { QueryClient, UseMutationResult } from '@tanstack/react-query'
 import useMapBox from '@/features/mapbox/hooks'
 import useModals from '@/hooks/modals'
 import usePatchActivity from '../hooks/usePatchActivity'
@@ -45,8 +45,15 @@ type ListProps = {
 
 const List = (props: ListProps) => {
   const { coords } = useMapBox()
+  const queryClient = new QueryClient()
   const { activities, isLocked } = props
   const { open } = useModals()
+
+  const handleClick = (activity) => {
+    // manually set restaurant
+    open('restaurantdiscovered', activity)
+    console.log(activity)
+  }
 
   // Update
   const patchActivity = usePatchActivity()
@@ -72,7 +79,7 @@ const List = (props: ListProps) => {
           key={activity.id}
           isLocked={isLocked}
           onLike={() => handleUpdate(activity)}
-          onClick={() => open('restaurantdiscovered', activity)}
+          onClick={() => handleClick(activity)}
         />
       ))}
     </div>
