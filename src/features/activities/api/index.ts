@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
 import { randomUUID } from 'crypto'
 
-import { addActivitySchema, updateActivitySchema } from '../schemas/index.schema'
+import { AddActivitySchema, UpdateActivitySchema } from '../schemas/index.schema'
 
 export const getActivity = procedure
   .input(
@@ -45,7 +45,7 @@ export const deleteActivity = procedure
     }
   })
 
-export const updateActivity = procedure.input(updateActivitySchema).mutation(async ({ input }) => {
+export const updateActivity = procedure.input(UpdateActivitySchema).mutation(async ({ input }) => {
   if (IS_DEVMODE) {
     // mock
     const data = await prisma.activity.update({
@@ -62,7 +62,7 @@ export const updateActivity = procedure.input(updateActivitySchema).mutation(asy
   }
 })
 
-export const addActivity = procedure.input(addActivitySchema).mutation(async ({ input }) => {
+export const addActivity = procedure.input(AddActivitySchema).mutation(async ({ input }) => {
   const { activityId = randomUUID(), userId, place_id = '', is_liked = false } = input
 
   if (IS_DEVMODE) {
