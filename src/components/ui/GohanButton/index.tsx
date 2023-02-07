@@ -19,22 +19,24 @@ type Props = {
 
 const GohanButton = (props: Props) => {
   // const { hasDirections, revokeDirections } = useDirections()
-  const directions = revokeDirections()
+  // const directions = revokeDirections()
 
-  const { isLoadingUserLocation } = useMapBox()
+  // const { isLoadingUserLocation } = useMapBox()
 
-  // const { get } = useRestaurants()
-  // const restaurants = get()
+  // // const { get } = useRestaurants()
+  // // const restaurants = get()
 
-  // Restaurants
-  const getRestaurants = useGetRestaurants()
+  // // Restaurants
+  // const getRestaurants = useGetRestaurants()
 
-  const {
-    isLoading = (isLoadingUserLocation || getRestaurants.isFetching) ?? false,
-    isNavigating = hasDirections ?? false,
-    disabled = isLoadingUserLocation ?? false,
-    onClick = hasDirections ? () => directions.mutate() : () => getRestaurants.refetch(),
-  } = props
+  // const {
+  //   isLoading = (isLoadingUserLocation || getRestaurants.isFetching) ?? false,
+  //   isNavigating = hasDirections ?? false,
+  //   disabled = isLoadingUserLocation ?? false,
+  //   onClick = hasDirections ? () => directions.mutate() : () => getRestaurants.refetch(),
+  // } = props
+
+  const { isLoading = false, isNavigating = false, disabled = false, onClick } = props
 
   const ui = () =>
     isLoading ? (

@@ -85,7 +85,7 @@ const Index = () => {
         onClose={clearRestaurant.mutate}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         data={getPayload('restaurantdiscovered')}
-        isNavigating={hasDirections}
+        // isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />
       <UserSettingsModal />
