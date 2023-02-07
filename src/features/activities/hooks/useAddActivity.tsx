@@ -1,7 +1,7 @@
 import useToast from '@/libs/react-toastify'
 import { trpc } from '@/libs/trpc'
 
-const useAddActivity = (props: Parameters<typeof trpc.addActivity.useMutation>) => {
+const useAddActivity = () => {
   return trpc.addActivity.useMutation({
     onError: (error) => {
       console.error(error)
