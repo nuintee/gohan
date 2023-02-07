@@ -44,7 +44,7 @@ type ListProps = {
 }
 
 const List = (props: ListProps) => {
-  const [activityId, setActivityId] = useState('')
+  const { coords } = useMapBox()
   const { activities, isLocked } = props
   const { open } = useModals()
 
@@ -52,10 +52,6 @@ const List = (props: ListProps) => {
   const patchActivity = usePatchActivity()
 
   const handleUpdate = (activity: ActivityResolved) => {
-    setActivityId(activity.id)
-
-    if (!activityId) return
-
     patchActivity.mutate({
       activityId: activity.id,
       payload: {
@@ -68,10 +64,10 @@ const List = (props: ListProps) => {
 
   return (
     <div className='flex flex-col overflow-auto'>
-      {activities?.map((activity) => (
+      {activities.map((activity) => (
         <RestaurantCard
           data={activity}
-          // distance={calculateDistance(coords, activity.geometry.location, true).auto}
+          distance={calculateDistance(coords, activity.geometry.location, true).auto}
           compact
           key={activity.id}
           isLocked={isLocked}
