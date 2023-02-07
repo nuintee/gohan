@@ -3,7 +3,6 @@ import { GohanButton, ToastCatcher } from '@/components/ui'
 import MapBox from '@/features/mapbox/components/MapBox'
 import useMapBox from '@/features/mapbox/hooks'
 import { mapBoxState } from '@/features/mapbox/stores'
-import useUser from '@/features/user/hooks'
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
