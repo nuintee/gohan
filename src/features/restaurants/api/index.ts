@@ -11,7 +11,7 @@ import axios from 'axios'
 import { GCP_API_KEY } from '@/config/env'
 
 // Schema
-import { neededDetailsFields } from '../schemas/getRestaurantDetails.schema'
+import { neededDetailsFields } from '../constants'
 
 export const getRestaurant = procedure
   .input(
