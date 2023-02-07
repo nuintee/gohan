@@ -1,6 +1,6 @@
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
-import { neededDetailsFields } from '../schemas/getRestaurantDetails.schema'
+import { neededDetailsFields } from '../constants'
 
 export type PlacesSearchStatus = [
   'OK',
@@ -41,6 +41,7 @@ export interface ResultsEntity {
   types?: string[] | null
   user_ratings_total: number
   vicinity: string
+  website?: string
 }
 export interface Geometry {
   location: NortheastOrSouthwestOrLocation
