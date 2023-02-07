@@ -63,7 +63,7 @@ const Index = () => {
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
-        // onClose={clearRestaurant.mutate}
+        data={restaurants.data}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         // isNavigating={hasDirections}
       />

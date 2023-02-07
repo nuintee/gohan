@@ -24,7 +24,11 @@ export const getRestaurant = procedure
   .query(async ({ input }) => {
     if (IS_DEVMODE) {
       await sleep(1000)
-      return restaurantsData
+
+      const openNow = restaurantsData.results.filter((v) => v.opening_hours.open_now)
+      const randomOne = openNow[Math.floor(Math.random() * openNow.length)]
+
+      return randomOne
     } else if (IS_PRODMODE) {
       const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
       url.searchParams.append('location', `${input.latitude},${input.longitude}`)
