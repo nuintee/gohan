@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 // Schemas
-import { Schema, Props } from '@/features/directions/schema/getDirections.schema'
+import { Schema, Props } from '@/features/directions/schema/coordinates.schema'
 
 // controllers
 import { getDirections } from '@/features/directions/controllers/getDirections'

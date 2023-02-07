@@ -1,4 +1,4 @@
-import { Coordinates } from '@/features/directions/schema/getDirections.schema'
+import { Coordinates } from '@/features/directions/schema/coordinates.schema'
 import { ViewState } from 'react-map-gl'
 import { atom } from 'recoil'
 

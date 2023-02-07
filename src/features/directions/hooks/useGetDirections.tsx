@@ -1,6 +1,6 @@
 import useToast from '@/libs/react-toastify'
 
-import { Coordinates } from '../schema/getDirections.schema'
+import { Coordinates } from '../schema/coordinates.schema'
 
 import useMapBox from '@/features/mapbox/hooks'
 import { trpc } from '@/libs/trpc'

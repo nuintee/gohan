@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
 
 // Schema
-import { CoordinatesSchema } from '../schema/getDirections.schema'
+import { CoordinatesSchema } from '../schema/coordinates.schema'
 
 export const getDirections = procedure
   .input(z.array(CoordinatesSchema).max(2))

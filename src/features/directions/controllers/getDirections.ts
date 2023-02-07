@@ -5,7 +5,7 @@ import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import axios from '@/libs/axios'
 
 // Schemas
-import { Schema, Props } from '@/features/directions/schema/getDirections.schema'
+import { Schema, Props } from '@/features/directions/schema/coordinates.schema'
 
 export const getDirections = async (props: Props) => {
   const { profileType, start, end } = await Schema.parse(props)
