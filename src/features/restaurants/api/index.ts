@@ -17,26 +17,27 @@ import { CoordinatesSchema } from '@/features/directions/schema/coordinates.sche
 // Utils
 import { sleep } from '@/utils/sleep'
 
-const validInput = z
-  .object({
-    place_id: z.string(),
-    latitude: z.number(),
-    longitude: z.number(),
-  })
-  .optional()
+const validInput = z.object({
+  place_id: z.optional(z.string()),
+  latitude: z.optional(z.number()),
+  longitude: z.optional(z.number()),
+})
 
 const checkIsAnyValid = (v: z.infer<typeof validInput>) => {
-  const isPlaceId = !!v?.place_id
+  const isPlaceId = v?.place_id
   const isCoords = v?.latitude && v.longitude
   const isAnyValid = isPlaceId || isCoords
 
   return { isPlaceId, isCoords, isAnyValid }
 }
 
-const anyValid = validInput.refine((v) => {
-  const { isAnyValid } = checkIsAnyValid(v)
-  return isAnyValid
-})
+const anyValid = validInput.refine(
+  (v) => {
+    const { isAnyValid } = checkIsAnyValid(v)
+    return isAnyValid
+  },
+  { message: 'Must provide any' },
+)
 
 export const getExperimentalRestaurant = procedure.input(anyValid).query(async ({ input }) => {
   if (IS_DEVMODE) {

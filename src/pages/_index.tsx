@@ -14,6 +14,7 @@ import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 import useGetDirections from '@/features/directions/hooks/useGetDirections'
+import useExperimentalRestaurants from '@/features/restaurants/hooks/useExperimentalRestaurants'
 
 const Index = () => {
   // Session
@@ -27,7 +28,14 @@ const Index = () => {
   // Directions
 
   // Resturants
-  const restaurants = useRestaurants({
+
+  // const restaurants = useRestaurants({
+  //   latitude: coords.latitude,
+  //   longitude: coords.longitude,
+  // })
+
+  // random
+  const restaurants = useExperimentalRestaurants({
     latitude: coords.latitude,
     longitude: coords.longitude,
   })
