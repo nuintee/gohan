@@ -15,6 +15,8 @@ import useModals from '@/hooks/modals'
 import usePatchActivity from '../hooks/usePatchActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
+import useExperimentalRestaurants from '@/features/restaurants/hooks/useExperimentalRestaurants'
+import { RestaurantProps } from '@/features/restaurants/types'
 
 // Constants
 const tabs = [
@@ -43,44 +45,88 @@ type ListProps = {
   isLocked: boolean
 }
 
-const List = (props: ListProps) => {
-  const { coords } = useMapBox()
-  const queryClient = new QueryClient()
-  const { activities, isLocked } = props
-  const { open } = useModals()
+// later move inside to restaurants component
+const ActivityWrapper = (props: RestaurantProps) => {
+  const { data, isLocked } = props
 
-  const handleClick = (activity) => {
-    // manually set restaurant
-    // open('restaurantdiscovered', activity)
-    // console.log(activity)
-  }
-
-  // Update
+  const restaurant = useExperimentalRestaurants({ place_id: data?.place_id })
   const patchActivity = usePatchActivity()
 
-  const handleUpdate = (activity: ActivityResolved) => {
+  if (!data) return <></>
+
+  const handleUpdate = () => {
     patchActivity.mutate({
-      activityId: activity.id,
+      activityId: data?.id,
       payload: {
-        is_liked: !activity.is_liked,
+        is_liked: !data?.is_liked,
       },
     })
   }
+
+  return (
+    <RestaurantCard
+      data={data}
+      // distance={calculateDistance(coords, activity.geometry.location, true).auto}
+      compact
+      key={data?.id}
+      isLocked={isLocked}
+      onLike={() => handleUpdate()}
+      onClick={() => restaurant.refetch()}
+    />
+  )
+}
+
+// const List = (props: ListProps) => {
+//   const { coords } = useMapBox()
+//   const { activities, isLocked } = props
+
+//   const handleClick = (activity) => {
+//     // manually set restaurant
+//     // open('restaurantdiscovered', activity)
+//     // console.log(activity)
+//   }
+
+//   // Update
+//   const patchActivity = usePatchActivity()
+
+//   const handleUpdate = (activity: ActivityResolved) => {
+//     patchActivity.mutate({
+//       activityId: activity.id,
+//       payload: {
+//         is_liked: !activity.is_liked,
+//       },
+//     })
+//   }
+
+//   if (!activities?.length) return <>No contents</>
+
+//   return (
+//     <div className='flex flex-col overflow-auto'>
+//       {activities.map((activity) => (
+//         <RestaurantCard
+//           data={activity}
+//           distance={calculateDistance(coords, activity.geometry.location, true).auto}
+//           compact
+//           key={activity.id}
+//           isLocked={isLocked}
+//           onLike={() => handleUpdate(activity)}
+//           onClick={() => handleClick(activity)}
+//         />
+//       ))}
+//     </div>
+//   )
+// }
+
+const List = (props: ListProps) => {
+  const { coords } = useMapBox()
+  const { activities, isLocked } = props
 
   if (!activities?.length) return <>No contents</>
 
   return (
     <div className='flex flex-col overflow-auto'>
       {activities.map((activity) => (
-        <RestaurantCard
-          data={activity}
-          distance={calculateDistance(coords, activity.geometry.location, true).auto}
-          compact
-          key={activity.id}
-          isLocked={isLocked}
-          onLike={() => handleUpdate(activity)}
-          onClick={() => handleClick(activity)}
-        />
+        <ActivityWrapper data={activity} isLocked={isLocked} />
       ))}
     </div>
   )

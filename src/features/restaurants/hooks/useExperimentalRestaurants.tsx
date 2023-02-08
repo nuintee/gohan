@@ -27,6 +27,8 @@ const useExperimentalRestaurants = (
 
       if (status !== 'authenticated') return
 
+      if (!!props.place_id) return
+
       addActivity.mutate({
         place_id: data.place_id,
         is_liked: false,
