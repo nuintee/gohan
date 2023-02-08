@@ -46,32 +46,40 @@ type ListProps = {
 }
 
 // later move inside to restaurants component
-const ActivityWrapper = (props: RestaurantProps) => {
-  const { data, isLocked } = props
+const ActivityWrapper = (
+  props: RestaurantProps & { placeId: string; activityId: string; isLiked: boolean },
+) => {
+  const { coords } = useMapBox()
+  const { placeId, activityId, isLocked, isLiked, setPlaceId, data } = props
 
-  const restaurant = useExperimentalRestaurants({ place_id: data?.place_id })
   const patchActivity = usePatchActivity()
 
-  if (!data) return <></>
+  const detailedActivity = useExperimentalRestaurants({
+    place_id: data?.place_id,
+  })
 
   const handleUpdate = () => {
     patchActivity.mutate({
-      activityId: data?.id,
+      activityId: activityId,
       payload: {
-        is_liked: !data?.is_liked,
+        is_liked: !isLiked,
       },
     })
   }
 
+  const handleClick = () => {
+    setPlaceId(placeId)
+  }
+
   return (
     <RestaurantCard
-      data={data}
+      data={detailedActivity.data}
       // distance={calculateDistance(coords, activity.geometry.location, true).auto}
       compact
-      key={data?.id}
+      key={activityId}
       isLocked={isLocked}
       onLike={() => handleUpdate()}
-      onClick={() => restaurant.refetch()}
+      onClick={() => handleClick()}
     />
   )
 }
@@ -119,20 +127,51 @@ const ActivityWrapper = (props: RestaurantProps) => {
 
 const List = (props: ListProps) => {
   const { coords } = useMapBox()
-  const { activities, isLocked } = props
+  const { activities, isLocked, setPlaceId } = props
 
   if (!activities?.length) return <>No contents</>
 
   return (
     <div className='flex flex-col overflow-auto'>
       {activities.map((activity) => (
-        <ActivityWrapper data={activity} isLocked={isLocked} />
+        <ActivityWrapper
+          placeId={activity.place_id}
+          activityId={activity.id}
+          isLocked={isLocked}
+          isLiked={activity.is_liked}
+          setPlaceId={setPlaceId}
+          data={activity}
+        />
       ))}
     </div>
   )
 }
 
-const ActivityPanel = (props: Props) => {
+// const ActivityPanel = (props: Props & { setPlaceId: Function }) => {
+//   const { isPanelOpen, closePanel } = useActivityPanel()
+//   const { status, data: session } = useSession()
+//   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
+
+//   const {
+//     isOpen = isPanelOpen ?? false,
+//     onClose = closePanel,
+//     data = getUserAll.data ?? [],
+//     setPlaceId,
+//   } = props
+
+//   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
+
+//   return (
+//     <div
+//       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
+//     >
+//       <Header title={'ActivityPanel'} onClose={onClose} />
+//       <List activities={data} isLocked={status === 'unauthenticated'} setPlaceId={setPlaceId} />
+//     </div>
+//   )
+// }
+
+const ActivityPanel = (props: Props & { setPlaceId: Function }) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { status, data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -141,6 +180,7 @@ const ActivityPanel = (props: Props) => {
     isOpen = isPanelOpen ?? false,
     onClose = closePanel,
     data = getUserAll.data ?? [],
+    setPlaceId,
   } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
@@ -150,7 +190,13 @@ const ActivityPanel = (props: Props) => {
       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
     >
       <Header title={'ActivityPanel'} onClose={onClose} />
-      <List activities={data} isLocked={status === 'unauthenticated'} />
+      <div>
+        {getUserAll.data?.map((activity) => (
+          <div onClick={() => setPlaceId(activity.place_id)} role='button'>
+            <p>{activity.place_id}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

@@ -6,13 +6,14 @@ import { useSession } from 'next-auth/react'
 
 const useExperimentalRestaurants = (
   props: Parameters<typeof trpc.getExperimentalRestaurant.useQuery>[0],
+  callbackOnSuccess: () => void,
 ) => {
   const { status, data: session } = useSession()
   const addActivity = useAddActivity()
   const { open } = useModals()
 
   return trpc.getExperimentalRestaurant.useQuery(props, {
-    enabled: false,
+    enabled: !!props.place_id,
     onError: (error) => {
       console.error(error)
 
@@ -22,6 +23,7 @@ const useExperimentalRestaurants = (
     },
     onSuccess: (data) => {
       console.log(data)
+      callbackOnSuccess()
 
       open('restaurantdiscovered', data)
 
@@ -29,11 +31,11 @@ const useExperimentalRestaurants = (
 
       if (!!props.place_id) return
 
-      addActivity.mutate({
-        place_id: data.place_id,
-        is_liked: false,
-        userId: session.user.id,
-      })
+      // addActivity.mutate({
+      //   place_id: data.place_id,
+      //   is_liked: false,
+      //   userId: session.user.id,
+      // })
     },
   })
 }

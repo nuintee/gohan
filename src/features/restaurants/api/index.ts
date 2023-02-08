@@ -16,6 +16,7 @@ import { CoordinatesSchema } from '@/features/directions/schema/coordinates.sche
 
 // Utils
 import { sleep } from '@/utils/sleep'
+import { trpc } from '@/libs/trpc'
 
 const validInput = z.object({
   place_id: z.optional(z.string()),

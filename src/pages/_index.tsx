@@ -15,30 +15,36 @@ import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useExperimentalRestaurants from '@/features/restaurants/hooks/useExperimentalRestaurants'
+import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
+import { useCallback, useState } from 'react'
+import { QueryClient } from '@tanstack/react-query'
 
 const Index = () => {
   // Session
   const session = useSession()
   // Modals
-  const { isOpen, close } = useModals()
+  const { isOpen, close, getPayload } = useModals()
 
   // GPS
   const { coords } = useMapBox()
 
-  // Directions
+  // Place_id
+  const [place_id, setPlaceId] = useState('')
 
-  // Resturants
+  const restaurants = useExperimentalRestaurants(
+    {
+      place_id,
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+    },
+    () => {
+      setPlaceId('')
+    },
+  ) // if place_id is falsy and ephemeral === true, get random by refetch, otherwise if ephemeral === true and place_id is truthy, refetch
 
-  // const restaurants = useRestaurants({
-  //   latitude: coords.latitude,
-  //   longitude: coords.longitude,
-  // })
-
-  // random
-  const restaurants = useExperimentalRestaurants({
-    latitude: coords.latitude,
-    longitude: coords.longitude,
-  })
+  const handleClick = () => {
+    restaurants.refetch()
+  }
 
   return (
     <>
@@ -59,19 +65,20 @@ const Index = () => {
               onClick={() => open('restaurantdiscovered')}
             />
           )} */}
+          {/* {restaurants.data && <RestaurantCard data={restaurants.data} compact />} */}
           <GohanButton
-            onClick={() => restaurants.refetch()}
+            onClick={() => handleClick()}
             isLoading={restaurants.isFetching}
             disabled={restaurants.isFetching}
           />
         </section>
       </div>
-      <ActivityPanel />
+      <ActivityPanel setPlaceId={setPlaceId} />
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
-        data={restaurants.data}
+        data={getPayload('restaurantdiscovered')}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         // isNavigating={hasDirections}
       />

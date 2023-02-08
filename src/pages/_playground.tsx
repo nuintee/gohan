@@ -6,6 +6,11 @@ import { trpc } from '@/libs/trpc'
 import useToast from '@/libs/react-toastify'
 import { UseTRPCMutationResult, UseTRPCQueryResult } from '@trpc/react-query/shared'
 import useGetDirections from '@/features/directions/hooks/useGetDirections'
+import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
+import useExperimentalRestaurants from '@/features/restaurants/hooks/useExperimentalRestaurants'
+import { useState } from 'react'
+import useExpCachedRestaurant from '@/features/restaurants/hooks/useExpCachedRestaurant'
+import { QueryClient } from '@tanstack/react-query'
 
 type Props = {
   apiResult: UseTRPCQueryResult<any, any> | UseTRPCMutationResult<any, any, any, any>
@@ -85,6 +90,8 @@ const DetailsGroup = ({ children, label }) => {
 }
 
 const PlayGround = () => {
+  const [place_id, setPlaceId] = useState('')
+
   // Restaurants [OK]
   const getRestaurants = trpc.getRestaurant.useQuery({
     latitude: 42.64775203224244,
@@ -94,6 +101,21 @@ const PlayGround = () => {
   const getRestaurantDetail = trpc.getRestaurantDetails.useQuery({
     place_id: 'ChIJzdIWCP2GqkAR4wCobfmZAvo',
   })
+
+  // Must be one result
+  const getExpRestaurants = useExperimentalRestaurants({
+    place_id,
+    latitude: 42.64775203224244,
+    longitude: 23.40559939582422,
+  })
+
+  function setRandomPlaceId() {
+    const place_ids = ['ChIJ58PFO_yGqkAR1a2dnhgIBiQ', 'ChIJzdIWCP2GqkAR4wCobfmZAvo']
+    const randomOne = place_ids[Math.floor(Math.random() * place_ids.length)]
+    setPlaceId('ChIJ58PFO_yGqkAR1a2dnhgIBiQ')
+    getExpRestaurants.refetch()
+    setPlaceId('')
+  }
 
   const getActivity = trpc.getActivity.useQuery({
     activityId: '0cad9849-cfea-46c4-9821-39691838986b',
@@ -153,6 +175,8 @@ const PlayGround = () => {
             </DetailsGroup>
             <DetailsGroup label={'Experiments'}>
               <Details apiResult={experiments} />
+              <Details apiResult={getExpRestaurants} />
+              <button onClick={setRandomPlaceId}>placeId</button>
               <Details
                 apiResult={mExperiments}
                 mutationPayload={{
@@ -178,6 +202,8 @@ const PlayGround = () => {
               </div>
             </DetailsGroup>
           </DetailsRenderer>
+
+          <RestaurantCard data={getExpRestaurants.data} />
         </div>
         <MapBox />
       </div>
