@@ -17,6 +17,49 @@ import { CoordinatesSchema } from '@/features/directions/schema/coordinates.sche
 // Utils
 import { sleep } from '@/utils/sleep'
 
+const validInput = z
+  .object({
+    place_id: z.string(),
+    latitude: z.number(),
+    longitude: z.number(),
+  })
+  .optional()
+
+const checkIsAnyValid = (v: z.infer<typeof validInput>) => {
+  const isPlaceId = !!v?.place_id
+  const isCoords = v?.latitude && v.longitude
+  const isAnyValid = isPlaceId || isCoords
+
+  return { isPlaceId, isCoords, isAnyValid }
+}
+
+const anyValid = validInput.refine((v) => {
+  const { isAnyValid } = checkIsAnyValid(v)
+  return isAnyValid
+})
+
+export const getExperimentalRestaurant = procedure.input(anyValid).query(async ({ input }) => {
+  if (IS_DEVMODE) {
+    await sleep(1000)
+
+    const { isPlaceId } = checkIsAnyValid(input)
+
+    if (isPlaceId) {
+      // return details
+      const pickedOne = details.result(input?.place_id as string)
+      return pickedOne
+    } else {
+      // return random
+      const openNow = restaurantsData.results.filter((v) => v.opening_hours.open_now)
+      const randomOne = openNow[Math.floor(Math.random() * openNow.length)]
+
+      return randomOne
+    }
+  } else if (IS_PRODMODE) {
+  } else {
+  }
+})
+
 export const getRestaurant = procedure.input(CoordinatesSchema).query(async ({ input }) => {
   if (IS_DEVMODE) {
     await sleep(1000)
