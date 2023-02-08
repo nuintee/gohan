@@ -12,40 +12,36 @@ import { GCP_API_KEY } from '@/config/env'
 
 // Schema
 import { neededDetailsFields } from '../constants'
+import { CoordinatesSchema } from '@/features/directions/schema/coordinates.schema'
+
+// Utils
 import { sleep } from '@/utils/sleep'
 
-export const getRestaurant = procedure
-  .input(
-    z.object({
-      latitude: z.number(),
-      longitude: z.number(),
-    }),
-  )
-  .query(async ({ input }) => {
-    if (IS_DEVMODE) {
-      await sleep(1000)
+export const getRestaurant = procedure.input(CoordinatesSchema).query(async ({ input }) => {
+  if (IS_DEVMODE) {
+    await sleep(1000)
 
-      const openNow = restaurantsData.results.filter((v) => v.opening_hours.open_now)
-      const randomOne = openNow[Math.floor(Math.random() * openNow.length)]
+    const openNow = restaurantsData.results.filter((v) => v.opening_hours.open_now)
+    const randomOne = openNow[Math.floor(Math.random() * openNow.length)]
 
-      return randomOne
-    } else if (IS_PRODMODE) {
-      const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
-      url.searchParams.append('location', `${input.latitude},${input.longitude}`)
-      url.searchParams.append('radius', '500')
-      url.searchParams.append('types', 'food')
-      url.searchParams.append('opennow', 'true')
-      url.searchParams.append('key', GCP_API_KEY)
+    return randomOne
+  } else if (IS_PRODMODE) {
+    const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
+    url.searchParams.append('location', `${input.latitude},${input.longitude}`)
+    url.searchParams.append('radius', '500')
+    url.searchParams.append('types', 'food')
+    url.searchParams.append('opennow', 'true')
+    url.searchParams.append('key', GCP_API_KEY)
 
-      const { data } = await axios.get(url.toString())
+    const { data } = await axios.get(url.toString())
 
-      if (!['OK', 'ZERO_RESULTS'].includes(data.status)) throw new Error(data.status)
+    if (!['OK', 'ZERO_RESULTS'].includes(data.status)) throw new Error(data.status)
 
-      return data
-    } else {
-      // test
-    }
-  })
+    return data
+  } else {
+    // test
+  }
+})
 
 export const getRestaurantDetails = procedure
   .input(
