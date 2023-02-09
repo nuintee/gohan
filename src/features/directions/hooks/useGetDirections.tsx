@@ -8,10 +8,14 @@ import { trpc } from '@/libs/trpc'
 import { useRecoilState } from 'recoil'
 import { directionsState } from '../stores'
 import useGeoJSON from './useGeoJSON'
+import { DirectionsAPI } from '../types/api'
 
-const useGetDirections = (props: DirectionsInput) => {
+const useGetDirections = (
+  props: DirectionsInput,
+  successCallback: (data: DirectionsAPI) => void,
+) => {
   const { coords } = useMapBox()
-  const { start = coords as Required<Coordinates>, destination } = props
+  const { start = coords, destination } = props
 
   const isGPSValid = start.latitude && start.longitude
 
@@ -30,6 +34,7 @@ const useGetDirections = (props: DirectionsInput) => {
         }
       },
       onSuccess: (data) => {
+        successCallback(data)
         console.log(data)
       },
     },

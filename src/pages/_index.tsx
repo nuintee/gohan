@@ -36,12 +36,26 @@ const Index = () => {
     longitude: coords.longitude,
   })
 
-  const getDirections = useGetDirections({
-    destination: {
-      latitude: 0,
-      longitude: 0,
+  const getDirections = useGetDirections(
+    {
+      start: {
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      },
+      destination: {
+        latitude: 0,
+        longitude: 0,
+      },
     },
-  })
+    (data) => {
+      setDirections((prev) => ({
+        ...prev,
+        ...createGeoJSON({
+          coordinates: data.routes[0].geometry.coordinates,
+        }),
+      }))
+    },
+  )
 
   const isNavigating = () => {
     if (!directions) return false
@@ -57,12 +71,8 @@ const Index = () => {
     if (isNavigating() && directions.data?.place_id === activity?.place_id) {
       setDirections(INITIAL_DIRECTIONS)
     } else {
-      setDirections((prev) => ({
-        ...prev,
-        source: { waypoint: [] },
-        layer: { waypoint: [] },
-        data: activity,
-      }))
+      setDirections((prev) => ({ ...prev, data: activity }))
+      getDirections.refetch()
     }
   }
 
