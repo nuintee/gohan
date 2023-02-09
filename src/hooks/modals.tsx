@@ -5,22 +5,14 @@ import { useRecoilState } from 'recoil'
 
 type ModalKey = typeof modalKeys[number]
 
-type Payload<T extends ModalKey> = 'userauth' extends T
-  ? {}
-  : 'usersettings' extends T
-  ? {}
-  : 'usersignout' extends T
-  ? {}
-  : 'restaurantdiscovered' extends T
-  ? ActivityResolved
-  : {}
-
 type ModalMapper = {
   restaurantdiscovered: ActivityResolved
   userauth: {}
   usersettings: {}
   usersignout: {}
 }
+
+type Payload<T extends ModalKey> = {}
 
 const useModals = () => {
   const [modals, setModals] = useRecoilState(modalState)
@@ -32,10 +24,10 @@ const useModals = () => {
     return modals?.findIndex((v) => v.key === key) >= 0
   }
 
-  const getPayload = (key: ModalKey) => {
+  const getPayload = <T extends ModalKey>(key: T): ModalMapper[T] => {
     const data = modals?.find((v) => v.key === key)
 
-    return data?.payload
+    return data?.payload as ModalMapper[T]
   }
 
   const _append = (key: ModalKey, payload?: Payload<typeof key>) => {
