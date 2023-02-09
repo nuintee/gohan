@@ -4,10 +4,7 @@ import useToast from '@/libs/react-toastify'
 import { trpc } from '@/libs/trpc'
 import { useSession } from 'next-auth/react'
 
-const useRestaurants = (
-  props: Parameters<typeof trpc.getRestaurants.useQuery>[0],
-  callbackOnSuccess: () => void,
-) => {
+const useRestaurants = (props: Parameters<typeof trpc.getRestaurants.useQuery>[0]) => {
   const { status, data: session } = useSession()
   const addActivity = useAddActivity()
   const { open } = useModals()
@@ -35,11 +32,11 @@ const useRestaurants = (
 
       if (!!props.place_id) return
 
-      // addActivity.mutate({
-      //   place_id: data.place_id,
-      //   is_liked: false,
-      //   userId: session.user.id,
-      // })
+      addActivity.mutate({
+        place_id: data.place_id,
+        is_liked: false,
+        userId: session.user.id,
+      })
     },
   })
 }

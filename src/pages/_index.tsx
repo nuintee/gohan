@@ -12,14 +12,14 @@ import AcitvityButton from '@/features/activities/components/ActivityButton'
 import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
-import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
+import useResaturants from '@/features/restaurants/hooks/useRestaurants'
 
 const Index = () => {
   const { status, data: session } = useSession()
   const { isOpen, getPayload, close, open } = useModals()
   const { coords } = useMapBox()
 
-  const restaurants = useExperimentalRestaurants({
+  const restaurants = useResaturants({
     latitude: coords.latitude,
     longitude: coords.longitude,
   })
