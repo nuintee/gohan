@@ -73,8 +73,6 @@ const Index = () => {
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-          {/* {hasDirections() && <RestaurantCard data={restaurants.data} compact />} */}
-          {/* <button onClick={handleDirections}>{hasDirections() ? 'Stop' : 'Start'}</button> */}
           {isNavigating() && (
             <RestaurantCard
               data={directions.data}
@@ -89,7 +87,6 @@ const Index = () => {
           />
         </section>
       </div>
-      {/* <ActivityPanel setPlaceId={setPlaceId} /> */}
       <ActivityPanel onClickItem={(activity) => open('restaurantdiscovered', activity)} />
       <RestaurantDiscoveredModal
         isLocked={status === 'unauthenticated'}
@@ -101,8 +98,6 @@ const Index = () => {
           isNavigating() &&
           getPayload('restaurantdiscovered')?.place_id === directions.data?.place_id
         }
-        // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
-        // isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />
       <UserSettingsModal />
