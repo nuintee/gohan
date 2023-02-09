@@ -12,8 +12,6 @@ type ModalMapper = {
   usersignout: {}
 }
 
-type Payload<T extends ModalKey> = {}
-
 const useModals = () => {
   const [modals, setModals] = useRecoilState(modalState)
 
@@ -30,7 +28,7 @@ const useModals = () => {
     return data?.payload as ModalMapper[T]
   }
 
-  const _append = (key: ModalKey, payload?: Payload<typeof key>) => {
+  const _append = <T extends ModalKey>(key: T, payload?: ModalMapper[T]) => {
     if (isOpen(key)) {
       setModals((prev) => prev.map((v) => (v.key === key ? { key, payload } : v)))
     } else {
@@ -42,7 +40,7 @@ const useModals = () => {
     setModals((prev) => prev.filter((v) => v.key !== key))
   }
 
-  const open = (key: ModalKey, payload?: Payload<typeof key>) => {
+  const open = <T extends ModalKey>(key: T, payload?: ModalMapper[T]) => {
     _append(key, payload)
   }
 
@@ -51,7 +49,7 @@ const useModals = () => {
     _remove(key)
   }
 
-  const toggle = (key: ModalKey, payload?: Payload<typeof key>) => {
+  const toggle = <T extends ModalKey>(key: T, payload?: ModalMapper[T]) => {
     if (isOpen(key)) {
       close(key)
     } else {
