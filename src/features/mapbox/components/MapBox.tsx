@@ -69,7 +69,10 @@ const MapBox = () => {
           ref={geoLocateRef}
         />
         {getUserAll?.data?.map((activity) => (
-          <Marker />
+          <Marker
+            latitude={activity.geometry?.location?.lat}
+            longitude={activity.geometry?.location?.lng}
+          />
         ))}
       </Map>
     </div>

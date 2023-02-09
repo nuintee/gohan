@@ -8,7 +8,7 @@ const useGetUserActivities = (props: Parameters<typeof trpc.getUserActivities.us
   const { isPanelOpen } = useActivityPanel()
 
   return trpc.getUserActivities.useQuery(props, {
-    enabled: status === 'authenticated' && isPanelOpen,
+    enabled: status === 'authenticated',
     onError: (error) => {
       console.error(error)
       if (error instanceof Error) {
