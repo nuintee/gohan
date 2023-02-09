@@ -91,7 +91,7 @@ const Index = () => {
           <User />
           <AcitvityButton />
         </section>
-        <MapBox />
+        <MapBox geoJSON={{ ...directions.source, ...directions.layer }} />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
           {isNavigating() && (
             <RestaurantCard

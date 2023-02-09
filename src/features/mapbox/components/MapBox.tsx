@@ -16,9 +16,11 @@ import useMapBox from '../hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
 import { useRef } from 'react'
+import { GeoJSON } from '@/features/directions/types/geojson'
 
-const MapBox = ({}) => {
+const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
+
   const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
     useMapBox()
 
@@ -60,11 +62,6 @@ const MapBox = ({}) => {
           }}
           ref={geoLocateRef}
         />
-        {/* {hasDirections && (
-          <Source type='geojson' data={formattedDirections.source}>
-            <Layer {...formattedDirections?.layer} />
-          </Source>
-        )} */}
       </Map>
     </div>
   )
