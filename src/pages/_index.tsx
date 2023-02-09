@@ -6,7 +6,6 @@ import { signOut, useSession, signIn } from 'next-auth/react'
 
 // Hooks
 import User from '@/features/user/components/User'
-import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useModals from '@/hooks/modals'
 import UserAuthConsentDialog from '@/features/user/components/UserAuthConsentDialog'
 import AcitvityButton from '@/features/activities/components/ActivityButton'
@@ -14,23 +13,55 @@ import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 import useGetDirections from '@/features/directions/hooks/useGetDirections'
+import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
+import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
+import { useCallback, useState } from 'react'
+import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { trpc } from '@/libs/trpc'
+import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
+import { ActivityResolved } from '@/features/activities/types'
 
 const Index = () => {
-  // Session
-  const session = useSession()
-  // Modals
-  const { isOpen, close } = useModals()
-
-  // GPS
+  const { status, data: session } = useSession()
+  const { isOpen, getPayload, close, open } = useModals()
   const { coords } = useMapBox()
 
   // Directions
+  const createGeoJSON = useGeoJSON()
+  const INITIAL_DIRECTIONS = { source: {}, layer: {}, data: {} }
+  const [directions, setDirections] = useState(INITIAL_DIRECTIONS)
 
-  // Resturants
-  const restaurants = useRestaurants({
+  const restaurants = useExperimentalRestaurants({
     latitude: coords.latitude,
     longitude: coords.longitude,
   })
+
+  const handleClick = () => {
+    restaurants.refetch()
+  }
+
+  const isNavigating = () => {
+    if (!directions) return false
+
+    const isSource = Object.keys(directions.source).length > 0
+    const isLayer = Object.keys(directions.layer).length > 0
+    return isSource && isLayer
+  }
+
+  const handleNavigate = (activity: ActivityResolved) => {
+    if (!activity) return
+
+    if (isNavigating() && directions.data?.place_id === activity?.place_id) {
+      setDirections(INITIAL_DIRECTIONS)
+    } else {
+      setDirections((prev) => ({
+        ...prev,
+        source: { waypoint: [] },
+        layer: { waypoint: [] },
+        data: activity,
+      }))
+    }
+  }
 
   return (
     <>
@@ -41,31 +72,31 @@ const Index = () => {
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-          {/* {hasDirections && (
+          {isNavigating() && (
             <RestaurantCard
+              data={directions.data}
               compact
-              isLocked={session.status === 'unauthenticated'}
-              isNavigating={hasDirections}
-              data={getRestaurants.data}
-              // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
-              onClick={() => open('restaurantdiscovered')}
+              onClick={() => open('restaurantdiscovered', directions.data)}
             />
-          )} */}
+          )}
           <GohanButton
-            onClick={() => restaurants.refetch()}
+            onClick={() => handleClick()}
             isLoading={restaurants.isFetching}
             disabled={restaurants.isFetching}
           />
         </section>
       </div>
-      <ActivityPanel />
+      <ActivityPanel onClickItem={(activity) => open('restaurantdiscovered', activity)} />
       <RestaurantDiscoveredModal
-        isLocked={session.status === 'unauthenticated'}
+        isLocked={status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
-        data={restaurants.data}
-        // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
-        // isNavigating={hasDirections}
+        data={getPayload('restaurantdiscovered')}
+        onNavigate={handleNavigate}
+        isNavigating={
+          isNavigating() &&
+          getPayload('restaurantdiscovered')?.place_id === directions.data?.place_id
+        }
       />
       <UserAuthConsentDialog />
       <UserSettingsModal />

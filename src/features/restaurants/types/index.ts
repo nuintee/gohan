@@ -1,3 +1,4 @@
+import { ActivityResolved } from '@/features/activities/types'
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
 import { neededDetailsFields } from '../constants'
@@ -77,9 +78,9 @@ export type RestaurantProps = {
   compact?: boolean
   isNavigating?: boolean
   isLocked: boolean
-  data?: RestaurantData
+  data?: ActivityResolved
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
-  onNavigate?: MouseEventHandler<HTMLButtonElement>
+  onNavigate?: (activity: ActivityResolved) => void
 }
