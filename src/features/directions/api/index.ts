@@ -1,14 +1,17 @@
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
 import { z } from 'zod'
+import { sleep } from '@/utils/sleep'
+import axios from 'axios'
 
 // Env
 import { IS_DEVMODE, IS_PRODMODE, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 
 // Schema
 import { CoordinatesSchema } from '../schema/coordinates.schema'
-import { sleep } from '@/utils/sleep'
-import axios from 'axios'
+import { DirectionsAPI } from '../types/api'
+
+// Data
+import directions from '@/data/_directions.json'
 
 export const getDirections = procedure
   .input(z.array(CoordinatesSchema).max(2))
@@ -19,10 +22,7 @@ export const getDirections = procedure
       // mock as msw
       sleep(1000)
 
-      return {
-        a,
-        b,
-      }
+      return {}
     } else if (IS_PRODMODE) {
       const url = new URL(
         `https://api.mapbox.com/directions/v5/mapbox/walking/${a.latitude},${a.longitude};${b.latitude},${b.longitude}`,
@@ -35,7 +35,7 @@ export const getDirections = procedure
       url.searchParams.append('steps', 'true')
       url.searchParams.append('access_token', MAPBOX_PUBLIC_TOKEN)
 
-      const { data } = await axios.get(url.toString())
+      const { data } = await axios.get<DirectionsAPI>(url.toString())
 
       return data
     } else {
