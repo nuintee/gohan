@@ -12,7 +12,7 @@ type Props = {
 } & RestaurantProps
 
 const RestaurantDiscoveredModal = (props: Props) => {
-  const { isOpen, onClose, data, isNavigating, onNavigate, ...rest } = props
+  const { isOpen, onClose, data, isNavigating, isLoading = false, onNavigate, ...rest } = props
 
   return (
     <ModalLayout isOpen={isOpen}>
@@ -21,6 +21,7 @@ const RestaurantDiscoveredModal = (props: Props) => {
         onNavigate={onNavigate}
         data={props.data}
         isNavigating={isNavigating}
+        isLoading={isLoading}
         {...rest}
       />
     </ModalLayout>

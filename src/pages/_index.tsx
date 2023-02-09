@@ -114,6 +114,7 @@ const Index = () => {
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         data={getPayload('restaurantdiscovered')}
+        isLoading={getDirections.isFetching}
         onNavigate={handleNavigate}
         isNavigating={
           isNavigating() &&
