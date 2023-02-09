@@ -52,7 +52,7 @@ const Index = () => {
   const handleNavigate = (activity: ActivityResolved) => {
     if (!activity) return
 
-    if (isNavigating()) {
+    if (isNavigating() && directions.data?.place_id === activity?.place_id) {
       setDirections(INITIAL_DIRECTIONS)
     } else {
       setDirections((prev) => ({
