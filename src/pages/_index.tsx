@@ -21,6 +21,19 @@ import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/re
 import { trpc } from '@/libs/trpc'
 
 const Index = () => {
+  const { status, data: session } = useSession()
+  const { isOpen, getPayload, close, open } = useModals()
+  const { coords } = useMapBox()
+
+  const restaurants = useExperimentalRestaurants({
+    latitude: coords.latitude,
+    longitude: coords.longitude,
+  })
+
+  const handleClick = () => {
+    restaurants.refetch()
+  }
+
   return (
     <>
       <div className='flex flex-col gap-4'>
@@ -32,25 +45,25 @@ const Index = () => {
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
           {/* {hasDirections() && <RestaurantCard data={restaurants.data} compact />} */}
           {/* <button onClick={handleDirections}>{hasDirections() ? 'Stop' : 'Start'}</button> */}
-          {/* <GohanButton
+          <GohanButton
             onClick={() => handleClick()}
             isLoading={restaurants.isFetching}
             disabled={restaurants.isFetching}
-          /> */}
+          />
         </section>
       </div>
       {/* <ActivityPanel setPlaceId={setPlaceId} /> */}
-      <ActivityPanel onClickItem={(activity) => console.log(activity)} />
-      {/* <RestaurantDiscoveredModal
-        isLocked={session.status === 'unauthenticated'}
+      <ActivityPanel onClickItem={(activity) => open('restaurantdiscovered', activity)} />
+      <RestaurantDiscoveredModal
+        isLocked={status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         data={getPayload('restaurantdiscovered')}
-        onNavigate={handleDirections}
-        isNavigating={hasDirections()}
+        onNavigate={() => {}}
+        isNavigating={() => {}}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         // isNavigating={hasDirections}
-      /> */}
+      />
       <UserAuthConsentDialog />
       <UserSettingsModal />
       <ToastCatcher position='top-center' />

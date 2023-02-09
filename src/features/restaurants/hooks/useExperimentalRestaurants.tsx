@@ -23,7 +23,7 @@ const useExperimentalRestaurants = (
     },
     onSuccess: (data) => {
       console.log(data)
-      callbackOnSuccess()
+      // callbackOnSuccess()
 
       open('restaurantdiscovered', data)
 
