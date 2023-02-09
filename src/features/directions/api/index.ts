@@ -14,9 +14,14 @@ import { DirectionsAPI } from '../types/api'
 import directions from '@/data/_directions.json'
 
 export const getDirections = procedure
-  .input(z.array(CoordinatesSchema).max(2))
+  .input(
+    z.object({
+      start: CoordinatesSchema,
+      desintaion: CoordinatesSchema,
+    }),
+  )
   .query(async ({ input }) => {
-    const [a, b] = input
+    const { desintaion } = input
 
     if (IS_DEVMODE) {
       // mock as msw
@@ -26,7 +31,10 @@ export const getDirections = procedure
         // otherwise return random
         const found = directions.find((direction) => {
           const waypointsEnd = direction.waypoints.pop() // destination
-          return JSON.stringify([b.latitude, b.longitude]) && JSON.stringify(waypointsEnd?.location)
+          return (
+            JSON.stringify([desintaion.latitude, desintaion.longitude]) &&
+            JSON.stringify(waypointsEnd?.location)
+          )
         })
 
         return found || directions[Math.floor(Math.random() * directions.length - 1)]
