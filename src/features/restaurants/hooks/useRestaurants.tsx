@@ -12,13 +12,18 @@ const useRestaurants = (
   const addActivity = useAddActivity()
   const { open } = useModals()
 
+  const isGPSValid = props.latitude && props.longitude
+
   return trpc.getRestaurants.useQuery(props, {
     enabled: !!props.place_id,
+    retry: isGPSValid ? 3 : 0,
     onError: (error) => {
       console.error(error)
 
       if (error instanceof Error) {
-        useToast.error(error.message)
+        const message = !isGPSValid ? `Please allow user geolocaiton tracking` : error.message
+
+        useToast.error(message)
       }
     },
     onSuccess: (data) => {
