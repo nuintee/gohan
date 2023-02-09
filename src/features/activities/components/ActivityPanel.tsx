@@ -15,7 +15,7 @@ import useModals from '@/hooks/modals'
 import usePatchActivity from '../hooks/usePatchActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
-import useExperimentalRestaurants from '@/features/restaurants/hooks/useExperimentalRestaurants'
+import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { RestaurantProps } from '@/features/restaurants/types'
 
 // Constants
