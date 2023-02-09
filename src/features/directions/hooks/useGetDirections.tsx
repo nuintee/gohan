@@ -11,7 +11,7 @@ import useGeoJSON from './useGeoJSON'
 
 const useGetDirections = (props: DirectionsInput) => {
   const { coords } = useMapBox()
-  const { start = coords, destination } = props
+  const { start = coords as Required<Coordinates>, destination } = props
 
   return trpc.getDirections.useQuery(
     { start, destination },
