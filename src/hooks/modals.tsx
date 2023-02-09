@@ -2,22 +2,34 @@
 import { modalKeys, modalState } from '@/stores/modals'
 import { useRecoilState } from 'recoil'
 
+type ModalKey = typeof modalKeys[number]
+
+type Payload<T extends ModalKey> = 'userauth' extends T
+  ? {}
+  : 'usersettings' extends T
+  ? {}
+  : 'usersignout' extends T
+  ? {}
+  : 'restaurantdiscovered' extends T
+  ? {}
+  : {}
+
 const useModals = () => {
   const [modals, setModals] = useRecoilState(modalState)
 
   /**
    * Checks if the target modal is open by given key
    */
-  const isOpen = (key: typeof modalKeys[number]) => {
+  const isOpen = (key: ModalKey) => {
     return modals?.findIndex((v) => v.key === key) >= 0
   }
 
-  const getPayload = (key: typeof modalKeys[number]) => {
+  const getPayload = (key: ModalKey) => {
     const data = modals?.find((v) => v.key === key)
-    return data?.payload
+    return data?.payload as Payload<typeof key>
   }
 
-  const _append = (key: typeof modalKeys[number], payload) => {
+  const _append = (key: ModalKey, payload?: Payload<typeof key>) => {
     if (isOpen(key)) {
       setModals((prev) => prev.map((v) => (v.key === key ? { key, payload } : v)))
     } else {
@@ -25,20 +37,20 @@ const useModals = () => {
     }
   }
 
-  const _remove = (key: typeof modalKeys[number]) => {
+  const _remove = (key: ModalKey) => {
     setModals((prev) => prev.filter((v) => v.key !== key))
   }
 
-  const open = (key: typeof modalKeys[number], payload?) => {
+  const open = (key: ModalKey, payload?: Payload<typeof key>) => {
     _append(key, payload)
   }
 
-  const close = (key: typeof modalKeys[number]) => {
+  const close = (key: ModalKey) => {
     if (!isOpen(key)) return
     _remove(key)
   }
 
-  const toggle = (key: typeof modalKeys[number], payload?) => {
+  const toggle = (key: ModalKey, payload?: Payload<typeof key>) => {
     if (isOpen(key)) {
       close(key)
     } else {
