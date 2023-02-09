@@ -38,6 +38,7 @@ type Props = {
   isOpen?: boolean
   data?: ActivityResolved[]
   onClose?: React.MouseEventHandler<HTMLButtonElement>
+  onClickItem: (item: ActivityResolved) => void
 }
 
 type ListProps = {
@@ -171,7 +172,7 @@ const List = (props: ListProps) => {
 //   )
 // }
 
-const ActivityPanel = (props: Props & { setPlaceId: Function }) => {
+const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { status, data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -180,7 +181,7 @@ const ActivityPanel = (props: Props & { setPlaceId: Function }) => {
     isOpen = isPanelOpen ?? false,
     onClose = closePanel,
     data = getUserAll.data ?? [],
-    setPlaceId,
+    onClickItem,
   } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
@@ -192,9 +193,7 @@ const ActivityPanel = (props: Props & { setPlaceId: Function }) => {
       <Header title={'ActivityPanel'} onClose={onClose} />
       <div>
         {getUserAll.data?.map((activity) => (
-          <div onClick={() => setPlaceId(activity.place_id)} role='button'>
-            <p>{activity.place_id}</p>
-          </div>
+          <RestaurantCard data={activity} compact onClick={() => onClickItem(activity)} />
         ))}
       </div>
     </div>

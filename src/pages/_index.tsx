@@ -17,35 +17,10 @@ import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useExperimentalRestaurants from '@/features/restaurants/hooks/useExperimentalRestaurants'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { useCallback, useState } from 'react'
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { trpc } from '@/libs/trpc'
 
 const Index = () => {
-  // Session
-  const session = useSession()
-  // Modals
-  const { isOpen, close, getPayload } = useModals()
-
-  // GPS
-  const { coords } = useMapBox()
-
-  // Place_id
-  const [place_id, setPlaceId] = useState('')
-
-  const restaurants = useExperimentalRestaurants(
-    {
-      place_id,
-      latitude: coords.latitude,
-      longitude: coords.longitude,
-    },
-    () => {
-      setPlaceId('')
-    },
-  ) // if place_id is falsy and ephemeral === true, get random by refetch, otherwise if ephemeral === true and place_id is truthy, refetch
-
-  const handleClick = () => {
-    restaurants.refetch()
-  }
-
   return (
     <>
       <div className='flex flex-col gap-4'>
@@ -55,33 +30,27 @@ const Index = () => {
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-          {/* {hasDirections && (
-            <RestaurantCard
-              compact
-              isLocked={session.status === 'unauthenticated'}
-              isNavigating={hasDirections}
-              data={getRestaurants.data}
-              // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
-              onClick={() => open('restaurantdiscovered')}
-            />
-          )} */}
-          {/* {restaurants.data && <RestaurantCard data={restaurants.data} compact />} */}
-          <GohanButton
+          {/* {hasDirections() && <RestaurantCard data={restaurants.data} compact />} */}
+          {/* <button onClick={handleDirections}>{hasDirections() ? 'Stop' : 'Start'}</button> */}
+          {/* <GohanButton
             onClick={() => handleClick()}
             isLoading={restaurants.isFetching}
             disabled={restaurants.isFetching}
-          />
+          /> */}
         </section>
       </div>
-      <ActivityPanel setPlaceId={setPlaceId} />
-      <RestaurantDiscoveredModal
+      {/* <ActivityPanel setPlaceId={setPlaceId} /> */}
+      <ActivityPanel onClickItem={(activity) => console.log(activity)} />
+      {/* <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         data={getPayload('restaurantdiscovered')}
+        onNavigate={handleDirections}
+        isNavigating={hasDirections()}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         // isNavigating={hasDirections}
-      />
+      /> */}
       <UserAuthConsentDialog />
       <UserSettingsModal />
       <ToastCatcher position='top-center' />
