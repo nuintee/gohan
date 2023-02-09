@@ -5,6 +5,7 @@ import Map, {
   useMap,
   GeolocateResultEvent,
   GeolocateControlRef,
+  Marker,
 } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
@@ -16,8 +17,15 @@ import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
 import { useRef } from 'react'
 
+// hooks
+import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
+import { useSession } from 'next-auth/react'
+
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
+
+  const { data: session } = useSession()
+  const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
   const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
     useMapBox()
@@ -60,6 +68,9 @@ const MapBox = () => {
           }}
           ref={geoLocateRef}
         />
+        {getUserAll?.data?.map((activity) => (
+          <Marker />
+        ))}
       </Map>
     </div>
   )
