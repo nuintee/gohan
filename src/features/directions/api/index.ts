@@ -19,7 +19,7 @@ export const getDirections = procedure.input(DirectionsInputSchema).query(async 
 
   if (IS_DEVMODE) {
     // mock as msw
-    sleep(1000)
+    await sleep(1000)
 
     const findByCoordinates = () => {
       // otherwise return random
