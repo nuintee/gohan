@@ -13,15 +13,20 @@ const useGetDirections = (props: DirectionsInput) => {
   const { coords } = useMapBox()
   const { start = coords as Required<Coordinates>, destination } = props
 
+  const isGPSValid = start.latitude && start.longitude
+
   return trpc.getDirections.useQuery(
     { start, destination },
     {
       enabled: false,
+      retry: isGPSValid ? 3 : 0,
       onError: (error) => {
         console.error(error)
 
         if (error instanceof Error) {
-          useToast.error(error.message)
+          const message = !isGPSValid ? `Please allow user geolocaiton tracking` : error.message
+
+          useToast.error(message)
         }
       },
       onSuccess: (data) => {

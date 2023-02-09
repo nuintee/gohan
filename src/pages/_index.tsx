@@ -36,6 +36,13 @@ const Index = () => {
     longitude: coords.longitude,
   })
 
+  const getDirections = useGetDirections({
+    destination: {
+      latitude: 0,
+      longitude: 0,
+    },
+  })
+
   const isNavigating = () => {
     if (!directions) return false
 
