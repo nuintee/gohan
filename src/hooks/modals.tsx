@@ -1,4 +1,5 @@
 // Stores
+import { ActivityResolved } from '@/features/activities/types'
 import { modalKeys, modalState } from '@/stores/modals'
 import { useRecoilState } from 'recoil'
 
@@ -11,8 +12,15 @@ type Payload<T extends ModalKey> = 'userauth' extends T
   : 'usersignout' extends T
   ? {}
   : 'restaurantdiscovered' extends T
-  ? {}
+  ? ActivityResolved
   : {}
+
+type ModalMapper = {
+  restaurantdiscovered: ActivityResolved
+  userauth: {}
+  usersettings: {}
+  usersignout: {}
+}
 
 const useModals = () => {
   const [modals, setModals] = useRecoilState(modalState)
@@ -26,7 +34,8 @@ const useModals = () => {
 
   const getPayload = (key: ModalKey) => {
     const data = modals?.find((v) => v.key === key)
-    return data?.payload as Payload<typeof key>
+
+    return data?.payload
   }
 
   const _append = (key: ModalKey, payload?: Payload<typeof key>) => {
