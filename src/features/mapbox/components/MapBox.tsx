@@ -12,11 +12,9 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { mapStyles } from '../config'
 import useMapBox from '../hooks'
-// import useDirections from '@/features/directions/hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
 import { useRef } from 'react'
-import { GeoJSON } from '@/features/directions/types/geojson'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)

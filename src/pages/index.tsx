@@ -22,7 +22,6 @@ import calculateDistance from '@/libs/haversine-distance'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
 import useToast from '@/libs/react-toastify'
-import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
 import useGetUser from '@/features/user/hooks/useGetUser'
 import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 
