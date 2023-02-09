@@ -19,11 +19,18 @@ import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { useCallback, useState } from 'react'
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { trpc } from '@/libs/trpc'
+import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
+import { ActivityResolved } from '@/features/activities/types'
 
 const Index = () => {
   const { status, data: session } = useSession()
   const { isOpen, getPayload, close, open } = useModals()
   const { coords } = useMapBox()
+
+  // Directions
+  const createGeoJSON = useGeoJSON()
+  const INITIAL_DIRECTIONS = { source: {}, layer: {}, data: {} }
+  const [directions, setDirections] = useState(INITIAL_DIRECTIONS)
 
   const restaurants = useExperimentalRestaurants({
     latitude: coords.latitude,
@@ -32,6 +39,29 @@ const Index = () => {
 
   const handleClick = () => {
     restaurants.refetch()
+  }
+
+  const isNavigating = () => {
+    if (!directions) return false
+
+    const isSource = Object.keys(directions.source).length > 0
+    const isLayer = Object.keys(directions.layer).length > 0
+    return isSource && isLayer
+  }
+
+  const handleNavigate = (activity: ActivityResolved) => {
+    if (!activity) return
+
+    if (isNavigating()) {
+      setDirections(INITIAL_DIRECTIONS)
+    } else {
+      setDirections((prev) => ({
+        ...prev,
+        source: { waypoint: [] },
+        layer: { waypoint: [] },
+        data: activity,
+      }))
+    }
   }
 
   return (
@@ -45,6 +75,13 @@ const Index = () => {
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
           {/* {hasDirections() && <RestaurantCard data={restaurants.data} compact />} */}
           {/* <button onClick={handleDirections}>{hasDirections() ? 'Stop' : 'Start'}</button> */}
+          {isNavigating() && (
+            <RestaurantCard
+              data={directions.data}
+              compact
+              onClick={() => open('restaurantdiscovered', directions.data)}
+            />
+          )}
           <GohanButton
             onClick={() => handleClick()}
             isLoading={restaurants.isFetching}
@@ -59,8 +96,11 @@ const Index = () => {
         isOpen={isOpen('restaurantdiscovered')}
         onClose={() => close('restaurantdiscovered')}
         data={getPayload('restaurantdiscovered')}
-        onNavigate={() => {}}
-        isNavigating={() => {}}
+        onNavigate={handleNavigate}
+        isNavigating={
+          isNavigating() &&
+          getPayload('restaurantdiscovered')?.place_id === directions.data?.place_id
+        }
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         // isNavigating={hasDirections}
       />
