@@ -130,16 +130,16 @@ const PlayGround = () => {
 
   const updateUser = trpc.updateUser.useMutation()
 
-  const getDirections = useGetDirections([
-    {
-      latitude: 42.64775203224244,
-      longitude: 23.40559939582422,
-    },
-    {
-      latitude: 42.64775203224244,
-      longitude: 23.40559939582422,
-    },
-  ])
+  // const getDirections = useGetDirections([
+  //   {
+  //     latitude: 42.64775203224244,
+  //     longitude: 23.40559939582422,
+  //   },
+  //   {
+  //     latitude: 42.64775203224244,
+  //     longitude: 23.40559939582422,
+  //   },
+  // ])
 
   const experiments = trpc.getExperiment.useQuery({ a: 1, b: 2 }, { keepPreviousData: true })
 
@@ -170,9 +170,9 @@ const PlayGround = () => {
               <Details apiResult={getActivity} />
               <Details apiResult={getUserActivities} />
             </DetailsGroup>
-            <DetailsGroup label={'Directions'}>
+            {/* <DetailsGroup label={'Directions'}>
               <Details apiResult={getDirections} />
-            </DetailsGroup>
+            </DetailsGroup> */}
             <DetailsGroup label={'Experiments'}>
               <Details apiResult={experiments} />
               <Details apiResult={getExpRestaurants} />

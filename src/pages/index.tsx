@@ -21,7 +21,6 @@ import RestaurantDiscoveredModal from '@/features/restaurants/components/Restaur
 import calculateDistance from '@/libs/haversine-distance'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
-import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useToast from '@/libs/react-toastify'
 import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
 import useGetUser from '@/features/user/hooks/useGetUser'
