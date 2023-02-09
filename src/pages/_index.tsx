@@ -13,11 +13,6 @@ import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
-import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
-import { useCallback, useState } from 'react'
-import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { trpc } from '@/libs/trpc'
-import { ActivityResolved } from '@/features/activities/types'
 
 const Index = () => {
   const { status, data: session } = useSession()
@@ -29,10 +24,6 @@ const Index = () => {
     longitude: coords.longitude,
   })
 
-  const handleClick = () => {
-    restaurants.refetch()
-  }
-
   return (
     <>
       <div className='flex flex-col gap-4'>
@@ -43,7 +34,7 @@ const Index = () => {
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
           <GohanButton
-            onClick={() => handleClick()}
+            onClick={() => restaurants.refetch()}
             isLoading={restaurants.isFetching}
             disabled={restaurants.isFetching}
           />
