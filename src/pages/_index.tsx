@@ -36,10 +36,6 @@ const Index = () => {
     longitude: coords.longitude,
   })
 
-  const handleClick = () => {
-    restaurants.refetch()
-  }
-
   const isNavigating = () => {
     if (!directions) return false
 
@@ -63,6 +59,14 @@ const Index = () => {
     }
   }
 
+  const handleClick = () => {
+    if (isNavigating()) {
+      setDirections(INITIAL_DIRECTIONS)
+    } else {
+      restaurants.refetch()
+    }
+  }
+
   return (
     <>
       <div className='flex flex-col gap-4'>
@@ -81,6 +85,7 @@ const Index = () => {
           )}
           <GohanButton
             onClick={() => handleClick()}
+            isNavigating={isNavigating()}
             isLoading={restaurants.isFetching}
             disabled={restaurants.isFetching}
           />
