@@ -22,7 +22,17 @@ export const getDirections = procedure
       // mock as msw
       sleep(1000)
 
-      return {}
+      const findByCoordinates = () => {
+        // otherwise return random
+        const found = directions.find((direction) => {
+          const waypointsEnd = direction.waypoints.pop() // destination
+          return JSON.stringify([b.latitude, b.longitude]) && JSON.stringify(waypointsEnd?.location)
+        })
+
+        return found || directions[Math.floor(Math.random() * directions.length - 1)]
+      }
+
+      return findByCoordinates()
     } else if (IS_PRODMODE) {
       const url = new URL(
         `https://api.mapbox.com/directions/v5/mapbox/walking/${a.latitude},${a.longitude};${b.latitude},${b.longitude}`,
