@@ -7,10 +7,12 @@ type ModalKey = typeof modalKeys[number]
 
 type ModalMapper = {
   restaurantdiscovered: ActivityResolved
-  userauth: {}
-  usersettings: {}
-  usersignout: {}
+  // userauth: {}
+  // usersettings: {}
+  // usersignout: {}
 }
+
+type ModalData<TData> = TData extends keyof ModalMapper ? ModalMapper[T] : {}
 
 const useModals = () => {
   const [modals, setModals] = useRecoilState(modalState)
@@ -22,10 +24,24 @@ const useModals = () => {
     return modals?.findIndex((v) => v.key === key) >= 0
   }
 
-  const getPayload = <T extends ModalKey>(key: T): ModalMapper[T] => {
+  // const getPayload = <T extends ModalKey>(key: T): ModalMapper[T] => {
+  //   const data = modals?.find((v) => v.key === key)
+
+  //   return data?.payload as ModalMapper[T]
+  // }
+
+  // const getPayload = <T extends ModalKey>(
+  //   key: T,
+  // ): T extends keyof ModalMapper ? ModalMapper[T] : {} => {
+  //   const data = modals?.find((v) => v.key === key)
+
+  //   return data?.payload as T extends keyof ModalMapper ? ModalMapper[T] : {}
+  // }
+
+  const getPayload = <T extends ModalKey>(key: T): ModalData<T> => {
     const data = modals?.find((v) => v.key === key)
 
-    return data?.payload as ModalMapper[T]
+    return data?.payload as ModalData<T>
   }
 
   const _append = <T extends ModalKey>(key: T, payload?: ModalMapper[T]) => {
