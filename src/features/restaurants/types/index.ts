@@ -1,6 +1,7 @@
+import { ActivityResolved } from '@/features/activities/types'
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
-import { neededDetailsFields } from '../schemas/getRestaurantDetails.schema'
+import { neededDetailsFields } from '../constants'
 
 export type PlacesSearchStatus = [
   'OK',
@@ -41,6 +42,7 @@ export interface ResultsEntity {
   types?: string[] | null
   user_ratings_total: number
   vicinity: string
+  website?: string
 }
 export interface Geometry {
   location: NortheastOrSouthwestOrLocation
@@ -76,9 +78,10 @@ export type RestaurantProps = {
   compact?: boolean
   isNavigating?: boolean
   isLocked: boolean
-  data?: RestaurantData
+  isLoading?: boolean
+  data?: ActivityResolved
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
-  onNavigate?: MouseEventHandler<HTMLButtonElement>
+  onNavigate?: (activity: ActivityResolved) => void
 }

@@ -1,9 +1,8 @@
 import { GohanButton, ToastCatcher } from '@/components/ui'
-import useDirections from '@/features/directions/hooks'
+// import useDirections from '@/features/directions/hooks'
 import MapBox from '@/features/mapbox/components/MapBox'
 import useMapBox from '@/features/mapbox/hooks'
 import { mapBoxState } from '@/features/mapbox/stores'
-import useUser from '@/features/user/hooks'
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
@@ -15,22 +14,14 @@ import User from '@/features/user/components/User'
 import useModals from '@/hooks/modals'
 import UserAuthConsentDialog from '@/features/user/components/UserAuthConsentDialog'
 import AcitvityButton from '@/features/activities/components/ActivityButton'
-import useActivities from '@/features/activities/hooks'
 import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
-import useRestaurants from '@/features/restaurants/hooks'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 import calculateDistance from '@/libs/haversine-distance'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
-import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useToast from '@/libs/react-toastify'
-import useClearDirections from '@/features/directions/hooks/useClearDirections'
-import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
-import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
-import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useClearRestaurant'
-import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
 import useGetUser from '@/features/user/hooks/useGetUser'
 import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 
@@ -42,19 +33,17 @@ const Index = () => {
   const { open, close, isOpen, getPayload } = useModals()
 
   // Restaurants
-  const getRestaurants = useGetRestaurants()
-  const clearRestaurant = useClearRestaurant()
 
   // GPS
   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
 
   // Directions
-  const {
-    hasDirections,
-    directions,
-    revokeDirections,
-    getDirections: getDirections,
-  } = useDirections()
+  // const {
+  //   hasDirections,
+  //   directions,
+  //   revokeDirections,
+  //   getDirections: getDirections,
+  // } = useDirections()
 
   return (
     <>
@@ -65,7 +54,7 @@ const Index = () => {
         </section>
         <MapBox />
         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-          {hasDirections && (
+          {/* {hasDirections && (
             <RestaurantCard
               compact
               isLocked={session.status === 'unauthenticated'}
@@ -74,7 +63,7 @@ const Index = () => {
               // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
               onClick={() => open('restaurantdiscovered')}
             />
-          )}
+          )} */}
           <GohanButton />
         </section>
       </div>
@@ -82,10 +71,10 @@ const Index = () => {
       <RestaurantDiscoveredModal
         isLocked={session.status === 'unauthenticated'}
         isOpen={isOpen('restaurantdiscovered')}
-        onClose={clearRestaurant.mutate}
+        // onClose={clearRestaurant.mutate}
         // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
         data={getPayload('restaurantdiscovered')}
-        isNavigating={hasDirections}
+        // isNavigating={hasDirections}
       />
       <UserAuthConsentDialog />
       <UserSettingsModal />

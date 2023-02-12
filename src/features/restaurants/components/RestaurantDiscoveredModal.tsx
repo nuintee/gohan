@@ -1,6 +1,7 @@
-import useDirections from '@/features/directions/hooks'
+// import useDirections from '@/features/directions/hooks'
 import useMapBox from '@/features/mapbox/hooks'
 import ModalLayout from '@/layouts/ModalLayout'
+import { useEffect } from 'react'
 import { RestaurantProps } from '../types'
 
 import RestaurantCard from './RestaurantCard'
@@ -11,27 +12,7 @@ type Props = {
 } & RestaurantProps
 
 const RestaurantDiscoveredModal = (props: Props) => {
-  const { getDirections, revokeDirections } = useDirections()
-
-  const get = getDirections({
-    end: `${props.data?.geometry?.location?.lat},${props.data?.geometry?.location?.lng}`,
-  })
-  const revoke = revokeDirections()
-
-  const {
-    isOpen,
-    onClose,
-    data,
-    isNavigating,
-    onNavigate = isNavigating
-      ? () => {
-          revoke.mutate()
-        }
-      : () => {
-          get.refetch()
-        },
-    ...rest
-  } = props
+  const { isOpen, onClose, data, isNavigating, isLoading = false, onNavigate, ...rest } = props
 
   return (
     <ModalLayout isOpen={isOpen}>
@@ -40,6 +21,7 @@ const RestaurantDiscoveredModal = (props: Props) => {
         onNavigate={onNavigate}
         data={props.data}
         isNavigating={isNavigating}
+        isLoading={isLoading}
         {...rest}
       />
     </ModalLayout>

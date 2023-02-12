@@ -1,162 +1,209 @@
 import { GohanButton, ToastCatcher } from '@/components/ui'
-import useDirections from '@/features/directions/hooks'
 import MapBox from '@/features/mapbox/components/MapBox'
-import useMapBox from '@/features/mapbox/hooks'
-import { mapBoxState } from '@/features/mapbox/stores'
-import useUser from '@/features/user/hooks'
-import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-
-import { signOut, useSession, signIn } from 'next-auth/react'
+import { trpc } from '@/libs/trpc'
 
 // ENV
-import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, BASE_URL } from '@/config/env'
-import User from '@/features/user/components/User'
-import useModals from '@/hooks/modals'
-import UserAuthConsentDialog from '@/features/user/components/UserAuthConsentDialog'
-import AcitvityButton from '@/features/activities/components/ActivityButton'
-import useActivities from '@/features/activities/hooks'
-import UserSettingsModal from '@/features/user/components/UserSettingsModal'
-import ActivityPanel from '@/features/activities/components/ActivityPanel'
-import useRestaurants from '@/features/restaurants/hooks'
-import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
-import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
-import calculateDistance from '@/libs/haversine-distance'
-import useGetActivity from '@/features/activities/hooks/useGetActivity'
-import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
-import useGetDirections from '@/features/directions/hooks/useGetDirections'
 import useToast from '@/libs/react-toastify'
-import useClearDirections from '@/features/directions/hooks/useClearDirections'
-import useGeoJSON from '@/features/directions/hooks/useGeoJSON'
-import useGetRestaurants from '@/features/restaurants/hooks/useRestaurants/useGetRestaurants'
-import useClearRestaurant from '@/features/restaurants/hooks/useRestaurants/useClearRestaurant'
-import useRestaurantDetails from '@/features/restaurants/hooks/useRestaurantDetails'
-import useGetUser from '@/features/user/hooks/useGetUser'
-import useUpdateUser from '@/features/user/hooks/useUpdateUser'
+import { UseTRPCMutationResult, UseTRPCQueryResult } from '@trpc/react-query/shared'
+import useGetDirections from '@/features/directions/hooks/useGetDirections'
+import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
+import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
+import { useState } from 'react'
+import useExpCachedRestaurant from '@/features/restaurants/hooks/useExpCachedRestaurant'
+import { QueryClient } from '@tanstack/react-query'
 
-// const Index = () => {
-//   // User
-//   const session = useSession()
+type Props = {
+  apiResult: UseTRPCQueryResult<any, any> | UseTRPCMutationResult<any, any, any, any>
+  write?: boolean
+  mutationPayload?: Object
+}
 
-//   // Modals
-//   const { open, close, isOpen, getPayload } = useModals()
+const buttonClass =
+  'p-2 bg-gh-dark text-white rounded-md text-sm hover:bg-opacity-80 active:bg-opacity-80 active:scale-90 font-mono'
 
-//   // Restaurants
-//   const { restaurant, set } = useRestaurants()
+const Details = (props: Props) => {
+  const { apiResult, mutationPayload } = props
 
-//   // GPS
-//   const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
+  const isQuery = apiResult.hasOwnProperty('refetch')
+  const isMutation = apiResult.hasOwnProperty('mutate')
 
-//   // Directions
-//   const {
-//     hasDirections,
-//     directions,
-//     revokeDirections,
-//     getDirections: getDirections,
-//   } = useDirections()
+  const handleTry = async () => {
+    if (isQuery) {
+      const refetched = await apiResult.refetch()
+      console.log(refetched)
+    } else if (isMutation) {
+      apiResult.mutateAsync(mutationPayload)
+      console.log(apiResult)
+    }
+  }
 
-//   return (
-//     <>
-//       <div className='flex flex-col gap-4'>
-//         <section className='absolute top-0 left-0 z-[1] w-full p-4 flex gap-4 justify-between'>
-//           <User />
-//           <AcitvityButton />
-//         </section>
-//         <MapBox />
-//         <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-//           {hasDirections && (
-//             <RestaurantCard
-//               compact
-//               isLocked={session.status === 'unauthenticated'}
-//               isNavigating={hasDirections}
-//               data={restaurant}
-//               distance={calculateDistance(coords, restaurant?.geometry?.location).auto}
-//               onClick={() => open('restaurantdiscovered')}
-//             />
-//           )}
-//           <GohanButton />
-//         </section>
-//       </div>
-//       <ActivityPanel />
-//       <RestaurantDiscoveredModal
-//         isLocked={session.status === 'unauthenticated'}
-//         isOpen={isOpen('restaurantdiscovered')}
-//         onClose={() => close('restaurantdiscovered')}
-//         distance={calculateDistance(coords, restaurant?.geometry?.location, true).auto}
-//         data={restaurant}
-//         isNavigating={hasDirections}
-//       />
-//       <UserAuthConsentDialog />
-//       <UserSettingsModal />
-//       <ToastCatcher position='top-center' />
-//     </>
-//   )
-// }
+  const loading = () => {
+    if (isMutation) {
+      const l = Boolean(apiResult.isLoading || apiResult.isFetching | apiResult.isRefetching)
+      return l
+    } else {
+      return apiResult.isLoading
+    }
+  }
+
+  const statusColor = (status: 'error' | 'success' | 'loading' | 'idle') => {
+    switch (status) {
+      case 'error':
+        return 'bg-red-400'
+      case 'success':
+        return 'bg-green-400'
+      case 'loading':
+        return 'bg-yello-400'
+      default:
+        return 'bg-gray-400'
+    }
+  }
+
+  return (
+    <details className='bg-white min-w-[10rem] p-2 cursor-pointer group'>
+      <summary className='text-gray-400 group-open:text-black font-mono'>
+        {props.apiResult.trpc.path}
+      </summary>
+      <div className='flex gap-2 pt-2 items-center justify-between'>
+        <span className={`p-2 ${statusColor(apiResult.status)} rounded-md text-white font-mono`}>
+          {apiResult.status}
+        </span>
+        <button onClick={handleTry} className={buttonClass}>
+          {loading() ? '...' : 'TRY'}
+        </button>
+      </div>
+    </details>
+  )
+}
+
+const DetailsRenderer = ({ children }) => {
+  return <div className='flex flex-col divide-y'>{children}</div>
+}
+
+const DetailsGroup = ({ children, label }) => {
+  return (
+    <div className='bg-white p-2'>
+      <h1 className='font-semibold font-mono'>{label}</h1>
+      {children}
+    </div>
+  )
+}
 
 const PlayGround = () => {
-  // Activities [OK]
-  const getActivity = useGetActivity({ activityId: '2' })
-  const getUserActivities = useGetUserActivities({ userId: '268119a3-cc69-4cff-b86d-35ee46ef43ad' })
-
-  // Directions [OK]
-  const getDirections = useGetDirections({ end: `23.408622,42.648763` })
-  const clearDirections = useClearDirections({ end: `23.408622,42.648763` })
-  const formatToGeoJSON = useGeoJSON() // OK
+  const [place_id, setPlaceId] = useState('')
 
   // Restaurants [OK]
-  const getRestaurants = useGetRestaurants()
-  const clearRestaurants = useClearRestaurant()
-  const getRestaurantDetail = useRestaurantDetails({ place_id: 'ChIJzdIWCP2GqkAR4wCobfmZAvo' })
+  const getRestaurants = trpc.getRestaurant.useQuery({
+    latitude: 42.64775203224244,
+    longitude: 23.40559939582422,
+  })
 
-  // User [OK]
-  const getUser = useGetUser()
-  const updateUser = useUpdateUser()
+  const getRestaurantDetail = trpc.getRestaurantDetails.useQuery({
+    place_id: 'ChIJzdIWCP2GqkAR4wCobfmZAvo',
+  })
+
+  // Must be one result
+  const getExpRestaurants = useExperimentalRestaurants({
+    place_id,
+    latitude: 42.64775203224244,
+    longitude: 23.40559939582422,
+  })
+
+  function setRandomPlaceId() {
+    const place_ids = ['ChIJ58PFO_yGqkAR1a2dnhgIBiQ', 'ChIJzdIWCP2GqkAR4wCobfmZAvo']
+    const randomOne = place_ids[Math.floor(Math.random() * place_ids.length)]
+    setPlaceId('ChIJ58PFO_yGqkAR1a2dnhgIBiQ')
+    getExpRestaurants.refetch()
+    setPlaceId('')
+  }
+
+  const getActivity = trpc.getActivity.useQuery({
+    activityId: '0cad9849-cfea-46c4-9821-39691838986b',
+  })
+  const getUserActivities = trpc.getUserActivities.useQuery({
+    userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
+  })
+
+  const getUser = trpc.getUser.useQuery({
+    userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
+  })
+
+  const updateUser = trpc.updateUser.useMutation()
+
+  // const getDirections = useGetDirections([
+  //   {
+  //     latitude: 42.64775203224244,
+  //     longitude: 23.40559939582422,
+  //   },
+  //   {
+  //     latitude: 42.64775203224244,
+  //     longitude: 23.40559939582422,
+  //   },
+  // ])
+
+  const experiments = trpc.getExperiment.useQuery({ a: 1, b: 2 }, { keepPreviousData: true })
+
+  const mExperiments = trpc.getExperimentWithMutation.useMutation()
 
   return (
     <>
       <div>
         <div className='absolute top-0 left-0 z-[2]'>
-          <p>{getActivity.isFetching ? '...' : JSON.stringify(getActivity.data)}</p>
-          <button onClick={getActivity.refetch}>GetActivity</button>
-          <hr></hr>
+          <DetailsRenderer>
+            <DetailsGroup label={'User'}>
+              <Details apiResult={getUser} />
+              <Details
+                apiResult={updateUser}
+                mutationPayload={{
+                  userId: '4269df99-cb99-42c1-9c92-9a7e854e7327',
+                  payload: {
+                    name: new Date().toISOString(),
+                  },
+                }}
+              />
+            </DetailsGroup>
+            <DetailsGroup label={'Restaurants'}>
+              <Details apiResult={getRestaurantDetail} />
+              <Details apiResult={getRestaurants} />
+            </DetailsGroup>
+            <DetailsGroup label={'Activities'}>
+              <Details apiResult={getActivity} />
+              <Details apiResult={getUserActivities} />
+            </DetailsGroup>
+            {/* <DetailsGroup label={'Directions'}>
+              <Details apiResult={getDirections} />
+            </DetailsGroup> */}
+            <DetailsGroup label={'Experiments'}>
+              <Details apiResult={experiments} />
+              <Details apiResult={getExpRestaurants} />
+              <button onClick={setRandomPlaceId}>placeId</button>
+              <Details
+                apiResult={mExperiments}
+                mutationPayload={{
+                  a: 1,
+                  b: 2,
+                }}
+              />
+            </DetailsGroup>
+            <DetailsGroup label={'Toasts'}>
+              <div className='flex flex-col gap-2'>
+                <button className={buttonClass} onClick={() => useToast('NORMAL')}>
+                  NORMAL
+                </button>
+                <button className={buttonClass} onClick={() => useToast.info('INFO')}>
+                  INFO
+                </button>
+                <button className={buttonClass} onClick={() => useToast.error('ERROR')}>
+                  ERROR
+                </button>
+                <button className={buttonClass} onClick={() => useToast.success('NORMAL')}>
+                  SUCCESS
+                </button>
+              </div>
+            </DetailsGroup>
+          </DetailsRenderer>
 
-          <p>{getUserActivities.isFetching ? '...' : JSON.stringify(getUserActivities.data)}</p>
-          <button onClick={getUserActivities.refetch}>GetActivities</button>
-          <hr></hr>
-
-          <p>{getDirections.isFetching ? '...' : JSON.stringify(getDirections.data)}</p>
-          <button onClick={getDirections.refetch}>GetDirections</button>
-          <button onClick={clearDirections.mutate}>ClearDirections</button>
-          <button
-            onClick={() =>
-              console.log(
-                formatToGeoJSON({
-                  coordinates: getDirections.data?.routes[0].geometry.coordinates,
-                }),
-              )
-            }
-          >
-            Format
-          </button>
-          <hr></hr>
-
-          <p>{getRestaurants.isFetching ? '...' : JSON.stringify(getRestaurants.data)}</p>
-          <button onClick={getRestaurants.refetch}>Get Restaurants</button>
-          <button onClick={clearRestaurants.mutate}>Clear Restaurants</button>
-          <hr></hr>
-
-          <p>{getRestaurantDetail.isFetching ? '...' : JSON.stringify(getRestaurantDetail.data)}</p>
-          <button onClick={getRestaurantDetail.refetch}>Log Restaurant Detail</button>
-          <hr></hr>
-
-          <p>{getUser.isFetching ? '...' : JSON.stringify(getUser.data)}</p>
-          <button onClick={getUser.refetch}>Get User</button>
-          <button onClick={() => updateUser.mutate({ name: new Date().toISOString() })}>
-            Update User
-          </button>
-          <hr></hr>
-
-          <button onClick={() => useToast('S')}>useToast</button>
+          <RestaurantCard data={getExpRestaurants.data} />
         </div>
         <MapBox />
       </div>

@@ -5,6 +5,7 @@ import Map, {
   useMap,
   GeolocateResultEvent,
   GeolocateControlRef,
+  Marker,
 } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
@@ -12,16 +13,22 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { mapStyles } from '../config'
 import useMapBox from '../hooks'
-import useDirections from '@/features/directions/hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
 import { useRef } from 'react'
 
-const MapBox = ({}) => {
+// hooks
+import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
+import { useSession } from 'next-auth/react'
+
+const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
+
+  const { data: session } = useSession()
+  const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
+
   const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
     useMapBox()
-  const { hasDirections, formattedDirections } = useDirections()
 
   const handleLoad = () => {
     updateIsLoadingUserLocation(true)
@@ -61,11 +68,12 @@ const MapBox = ({}) => {
           }}
           ref={geoLocateRef}
         />
-        {hasDirections && (
-          <Source type='geojson' data={formattedDirections.source}>
-            <Layer {...formattedDirections?.layer} />
-          </Source>
-        )}
+        {getUserAll?.data?.map((activity) => (
+          <Marker
+            latitude={activity.geometry?.location?.lat}
+            longitude={activity.geometry?.location?.lng}
+          />
+        ))}
       </Map>
     </div>
   )
