@@ -12,7 +12,7 @@ type Props = {
   onClose?: MouseEventHandler<HTMLButtonElement>
 }
 
-const Header = (props: Props) => {
+const PanelHeader = (props: Props) => {
   const { title, onClose, background } = props
 
   return (
@@ -28,4 +28,4 @@ const Header = (props: Props) => {
   )
 }
 
-export default Header
+export default PanelHeader

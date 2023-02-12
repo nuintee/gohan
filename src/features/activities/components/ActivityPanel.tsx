@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import calculateDistance from '@/libs/haversine-distance'
 
 // Components
-import Header from '@/components/ui/Header'
+import PanelHeader from '@/components/ui/PanelHeader'
 import { Activity } from '@prisma/client'
 import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { ActivityResolved } from '../types'
@@ -166,7 +166,7 @@ const List = (props: ListProps) => {
 //     <div
 //       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
 //     >
-//       <Header title={'ActivityPanel'} onClose={onClose} />
+//       <PanelHeader title={'ActivityPanel'} onClose={onClose} />
 //       <List activities={data} isLocked={status === 'unauthenticated'} setPlaceId={setPlaceId} />
 //     </div>
 //   )
@@ -190,7 +190,7 @@ const ActivityPanel = (props: Props) => {
     <div
       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
     >
-      <Header title={'ActivityPanel'} onClose={onClose} />
+      <PanelHeader title={'ActivityPanel'} onClose={onClose} />
       <div>
         {getUserAll.data?.map((activity) => (
           <RestaurantCard data={activity} compact onClick={() => onClickItem(activity)} />
