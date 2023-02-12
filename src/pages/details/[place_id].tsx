@@ -3,7 +3,8 @@ import { useRouter } from 'next/router'
 import analyze from 'rgbaster'
 
 // data
-import place from '@/data/_places.json'
+import { details } from '@/data/details'
+import places from '@/data/_places.json'
 import { ActivityResolved } from '@/features/activities/types'
 import { useEffect, useState } from 'react'
 import { GCP_API_KEY } from '@/config/env'
@@ -56,14 +57,12 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
 }
 
 export async function getServerSideProps({ query }) {
-  const randomPlace =
-    place.results.find((v) => v.place_id === query.place_id) ||
-    place.results[Math.floor(Math.random() * place.results.length - 1)]
-
   return {
     props: {
-      data: randomPlace,
-    }, // will be passed to the page component as props
+      data:
+        details.result(query.place_id) ||
+        places.results[Math.floor(Math.random() * places.results.length - 1)],
+    },
   }
 }
 
