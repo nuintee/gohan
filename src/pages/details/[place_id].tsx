@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
+import { Button } from '@/components/ui'
 
 const getColor = async (url) => {
   const result = await analyze(url)
@@ -49,11 +50,18 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               alt={!dominant.isLoading && 'Image'}
               className='aspect-square object-cover h-60 w-60 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
             />
-            <div className='flex flex-col gap-2'>
-              <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
-              <p className='text-white text-md'>
-                {data.editorial_summary?.overview || data.types?.join('・')}
-              </p>
+            <div className='flex-1 flex flex-col justify-between py-2'>
+              <div className='flex flex-col gap-2'>
+                <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
+                <p className='text-white text-md'>
+                  {data.editorial_summary?.overview || data.types?.join('・')}
+                </p>
+              </div>
+              <div className='flex gap-4 w-fit'>
+                <Button text='BUTTON' />
+                <Button text='BUTTON' outline />
+                <Button text='BUTTON' outline />
+              </div>
             </div>
           </div>
         </div>
