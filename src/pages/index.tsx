@@ -1,4 +1,4 @@
-import { GohanButton, ToastCatcher } from '@/components/ui'
+import { Button, GohanButton, ToastCatcher } from '@/components/ui'
 // import useDirections from '@/features/directions/hooks'
 import MapBox from '@/features/mapbox/components/MapBox'
 import useMapBox from '@/features/mapbox/hooks'
@@ -25,59 +25,42 @@ import useToast from '@/libs/react-toastify'
 import useGetUser from '@/features/user/hooks/useGetUser'
 import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 
+import Header from '@/components/ui/Header'
+import { Logo } from '@/components/icons'
+import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
+
 const Index = () => {
   // User
   const session = useSession()
+  const { coords } = useMapBox()
 
   // Modals
   const { open, close, isOpen, getPayload } = useModals()
 
-  // Restaurants
-
-  // GPS
-  const { coords, coordAsString, isLoadingUserLocation } = useMapBox()
-
-  // Directions
-  // const {
-  //   hasDirections,
-  //   directions,
-  //   revokeDirections,
-  //   getDirections: getDirections,
-  // } = useDirections()
+  const restaurants = useRestaurants({
+    latitude: coords.latitude,
+    longitude: coords.longitude,
+  })
 
   return (
     <>
-      <div className='flex flex-col gap-4'>
-        <section className='absolute top-0 left-0 z-[1] w-full p-4 flex gap-4 justify-between'>
-          <User />
-          <AcitvityButton />
-        </section>
-        <MapBox />
-        <section className='absolute bottom-0 left-0 z-[1] w-full flex items-center justify-center p-4 flex-col gap-4'>
-          {/* {hasDirections && (
-            <RestaurantCard
-              compact
-              isLocked={session.status === 'unauthenticated'}
-              isNavigating={hasDirections}
-              data={getRestaurants.data}
-              // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location).auto}
-              onClick={() => open('restaurantdiscovered')}
-            />
-          )} */}
-          <GohanButton />
-        </section>
+      <div className='flex flex-col gap-4 h-full w-full'>
+        <Header />
+        <div className='flex flex-1 flex-col gap-4 items-center justify-center'>
+          {/* Layout */}
+          <div className='flex flex-col gap-2 items-center justify-center'>
+            <h1 className='text-4xl font-semibold'>Where should I eat</h1>
+            <p className='text-gh-d-gray text-lg'>Click to Gohan</p>
+          </div>
+          <GohanButton
+            onClick={() => restaurants.refetch()}
+            isLoading={restaurants.isFetching}
+            disabled={restaurants.isFetching}
+            size={40}
+          />
+        </div>
       </div>
-      <ActivityPanel />
-      <RestaurantDiscoveredModal
-        isLocked={session.status === 'unauthenticated'}
-        isOpen={isOpen('restaurantdiscovered')}
-        // onClose={clearRestaurant.mutate}
-        // distance={calculateDistance(coords, getRestaurants.data?.geometry?.location, true).auto}
-        data={getPayload('restaurantdiscovered')}
-        // isNavigating={hasDirections}
-      />
-      <UserAuthConsentDialog />
-      <UserSettingsModal />
+      <MapBox />
       <ToastCatcher position='top-center' />
     </>
   )
