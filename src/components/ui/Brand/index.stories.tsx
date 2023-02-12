@@ -4,22 +4,16 @@ import React from 'react'
 
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import Header from './index'
+import Brand from './index'
 
 export default {
-  title: 'UI/Header',
-  component: Header,
-} as ComponentMeta<typeof Header>
+  title: 'UI/Brand',
+  component: Brand,
+} as ComponentMeta<typeof Brand>
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof Header> = (args) => <Header />
+const Template: ComponentStory<typeof Brand> = (args) => <Brand />
 
 export const Default = Template.bind({})
 
 Default.args = {}
-
-Default.parameters = {
-  backgrounds: {
-    default: '#FFF',
-  },
-}

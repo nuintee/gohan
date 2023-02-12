@@ -1,30 +1,21 @@
-import { MouseEventHandler } from 'react'
+import User from '@/features/user/components/User'
+import Link from 'next/link'
+import Brand from '../Brand'
 
-// Config
-import { colors } from '@/config/colors'
-
-// Icon
-import { Close } from '@/components/icons'
-
-type Props = {
-  title?: string
-  background?: string
-  onClose?: MouseEventHandler<HTMLButtonElement>
-}
-
-const Header = (props: Props) => {
-  const { title, onClose, background } = props
-
+const Header = () => {
   return (
-    <header
-      className='p-4 flex gap-2 items-center justify-between border-gh-l-gray'
-      style={{ background: background || '#FFF' }}
-    >
-      <p className='font-bold select-none'>{title || 'TITLE'}</p>
-      <button onClick={onClose}>
-        <Close fill={colors['gh-gray']} />
-      </button>
-    </header>
+    <div className='flex gap-4 bg-gh-brown justify-between px-[10%]'>
+      <Brand margin={true} />
+      <Link
+        href='/library'
+        className={`ml-auto p-2 items-center flex border-b-2 border-transparent hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange  text-gh-white`}
+      >
+        Library
+      </Link>
+      <div className='flex items-center'>
+        <User />
+      </div>
+    </div>
   )
 }
 
