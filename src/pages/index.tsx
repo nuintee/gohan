@@ -77,8 +77,10 @@ const Index = () => {
         <div className='flex flex-1 flex-col gap-4 items-center justify-center'>
           {/* Layout */}
           <div className='flex flex-col gap-2 items-center justify-center'>
-            <h1 className='text-4xl font-semibold'>Where should I eat</h1>
-            <p className='text-gh-d-gray text-lg'>Click to Gohan</p>
+            <h1 className='text-4xl font-semibold'>
+              {restaurants.isFetching ? 'Searching perfect place' : 'Where should I eat'}
+            </h1>
+            {!restaurants.isFetching && <p className='text-gh-d-gray text-lg'>Click to Gohan</p>}
           </div>
           <GohanButton
             onClick={() => restaurants.refetch()}
