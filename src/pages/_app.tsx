@@ -10,15 +10,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { trpc } from '@/libs/trpc'
 
-// Fonts
-import { Poppins } from '@next/font/google'
-
-const poppins = Poppins({
-  weight: '200',
-  subsets: ['latin-ext'],
-  variable: '--font-poppins',
-})
-
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
     worker.initMocks()
@@ -33,9 +24,8 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
-            <main className={`${poppins.variable} font-sans h-screen w-screen overflow-hidden`}>
-              <Component {...pageProps} />
-            </main>
+            <Component {...pageProps} />
+
             <ReactQueryDevtools />
           </SessionProvider>
         </QueryClientProvider>
