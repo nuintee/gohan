@@ -10,6 +10,7 @@ import { GCP_API_KEY } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
 import { Button, Input } from '@/components/ui'
+import HeroImage from '@/features/details/components/HeroImage'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -38,11 +39,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
         >
           {/* Cover */}
           <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-            <img
-              src={!dominant.isLoading && `https://source.unsplash.com/random`}
-              alt={!dominant.isLoading && 'Image'}
-              className='aspect-square object-cover h-60 w-60 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
-            />
+            <HeroImage isLoading={dominant.isLoading} />
             <div className='flex-1 flex flex-col justify-between py-2'>
               <div className='flex flex-col gap-2'>
                 <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
