@@ -1,8 +1,14 @@
+import { Logo } from '@/components/icons'
+
+const LOGO_SIZE = 20
+
 const Brand = () => {
   return (
-    <div>
-      {/* Logo */}
-      {/* GOHAN TEXT */}
+    <div className='flex gap-2 items-center w-fit'>
+      <div className='bg-gh-dark h-fit w-fit p-4 rounded-full'>
+        <Logo height={LOGO_SIZE} width={LOGO_SIZE} />
+      </div>
+      <h1 className='text-white font-bold font-poppins'>GOHAN</h1>
     </div>
   )
 }

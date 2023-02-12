@@ -17,9 +17,3 @@ const Template: ComponentStory<typeof Brand> = (args) => <Brand />
 export const Default = Template.bind({})
 
 Default.args = {}
-
-Default.parameters = {
-  backgrounds: {
-    default: '#FFF',
-  },
-}
