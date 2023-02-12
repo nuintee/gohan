@@ -1,6 +1,5 @@
 type Props = {
   isLoading?: boolean
-  onClick?: () => void
 } & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
 
 const HeroImage = (props: Props) => {
