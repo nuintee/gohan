@@ -10,13 +10,14 @@ import useMapBox from '@/features/mapbox/hooks'
 
 type Props = {
   isLoading?: boolean
+  size?: number
   isNavigating?: boolean
   disabled?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 const GohanButton = (props: Props) => {
-  const { isLoading = false, isNavigating = false, disabled = false, onClick } = props
+  const { isLoading = false, isNavigating = false, disabled = false, onClick, size } = props
 
   const ui = () =>
     isLoading ? (
@@ -24,7 +25,7 @@ const GohanButton = (props: Props) => {
     ) : isNavigating ? (
       <Close fill='white' />
     ) : (
-      <Logo />
+      <Logo height={size} width={size} />
     )
 
   return (
@@ -35,8 +36,8 @@ const GohanButton = (props: Props) => {
       }`}
       disabled={disabled}
       style={{
-        height: `5em`,
-        width: `5em`,
+        height: size ? `${size / 5}em` : '5em',
+        width: size ? `${size / 5}em` : '5em',
       }}
     >
       {ui()}

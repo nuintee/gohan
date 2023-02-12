@@ -24,7 +24,7 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
-            <main className={`font-poppins`}>
+            <main className={`font-poppins h-screen w-screen`}>
               <Component {...pageProps} />
             </main>
             <ReactQueryDevtools />
