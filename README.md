@@ -30,7 +30,7 @@ I wanted to create an app that would choose a restaurant on its own for me when 
     - Next.js
     - Typescript
     - React Context - Since the app is not that complicated
-    - SWR
+    - React Query
 - Backend
     
     
