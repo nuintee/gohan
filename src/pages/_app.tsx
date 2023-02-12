@@ -14,7 +14,8 @@ import { trpc } from '@/libs/trpc'
 import { Poppins } from '@next/font/google'
 
 const poppins = Poppins({
-  weight: '500',
+  weight: '200',
+  subsets: ['latin-ext'],
   variable: '--font-poppins',
 })
 
@@ -32,7 +33,7 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
-            <main className={poppins.className}>
+            <main className={`${poppins.variable} font-sans h-screen w-screen overflow-hidden`}>
               <Component {...pageProps} />
             </main>
             <ReactQueryDevtools />
