@@ -43,7 +43,14 @@ export interface ResultsEntity {
   user_ratings_total: number
   vicinity: string
   website?: string
+  editorial_summary?: PlaceEditorialSummary
 }
+
+export interface PlaceEditorialSummary {
+  language?: string
+  overview?: string
+}
+
 export interface Geometry {
   location: NortheastOrSouthwestOrLocation
   viewport: Viewport

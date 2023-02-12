@@ -37,18 +37,24 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
       <Header />
       <div className='flex flex-1'>
         <div
-          className={`h-[10rem] w-full`}
+          className={`h-[13rem] w-full`}
           style={{
             backgroundColor: dominant.color,
           }}
         >
           {/* Cover */}
-          <div className='px-[10%] py-16'>
+          <div className='px-[10%] py-16 flex gap-8'>
             <img
               src={!dominant.isLoading && `https://source.unsplash.com/random`}
               alt={!dominant.isLoading && 'Image'}
-              className='aspect-square object-cover h-52 w-52 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
+              className='aspect-square object-cover h-60 w-60 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
             />
+            <div className='flex flex-col gap-2'>
+              <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
+              <p className='text-white text-md'>
+                {data.editorial_summary?.overview || data.types?.join('・')}
+              </p>
+            </div>
           </div>
         </div>
       </div>
