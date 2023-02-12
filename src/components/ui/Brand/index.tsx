@@ -8,7 +8,7 @@ const Brand = () => {
       <div className='bg-gh-dark h-fit w-fit p-4 rounded-full'>
         <Logo height={LOGO_SIZE} width={LOGO_SIZE} />
       </div>
-      <h1 className={`text-white font-bold font-sans`}>GOHAN</h1>
+      <h1 className={`text-white font-bold font-poppins`}>GOHAN</h1>
     </div>
   )
 }

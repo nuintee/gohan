@@ -11,6 +11,9 @@ module.exports = {
   theme: {
     extend: {
       colors,
+      fontFamily: {
+        poppins: ['Poppins', ...fontFamily.sans],
+      },
     },
   },
   plugins: [],
