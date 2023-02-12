@@ -25,7 +25,6 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
         <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
             <Component {...pageProps} />
-
             <ReactQueryDevtools />
           </SessionProvider>
         </QueryClientProvider>
