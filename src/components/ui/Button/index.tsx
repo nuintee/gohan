@@ -37,6 +37,8 @@ const Button = (props: Props) => {
         return colors['gh-red']
       } else if (outline) {
         return colors['gh-l-gray']
+      } else {
+        return colors['gh-white']
       }
     },
   }

@@ -1,6 +1,15 @@
 // Stores
+import { ActivityResolved } from '@/features/activities/types'
 import { modalKeys, modalState } from '@/stores/modals'
 import { useRecoilState } from 'recoil'
+
+type ModalKey = typeof modalKeys[number]
+
+type ModalMapper = {
+  restaurantdiscovered: ActivityResolved
+}
+
+type ModalData<TData> = TData extends keyof ModalMapper ? ModalMapper[TData] : {}
 
 const useModals = () => {
   const [modals, setModals] = useRecoilState(modalState)
@@ -8,16 +17,17 @@ const useModals = () => {
   /**
    * Checks if the target modal is open by given key
    */
-  const isOpen = (key: typeof modalKeys[number]) => {
+  const isOpen = (key: ModalKey) => {
     return modals?.findIndex((v) => v.key === key) >= 0
   }
 
-  const getPayload = (key: typeof modalKeys[number]) => {
+  const getPayload = <T extends ModalKey>(key: T): ModalData<T> => {
     const data = modals?.find((v) => v.key === key)
-    return data?.payload
+
+    return data?.payload as ModalData<T>
   }
 
-  const _append = (key: typeof modalKeys[number], payload) => {
+  const _append = <T extends ModalKey>(key: T, payload?: ModalData<T>) => {
     if (isOpen(key)) {
       setModals((prev) => prev.map((v) => (v.key === key ? { key, payload } : v)))
     } else {
@@ -25,20 +35,20 @@ const useModals = () => {
     }
   }
 
-  const _remove = (key: typeof modalKeys[number]) => {
+  const _remove = (key: ModalKey) => {
     setModals((prev) => prev.filter((v) => v.key !== key))
   }
 
-  const open = (key: typeof modalKeys[number], payload?) => {
+  const open = <T extends ModalKey>(key: T, payload?: ModalData<T>) => {
     _append(key, payload)
   }
 
-  const close = (key: typeof modalKeys[number]) => {
+  const close = (key: ModalKey) => {
     if (!isOpen(key)) return
     _remove(key)
   }
 
-  const toggle = (key: typeof modalKeys[number], payload?) => {
+  const toggle = <T extends ModalKey>(key: T, payload?: ModalData<T>) => {
     if (isOpen(key)) {
       close(key)
     } else {
