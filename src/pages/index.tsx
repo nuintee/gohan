@@ -28,6 +28,32 @@ import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 import Header from '@/components/ui/Header'
 import { Logo } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
+import { useRouter } from 'next/router'
+
+const DetailsModal = ({
+  isOpen = false,
+  onClose = () => {},
+  duration = 1000,
+  title,
+  description,
+}: {
+  isOpen: boolean
+  onClose?: () => void
+  duration?: number
+  title?: string
+  description?: string
+}) => {
+  const openClassName = isOpen ? 'scale-100' : 'scale-0'
+
+  return (
+    <div
+      className={`h-screen w-screen bg-red-400 absolute top-0 left-0 flex items-center justify-center flex-col duration-200 ease-in-out ${openClassName}`}
+    >
+      <h1 className='text-4xl text-white'>{title || 'Manuever Cafe'}</h1>
+      <p className='text-xl text-white'>{description || 'Description'}</p>
+    </div>
+  )
+}
 
 const Index = () => {
   // User
@@ -36,6 +62,8 @@ const Index = () => {
 
   // Modals
   const { open, close, isOpen, getPayload } = useModals()
+
+  const router = useRouter()
 
   const restaurants = useRestaurants({
     latitude: coords.latitude,
@@ -59,6 +87,7 @@ const Index = () => {
             size={40}
           />
         </div>
+        <DetailsModal isOpen={restaurants.isSuccess} />
       </div>
       <MapBox />
       <ToastCatcher position='top-center' />
