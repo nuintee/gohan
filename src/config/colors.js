@@ -13,5 +13,6 @@ module.exports = {
     'gh-l-green': '#ACE5C7',
     'gh-l-blue': '#0289f7',
     'gh-d-gray': '#6B6A6A',
+    'gh-pale': '#F9FAFB',
   },
 }
