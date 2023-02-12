@@ -1,6 +1,5 @@
 import Header from '@/components/ui/Header'
 import { useRouter } from 'next/router'
-import analyze from 'rgbaster'
 
 // data
 import { details } from '@/data/details'
@@ -10,13 +9,7 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
-import { Button } from '@/components/ui'
-
-const getColor = async (url) => {
-  const result = await analyze(url)
-  const dominant = result[0].color
-  return dominant
-}
+import { Button, Input } from '@/components/ui'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -26,8 +19,8 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
 
   useEffect(() => {
     const init = async () => {
-      const color = await getColor(`https://source.unsplash.com/random`)
-      setDominant({ color, isLoading: false })
+      //   const color = await getColor(`https://source.unsplash.com/random`)
+      setDominant({ color: colors['gh-dark'], isLoading: false })
     }
 
     init()
@@ -36,7 +29,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   return (
     <div className='flex flex-col h-screen w-screen'>
       <Header />
-      <div className='flex flex-1'>
+      <div className='flex flex-1 flex-col'>
         <div
           className={`h-[13rem] w-full`}
           style={{
@@ -44,7 +37,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           }}
         >
           {/* Cover */}
-          <div className='px-[10%] py-16 flex gap-8'>
+          <div className='px-[10%] pt-16 pb-6 flex gap-8'>
             <img
               src={!dominant.isLoading && `https://source.unsplash.com/random`}
               alt={!dominant.isLoading && 'Image'}
@@ -64,6 +57,15 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               </div>
             </div>
           </div>
+          <main className='px-[10%]'>
+            <section className='flex flex-col gap-2'>
+              <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
+              <Input placeholder='メモ' />
+            </section>
+            <section>
+              <div></div>
+            </section>
+          </main>
         </div>
       </div>
     </div>
