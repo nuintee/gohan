@@ -6,9 +6,11 @@ const DetailsPage = ({ data }) => {
   const { place_id } = router.query
 
   return (
-    <div>
+    <div className='flex flex-col h-screen w-screen'>
       <Header />
-      <div className='flex flex-1'></div>
+      <div className='flex flex-1 bg-red-200'>
+        <div className={`bg-red-300 h-[10rem] w-full`}>{/* Cover */}</div>
+      </div>
     </div>
   )
 }
