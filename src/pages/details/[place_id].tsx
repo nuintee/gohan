@@ -51,6 +51,14 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               <Button text='評価を変更' />
               <Button text='基本情報を表示' outline />
               <Button text='共有' outline />
+              <Button
+                text=''
+                outline
+                icon={{
+                  position: 'after',
+                  src: <p>1</p>,
+                }}
+              />
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@ export type Props = {
 }
 
 const Button = (props: Props) => {
-  const { text, icon, loading, danger, outline, onClick } = props
+  const { text = '', icon, loading, danger, outline, onClick } = props
 
   const style = {
     container: () => {
@@ -27,7 +27,7 @@ const Button = (props: Props) => {
         ? 'ring-gh-red ring-1 text-red-400 bg-transparent hover:text-white hover:bg-red-400'
         : _fallbackClass
       const outLineClass = outline
-        ? 'ring-gh-l-gray ring-1 text-gh-l-gray bg-transparent hover:text-gh-dark hover:bg-gh-white'
+        ? 'ring-gray-200 ring-1 text-gh-gray bg-transparent hover:text-gh-dark hover:bg-gh-white'
         : _fallbackClass
 
       return `${defaultClass} ${danger ? dangerClass : outLineClass}`
@@ -49,7 +49,7 @@ const Button = (props: Props) => {
       {loading ? (
         <PulseLoader color={style.icon()} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
-        text || 'BUTTON'
+        text
       )}
       {icon?.position === 'after' && icon.src}
     </button>
