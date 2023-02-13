@@ -89,7 +89,7 @@ export interface Viewport {
 export interface OpeningHours {
   open_now: boolean | null
   periods: PlaceOpeningHoursPeriod[] | null
-  special_days: [] | null
+  special_days: PlaceSpecialDay[] | null
   type: string | null
   weekday_text: [] | null
 }

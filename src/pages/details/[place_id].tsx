@@ -60,8 +60,13 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <Input placeholder='メモ' />
           </section>
           <section className='flex items-center justify-between gap-4  mb-14'>
-            <DescriptiveChip title='' />
-            <DescriptiveChip title='営業中' description='営業時間: ' />
+            <DescriptiveChip title='超高級' description={data.price_level} />
+            <DescriptiveChip
+              title='営業中'
+              description={`営業時間: ${
+                data.opening_hours?.periods && data.opening_hours?.periods[0]
+              }`}
+            />
             {data.user_ratings_total > 0 && (
               <DescriptiveChip
                 title={`悪い評価`}

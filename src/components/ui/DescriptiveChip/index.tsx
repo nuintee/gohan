@@ -7,8 +7,8 @@ const DescriptiveChip = ({
   description = '説明',
 }: {
   icon?: JSX.Element
-  title: string
-  description: string
+  title?: string
+  description?: string
 }) => {
   return (
     <div className='flex gap-4 items-center w-full bg-gh-pale p-4 select-none rounded-md'>
