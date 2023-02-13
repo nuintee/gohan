@@ -1,7 +1,7 @@
-import { IconType } from 'react-icons'
+import { IconBaseProps } from 'react-icons'
 import { MdOutlineContentCopy } from 'react-icons/md'
 
-const Copy = (props: IconType) => {
+const Copy = (props?: IconBaseProps) => {
   return <MdOutlineContentCopy {...props} />
 }
 

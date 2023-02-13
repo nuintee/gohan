@@ -12,6 +12,7 @@ import { colors } from '@/config/colors'
 import { Button, Input } from '@/components/ui'
 import HeroImage from '@/features/details/components/HeroImage'
 import Cover from '@/features/details/components/Cover'
+import ActivityStatus from '@/features/activities/components/ActivityStatus'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -70,7 +71,10 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           <HeroImage isLoading={dominant.isLoading} />
           <div className='flex-1 flex flex-col justify-between py-2'>
             <div className='flex flex-col gap-2'>
-              <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
+              <div className='flex gap-4'>
+                <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
+                <ActivityStatus status='good' />
+              </div>
               <p className='text-white text-md'>
                 {data.editorial_summary?.overview || data.types?.join('・')}
               </p>
