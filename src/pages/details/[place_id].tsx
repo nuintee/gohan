@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
-import { Button, Input, Cover, ImageChip, DescriptiveChip } from '@/components/ui'
+import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
@@ -93,6 +93,13 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <DescriptiveChip />
             <DescriptiveChip />
             <DescriptiveChip />
+          </section>
+          <section className='outline rounded-md p-4 outline-gh-pale'>
+            <header className='flex gap-2 justify-between'>
+              <Texts main='ロケーション' sub='Pamukkale, Turkey' />
+              <Button text='グローバルマップで場所を確認' outline />
+            </header>
+            <main></main>
           </section>
         </main>
       </div>

@@ -1,4 +1,5 @@
 import { Copy } from '@/components/icons'
+import { Texts } from '@/components/ui'
 
 const DescriptiveChip = ({
   icon = <Copy />,
@@ -12,10 +13,7 @@ const DescriptiveChip = ({
   return (
     <div className='flex gap-4 items-center w-full bg-gh-pale p-4 select-none'>
       <section className='bg-white p-4 rounded-full'>{icon}</section>
-      <section>
-        <h1 className='font-semibold'>{title}</h1>
-        <p className='text-sm text-gh-gray'>{description}</p>
-      </section>
+      <Texts main={title} sub={description} size='small' />
     </div>
   )
 }
