@@ -23,6 +23,8 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
     const init = async () => {
       //   const color = await getColor(`https://source.unsplash.com/random`)
       setDominant({ color: colors['gh-dark'], isLoading: false })
+
+      console.log(data)
     }
 
     init()
@@ -58,12 +60,16 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <Input placeholder='メモ' />
           </section>
           <section className='flex items-center justify-between gap-4  mb-14'>
-            <DescriptiveChip />
+            <DescriptiveChip title='' />
             <DescriptiveChip />
             <DescriptiveChip />
           </section>
           <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}></DetailsSection>
-          <DetailsSection margin='5rem' main='レビュー・3.5' sub='200件のレビュー' />
+          <DetailsSection
+            margin='5rem'
+            main={`レビュー・${data.rating}`}
+            sub={`${data.user_ratings_total}件のレビュー`}
+          />
         </main>
       </div>
     </div>

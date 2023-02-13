@@ -36,23 +36,37 @@ export interface ResultsEntity {
   photos?: PhotosEntity[] | null
   place_id: string
   plus_code: PlusCode
-  price_level?: number | null
+  price_level?: 0 | 1 | 2 | 3 | 4 | null
+  reviews: PlaceReview | null
   rating: number
   reference: string
   scope: string
-  types?: string[] | null
+  types: string[] | null
   user_ratings_total: number
   vicinity: string
-  website?: string
-  editorial_summary?: PlaceEditorialSummary
-  formatted_address?: string
-  url?: string // Applications must link to or embed this page on any screen that shows detailed results about the place to the user.
+  website: string | null
+  editorial_summary: PlaceEditorialSummary | null
+  formatted_address: string | null
+  url: string | null // Applications must link to or embed this page on any screen that shows detailed results about the place to the user.
 }
 
 export interface AddressComponent {
   long_name: string
   short_name: string
   types: string[]
+}
+
+export interface PlaceReview {
+  author_name: string
+  rating: number
+  relative_time_description: string
+  time: number
+  author_url: string | null
+  language: string | null
+  original_language: string | null
+  profile_photo_url: string | null
+  text: string | null
+  translated: boolean | null
 }
 
 export interface PlaceEditorialSummary {

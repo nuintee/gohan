@@ -80,7 +80,7 @@ export const getRestaurants = procedure.input(anyValid).query(async ({ input }) 
       const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
       url.searchParams.append('location', `${input.latitude},${input.longitude}`)
       url.searchParams.append('radius', '500')
-      url.searchParams.append('types', 'food')
+      url.searchParams.append('types', 'restaurant') // old types was food
       url.searchParams.append('opennow', 'true')
       url.searchParams.append('key', GCP_API_KEY)
 
