@@ -25,6 +25,7 @@ export interface DetailsAPI {
 }
 
 export interface ResultsEntity {
+  address_components?: AddressComponent
   business_status: string
   geometry: Geometry
   icon: string
@@ -44,6 +45,14 @@ export interface ResultsEntity {
   vicinity: string
   website?: string
   editorial_summary?: PlaceEditorialSummary
+  formatted_address?: string
+  url?: string // Applications must link to or embed this page on any screen that shows detailed results about the place to the user.
+}
+
+export interface AddressComponent {
+  long_name: string
+  short_name: string
+  types: string[]
 }
 
 export interface PlaceEditorialSummary {
