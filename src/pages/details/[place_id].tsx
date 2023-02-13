@@ -48,9 +48,9 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               </p>
             </div>
             <div className='flex gap-4 w-fit'>
-              <Button text='BUTTON' />
-              <Button text='BUTTON' outline />
-              <Button text='BUTTON' outline />
+              <Button text='評価を変更' />
+              <Button text='基本情報を表示' outline />
+              <Button text='共有' outline />
             </div>
           </div>
         </div>
