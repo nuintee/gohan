@@ -65,11 +65,13 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <DescriptiveChip />
           </section>
           <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}></DetailsSection>
-          <DetailsSection
-            margin='5rem'
-            main={`レビュー・${data.rating}`}
-            sub={`${data.user_ratings_total}件のレビュー`}
-          />
+          {data.user_ratings_total > 0 && (
+            <DetailsSection
+              margin='5rem'
+              main={`レビュー・${data.rating}`}
+              sub={`${data.user_ratings_total}件のレビュー`}
+            />
+          )}
         </main>
       </div>
     </div>
