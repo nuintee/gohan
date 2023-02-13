@@ -87,8 +87,30 @@ export interface Viewport {
   southwest: NortheastOrSouthwestOrLocation
 }
 export interface OpeningHours {
-  open_now: boolean
+  open_now: boolean | null
+  periods: PlaceOpeningHoursPeriod[] | null
+  special_days: [] | null
+  type: string | null
+  weekday_text: [] | null
 }
+
+export interface PlaceOpeningHoursPeriod {
+  open: PlaceOpeningHoursPeriodDetail
+  close: PlaceOpeningHoursPeriodDetail | null
+}
+
+export interface PlaceOpeningHoursPeriodDetail {
+  day: number
+  time: string
+  date: string | null
+  truncated: boolean | null
+}
+
+export interface PlaceSpecialDay {
+  date: string | null
+  exceptional_hours: boolean | null
+}
+
 export interface PhotosEntity {
   height: number
   html_attributions?: string[] | null

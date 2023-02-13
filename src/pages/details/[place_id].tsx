@@ -61,8 +61,13 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           </section>
           <section className='flex items-center justify-between gap-4  mb-14'>
             <DescriptiveChip title='' />
-            <DescriptiveChip />
-            <DescriptiveChip />
+            <DescriptiveChip title='営業中' description='営業時間: ' />
+            {data.user_ratings_total > 0 && (
+              <DescriptiveChip
+                title={`悪い評価`}
+                description={`Googleでの評価は${data.rating}です。`}
+              />
+            )}
           </section>
           <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}></DetailsSection>
           {data.user_ratings_total > 0 && (
