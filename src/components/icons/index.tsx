@@ -13,6 +13,7 @@ import RouteArrow from './RouteArrow'
 import LocateUser from './LocateUser'
 import PulseLoader from './PulseLoader'
 import Clock from './Clock'
+import Star from './Star'
 
 export {
   Check,
@@ -30,4 +31,5 @@ export {
   LocateUser,
   PulseLoader,
   Clock,
+  Star,
 }

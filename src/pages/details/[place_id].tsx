@@ -13,7 +13,7 @@ import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/compo
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
-import { Clock } from '@/components/icons'
+import { Clock, Star } from '@/components/icons'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -82,6 +82,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               <DescriptiveChip
                 title={`悪い評価`}
                 description={`Googleでの評価は${data.rating}です。`}
+                icon={<Star />}
               />
             )}
           </section>
