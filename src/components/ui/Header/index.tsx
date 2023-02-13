@@ -4,7 +4,7 @@ import Brand from '../Brand'
 
 const Header = () => {
   return (
-    <div className='flex gap-4 bg-gh-brown justify-between px-[10%]'>
+    <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full fixed z-[1]'>
       <Brand margin={true} />
       <Link
         href='/library'

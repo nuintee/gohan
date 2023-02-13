@@ -11,6 +11,8 @@ import Image from 'next/image'
 import { colors } from '@/config/colors'
 import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
+import MapBox from '@/features/mapbox/components/MapBox'
+import DetailsSection from '@/layouts/DetailsSection'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -94,13 +96,17 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <DescriptiveChip />
             <DescriptiveChip />
           </section>
-          <section className='outline rounded-md p-4 outline-gh-pale'>
+          {/* <section className='outline rounded-md p-4 outline-gh-pale'>
             <header className='flex gap-2 justify-between'>
               <Texts main='ロケーション' sub='Pamukkale, Turkey' />
               <Button text='グローバルマップで場所を確認' outline />
             </header>
-            <main></main>
-          </section>
+            <main className='flex-1 min-h-[20rem]'>
+              <MapBox />
+            </main>
+          </section> */}
+          <DetailsSection margin='5rem' main='ロケーション' sub='Pamukkale, Turkey' />
+          <DetailsSection margin='5rem' main='ロケーション' sub='Pamukkale, Turkey' />
         </main>
       </div>
     </div>
