@@ -2,7 +2,7 @@ type Props = {
   isLoading?: boolean
 } & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
 
-const HeroImage = (props: Props) => {
+const ImageChip = (props: Props) => {
   const { isLoading = false, onClick = () => {} } = props
 
   return (
@@ -16,4 +16,4 @@ const HeroImage = (props: Props) => {
   )
 }
 
-export default HeroImage
+export default ImageChip

@@ -9,9 +9,7 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
-import { Button, Input } from '@/components/ui'
-import HeroImage from '@/features/details/components/HeroImage'
-import Cover from '@/features/details/components/Cover'
+import { Button, Input, Cover, ImageChip, DescriptiveChip } from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
@@ -68,7 +66,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
 
         <Cover color={dominant.color} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-          <HeroImage isLoading={dominant.isLoading} />
+          <ImageChip isLoading={dominant.isLoading} />
           <div className='flex-1 flex flex-col justify-between py-2'>
             <div className='flex flex-col gap-2'>
               <div className='flex gap-4'>
@@ -87,12 +85,14 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           </div>
         </div>
         <main className='px-[10%]'>
-          <section className='flex flex-col gap-2'>
+          <section className='flex flex-col gap-2 mb-14'>
             <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
             <Input placeholder='メモ' />
           </section>
-          <section>
-            <div></div>
+          <section className='flex items-center justify-between gap-4  mb-14'>
+            <DescriptiveChip />
+            <DescriptiveChip />
+            <DescriptiveChip />
           </section>
         </main>
       </div>

@@ -4,15 +4,15 @@ import React from 'react'
 
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import Feature from './Feature'
+import DescriptiveChip from '.'
 
 export default {
-  title: 'Features/Details/Feature',
-  component: Feature,
-} as ComponentMeta<typeof Feature>
+  title: 'UI/DescriptiveChip',
+  component: DescriptiveChip,
+} as ComponentMeta<typeof DescriptiveChip>
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof Feature> = (args) => <Feature {...args} />
+const Template: ComponentStory<typeof DescriptiveChip> = (args) => <DescriptiveChip {...args} />
 
 export const Default = Template.bind({})
 

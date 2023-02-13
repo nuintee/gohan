@@ -1,6 +1,6 @@
 import { Copy } from '@/components/icons'
 
-const Feature = ({
+const DescriptiveChip = ({
   icon = <Copy />,
   title = 'タイトル',
   description = '説明',
@@ -10,7 +10,7 @@ const Feature = ({
   description: string
 }) => {
   return (
-    <div className='flex gap-4 items-center bg-gh-pale p-4 w-fit select-none'>
+    <div className='flex gap-4 items-center w-full bg-gh-pale p-4 select-none'>
       <section className='bg-white p-4 rounded-full'>{icon}</section>
       <section>
         <h1 className='font-semibold'>{title}</h1>
@@ -20,4 +20,4 @@ const Feature = ({
   )
 }
 
-export default Feature
+export default DescriptiveChip
