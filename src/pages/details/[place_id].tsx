@@ -12,6 +12,8 @@ import { colors } from '@/config/colors'
 import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/layouts/DetailsSection'
+import Price from '@/components/icons/Price'
+import { Clock } from '@/components/icons'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -68,12 +70,13 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <Input placeholder='メモ' />
           </section>
           <section className='flex items-center justify-between gap-4  mb-14'>
-            <DescriptiveChip title='超高級' description={data.price_level} />
+            <DescriptiveChip title='超高級' description={data.price_level} icon={<Price />} />
             <DescriptiveChip
               title='営業中'
               description={`営業時間: ${
                 data.opening_hours?.periods && data.opening_hours?.periods[0]
               }`}
+              icon={<Clock />}
             />
             {data.user_ratings_total > 0 && (
               <DescriptiveChip
