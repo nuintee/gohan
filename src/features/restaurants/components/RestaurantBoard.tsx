@@ -13,17 +13,7 @@ import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 
 const RestaurantBoard = (props: RestaurantProps) => {
-  const {
-    compact,
-    data,
-    isLocked,
-    isNavigating,
-    distance,
-    isLoading,
-    onLike,
-    onClick,
-    onNavigate,
-  } = props
+  const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate } = props
 
   const compactStyle = {
     container:
@@ -37,7 +27,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
   const theme = compactStyle
 
   return (
-    <div className={theme.container} onClick={compact && onClick}>
+    <div className={theme.container} onClick={onClick}>
       <img
         src={cardConfig.imgSrc(data?.photos)}
         alt={cardConfig.imgAlt(data?.name)}
@@ -48,7 +38,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
           <Texts
             main={cardConfig.textsMain(data?.name)}
             sub={cardConfig.textsSub(data?.types?.join('・'))}
-            size={cardConfig.textsSize(compact)}
+            size={cardConfig.textSize}
           />
           <ActivityStatus status='good' />
           {/* <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} /> */}
