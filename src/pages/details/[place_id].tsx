@@ -22,6 +22,7 @@ import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import { getDominantColor } from '@/libs/rgbaster'
 
 import images from '@/data/images.json'
+import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 
 const IMG_SRC = images.random()
 
@@ -30,6 +31,8 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
     color: colors['gh-l-gray'],
     isLoading: true,
   })
+
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const init = async () => {
@@ -65,7 +68,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               </div>
               <div className='flex gap-4 w-fit'>
                 <Button text='評価を変更' />
-                <Button text='基本情報を表示' outline />
+                <Button text='基本情報を表示' outline onClick={() => setIsOpen(true)} />
                 <Button
                   text='共有'
                   outline
@@ -131,6 +134,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           </main>
         </div>
       </div>
+      <BasicInfoModal isOpen={isOpen} data={data} onClose={() => setIsOpen(false)} />
     </>
   )
 }
