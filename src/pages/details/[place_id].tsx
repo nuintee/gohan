@@ -112,7 +112,8 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           <main className='px-[10%]'>
             <section className='flex flex-col gap-2 mb-14'>
               <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
-              <Input placeholder='メモ' />
+              {/* <Input placeholder='メモ' /> */}
+              <p className='text-gh-gray'>メモ</p>
             </section>
             <section className='flex items-center justify-between gap-4  mb-14'>
               <DescriptiveChip

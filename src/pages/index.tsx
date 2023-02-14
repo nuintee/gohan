@@ -76,8 +76,8 @@ const Index = () => {
   const router = useRouter()
 
   const restaurants = useRestaurants({
-    latitude: coords.latitude,
-    longitude: coords.longitude,
+    latitude: 42.648763,
+    longitude: 23.408622,
     successCallback: (data) => {
       router.push(`/details/${data.place_id}?effect=true`, `/details/${data.place_id}`)
     },
@@ -104,7 +104,7 @@ const Index = () => {
         </div>
       </div>
       {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
-      <MapBox />
+      {/* <MapBox /> */}
     </>
   )
 }
