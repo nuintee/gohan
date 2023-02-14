@@ -25,7 +25,7 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
       <section className='bg-white'>
         <PanelHeader onClose={onClose} />
         <main className='min-w-[30rem] p-4 flex flex-col items-center gap-8 justify-center'>
-          <h2>この場所への評価を教えて下さい。</h2>
+          <h2 className='font-semibold text-xl'>この場所への評価を教えて下さい。</h2>
           <div className='flex items-center justify-center gap-4 mb-10'>
             {STATUS.filter((v) => v !== 'new').map((v) => (
               <button
