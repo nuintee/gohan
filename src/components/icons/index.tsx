@@ -15,6 +15,7 @@ import PulseLoader from './PulseLoader'
 import Clock from './Clock'
 import Star from './Star'
 import Share from './Share'
+import Dots from './Dots'
 
 export {
   Check,
@@ -34,4 +35,5 @@ export {
   Clock,
   Star,
   Share,
+  Dots,
 }
