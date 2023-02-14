@@ -12,6 +12,10 @@ import ActivityPlain from './ActivityPlain'
 import RouteArrow from './RouteArrow'
 import LocateUser from './LocateUser'
 import PulseLoader from './PulseLoader'
+import Clock from './Clock'
+import Star from './Star'
+import Share from './Share'
+import Dots from './Dots'
 
 export {
   Check,
@@ -28,4 +32,8 @@ export {
   RouteArrow,
   LocateUser,
   PulseLoader,
+  Clock,
+  Star,
+  Share,
+  Dots,
 }

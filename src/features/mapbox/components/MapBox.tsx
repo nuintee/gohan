@@ -44,7 +44,7 @@ const MapBox = () => {
   }
 
   return (
-    <div className='w-screen h-screen'>
+    <div className='w-full h-full'>
       <Map
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         mapStyle={mapStyles.MONOCHROME}

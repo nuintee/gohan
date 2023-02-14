@@ -4,8 +4,13 @@ import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'
 import { trpc } from '@/libs/trpc'
 import { useSession } from 'next-auth/react'
+import { ResultsEntity } from '../types'
 
-const useRestaurants = (props: Parameters<typeof trpc.getRestaurants.useQuery>[0]) => {
+const useRestaurants = (
+  props: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
+    successCallback?: (data: ResultsEntity) => void
+  },
+) => {
   const { status, data: session } = useSession()
   const addActivity = useAddActivity()
   const { open } = useModals()
@@ -32,7 +37,7 @@ const useRestaurants = (props: Parameters<typeof trpc.getRestaurants.useQuery>[0
     onSuccess: (data) => {
       console.log(data)
 
-      open('restaurantdiscovered', data)
+      props.successCallback && props.successCallback(data)
 
       if (status !== 'authenticated') return
 

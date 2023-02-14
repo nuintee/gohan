@@ -25,6 +25,7 @@ export interface DetailsAPI {
 }
 
 export interface ResultsEntity {
+  address_components?: AddressComponent
   business_status: string
   geometry: Geometry
   icon: string
@@ -35,15 +36,44 @@ export interface ResultsEntity {
   photos?: PhotosEntity[] | null
   place_id: string
   plus_code: PlusCode
-  price_level?: number | null
+  price_level?: 0 | 1 | 2 | 3 | 4 | null
+  reviews: PlaceReview | null
   rating: number
   reference: string
   scope: string
-  types?: string[] | null
+  types: string[] | null
   user_ratings_total: number
   vicinity: string
-  website?: string
+  website: string | null
+  editorial_summary: PlaceEditorialSummary | null
+  formatted_address: string | null
+  url: string | null // Applications must link to or embed this page on any screen that shows detailed results about the place to the user.
 }
+
+export interface AddressComponent {
+  long_name: string
+  short_name: string
+  types: string[]
+}
+
+export interface PlaceReview {
+  author_name: string
+  rating: number
+  relative_time_description: string
+  time: number
+  author_url: string | null
+  language: string | null
+  original_language: string | null
+  profile_photo_url: string | null
+  text: string | null
+  translated: boolean | null
+}
+
+export interface PlaceEditorialSummary {
+  language?: string
+  overview?: string
+}
+
 export interface Geometry {
   location: NortheastOrSouthwestOrLocation
   viewport: Viewport
@@ -57,8 +87,30 @@ export interface Viewport {
   southwest: NortheastOrSouthwestOrLocation
 }
 export interface OpeningHours {
-  open_now: boolean
+  open_now: boolean | null
+  periods: PlaceOpeningHoursPeriod[] | null
+  special_days: PlaceSpecialDay[] | null
+  type: string | null
+  weekday_text: [] | null
 }
+
+export interface PlaceOpeningHoursPeriod {
+  open: PlaceOpeningHoursPeriodDetail
+  close: PlaceOpeningHoursPeriodDetail | null
+}
+
+export interface PlaceOpeningHoursPeriodDetail {
+  day: number
+  time: string
+  date: string | null
+  truncated: boolean | null
+}
+
+export interface PlaceSpecialDay {
+  date: string | null
+  exceptional_hours: boolean | null
+}
+
 export interface PhotosEntity {
   height: number
   html_attributions?: string[] | null

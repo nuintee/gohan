@@ -9,6 +9,10 @@ import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { trpc } from '@/libs/trpc'
+import { ToastCatcher } from '@/components/ui'
+
+// Override
+import '@/utils/__arrayOverride__'
 
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
@@ -26,6 +30,7 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
           <SessionProvider session={pageProps.session}>
             <main className={`font-poppins h-screen w-screen`}>
               <Component {...pageProps} />
+              <ToastCatcher position='top-center' />
             </main>
             <ReactQueryDevtools />
           </SessionProvider>
