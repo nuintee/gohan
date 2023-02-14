@@ -18,8 +18,7 @@ import { getRestaurants } from '@/features/restaurants/api'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useToast from '@/libs/react-toastify'
 import { share } from '@/utils/share'
-import MapBox from '@/features/mapbox/components/MapBox'
-import { Map } from 'react-map-gl'
+import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -106,9 +105,9 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           </section>
           <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}>
             <div className='flex-1 h-[40rem] w-full'>
-              <Map
-                mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
-                mapStyle='mapbox://styles/nuinteedev/cldaz8llv002c01mgt375yl40'
+              <MapBoxChip
+                latitude={data.geometry.location.lat}
+                longitude={data.geometry.location.lng}
               />
             </div>
           </DetailsSection>
