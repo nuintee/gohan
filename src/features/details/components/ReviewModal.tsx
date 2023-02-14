@@ -33,6 +33,7 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
                 style={{
                   backgroundColor: COLORS[v],
                 }}
+                key={v}
               >
                 {v}
               </button>
