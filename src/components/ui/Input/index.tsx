@@ -30,7 +30,7 @@ const Input = forwardRef((props: Props, ref) => {
   const cob = true
 
   return (
-    <div className='flex flex-col gap-1'>
+    <div className='flex flex-col gap-1 w-full'>
       {label && <label className='text-gh-gray'>{label}</label>}
       <div className='w-full flex bg-gh-white rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-gh-l-gray'>
         <input

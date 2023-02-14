@@ -136,7 +136,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
         </div>
       </div>
       {/* <BasicInfoModal isOpen={isOpen} data={data} onClose={() => setIsOpen(false)} /> */}
-      <ReviewModal isOpen={isOpen} />
+      <ReviewModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   )
 }
