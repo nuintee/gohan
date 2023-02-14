@@ -24,6 +24,8 @@ import { getDominantColor } from '@/libs/rgbaster'
 import images from '@/data/images.json'
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
+import ModalLayout from '@/layouts/ModalLayout'
+import ImageModal from '@/features/details/components/ImageModal'
 
 const IMG_SRC = images.random()
 
@@ -35,12 +37,13 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
     isLoading: true,
   })
 
-  const [isOpen, setIsOpen] = useState(false)
+  // Modals states -> later implement with recoil modals
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+  const [isBasicInfoModalOpen, setIsBasicInfoModalOpen] = useState(false)
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
 
   useEffect(() => {
     const init = async () => {
-      console.log(router)
-
       if (!IMG_SRC) return
 
       const color = await getDominantColor(IMG_SRC)
@@ -63,7 +66,11 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
         <div className='flex flex-1 flex-col relative'>
           <Cover color={dominant.color} />
           <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-            <ImageChip isLoading={dominant.isLoading} src={IMG_SRC} />
+            <ImageChip
+              isLoading={dominant.isLoading}
+              src={IMG_SRC}
+              onClick={() => setIsImageModalOpen(true)}
+            />
             <div className='flex-1 flex flex-col justify-between py-2'>
               <div className='flex flex-col gap-2'>
                 <div className='flex gap-4'>
@@ -75,8 +82,12 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
                 </p>
               </div>
               <div className='flex gap-4 w-fit'>
-                <Button text='評価を変更' />
-                <Button text='基本情報を表示' outline onClick={() => setIsOpen(true)} />
+                <Button text='評価を変更' onClick={() => setIsReviewModalOpen(true)} />
+                <Button
+                  text='基本情報を表示'
+                  outline
+                  onClick={() => setIsBasicInfoModalOpen(true)}
+                />
                 <Button
                   text='共有'
                   outline
@@ -142,8 +153,21 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           </main>
         </div>
       </div>
-      {/* <BasicInfoModal isOpen={isOpen} data={data} onClose={() => setIsOpen(false)} /> */}
-      <ReviewModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <BasicInfoModal
+        isOpen={isBasicInfoModalOpen}
+        data={data}
+        onClose={() => setIsBasicInfoModalOpen(false)}
+      />
+      <ReviewModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)} />
+      <ImageModal
+        isOpen={isImageModalOpen}
+        data={data.photos?.map((v) => ({
+          ...v,
+          src: IMG_SRC,
+          id: v.photo_reference,
+        }))}
+        onClose={() => setIsImageModalOpen(false)}
+      />
     </>
   )
 }

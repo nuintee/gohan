@@ -12,7 +12,7 @@ const BasicInfoModal = (props: Props) => {
   const { isOpen, onClose, data } = props
 
   return (
-    <ModalLayout isOpen={isOpen}>
+    <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
       <section>
         <PanelHeader title='基本的な情報' onClose={onClose} />
         <main className='min-w-[30rem] flex flex-col'>

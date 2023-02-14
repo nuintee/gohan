@@ -21,7 +21,7 @@ type Props = {
 
 const ReviewModal = ({ isOpen, onClose, data }: Props) => {
   return (
-    <ModalLayout isOpen={isOpen}>
+    <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
       <section className='bg-white'>
         <PanelHeader onClose={onClose} />
         <main className='min-w-[30rem] p-4 flex flex-col items-center gap-8 justify-center'>
