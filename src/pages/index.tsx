@@ -89,8 +89,8 @@ const Index = () => {
             size={40}
           />
         </div>
-        <DetailsModal isOpen={restaurants.isSuccess} />
       </div>
+      <DetailsModal isOpen={restaurants.isSuccess} />
       <MapBox />
     </>
   )
