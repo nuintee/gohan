@@ -11,6 +11,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { trpc } from '@/libs/trpc'
 import { ToastCatcher } from '@/components/ui'
 
+// Override
+import '@/utils/__arrayOverride__'
+
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
     worker.initMocks()

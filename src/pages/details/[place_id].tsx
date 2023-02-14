@@ -21,13 +21,9 @@ import { share } from '@/utils/share'
 import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import { getDominantColor } from '@/libs/rgbaster'
 
-const IMAGES = [
-  'https://images.unsplash.com/photo-1674909073929-876e3427c43c?q=80&w=1080',
-  'https://images.unsplash.com/photo-1675533773826-6e546db74d36?q=80&w=1080',
-  'https://images.unsplash.com/photo-1675789652569-8d018c327c05?q=80&w=1080',
-]
+import images from '@/data/images.json'
 
-const IMG_SRC = 'https://source.unsplash.com/random'
+const IMG_SRC = images.random()
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -37,8 +33,10 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
 
   useEffect(() => {
     const init = async () => {
-      //   const color = await getDominantColor(`https://source.unsplash.com/random`)
+      if (!IMG_SRC) return
+
       const color = await getDominantColor(IMG_SRC)
+      console.log(color)
       setDominant({ color, isLoading: false })
 
       console.log(data)

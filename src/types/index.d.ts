@@ -12,3 +12,9 @@ declare module 'next-auth' {
     }
   }
 }
+
+declare global {
+  interface Array<T> {
+    random(): T
+  }
+}
