@@ -20,7 +20,7 @@ const TEXT: Record<typeof STATUSES[number], string> = {
 const ActivityStatus = ({ status = 'new' }: { status: typeof STATUSES[number] }) => {
   return (
     <span
-      className='p-2 rounded-full text-white font-semibold text-sm select-none'
+      className='p-2 rounded-full w-fit text-white font-semibold text-sm select-none'
       style={{
         backgroundColor: COLOR[status],
       }}

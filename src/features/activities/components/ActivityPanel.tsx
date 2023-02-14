@@ -17,6 +17,7 @@ import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { RestaurantProps } from '@/features/restaurants/types'
+import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 
 // Constants
 const tabs = [
@@ -188,12 +189,13 @@ const ActivityPanel = (props: Props) => {
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
+      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] shadow-md ${slideIn}`}
     >
-      <PanelHeader title={'ActivityPanel'} onClose={onClose} />
-      <div>
+      <PanelHeader title={'ライブラリ'} onClose={onClose} />
+      <hr></hr>
+      <div className='p-4'>
         {getUserAll.data?.map((activity) => (
-          <RestaurantCard data={activity} compact onClick={() => onClickItem(activity)} />
+          <RestaurantBoard data={activity} compact onClick={() => onClickItem(activity)} />
         ))}
       </div>
     </div>
