@@ -23,6 +23,7 @@ import { getDominantColor } from '@/libs/rgbaster'
 
 import images from '@/data/images.json'
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
+import ReviewModal from '@/features/details/components/ReviewModal'
 
 const IMG_SRC = images.random()
 
@@ -134,7 +135,8 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           </main>
         </div>
       </div>
-      <BasicInfoModal isOpen={isOpen} data={data} onClose={() => setIsOpen(false)} />
+      {/* <BasicInfoModal isOpen={isOpen} data={data} onClose={() => setIsOpen(false)} /> */}
+      <ReviewModal isOpen={isOpen} />
     </>
   )
 }

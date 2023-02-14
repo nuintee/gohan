@@ -20,7 +20,7 @@ const PanelHeader = (props: Props) => {
       className='p-4 flex gap-2 items-center justify-between border-gh-l-gray'
       style={{ background: background || '#FFF' }}
     >
-      <p className='font-bold select-none'>{title || 'TITLE'}</p>
+      {title && <p className='font-bold select-none'>{title}</p>}
       <button onClick={onClose}>
         <Close fill={colors['gh-gray']} />
       </button>
