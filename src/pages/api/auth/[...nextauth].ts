@@ -4,11 +4,18 @@ import type { NextAuthOptions } from 'next-auth'
 import prisma from '@/libs/prisma'
 
 // env
-import { AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_ISSUER, AUTH0_DOMAIN } from '@/config/env'
+import {
+  AUTH0_CLIENT_ID,
+  AUTH0_CLIENT_SECRET,
+  AUTH0_ISSUER,
+  AUTH0_DOMAIN,
+  IS_DEVMODE,
+} from '@/config/env'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 export const authOptions: NextAuthOptions = {
+  debug: IS_DEVMODE,
   providers: [
     Auth0Provider({
       clientId: AUTH0_CLIENT_ID,
