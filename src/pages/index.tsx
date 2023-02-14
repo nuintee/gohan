@@ -44,6 +44,16 @@ const DetailsModal = ({
   description?: string
 }) => {
   const openClassName = isOpen ? 'scale-100' : 'scale-0'
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const timer = setTimeout(() => {
+      router.push('/details/1')
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [isOpen])
 
   return (
     <div
@@ -68,6 +78,9 @@ const Index = () => {
   const restaurants = useRestaurants({
     latitude: coords.latitude,
     longitude: coords.longitude,
+    successCallback: (data) => {
+      router.push(`/details/${data.place_id}`)
+    },
   })
 
   return (
@@ -90,7 +103,7 @@ const Index = () => {
           />
         </div>
       </div>
-      <DetailsModal isOpen={restaurants.isSuccess} />
+      {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
       <MapBox />
     </>
   )
