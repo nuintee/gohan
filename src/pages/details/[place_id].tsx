@@ -13,7 +13,7 @@ import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/compo
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
-import { Clock, Star } from '@/components/icons'
+import { Clock, Share, Star } from '@/components/icons'
 import { getRestaurants } from '@/features/restaurants/api'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useToast from '@/libs/react-toastify'
@@ -56,7 +56,15 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <div className='flex gap-4 w-fit'>
               <Button text='評価を変更' />
               <Button text='基本情報を表示' outline />
-              <Button text='共有' outline onClick={() => share({ url: location.href })} />
+              <Button
+                text='共有'
+                outline
+                onClick={() => share({ url: location.href })}
+                icon={{
+                  position: 'before',
+                  src: <Share />,
+                }}
+              />
               <Button
                 text=''
                 outline
