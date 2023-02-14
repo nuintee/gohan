@@ -6,7 +6,7 @@ import { details } from '@/data/details'
 import places from '@/data/_places.json'
 import { ActivityResolved } from '@/features/activities/types'
 import { useEffect, useState } from 'react'
-import { GCP_API_KEY } from '@/config/env'
+import { GCP_API_KEY, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
 import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/components/ui'
@@ -18,6 +18,8 @@ import { getRestaurants } from '@/features/restaurants/api'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useToast from '@/libs/react-toastify'
 import { share } from '@/utils/share'
+import MapBox from '@/features/mapbox/components/MapBox'
+import { Map } from 'react-map-gl'
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   const [dominant, setDominant] = useState({
@@ -102,7 +104,14 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               />
             )}
           </section>
-          <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}></DetailsSection>
+          <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}>
+            <div className='flex-1 h-[40rem] w-full'>
+              <Map
+                mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
+                mapStyle='mapbox://styles/nuinteedev/cldaz8llv002c01mgt375yl40'
+              />
+            </div>
+          </DetailsSection>
           {data.user_ratings_total > 0 && (
             <DetailsSection
               margin='5rem'
