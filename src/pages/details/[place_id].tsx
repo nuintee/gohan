@@ -28,6 +28,8 @@ import ReviewModal from '@/features/details/components/ReviewModal'
 const IMG_SRC = images.random()
 
 const DetailsPage = ({ data }: { data: ActivityResolved }) => {
+  const router = useRouter()
+
   const [dominant, setDominant] = useState({
     color: colors['gh-l-gray'],
     isLoading: true,
@@ -37,6 +39,8 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
 
   useEffect(() => {
     const init = async () => {
+      console.log(router)
+
       if (!IMG_SRC) return
 
       const color = await getDominantColor(IMG_SRC)
@@ -48,6 +52,9 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
 
     init()
   }, [])
+
+  // Animation
+  if (router.query?.effect) return <>Effected!</>
 
   return (
     <>

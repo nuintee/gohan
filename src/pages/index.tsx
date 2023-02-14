@@ -79,7 +79,7 @@ const Index = () => {
     latitude: coords.latitude,
     longitude: coords.longitude,
     successCallback: (data) => {
-      router.push(`/details/${data.place_id}`)
+      router.push(`/details/${data.place_id}?effect=true`, `/details/${data.place_id}`)
     },
   })
 
