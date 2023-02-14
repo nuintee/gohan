@@ -1,6 +1,6 @@
 import { Props } from '../index.types'
 
-const Dots = ({ size = 20, fill }: Pick<Props, 'fill'> & { size?: number }) => {
+const Dots = ({ size = 20, fill = 'gray' }: Pick<Props, 'fill'> & { size?: number }) => {
   return (
     <svg
       width={size}

@@ -13,7 +13,7 @@ import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/compo
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
-import { Clock, Share, Star } from '@/components/icons'
+import { Clock, Dots, Share, Star } from '@/components/icons'
 import { getRestaurants } from '@/features/restaurants/api'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useToast from '@/libs/react-toastify'
@@ -80,8 +80,9 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
                   outline
                   icon={{
                     position: 'after',
-                    src: <p>1</p>,
+                    src: <Dots />,
                   }}
+                  square
                 />
               </div>
             </div>
