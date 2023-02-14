@@ -104,7 +104,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             )}
           </section>
           <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}>
-            <div className='flex-1 h-[40rem] w-full'>
+            <div className='flex-1 aspect-video w-full'>
               <MapBoxChip
                 latitude={data.geometry.location.lat}
                 longitude={data.geometry.location.lng}
