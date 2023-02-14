@@ -3,7 +3,7 @@ import { colors } from '@/config/colors'
 
 // Icons
 import { User as UserIcon, PulseLoader } from '@/components/icons'
-import { SessionContextValue, useSession } from 'next-auth/react'
+import { SessionContextValue, signIn, useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
 import useModals from '@/hooks/modals'
 
@@ -19,7 +19,11 @@ const User = (props: UserProps) => {
   const { open } = useModals()
 
   const handleOnClick = () => {
-    open(status === 'authenticated' ? 'usersettings' : 'userauth')
+    if (status === 'authenticated') {
+      // navigate to profile page
+    } else if (status === 'unauthenticated') {
+      signIn('auth0')
+    }
   }
 
   const {
