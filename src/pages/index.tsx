@@ -92,7 +92,6 @@ const Index = () => {
         <DetailsModal isOpen={restaurants.isSuccess} />
       </div>
       <MapBox />
-      <ToastCatcher position='top-center' />
     </>
   )
 }
