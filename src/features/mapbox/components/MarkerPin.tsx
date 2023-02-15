@@ -23,6 +23,9 @@ const Pin = ({
         e.originalEvent.stopPropagation()
         onClick && onClick()
       }}
+      style={{
+        ...(focused && { zIndex: '2' }),
+      }}
     >
       <section>
         <div
