@@ -80,6 +80,7 @@ const MapBox = () => {
         initialViewState={{
           latitude: gps.coords.latitude ?? 0,
           longitude: gps.coords.longitude ?? 0,
+          zoom: 16,
         }}
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         mapStyle={mapStyles.MONOCHROME}
