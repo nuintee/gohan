@@ -66,7 +66,6 @@ const DetailsModal = ({
 
 const Index = () => {
   // User
-  const { status } = useSession()
   const router = useRouter()
 
   const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
