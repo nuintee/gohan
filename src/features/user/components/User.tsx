@@ -3,7 +3,7 @@ import { colors } from '@/config/colors'
 
 // Icons
 import { User as UserIcon, PulseLoader } from '@/components/icons'
-import { SessionContextValue, signIn, useSession } from 'next-auth/react'
+import { SessionContextValue, signIn, signOut, useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
 import useModals from '@/hooks/modals'
 
@@ -21,6 +21,7 @@ const User = (props: UserProps) => {
   const handleOnClick = () => {
     if (status === 'authenticated') {
       // navigate to profile page
+      signOut()
     } else if (status === 'unauthenticated') {
       signIn('auth0')
     }
@@ -37,7 +38,7 @@ const User = (props: UserProps) => {
   const theme =
     session.status === 'authenticated'
       ? `h-12 aspect-square rounded-full overflow-hidden ${feedBack}`
-      : `h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-2 bg-gh-white ${feedBack}`
+      : `h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-[1px] text-white hover:bg-white hover:text-gh-dark bg-transparent ${feedBack}`
 
   return (
     <button className={theme} onClick={onClick}>
