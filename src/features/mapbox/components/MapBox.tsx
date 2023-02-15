@@ -65,6 +65,10 @@ const MapBox = () => {
     })
   }
 
+  const clearFocus = () => {
+    setFocusId('')
+  }
+
   return (
     <div className='w-full h-full'>
       <div className='flex gap-2'>
@@ -78,7 +82,7 @@ const MapBox = () => {
         renderWorldCopies={false}
         pitchWithRotate={false}
         onMoveEnd={(e) => updateViewState(e.viewState)}
-        onClick={(e) => setFocusId('')}
+        onClick={() => clearFocus()}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
         ref={mapBoxRef}
