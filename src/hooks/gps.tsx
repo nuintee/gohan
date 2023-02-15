@@ -13,10 +13,9 @@ const useGPS = () => {
   }
 
   const updateGeolocationStatus = (
-    key: keyof Pick<DefaultGeolocationPosition, 'isError' | 'isFetching'>,
-    bool: boolean,
+    payload: Record<keyof Pick<DefaultGeolocationPosition, 'isError' | 'isFetching'>, boolean>,
   ) => {
-    setGPS((prev) => ({ ...prev, [key]: bool }))
+    updateSafeGeolocation(payload)
   }
 
   return {

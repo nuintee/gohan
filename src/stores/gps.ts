@@ -5,6 +5,7 @@ export type DefaultGeolocationPosition = {
   timestamp: GeolocationPosition['timestamp']
   isFetching: boolean
   isError: boolean
+  error?: string | null
 }
 
 export const gpsState = atom<DefaultGeolocationPosition>({
@@ -22,5 +23,6 @@ export const gpsState = atom<DefaultGeolocationPosition>({
     timestamp: new Date().getMilliseconds(),
     isFetching: true,
     isError: false,
+    error: '',
   },
 })

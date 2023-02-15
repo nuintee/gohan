@@ -4,7 +4,6 @@ import MapBox from '@/features/mapbox/components/MapBox'
 import useMapBox from '@/features/mapbox/hooks'
 import { mapBoxState } from '@/features/mapbox/stores'
 import { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
 
 import { signOut, useSession, signIn, getSession } from 'next-auth/react'
 
@@ -16,7 +15,6 @@ import UserAuthConsentDialog from '@/features/user/components/UserAuthConsentDia
 import AcitvityButton from '@/features/activities/components/ActivityButton'
 import UserSettingsModal from '@/features/user/components/UserSettingsModal'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
-import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import RestaurantDiscoveredModal from '@/features/restaurants/components/RestaurantDiscoveredModal'
 import calculateDistance from '@/libs/haversine-distance'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
@@ -29,7 +27,6 @@ import Header from '@/components/ui/Header'
 import { Logo } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { Router, useRouter } from 'next/router'
-import { gpsState } from '@/stores/gps'
 import useGPS from '@/hooks/gps'
 
 const DetailsModal = ({
@@ -81,8 +78,7 @@ const Index = () => {
           updateSafeGeolocation({ coords, timestamp, isFetching: false })
         },
         (error) => {
-          useToast.error(error.message)
-          updateGeolocationStatus('isError', true)
+          updateGeolocationStatus({ isError: true, isFetching: false })
         },
       )
     }
