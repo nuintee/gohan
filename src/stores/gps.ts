@@ -3,6 +3,7 @@ import { atom } from 'recoil'
 type DefaultGeolocationPosition = {
   coords: Partial<GeolocationPosition['coords']>
   timestamp: GeolocationPosition['timestamp']
+  isFetching: boolean
 }
 
 export const gpsState = atom<DefaultGeolocationPosition>({
@@ -18,5 +19,6 @@ export const gpsState = atom<DefaultGeolocationPosition>({
       speed: null,
     },
     timestamp: new Date().getMilliseconds(),
+    isFetching: true,
   },
 })

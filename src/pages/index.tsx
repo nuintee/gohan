@@ -79,7 +79,7 @@ const Index = () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setGPS(position)
+          setGPS({ ...position, isFetching: false })
         },
         (error) => {
           useToast.error(error.message)
