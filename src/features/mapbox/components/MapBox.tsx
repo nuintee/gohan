@@ -78,6 +78,7 @@ const MapBox = () => {
         renderWorldCopies={false}
         pitchWithRotate={false}
         onMoveEnd={(e) => updateViewState(e.viewState)}
+        onClick={(e) => setFocusId('')}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
         ref={mapBoxRef}
@@ -103,6 +104,7 @@ const MapBox = () => {
             focused={focusId === activity.place_id}
             onClick={() => onClickItem(activity)}
             data={activity}
+            key={activity.place_id}
           />
         ))}
       </Map>

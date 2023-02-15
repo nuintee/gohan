@@ -16,7 +16,14 @@ const Pin = ({
   data: ActivityResolved
 }) => {
   return (
-    <Marker latitude={latitude} longitude={longitude} onClick={onClick}>
+    <Marker
+      latitude={latitude}
+      longitude={longitude}
+      onClick={(e) => {
+        e.originalEvent.stopPropagation()
+        onClick && onClick()
+      }}
+    >
       <section>
         <div
           className={`absolute bg-white p-4 rounded-md duration-700 shadow-sm top-0 left-1/2 -translate-x-1/2 -translate-y-full -my-4 ${
