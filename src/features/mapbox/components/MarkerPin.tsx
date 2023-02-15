@@ -1,5 +1,6 @@
 import { Close, RightChevron } from '@/components/icons'
 import { Texts } from '@/components/ui'
+import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import { ActivityResolved } from '@/features/activities/types'
 import { useRouter } from 'next/router'
 import { Marker } from 'react-map-gl'
@@ -45,7 +46,7 @@ const Pin = ({
           role='button'
         >
           <div className='flex gap-4 items-center group-hover:bg-gh-pale p-2 rounded-md'>
-            <Texts main={data.name} sub={'2km'} />
+            <Texts main={data.name} sub='2km' />
             <RightChevron scale={1.2} />
           </div>
           <span className='h-3 w-3 bg-white rotate-45 absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 shadow-sm'></span>
