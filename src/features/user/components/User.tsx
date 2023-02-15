@@ -39,8 +39,8 @@ const User = (props: UserProps) => {
 
   const theme =
     session.status === 'authenticated'
-      ? `h-12 aspect-square rounded-full overflow-hidden ${feedBack}`
-      : `h-12 min-w-[6rem] rounded-full p-4 flex items-center justify-center border-[1px] text-white hover:bg-white hover:text-gh-dark bg-transparent ${feedBack}`
+      ? `h-10 aspect-square rounded-full overflow-hidden ${feedBack}`
+      : `h-10 min-w-[6rem] rounded-md p-4 flex items-center justify-center border-[1px] bg-white text-gh-dark ${feedBack}`
 
   return (
     <button className={theme} onClick={onClick}>
@@ -53,7 +53,7 @@ const User = (props: UserProps) => {
       ) : isLoading ? (
         <PulseLoader color={colors['gh-l-gray']} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
-        'Login'
+        'ログイン'
       )}
     </button>
   )
