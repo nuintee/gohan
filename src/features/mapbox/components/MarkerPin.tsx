@@ -50,10 +50,11 @@ const Pin = ({
           </div>
           <span className='h-3 w-3 bg-white rotate-45 absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 shadow-sm'></span>
         </div>
-        <div className='h-14 w-14 bg-white flex items-center justify-center rounded-full p-1 duration-700 ease-in-out'>
-          <span className='bg-gh-l-gray w-full aspect-square rounded-full flex items-center justify-center text-xl'>
-            😄
-          </span>
+        <div className='h-14 w-14 bg-white flex items-center justify-center rounded-full p-1 duration-700 ease-in-out shadow-sm'>
+          <img
+            src={'https://source.unsplash.com/random'}
+            className='aspect-square rounded-full object-cover'
+          />
         </div>
       </section>
     </Marker>
