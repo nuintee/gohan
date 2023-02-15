@@ -4,7 +4,7 @@ import { colors } from '@/config/colors'
 // Icons
 import { User as UserIcon, PulseLoader } from '@/components/icons'
 import { SessionContextValue, signIn, signOut, useSession } from 'next-auth/react'
-import { MouseEventHandler } from 'react'
+import { MouseEventHandler, useState } from 'react'
 import useModals from '@/hooks/modals'
 
 type UserProps = {
@@ -16,19 +16,21 @@ type UserProps = {
 const User = (props: UserProps) => {
   // Contexts
   const { status, data } = useSession()
-  const { open } = useModals()
+  const [isSignInProccess, setIsSignInProccess] = useState(false)
 
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     if (status === 'authenticated') {
       // navigate to profile page
       signOut()
     } else if (status === 'unauthenticated') {
-      signIn('auth0')
+      setIsSignInProccess(true)
+      await signIn('auth0')
+      setIsSignInProccess(false)
     }
   }
 
   const {
-    isLoading = status === 'loading' ?? false,
+    isLoading = (status === 'loading' || isSignInProccess) ?? false,
     session = { ...data, status } ?? {},
     onClick = handleOnClick,
   } = props

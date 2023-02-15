@@ -47,7 +47,7 @@ const ActivityPanel = (props: Props) => {
     >
       <PanelHeader title={'ライブラリ'} onClose={onClose} />
       <hr></hr>
-      <div className='p-4'>
+      <div className='p-4 flex-1 overflow-auto'>
         {getUserAll.data?.map((activity) => (
           <RestaurantBoard data={activity} compact onClick={() => onClickItem(activity)} />
         ))}

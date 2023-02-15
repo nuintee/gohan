@@ -67,7 +67,7 @@ const DetailsModal = ({
 
 const Index = () => {
   // User
-  const session = useSession()
+  const { status } = useSession()
   const { coords } = useMapBox()
 
   // Modals

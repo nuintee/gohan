@@ -10,7 +10,7 @@ const LibraryPage = () => {
       <Header />
       <main className='relative flex-1 bg-gh-l-gray'>
         <section className='absolute top-4 right-4 z-[1]'>
-          <AcitvityButton isLocked={false} />
+          <AcitvityButton />
         </section>
         <ActivityPanel />
         <MapBox />
