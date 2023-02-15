@@ -17,6 +17,8 @@ import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
+import MapBoxCore from '@/features/mapbox/components/MapBoxChip'
+import MapBox from '@/features/mapbox/components/MapBox'
 
 type Props = {
   isOpen?: boolean
@@ -41,7 +43,7 @@ const ActivityPanel = (props: Props) => {
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] shadow-md ${slideIn}`}
+      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[3]  shadow-md ${slideIn}`}
     >
       <PanelHeader title={'ライブラリ'} onClose={onClose} />
       <hr></hr>

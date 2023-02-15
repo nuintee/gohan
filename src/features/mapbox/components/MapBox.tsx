@@ -21,7 +21,7 @@ import { useRef } from 'react'
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
 import { useSession } from 'next-auth/react'
 
-const MapBox = () => {
+const MapBox = ({ activities }) => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
 
   const { data: session } = useSession()
@@ -68,7 +68,7 @@ const MapBox = () => {
           }}
           ref={geoLocateRef}
         />
-        {getUserAll?.data?.map((activity) => (
+        {getUserAll.data?.map((activity) => (
           <Marker
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
