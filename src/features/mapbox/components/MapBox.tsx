@@ -101,6 +101,8 @@ const MapBox = () => {
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
             focused={focusId === activity.place_id}
+            onClick={() => onClickItem(activity)}
+            data={activity}
           />
         ))}
       </Map>
