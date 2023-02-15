@@ -27,32 +27,6 @@ import { Close } from '@/components/icons'
 import MarkerPin from './MarkerPin'
 import { colors } from '@/config/colors'
 
-const Pin = ({
-  latitude,
-  longitude,
-  focused = false,
-}: {
-  latitude?: number
-  longitude?: number
-  focused?: boolean
-}) => {
-  return (
-    <Marker latitude={latitude} longitude={longitude}>
-      {/* <MarkerPin icon={<Close />} circleColor={colors['gh-l-green']} /> */}
-      <div
-        className='h-14 w-14 bg-white flex items-center justify-center rounded-full p-1 duration-700 ease-in-out'
-        style={{
-          ...(focused && { scale: '1.5' }),
-        }}
-      >
-        <span className='bg-gh-l-gray w-full aspect-square rounded-full flex items-center justify-center text-xl'>
-          😄
-        </span>
-      </div>
-    </Marker>
-  )
-}
-
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
   const mapBoxRef = useRef<MapRef>(null)
@@ -123,11 +97,7 @@ const MapBox = () => {
           ref={geoLocateRef}
         />
         {getUserAll.data?.map((activity) => (
-          // <Marker
-          //   latitude={activity.geometry?.location?.lat}
-          //   longitude={activity.geometry?.location?.lng}
-          // />
-          <Pin
+          <MarkerPin
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
             focused={focusId === activity.place_id}
