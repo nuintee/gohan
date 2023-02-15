@@ -5,7 +5,7 @@ type DefaultGeolocationPosition = {
   timestamp: GeolocationPosition['timestamp']
 }
 
-export const modalState = atom<DefaultGeolocationPosition>({
+export const gpsState = atom<DefaultGeolocationPosition>({
   key: 'gpsState',
   default: {
     coords: {

@@ -4,7 +4,7 @@ import MapBox from '@/features/mapbox/components/MapBox'
 import useMapBox from '@/features/mapbox/hooks'
 import { mapBoxState } from '@/features/mapbox/stores'
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import { signOut, useSession, signIn, getSession } from 'next-auth/react'
 
@@ -29,6 +29,7 @@ import Header from '@/components/ui/Header'
 import { Logo } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { Router, useRouter } from 'next/router'
+import { gpsState } from '@/stores/gps'
 
 const DetailsModal = ({
   isOpen = false,
@@ -71,12 +72,28 @@ const Index = () => {
   const { coords } = useMapBox()
   const router = useRouter()
 
+  // Recoil
+  const [gps, setGPS] = useRecoilState(gpsState)
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setGPS(position)
+        },
+        (error) => {
+          useToast.error(error.message)
+        },
+      )
+    }
+  }, [])
+
   // Modals
   const { open, close, isOpen, getPayload } = useModals()
 
   const restaurants = useRestaurants({
-    latitude: 42.648763,
-    longitude: 23.408622,
+    latitude: gps.coords.latitude,
+    longitude: gps.coords.longitude,
     successCallback: (data) => {
       router.push(`/details/${data.place_id}?effect=true`, `/details/${data.place_id}`)
     },
