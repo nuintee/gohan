@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-type DefaultGeolocationPosition = {
+export type DefaultGeolocationPosition = {
   coords: Partial<GeolocationPosition['coords']>
   timestamp: GeolocationPosition['timestamp']
   isFetching: boolean

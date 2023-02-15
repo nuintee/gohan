@@ -30,6 +30,7 @@ import { Logo } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { Router, useRouter } from 'next/router'
 import { gpsState } from '@/stores/gps'
+import useGPS from '@/hooks/gps'
 
 const DetailsModal = ({
   isOpen = false,
@@ -71,20 +72,17 @@ const Index = () => {
   const { status } = useSession()
   const router = useRouter()
 
-  // Recoil
-  const [gps, setGPS] = useRecoilState(gpsState)
-
-  console.log(gps)
+  const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
 
   useEffect(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         ({ timestamp, coords }) => {
-          setGPS((prev) => ({ ...prev, coords, timestamp, isFetching: false }))
+          updateSafeGeolocation({ coords, timestamp, isFetching: false })
         },
         (error) => {
           useToast.error(error.message)
-          setGPS((prev) => ({ ...prev, isError: true }))
+          updateGeolocationStatus('isError', true)
         },
       )
     }
