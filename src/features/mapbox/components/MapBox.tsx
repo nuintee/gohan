@@ -71,11 +71,6 @@ const MapBox = () => {
 
   return (
     <div className='w-full h-full'>
-      <div className='flex gap-2'>
-        {getUserAll.data?.map((v) => (
-          <button onClick={() => onClickItem(v)}>{v.name}</button>
-        ))}
-      </div>
       <Map
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         mapStyle={mapStyles.MONOCHROME}
