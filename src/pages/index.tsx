@@ -69,27 +69,26 @@ const DetailsModal = ({
 const Index = () => {
   // User
   const { status } = useSession()
-  const { coords } = useMapBox()
   const router = useRouter()
 
   // Recoil
   const [gps, setGPS] = useRecoilState(gpsState)
 
+  console.log(gps)
+
   useEffect(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setGPS({ ...position, isFetching: false })
+        ({ timestamp, coords }) => {
+          setGPS((prev) => ({ ...prev, coords, timestamp, isFetching: false }))
         },
         (error) => {
           useToast.error(error.message)
+          setGPS((prev) => ({ ...prev, isError: true }))
         },
       )
     }
   }, [])
-
-  // Modals
-  const { open, close, isOpen, getPayload } = useModals()
 
   const restaurants = useRestaurants({
     latitude: gps.coords.latitude,

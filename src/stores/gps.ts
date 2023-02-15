@@ -4,6 +4,7 @@ type DefaultGeolocationPosition = {
   coords: Partial<GeolocationPosition['coords']>
   timestamp: GeolocationPosition['timestamp']
   isFetching: boolean
+  isError: boolean
 }
 
 export const gpsState = atom<DefaultGeolocationPosition>({
@@ -12,7 +13,7 @@ export const gpsState = atom<DefaultGeolocationPosition>({
     coords: {
       accuracy: undefined,
       latitude: undefined,
-      longitude: 0,
+      longitude: undefined,
       altitude: null,
       altitudeAccuracy: null,
       heading: null,
@@ -20,5 +21,6 @@ export const gpsState = atom<DefaultGeolocationPosition>({
     },
     timestamp: new Date().getMilliseconds(),
     isFetching: true,
+    isError: false,
   },
 })
