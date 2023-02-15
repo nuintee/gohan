@@ -17,7 +17,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
 
   const compactStyle = {
     container:
-      'flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer active:bg-gray-50 active:scale-95',
+      'flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95',
     img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
     closeButton: '',
     contents: 'flex flex-1 gap-4 items-center justify-between',
