@@ -127,11 +127,9 @@ export type RestaurantData = Activity & Pick<ResultsEntity, typeof neededDetails
 
 // Data to pass Renderer
 export type RestaurantProps = {
-  compact?: boolean
-  isNavigating?: boolean
   isLocked: boolean
   isLoading?: boolean
-  data?: ActivityResolved
+  data?: ActivityResolved // includes status
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>

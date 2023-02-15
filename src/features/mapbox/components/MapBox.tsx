@@ -1,3 +1,4 @@
+import { forwardRef, useState } from 'react'
 import Map, {
   Source,
   Layer,
@@ -6,6 +7,7 @@ import Map, {
   GeolocateResultEvent,
   GeolocateControlRef,
   Marker,
+  MapRef,
 } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
@@ -20,9 +22,17 @@ import { useRef } from 'react'
 // hooks
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
 import { useSession } from 'next-auth/react'
+import { ActivityResolved } from '@/features/activities/types'
+import { Close } from '@/components/icons'
+import MarkerPin from './MarkerPin'
+import { colors } from '@/config/colors'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
+  const mapBoxRef = useRef<MapRef>(null)
+
+  // local
+  const [focusId, setFocusId] = useState('')
 
   const { data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -43,16 +53,39 @@ const MapBox = () => {
     }
   }
 
+  const onClickItem = (activity: ActivityResolved) => {
+    setFocusId(activity.place_id)
+
+    mapBoxRef.current?.flyTo({
+      center: {
+        lat: activity.geometry?.location?.lat,
+        lng: activity.geometry?.location?.lng,
+      },
+      zoom: 17.5,
+    })
+  }
+
+  const clearFocus = () => {
+    setFocusId('')
+  }
+
   return (
     <div className='w-full h-full'>
+      <div className='flex gap-2'>
+        {getUserAll.data?.map((v) => (
+          <button onClick={() => onClickItem(v)}>{v.name}</button>
+        ))}
+      </div>
       <Map
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         mapStyle={mapStyles.MONOCHROME}
         renderWorldCopies={false}
         pitchWithRotate={false}
         onMoveEnd={(e) => updateViewState(e.viewState)}
+        onClick={() => clearFocus()}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
+        ref={mapBoxRef}
       >
         <GeolocateControl
           showAccuracyCircle
@@ -68,10 +101,14 @@ const MapBox = () => {
           }}
           ref={geoLocateRef}
         />
-        {getUserAll?.data?.map((activity) => (
-          <Marker
+        {getUserAll.data?.map((activity) => (
+          <MarkerPin
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
+            focused={focusId === activity.place_id}
+            onClick={() => onClickItem(activity)}
+            data={activity}
+            key={activity.place_id}
           />
         ))}
       </Map>

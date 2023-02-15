@@ -12,7 +12,7 @@ const sizes = {
 
 type Props = {
   main: string
-  sub?: string
+  sub?: string | JSX.Element
   size?: 'small' | 'normal'
 }
 
@@ -22,7 +22,7 @@ const Texts = (props: Props) => {
   const textSize = sizes[size || 'normal']
 
   return (
-    <div className='flex w-full items-center justify-between rounded-md gap-2'>
+    <div className='flex w-full items-center justify-between rounded-md gap-2 whitespace-nowrap'>
       <div className='flex flex-col'>
         <h1 className={`font-bold ${textSize.main}`}>{main || 'Name'}</h1>
         <p className={`text-gh-l-gray ${textSize.sub}`}>{sub || 'Description'}</p>

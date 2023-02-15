@@ -16,23 +16,9 @@ import usePatchActivity from '../hooks/usePatchActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
-import { RestaurantProps } from '@/features/restaurants/types'
-
-// Constants
-const tabs = [
-  {
-    label: 'History',
-    id: 0,
-  },
-  {
-    label: 'Favorites',
-    id: 1,
-  },
-]
-
-const placeholder_data = Array.from(Array(100).keys()).map((v) => ({
-  state: ['LIKED', 'UNLIKED'][Math.floor(Math.random() * ['LIKED', 'UNLIKED'].length)],
-}))
+import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
+import MapBoxCore from '@/features/mapbox/components/MapBoxChip'
+import MapBox from '@/features/mapbox/components/MapBox'
 
 type Props = {
   isOpen?: boolean
@@ -40,137 +26,6 @@ type Props = {
   onClose?: React.MouseEventHandler<HTMLButtonElement>
   onClickItem: (item: ActivityResolved) => void
 }
-
-type ListProps = {
-  activities: ActivityResolved[]
-  isLocked: boolean
-}
-
-// later move inside to restaurants component
-const ActivityWrapper = (
-  props: RestaurantProps & { placeId: string; activityId: string; isLiked: boolean },
-) => {
-  const { coords } = useMapBox()
-  const { placeId, activityId, isLocked, isLiked, setPlaceId, data } = props
-
-  const patchActivity = usePatchActivity()
-
-  const detailedActivity = useExperimentalRestaurants({
-    place_id: data?.place_id,
-  })
-
-  const handleUpdate = () => {
-    patchActivity.mutate({
-      activityId: activityId,
-      payload: {
-        is_liked: !isLiked,
-      },
-    })
-  }
-
-  const handleClick = () => {
-    setPlaceId(placeId)
-  }
-
-  return (
-    <RestaurantCard
-      data={detailedActivity.data}
-      // distance={calculateDistance(coords, activity.geometry.location, true).auto}
-      compact
-      key={activityId}
-      isLocked={isLocked}
-      onLike={() => handleUpdate()}
-      onClick={() => handleClick()}
-    />
-  )
-}
-
-// const List = (props: ListProps) => {
-//   const { coords } = useMapBox()
-//   const { activities, isLocked } = props
-
-//   const handleClick = (activity) => {
-//     // manually set restaurant
-//     // open('restaurantdiscovered', activity)
-//     // console.log(activity)
-//   }
-
-//   // Update
-//   const patchActivity = usePatchActivity()
-
-//   const handleUpdate = (activity: ActivityResolved) => {
-//     patchActivity.mutate({
-//       activityId: activity.id,
-//       payload: {
-//         is_liked: !activity.is_liked,
-//       },
-//     })
-//   }
-
-//   if (!activities?.length) return <>No contents</>
-
-//   return (
-//     <div className='flex flex-col overflow-auto'>
-//       {activities.map((activity) => (
-//         <RestaurantCard
-//           data={activity}
-//           distance={calculateDistance(coords, activity.geometry.location, true).auto}
-//           compact
-//           key={activity.id}
-//           isLocked={isLocked}
-//           onLike={() => handleUpdate(activity)}
-//           onClick={() => handleClick(activity)}
-//         />
-//       ))}
-//     </div>
-//   )
-// }
-
-const List = (props: ListProps) => {
-  const { coords } = useMapBox()
-  const { activities, isLocked, setPlaceId } = props
-
-  if (!activities?.length) return <>No contents</>
-
-  return (
-    <div className='flex flex-col overflow-auto'>
-      {activities.map((activity) => (
-        <ActivityWrapper
-          placeId={activity.place_id}
-          activityId={activity.id}
-          isLocked={isLocked}
-          isLiked={activity.is_liked}
-          setPlaceId={setPlaceId}
-          data={activity}
-        />
-      ))}
-    </div>
-  )
-}
-
-// const ActivityPanel = (props: Props & { setPlaceId: Function }) => {
-//   const { isPanelOpen, closePanel } = useActivityPanel()
-//   const { status, data: session } = useSession()
-//   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
-
-//   const {
-//     isOpen = isPanelOpen ?? false,
-//     onClose = closePanel,
-//     data = getUserAll.data ?? [],
-//     setPlaceId,
-//   } = props
-
-//   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
-
-//   return (
-//     <div
-//       className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
-//     >
-//       <PanelHeader title={'ActivityPanel'} onClose={onClose} />
-//       <List activities={data} isLocked={status === 'unauthenticated'} setPlaceId={setPlaceId} />
-//     </div>
-//   )
-// }
 
 const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
@@ -188,12 +43,13 @@ const ActivityPanel = (props: Props) => {
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1] ${slideIn}`}
+      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1000]  shadow-md ${slideIn}`}
     >
-      <PanelHeader title={'ActivityPanel'} onClose={onClose} />
-      <div>
+      <PanelHeader title={'ライブラリ'} onClose={onClose} />
+      <hr></hr>
+      <div className='p-4'>
         {getUserAll.data?.map((activity) => (
-          <RestaurantCard data={activity} compact onClick={() => onClickItem(activity)} />
+          <RestaurantBoard data={activity} compact onClick={() => onClickItem(activity)} />
         ))}
       </div>
     </div>

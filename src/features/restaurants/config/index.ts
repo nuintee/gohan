@@ -25,6 +25,6 @@ export const cardConfig = {
   labelIcon: RouteArrow(),
   textsMain: (main?: string) => main || 'Restaurant Name',
   textsSub: (sub?: string) => sub || 'Restaurant・Types',
-  textsSize: (compact?: boolean) => (compact ? 'small' : 'normal'),
+  textSize: 'small' as const,
   buttonText: (isNavigating?: boolean) => (isNavigating ? 'Stop Navigation' : 'Navigate'),
 }
