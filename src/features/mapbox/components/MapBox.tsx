@@ -1,3 +1,4 @@
+import { forwardRef, useState } from 'react'
 import Map, {
   Source,
   Layer,
@@ -6,6 +7,7 @@ import Map, {
   GeolocateResultEvent,
   GeolocateControlRef,
   Marker,
+  MapRef,
 } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
@@ -20,9 +22,43 @@ import { useRef } from 'react'
 // hooks
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
 import { useSession } from 'next-auth/react'
+import { ActivityResolved } from '@/features/activities/types'
+import { Close } from '@/components/icons'
+import MarkerPin from './MarkerPin'
+import { colors } from '@/config/colors'
 
-const MapBox = ({ activities }) => {
+const Pin = ({
+  latitude,
+  longitude,
+  focused = false,
+}: {
+  latitude?: number
+  longitude?: number
+  focused?: boolean
+}) => {
+  return (
+    <Marker latitude={latitude} longitude={longitude}>
+      {/* <MarkerPin icon={<Close />} circleColor={colors['gh-l-green']} /> */}
+      <div
+        className='h-14 w-14 bg-white flex items-center justify-center rounded-full p-1 duration-700 ease-in-out'
+        style={{
+          ...(focused && { scale: '1.5' }),
+        }}
+      >
+        <span className='bg-gh-l-gray w-full aspect-square rounded-full flex items-center justify-center text-xl'>
+          😄
+        </span>
+      </div>
+    </Marker>
+  )
+}
+
+const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
+  const mapBoxRef = useRef<MapRef>(null)
+
+  // local
+  const [focusId, setFocusId] = useState('')
 
   const { data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -43,8 +79,25 @@ const MapBox = ({ activities }) => {
     }
   }
 
+  const onClickItem = (activity: ActivityResolved) => {
+    setFocusId(activity.place_id)
+
+    mapBoxRef.current?.flyTo({
+      center: {
+        lat: activity.geometry?.location?.lat,
+        lng: activity.geometry?.location?.lng,
+      },
+      zoom: 16,
+    })
+  }
+
   return (
     <div className='w-full h-full'>
+      <div className='flex gap-2'>
+        {getUserAll.data?.map((v) => (
+          <button onClick={() => onClickItem(v)}>{v.name}</button>
+        ))}
+      </div>
       <Map
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         mapStyle={mapStyles.MONOCHROME}
@@ -53,6 +106,7 @@ const MapBox = ({ activities }) => {
         onMoveEnd={(e) => updateViewState(e.viewState)}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
+        ref={mapBoxRef}
       >
         <GeolocateControl
           showAccuracyCircle
@@ -69,9 +123,14 @@ const MapBox = ({ activities }) => {
           ref={geoLocateRef}
         />
         {getUserAll.data?.map((activity) => (
-          <Marker
+          // <Marker
+          //   latitude={activity.geometry?.location?.lat}
+          //   longitude={activity.geometry?.location?.lng}
+          // />
+          <Pin
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
+            focused={focusId === activity.place_id}
           />
         ))}
       </Map>
