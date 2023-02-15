@@ -61,7 +61,7 @@ const MapBox = () => {
         lat: activity.geometry?.location?.lat,
         lng: activity.geometry?.location?.lng,
       },
-      zoom: 16,
+      zoom: 17.5,
     })
   }
 
