@@ -6,7 +6,7 @@ import { mapBoxState } from '@/features/mapbox/stores'
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { signOut, useSession, signIn } from 'next-auth/react'
+import { signOut, useSession, signIn, getSession } from 'next-auth/react'
 
 // ENV
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, BASE_URL } from '@/config/env'
@@ -28,7 +28,7 @@ import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 import Header from '@/components/ui/Header'
 import { Logo } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 
 const DetailsModal = ({
   isOpen = false,
@@ -69,11 +69,10 @@ const Index = () => {
   // User
   const { status } = useSession()
   const { coords } = useMapBox()
+  const router = useRouter()
 
   // Modals
   const { open, close, isOpen, getPayload } = useModals()
-
-  const router = useRouter()
 
   const restaurants = useRestaurants({
     latitude: 42.648763,

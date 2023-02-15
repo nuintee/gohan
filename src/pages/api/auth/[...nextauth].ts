@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
       if (url === `${baseUrl}/api/federate-logout`) {
         return `https://${AUTH0_DOMAIN}/v2/logout?returnTo=${baseUrl}&client_id=${AUTH0_CLIENT_ID}&federated`
       } else {
-        return baseUrl
+        return url
       }
     },
     async session({ session, user, token }) {

@@ -6,6 +6,7 @@ import { User as UserIcon, PulseLoader } from '@/components/icons'
 import { SessionContextValue, signIn, signOut, useSession } from 'next-auth/react'
 import { MouseEventHandler, useState } from 'react'
 import useModals from '@/hooks/modals'
+import useToast from '@/libs/react-toastify'
 
 type UserProps = {
   isLoading?: boolean
@@ -24,8 +25,14 @@ const User = (props: UserProps) => {
       signOut()
     } else if (status === 'unauthenticated') {
       setIsSignInProccess(true)
-      await signIn('auth0')
-      setIsSignInProccess(false)
+
+      const signinResult = await signIn('auth0')
+
+      if (signinResult?.ok) {
+        setIsSignInProccess(false)
+      } else if (signinResult?.error) {
+        useToast.error('ログインに失敗しました。')
+      }
     }
   }
 
@@ -39,7 +46,7 @@ const User = (props: UserProps) => {
 
   const theme =
     session.status === 'authenticated'
-      ? `h-10 aspect-square rounded-full overflow-hidden ${feedBack}`
+      ? `h-12 aspect-square rounded-full overflow-hidden ${feedBack}`
       : `h-10 min-w-[6rem] rounded-md p-4 flex items-center justify-center border-[1px] bg-white text-gh-dark ${feedBack}`
 
   return (
