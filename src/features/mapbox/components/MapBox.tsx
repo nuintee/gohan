@@ -28,13 +28,14 @@ import MarkerPin from './MarkerPin'
 import { colors } from '@/config/colors'
 import { useRecoilState } from 'recoil'
 import { gpsState } from '@/stores/gps'
+import useGPS from '@/hooks/gps'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
   const mapBoxRef = useRef<MapRef>(null)
 
   // Recoil
-  const [gps, setGPS] = useRecoilState(gpsState)
+  const { gps } = useGPS()
 
   // local
   const [focusId, setFocusId] = useState('')
@@ -78,8 +79,8 @@ const MapBox = () => {
     <div className='w-full h-full'>
       <Map
         initialViewState={{
-          latitude: gps.coords.latitude ?? 0,
-          longitude: gps.coords.longitude ?? 0,
+          latitude: gps.coords.latitude,
+          longitude: gps.coords.longitude,
           zoom: 16,
         }}
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
