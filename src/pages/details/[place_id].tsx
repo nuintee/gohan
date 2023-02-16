@@ -26,11 +26,17 @@ import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
 import ModalLayout from '@/layouts/ModalLayout'
 import ImageModal from '@/features/details/components/ImageModal'
+import { trpc } from '@/libs/trpc'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 
 const IMG_SRC = images.random()
 
-const DetailsPage = ({ data }: { data: ActivityResolved }) => {
+const DetailsPage = ({ passed }: { passed: ActivityResolved }) => {
   const router = useRouter()
+
+  const { data, isFetching } = useGetActivity({
+    activityId: 'd30b89de-6743-4d51-b6f0-b7865926b8d6',
+  })
 
   const [dominant, setDominant] = useState({
     color: colors['gh-l-gray'],
@@ -55,6 +61,10 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
 
     init()
   }, [])
+
+  if (isFetching) {
+    return <>Loading...</>
+  }
 
   // Animation
   if (router.query?.effect) return <>Effected!</>

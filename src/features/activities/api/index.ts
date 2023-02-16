@@ -21,7 +21,8 @@ export const getActivity = procedure
   .query(async ({ input }) => {
     if (IS_DEVMODE) {
       const data = await prisma.activity.findUnique({ where: { id: input.activityId } })
-      return data
+      const detailed = detailsData.result(data?.place_id as string)
+      return { ...data, ...detailed }
     } else if (IS_PRODMODE) {
       // Google API
     } else {
