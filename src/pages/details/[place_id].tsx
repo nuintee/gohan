@@ -29,14 +29,17 @@ import ImageModal from '@/features/details/components/ImageModal'
 import { trpc } from '@/libs/trpc'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 
+// SSG
+import { createProxySSGHelpers } from '@trpc/react-query/ssg'
+import { appRouter } from '@/server/routers/_app'
+import superjson from 'superjson'
+
 const IMG_SRC = images.random()
 
-const DetailsPage = ({ passed }: { passed: ActivityResolved }) => {
+const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) => {
   const router = useRouter()
 
-  const { data, isFetching } = useGetActivity({
-    activityId: 'd30b89de-6743-4d51-b6f0-b7865926b8d6',
-  })
+  const { data, isFetching } = useGetActivity({ activityId: id })
 
   const [dominant, setDominant] = useState({
     color: colors['gh-l-gray'],
@@ -62,9 +65,7 @@ const DetailsPage = ({ passed }: { passed: ActivityResolved }) => {
     init()
   }, [])
 
-  if (isFetching) {
-    return <>Loading...</>
-  }
+  if (isFetching) return <>Loading...</>
 
   // Animation
   if (router.query?.effect) return <>Effected!</>
@@ -184,13 +185,28 @@ const DetailsPage = ({ passed }: { passed: ActivityResolved }) => {
 }
 
 export async function getServerSideProps({ query }) {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  })
+
+  await ssg.getActivity.prefetch({ activityId: 'd30b89de-6743-4d51-b6f0-b7865926b8d6' })
+
   return {
     props: {
-      data:
-        details.result(query.place_id) ||
-        places.results[Math.floor(Math.random() * places.results.length - 1)],
+      trpcState: ssg.dehydrate(),
+      id: 'd30b89de-6743-4d51-b6f0-b7865926b8d6',
     },
   }
+
+  // return {
+  //   props: {
+  //     data:
+  //       details.result(query.place_id) ||
+  //       places.results[Math.floor(Math.random() * places.results.length - 1)],
+  //   },
+  // }
 }
 
 export default DetailsPage
