@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { ReviewStatus } from '@prisma/client'
 
 const REVIEW_STATUS_ENUM = z.nativeEnum(ReviewStatus)
+export type ReviewStatusType = z.infer<typeof REVIEW_STATUS_ENUM>
 
 export const AddActivitySchema = z.object({
   activityId: z.optional(z.string().uuid()),
