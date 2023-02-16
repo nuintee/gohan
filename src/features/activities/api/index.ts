@@ -69,14 +69,21 @@ export const updateActivity = procedure.input(UpdateActivitySchema).mutation(asy
 })
 
 export const addActivity = procedure.input(AddActivitySchema).mutation(async ({ input }) => {
-  const { activityId = randomUUID(), userId, place_id = '', is_liked = false } = input
+  const {
+    activityId = randomUUID(),
+    userId,
+    place_id = '',
+    memo = '',
+    reviewStatus = 'NEW',
+  } = input
 
   if (IS_DEVMODE) {
     const data = await prisma.activity.create({
       data: {
         id: activityId,
         place_id,
-        is_liked,
+        memo,
+        reviewStatus,
         userId,
         discovered_at: new Date(),
       },
