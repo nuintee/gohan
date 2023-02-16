@@ -1,47 +1,43 @@
-import { ViewState } from 'react-map-gl'
+import { ActivityResolved } from '@/features/activities/types'
+import { useRef } from 'react'
+import { MapRef, ViewState } from 'react-map-gl'
 import { useRecoilState } from 'recoil'
 
 // types
-import { mapBoxState } from '../stores'
+import { DefaultMapboxValues, mapBoxRefAtom, mapBoxState } from '../stores'
 
 const useMapBox = () => {
   const [mapbox, setMapBox] = useRecoilState(mapBoxState)
-  const { coords, viewState, isLoadingUserLocation } = mapbox
+  const [mapBoxRef, setMapBoxRef] = useRecoilState(mapBoxRefAtom)
 
-  function coordAsArray(coords: Pick<GeolocationCoordinates, 'latitude' | 'longitude'>) {
-    return [coords.latitude, coords.longitude]
+  const updateSafeMapBox = (payload: Omit<DefaultMapboxValues, 'mapBoxRef'>) => {
+    setMapBox((prev) => ({ ...prev, ...payload }))
   }
 
-  function coordAsString(coords: Pick<GeolocationCoordinates, 'latitude' | 'longitude'>) {
-    return `${coords.latitude},${coords.longitude}`
+  const clearActivityFocus = () => {
+    setMapBox((prev) => ({ ...prev, focusedPlaceId: '' }))
   }
 
-  const updateCoords = (coords: GeolocationCoordinates) => {
-    setMapBox((prev) => ({ ...prev, coords }))
+  const onActivityClicked = (activity: ActivityResolved) => {
+    updateSafeMapBox({ focusedPlaceId: activity.place_id })
 
-    if (isLoadingUserLocation) {
-      updateIsLoadingUserLocation(false)
-    }
-  }
-
-  const updateViewState = (viewState: ViewState) => {
-    setMapBox((prev) => ({ ...prev, viewState }))
-  }
-
-  const updateIsLoadingUserLocation = (isLoading: boolean) => {
-    setMapBox((prev) => ({ ...prev, isLoadingUserLocation: isLoading }))
+    mapBoxRef?.flyTo({
+      center: {
+        lat: activity.geometry?.location?.lat,
+        lng: activity.geometry?.location?.lng,
+      },
+      zoom: 17.5,
+    })
   }
 
   return {
-    updateCoords,
-    updateViewState,
-    updateIsLoadingUserLocation,
-    state: mapbox,
-    coords,
-    viewState,
-    isLoadingUserLocation,
-    coordAsString,
-    coordAsArray,
+    mapbox,
+    mapBoxRef,
+    setMapBoxRef,
+    setMapBoxDangerous: setMapBox,
+    updateSafeMapBox,
+    onActivityClicked,
+    clearActivityFocus,
   }
 }
 

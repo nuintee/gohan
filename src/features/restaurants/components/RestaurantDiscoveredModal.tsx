@@ -1,5 +1,4 @@
 // import useDirections from '@/features/directions/hooks'
-import useMapBox from '@/features/mapbox/hooks'
 import ModalLayout from '@/layouts/ModalLayout'
 import { useEffect } from 'react'
 import { RestaurantProps } from '../types'

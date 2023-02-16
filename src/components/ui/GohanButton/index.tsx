@@ -6,7 +6,6 @@ import { PulseLoader } from '@/components/icons'
 
 // Hooks
 // import useDirections from '@/features/directions/hooks'
-import useMapBox from '@/features/mapbox/hooks'
 
 type Props = {
   isLoading?: boolean

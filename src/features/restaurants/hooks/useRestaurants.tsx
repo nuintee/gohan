@@ -1,5 +1,4 @@
 import useAddActivity from '@/features/activities/hooks/useAddActivity'
-import useMapBox from '@/features/mapbox/hooks'
 import useGPS from '@/hooks/gps'
 import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'

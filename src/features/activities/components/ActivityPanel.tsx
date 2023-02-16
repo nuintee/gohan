@@ -10,7 +10,6 @@ import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { ActivityResolved } from '../types'
 import { useSession } from 'next-auth/react'
 import { QueryClient, UseMutationResult } from '@tanstack/react-query'
-import useMapBox from '@/features/mapbox/hooks'
 import useModals from '@/hooks/modals'
 import usePatchActivity from '../hooks/usePatchActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
@@ -19,6 +18,9 @@ import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaura
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 import MapBoxCore from '@/features/mapbox/components/MapBoxChip'
 import MapBox from '@/features/mapbox/components/MapBox'
+import { useRecoilState } from 'recoil'
+import { mapBoxState } from '@/features/mapbox/stores'
+import useMapBox from '@/features/mapbox/hooks'
 
 type Props = {
   isOpen?: boolean
@@ -39,6 +41,8 @@ const ActivityPanel = (props: Props) => {
     onClickItem,
   } = props
 
+  const { onActivityClicked, mapbox } = useMapBox()
+
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
   return (
@@ -49,7 +53,12 @@ const ActivityPanel = (props: Props) => {
       <hr></hr>
       <div className='p-4 flex-1 overflow-auto'>
         {getUserAll.data?.map((activity) => (
-          <RestaurantBoard data={activity} compact onClick={() => onClickItem(activity)} />
+          <RestaurantBoard
+            data={activity}
+            compact
+            onClick={() => onActivityClicked(activity)}
+            isFocused={mapbox.focusedPlaceId === activity.place_id}
+          />
         ))}
       </div>
     </div>

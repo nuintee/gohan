@@ -27,50 +27,25 @@ import { Close } from '@/components/icons'
 import MarkerPin from './MarkerPin'
 import { colors } from '@/config/colors'
 import useGPS from '@/hooks/gps'
+import { useRecoilState } from 'recoil'
+import { mapBoxState } from '../stores'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
-  const mapBoxRef = useRef<MapRef>(null)
 
-  // Recoil
   const { gps } = useGPS()
 
-  // local
-  const [focusId, setFocusId] = useState('')
+  const { mapbox, setMapBoxRef, onActivityClicked, clearActivityFocus } = useMapBox()
 
   const { data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
-  const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
-    useMapBox()
-
   const handleLoad = () => {
-    updateIsLoadingUserLocation(true)
     geoLocateRef?.current?.trigger()
   }
 
   const handleError = (error) => {
     useToast.error(error.message)
-
-    if (isLoadingUserLocation) {
-      updateIsLoadingUserLocation(false)
-    }
-  }
-
-  const onClickItem = (activity: ActivityResolved) => {
-    setFocusId(activity.place_id)
-
-    mapBoxRef.current?.flyTo({
-      center: {
-        lat: activity.geometry?.location?.lat,
-        lng: activity.geometry?.location?.lng,
-      },
-      zoom: 17.5,
-    })
-  }
-
-  const clearFocus = () => {
-    setFocusId('')
   }
 
   return (
@@ -85,11 +60,10 @@ const MapBox = () => {
         mapStyle={mapStyles.MONOCHROME}
         renderWorldCopies={false}
         pitchWithRotate={false}
-        onMoveEnd={(e) => updateViewState(e.viewState)}
-        onClick={() => clearFocus()}
+        onClick={() => clearActivityFocus()}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
-        ref={mapBoxRef}
+        ref={setMapBoxRef}
       >
         <GeolocateControl
           showAccuracyCircle
@@ -97,7 +71,6 @@ const MapBox = () => {
           showUserLocation
           showUserHeading
           position='bottom-right'
-          onGeolocate={(e) => updateCoords(e.coords)}
           onError={handleError}
           style={{
             padding: '0.5rem',
@@ -109,8 +82,8 @@ const MapBox = () => {
           <MarkerPin
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
-            focused={focusId === activity.place_id}
-            onClick={() => onClickItem(activity)}
+            focused={mapbox.focusedPlaceId === activity.place_id}
+            onClick={() => onActivityClicked(activity)}
             data={activity}
             key={activity.place_id}
           />
