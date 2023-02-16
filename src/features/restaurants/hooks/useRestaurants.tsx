@@ -41,8 +41,8 @@ const useRestaurants = (
       if (!!props.place_id) return
 
       addActivity.mutate({
-        place_id: data.place_id,
-        is_liked: false,
+        place_id: data?.place_id,
+        reviewStatus: 'NEW',
         userId: session.user.id,
       })
     },
