@@ -26,8 +26,6 @@ import { ActivityResolved } from '@/features/activities/types'
 import { Close } from '@/components/icons'
 import MarkerPin from './MarkerPin'
 import { colors } from '@/config/colors'
-import { useRecoilState } from 'recoil'
-import { gpsState } from '@/stores/gps'
 import useGPS from '@/hooks/gps'
 
 const MapBox = () => {
