@@ -1,10 +1,11 @@
-import { createRef, Ref, RefAttributes, RefObject, useRef } from 'react'
-import { MapRef, ViewState } from 'react-map-gl'
+import { MapRef } from 'react-map-gl'
 import { atom } from 'recoil'
 
 export type DefaultMapboxValues = {
   focusedPlaceId: string // place_id
 }
+
+export type DefaultMapboxRef = MapRef | null
 
 export const mapBoxState = atom<DefaultMapboxValues>({
   key: 'mapBoxState',
@@ -13,7 +14,7 @@ export const mapBoxState = atom<DefaultMapboxValues>({
   },
 })
 
-export const mapBoxRefAtom = atom({
+export const mapBoxRefAtom = atom<DefaultMapboxRef>({
   key: 'mapBoxRef',
   default: null,
   dangerouslyAllowMutability: true,
