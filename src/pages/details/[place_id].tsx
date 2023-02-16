@@ -72,12 +72,10 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 
   if (isFetching) return <>Loading...</>
 
-  if (isError) return <>Error</>
+  if (isError) return <>Navigate</>
 
   // Animation
   if (router.query?.effect) return <>Effected!</>
-
-  if (!data) return <></>
 
   return (
     <>
@@ -202,6 +200,14 @@ export async function getServerSideProps({ query }) {
   // })
 
   // await ssg.getActivity.prefetch({ activityId: 'd30b89de-6743-4d51-b6f0-b7865926b8d6' })
+
+  const data = true
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
 
   return {
     props: {
