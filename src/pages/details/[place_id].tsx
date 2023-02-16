@@ -33,13 +33,18 @@ import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import { createProxySSGHelpers } from '@trpc/react-query/ssg'
 import { appRouter } from '@/server/routers/_app'
 import superjson from 'superjson'
+import { useSession } from 'next-auth/react'
 
 const IMG_SRC = images.random()
 
 const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) => {
   const router = useRouter()
+  const { data: session, status } = useSession()
 
-  const { data, isFetching } = useGetActivity({ activityId: id })
+  const { data, isFetching, isError, error } = useGetActivity({
+    userId: session?.user.id,
+    place_id: id,
+  })
 
   const [dominant, setDominant] = useState({
     color: colors['gh-l-gray'],
@@ -67,8 +72,12 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 
   if (isFetching) return <>Loading...</>
 
+  if (isError) return <>Error</>
+
   // Animation
   if (router.query?.effect) return <>Effected!</>
+
+  if (!data) return <></>
 
   return (
     <>
@@ -86,7 +95,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
               <div className='flex flex-col gap-2'>
                 <div className='flex gap-4'>
                   <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
-                  <ActivityStatus status={data.reviewStatus} />
+                  {status === 'authenticated' && <ActivityStatus status={data.reviewStatus} />}
                 </div>
                 <p className='text-white text-md'>
                   {data.editorial_summary?.overview || data.types?.join('・')}
@@ -121,11 +130,12 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
             </div>
           </div>
           <main className='px-[10%]'>
-            <section className='flex flex-col gap-2 mb-14'>
-              <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
-              {/* <Input placeholder='メモ' /> */}
-              <p className='text-gh-gray'>{data.memo}</p>
-            </section>
+            {status === 'authenticated' && (
+              <section className='flex flex-col gap-2 mb-14'>
+                <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
+                <p className='text-gh-gray'>{data.memo}</p>
+              </section>
+            )}
             <section className='flex items-center justify-between gap-4  mb-14'>
               <DescriptiveChip
                 title='超高級'
@@ -185,18 +195,18 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 }
 
 export async function getServerSideProps({ query }) {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: {},
-    transformer: superjson,
-  })
+  // const ssg = createProxySSGHelpers({
+  //   router: appRouter,
+  //   ctx: {},
+  //   transformer: superjson,
+  // })
 
-  await ssg.getActivity.prefetch({ activityId: 'd30b89de-6743-4d51-b6f0-b7865926b8d6' })
+  // await ssg.getActivity.prefetch({ activityId: 'd30b89de-6743-4d51-b6f0-b7865926b8d6' })
 
   return {
     props: {
-      trpcState: ssg.dehydrate(),
-      id: 'd30b89de-6743-4d51-b6f0-b7865926b8d6',
+      // trpcState: ssg.dehydrate(),
+      id: query.place_id,
     },
   }
 

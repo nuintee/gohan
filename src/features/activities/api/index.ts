@@ -15,13 +15,27 @@ import { details as detailsData } from '@/data/details'
 export const getActivity = procedure
   .input(
     z.object({
-      activityId: z.string(),
+      userId: z.optional(z.string()),
+      place_id: z.string(),
     }),
   )
   .query(async ({ input }) => {
     if (IS_DEVMODE) {
-      const data = await prisma.activity.findUnique({ where: { id: input.activityId } })
-      const detailed = detailsData.result(data?.place_id as string)
+      let data
+
+      if (input.userId) {
+        // Get activity when authed
+        data = await prisma.activity.findUnique({
+          where: {
+            userId_place_id: {
+              userId: input.userId,
+              place_id: input.place_id,
+            },
+          },
+        })
+      }
+
+      const detailed = detailsData.result(input?.place_id as string)
       return { ...data, ...detailed }
     } else if (IS_PRODMODE) {
       // Google API
