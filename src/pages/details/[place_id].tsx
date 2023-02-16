@@ -75,7 +75,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
               <div className='flex flex-col gap-2'>
                 <div className='flex gap-4'>
                   <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
-                  <ActivityStatus status='good' />
+                  <ActivityStatus status={data.reviewStatus} />
                 </div>
                 <p className='text-white text-md'>
                   {data.editorial_summary?.overview || data.types?.join('・')}
@@ -113,7 +113,7 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
             <section className='flex flex-col gap-2 mb-14'>
               <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
               {/* <Input placeholder='メモ' /> */}
-              <p className='text-gh-gray'>メモ</p>
+              <p className='text-gh-gray'>{data.memo}</p>
             </section>
             <section className='flex items-center justify-between gap-4  mb-14'>
               <DescriptiveChip
