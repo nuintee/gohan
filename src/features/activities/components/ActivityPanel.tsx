@@ -20,6 +20,7 @@ import MapBoxCore from '@/features/mapbox/components/MapBoxChip'
 import MapBox from '@/features/mapbox/components/MapBox'
 import { useRecoilState } from 'recoil'
 import { mapBoxState } from '@/features/mapbox/stores'
+import useMapBox from '@/features/mapbox/hooks'
 
 type Props = {
   isOpen?: boolean
@@ -33,15 +34,14 @@ const ActivityPanel = (props: Props) => {
   const { status, data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
-  // Recoil
-  const [mapbox, setMapBox] = useRecoilState(mapBoxState)
-
   const {
     isOpen = isPanelOpen ?? false,
     onClose = closePanel,
     data = getUserAll.data ?? [],
     onClickItem,
   } = props
+
+  const { onActivityClicked, mapbox } = useMapBox()
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
@@ -53,7 +53,12 @@ const ActivityPanel = (props: Props) => {
       <hr></hr>
       <div className='p-4 flex-1 overflow-auto'>
         {getUserAll.data?.map((activity) => (
-          <RestaurantBoard data={activity} compact onClick={() => onClickItem(activity)} />
+          <RestaurantBoard
+            data={activity}
+            compact
+            onClick={() => onActivityClicked(activity)}
+            isFocused={mapbox.focusedPlaceId === activity.place_id}
+          />
         ))}
       </div>
     </div>

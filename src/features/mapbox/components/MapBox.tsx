@@ -32,11 +32,10 @@ import { mapBoxState } from '../stores'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
-  const mapBoxRef = useRef<MapRef>(null)
 
   const { gps } = useGPS()
 
-  const { mapbox, updateSafeMapBox } = useMapBox()
+  const { mapbox, mapBoxRef, onActivityClicked, clearActivityFocus } = useMapBox()
 
   const { data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -47,22 +46,6 @@ const MapBox = () => {
 
   const handleError = (error) => {
     useToast.error(error.message)
-  }
-
-  const onClickItem = (activity: ActivityResolved) => {
-    updateSafeMapBox({ focusedPlaceId: activity.place_id })
-
-    mapBoxRef.current?.flyTo({
-      center: {
-        lat: activity.geometry?.location?.lat,
-        lng: activity.geometry?.location?.lng,
-      },
-      zoom: 17.5,
-    })
-  }
-
-  const clearFocus = () => {
-    updateSafeMapBox({ focusedPlaceId: '' })
   }
 
   return (
@@ -77,7 +60,7 @@ const MapBox = () => {
         mapStyle={mapStyles.MONOCHROME}
         renderWorldCopies={false}
         pitchWithRotate={false}
-        onClick={() => clearFocus()}
+        onClick={() => clearActivityFocus()}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
         ref={mapBoxRef}
@@ -100,7 +83,7 @@ const MapBox = () => {
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
             focused={mapbox.focusedPlaceId === activity.place_id}
-            onClick={() => onClickItem(activity)}
+            onClick={() => onActivityClicked(activity)}
             data={activity}
             key={activity.place_id}
           />

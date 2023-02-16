@@ -129,6 +129,7 @@ export type RestaurantData = Activity & Pick<ResultsEntity, typeof neededDetails
 export type RestaurantProps = {
   isLocked: boolean
   isLoading?: boolean
+  isFocused?: boolean
   data?: ActivityResolved // includes status
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>

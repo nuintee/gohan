@@ -13,11 +13,12 @@ import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 
 const RestaurantBoard = (props: RestaurantProps) => {
-  const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate } = props
+  const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
 
   const compactStyle = {
-    container:
-      'flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95',
+    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill ${
+      isFocused && 'bg-gh-white'
+    } cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95`,
     img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
     closeButton: '',
     contents: 'flex flex-1 gap-4 items-center justify-between',
