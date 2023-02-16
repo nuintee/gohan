@@ -1,5 +1,6 @@
 import useAddActivity from '@/features/activities/hooks/useAddActivity'
 import useMapBox from '@/features/mapbox/hooks'
+import useGPS from '@/hooks/gps'
 import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'
 import { trpc } from '@/libs/trpc'
@@ -13,22 +14,19 @@ const useRestaurants = (
 ) => {
   const { status, data: session } = useSession()
   const addActivity = useAddActivity()
-  const { open } = useModals()
-  const { isLoadingUserLocation } = useMapBox()
-
-  const isGPSValid = props.latitude && props.longitude
+  const { isGPSFetching, isGPSError } = useGPS()
 
   return trpc.getRestaurants.useQuery(props, {
     enabled: !!props.place_id,
-    retry: isGPSValid ? 3 : 0,
+    retry: isGPSError || isGPSFetching ? 0 : 3,
     onError: (error) => {
       console.error(error)
 
       if (error instanceof Error) {
-        if (isLoadingUserLocation) {
+        if (isGPSFetching) {
           useToast.info('Loading user location, please wait')
         } else {
-          const message = !isGPSValid ? `Please allow user geolocaiton tracking` : error.message
+          const message = isGPSError ? `Please allow user geolocaiton tracking` : error.message
 
           useToast.error(message)
         }

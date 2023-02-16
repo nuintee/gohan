@@ -26,10 +26,14 @@ import { ActivityResolved } from '@/features/activities/types'
 import { Close } from '@/components/icons'
 import MarkerPin from './MarkerPin'
 import { colors } from '@/config/colors'
+import useGPS from '@/hooks/gps'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
   const mapBoxRef = useRef<MapRef>(null)
+
+  // Recoil
+  const { gps } = useGPS()
 
   // local
   const [focusId, setFocusId] = useState('')
@@ -72,6 +76,11 @@ const MapBox = () => {
   return (
     <div className='w-full h-full'>
       <Map
+        initialViewState={{
+          latitude: gps.coords.latitude,
+          longitude: gps.coords.longitude,
+          zoom: 16,
+        }}
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         mapStyle={mapStyles.MONOCHROME}
         renderWorldCopies={false}
