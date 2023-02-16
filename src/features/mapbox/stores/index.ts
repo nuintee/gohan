@@ -1,19 +1,16 @@
-import { Coordinates } from '@/features/directions/schema/coordinates.schema'
-import { ViewState } from 'react-map-gl'
+import { Ref, RefAttributes } from 'react'
+import { MapRef, ViewState } from 'react-map-gl'
 import { atom } from 'recoil'
 
-export const mapBoxState = atom<{
-  viewState: Partial<ViewState>
-  coords: Partial<Coordinates>
-  isLoadingUserLocation: boolean
-}>({
+export type DefaultMapboxValues = {
+  mapBoxRef: RefAttributes<MapRef>
+  focusedPlaceId: string // place_id
+}
+
+export const mapBoxState = atom<DefaultMapboxValues>({
   key: 'directionsState',
   default: {
-    viewState: {},
-    coords: {
-      latitude: undefined,
-      longitude: undefined,
-    },
-    isLoadingUserLocation: false,
+    mapBoxRef: {},
+    focusedPlaceId: '',
   },
 })

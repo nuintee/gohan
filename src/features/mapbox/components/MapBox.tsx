@@ -27,16 +27,16 @@ import { Close } from '@/components/icons'
 import MarkerPin from './MarkerPin'
 import { colors } from '@/config/colors'
 import useGPS from '@/hooks/gps'
+import { useRecoilState } from 'recoil'
+import { mapBoxState } from '../stores'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
   const mapBoxRef = useRef<MapRef>(null)
 
-  // Recoil
   const { gps } = useGPS()
 
-  // local
-  const [focusId, setFocusId] = useState('')
+  const { mapbox, updateSafeMapBox } = useMapBox()
 
   const { data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -50,7 +50,7 @@ const MapBox = () => {
   }
 
   const onClickItem = (activity: ActivityResolved) => {
-    setFocusId(activity.place_id)
+    updateSafeMapBox({ focusedPlaceId: activity.place_id })
 
     mapBoxRef.current?.flyTo({
       center: {
@@ -62,7 +62,7 @@ const MapBox = () => {
   }
 
   const clearFocus = () => {
-    setFocusId('')
+    updateSafeMapBox({ focusedPlaceId: '' })
   }
 
   return (
@@ -99,7 +99,7 @@ const MapBox = () => {
           <MarkerPin
             latitude={activity.geometry?.location?.lat}
             longitude={activity.geometry?.location?.lng}
-            focused={focusId === activity.place_id}
+            focused={mapbox.focusedPlaceId === activity.place_id}
             onClick={() => onClickItem(activity)}
             data={activity}
             key={activity.place_id}

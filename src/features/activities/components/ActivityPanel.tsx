@@ -18,6 +18,8 @@ import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaura
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 import MapBoxCore from '@/features/mapbox/components/MapBoxChip'
 import MapBox from '@/features/mapbox/components/MapBox'
+import { useRecoilState } from 'recoil'
+import { mapBoxState } from '@/features/mapbox/stores'
 
 type Props = {
   isOpen?: boolean
@@ -30,6 +32,9 @@ const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { status, data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
+
+  // Recoil
+  const [mapbox, setMapBox] = useRecoilState(mapBoxState)
 
   const {
     isOpen = isPanelOpen ?? false,
