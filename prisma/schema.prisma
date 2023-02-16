@@ -63,6 +63,8 @@ model Activity {
   memo          String
   reviewStatus  ReviewStatus @default(NEW)
   discovered_at DateTime @default(now())
+
+  @@unique([userId, place_id])
 }
 
 enum ReviewStatus {
