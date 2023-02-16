@@ -60,7 +60,6 @@ model Activity {
   userId       String 
   user          User   @relation(fields: [userId], references: [id], onDelete: Cascade) 
   place_id      String
-  is_liked      Boolean @default(false)
   memo          String
   reviewStatus  ReviewStatus @default(NEW)
   discovered_at DateTime @default(now())
