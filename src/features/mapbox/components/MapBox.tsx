@@ -41,20 +41,12 @@ const MapBox = () => {
   const { data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
-  const { updateViewState, updateCoords, updateIsLoadingUserLocation, isLoadingUserLocation } =
-    useMapBox()
-
   const handleLoad = () => {
-    updateIsLoadingUserLocation(true)
     geoLocateRef?.current?.trigger()
   }
 
   const handleError = (error) => {
     useToast.error(error.message)
-
-    if (isLoadingUserLocation) {
-      updateIsLoadingUserLocation(false)
-    }
   }
 
   const onClickItem = (activity: ActivityResolved) => {
@@ -85,7 +77,6 @@ const MapBox = () => {
         mapStyle={mapStyles.MONOCHROME}
         renderWorldCopies={false}
         pitchWithRotate={false}
-        onMoveEnd={(e) => updateViewState(e.viewState)}
         onClick={() => clearFocus()}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
@@ -97,7 +88,6 @@ const MapBox = () => {
           showUserLocation
           showUserHeading
           position='bottom-right'
-          onGeolocate={(e) => updateCoords(e.coords)}
           onError={handleError}
           style={{
             padding: '0.5rem',
