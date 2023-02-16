@@ -35,7 +35,7 @@ const MapBox = () => {
 
   const { gps } = useGPS()
 
-  const { mapbox, mapBoxRef, onActivityClicked, clearActivityFocus } = useMapBox()
+  const { mapbox, setMapBoxRef, onActivityClicked, clearActivityFocus } = useMapBox()
 
   const { data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -63,7 +63,7 @@ const MapBox = () => {
         onClick={() => clearActivityFocus()}
         onError={(e) => handleError(e.error)}
         onLoad={handleLoad}
-        ref={mapBoxRef}
+        ref={setMapBoxRef}
       >
         <GeolocateControl
           showAccuracyCircle
