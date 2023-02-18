@@ -35,6 +35,7 @@ import { appRouter } from '@/server/routers/_app'
 import superjson from 'superjson'
 import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
+import { GetServerSideProps } from 'next/types'
 
 const IMG_SRC = images.random()
 
@@ -193,37 +194,21 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   )
 }
 
-export async function getServerSideProps({ query }) {
-  // const ssg = createProxySSGHelpers({
-  //   router: appRouter,
-  //   ctx: {},
-  //   transformer: superjson,
-  // })
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  })
 
-  // await ssg.getActivity.prefetch({ activityId: 'd30b89de-6743-4d51-b6f0-b7865926b8d6' })
-
-  const data = true
-
-  if (!data) {
-    return {
-      notFound: true,
-    }
-  }
+  await ssg.getActivity.prefetch({ userId: '', place_id: query.place_id as string })
 
   return {
     props: {
-      // trpcState: ssg.dehydrate(),
+      trpcState: ssg.dehydrate(),
       id: query.place_id,
     },
   }
-
-  // return {
-  //   props: {
-  //     data:
-  //       details.result(query.place_id) ||
-  //       places.results[Math.floor(Math.random() * places.results.length - 1)],
-  //   },
-  // }
 }
 
 export default DetailsPage
