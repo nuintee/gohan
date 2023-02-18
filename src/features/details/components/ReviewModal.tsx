@@ -2,6 +2,7 @@ import { Input, PanelHeader } from '@/components/ui'
 import { colors } from '@/config/colors'
 import usePatchActivity from '@/features/activities/hooks/usePatchActivity'
 import ModalLayout from '@/layouts/ModalLayout'
+import useToast from '@/libs/react-toastify'
 import { ReviewStatus } from '@prisma/client'
 
 // lib
@@ -90,13 +91,21 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
   const onSubmit = (submittedData) => {
     console.log(submittedData)
     const { reviewMemo, reviewStatus } = submittedData
-    updateActivity.mutate({
-      activityId: data.id,
-      payload: {
-        reviewStatus,
-        memo: reviewMemo,
+    updateActivity.mutate(
+      {
+        activityId: data.id,
+        payload: {
+          reviewStatus,
+          memo: reviewMemo,
+        },
       },
-    })
+      {
+        onSuccess: (data) => {
+          useToast.success('レビュー更新完了')
+          onClose()
+        },
+      },
+    )
   }
 
   return (
