@@ -24,18 +24,7 @@ type Props = {
   subColor?: string
   mainDecoration?: JSX.Element | string
   subDecoration?: JSX.Element | string
-}
-
-{
-  /* <div className='flex flex-col gap-2'>
-                <div className='flex gap-4'>
-                  <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
-                  {status === 'authenticated' && <ActivityStatus status={data.reviewStatus} />}
-                </div>
-                <p className='text-white text-md'>
-                  {data.editorial_summary?.overview || data.types?.join('・')}
-                </p>
-              </div> */
+  gap?: boolean
 }
 
 const Texts = (props: Props) => {
@@ -47,13 +36,14 @@ const Texts = (props: Props) => {
     subColor = colors['gh-l-gray'],
     mainDecoration,
     subDecoration,
+    gap = false,
   } = props
 
   const textSize = sizes[size || 'normal']
 
   return (
     <div className='flex w-full items-center justify-between rounded-md gap-2 whitespace-nowrap'>
-      <div className='flex flex-col'>
+      <div className={`flex flex-col ${gap && 'gap-2'}`}>
         <div className='flex gap-4'>
           <h1
             className={`font-bold ${textSize.main}`}

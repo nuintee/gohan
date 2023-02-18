@@ -88,22 +88,16 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
           <div className='px-[10%] pt-16 pb-6 flex gap-8'>
             <ImageChip isLoading={true} src={IMG_SRC} onClick={() => setIsImageModalOpen(true)} />
             <div className='flex-1 flex flex-col justify-between py-2'>
-              {/* <div className='flex flex-col gap-2'>
-                <div className='flex gap-4'>
-                  <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
-                  {status === 'authenticated' && <ActivityStatus status={data.reviewStatus} />}
-                </div>
-                <p className='text-white text-md'>
-                  {data.editorial_summary?.overview || data.types?.join('・')}
-                </p>
-              </div> */}
               <Texts
                 size={'large'}
+                main={data.name}
+                sub={data.editorial_summary?.overview || data.types?.join('・')}
                 mainColor={'white'}
                 subColor={'white'}
                 mainDecoration={
                   status === 'authenticated' && <ActivityStatus status={data?.reviewStatus} />
                 }
+                gap
               />
               <div className='flex gap-4 w-fit'>
                 {status === 'authenticated' && (
