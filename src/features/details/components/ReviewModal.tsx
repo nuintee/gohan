@@ -84,23 +84,27 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm()
+  } = useForm<{
+    reviewMemo?: string
+    reviewStatus: ReviewStatus
+  }>()
 
   const updateActivity = usePatchActivity()
 
-  const onSubmit = (submittedData) => {
+  const onSubmit = handleSubmit((submittedData) => {
     console.log(submittedData)
-    const { reviewMemo, reviewStatus } = submittedData
+    const { reviewStatus, reviewMemo: memo } = submittedData
+
     updateActivity.mutate(
       {
         activityId: data.id,
         payload: {
           reviewStatus,
-          memo: reviewMemo,
+          memo,
         },
       },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           useToast.success('レビュー更新完了')
 
           if (!!onClose) {
@@ -109,14 +113,14 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
         },
       },
     )
-  }
+  })
 
   return (
     <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
       <section className='bg-white'>
         <PanelHeader onClose={onClose} />
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
           className='min-w-[30rem] p-4 flex flex-col items-center gap-8 justify-center'
         >
           <h2 className='font-semibold text-xl'>この場所への評価を教えて下さい。</h2>
