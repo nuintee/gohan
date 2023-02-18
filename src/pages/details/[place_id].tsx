@@ -148,17 +148,13 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
             </div>
           </div>
           <main className='px-[10%]'>
-            {status === 'authenticated' && (
-              <section className='flex flex-col gap-2 mb-14'>
-                <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
-                <p className='text-gh-gray'>{data.memo}</p>
-              </section>
-            )}
-            <section className='flex items-center justify-between gap-4  mb-14'>
+            {status === 'authenticated' && <Texts main='この場所についてのメモ' sub={data?.memo} />}
+            <section className='flex items-center justify-between gap-4 my-14'>
               <DescriptiveChip
                 title='超高級'
                 description={data.price_level}
                 icon={<Price fill={colors['gh-red']} />}
+                isLoading={true}
               />
               <DescriptiveChip
                 title='営業中'
@@ -166,16 +162,18 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                   data.opening_hours?.periods && data.opening_hours?.periods[0]
                 }`}
                 icon={<Clock fill={colors['gh-green']} />}
+                isLoading={true}
               />
               {data.user_ratings_total > 0 && (
                 <DescriptiveChip
                   title={`悪い評価`}
                   description={`Googleでの評価は${data.rating}です。`}
                   icon={<Star fill={colors['gh-red']} />}
+                  isLoading={true}
                 />
               )}
             </section>
-            <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}>
+            <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity} isLoading={true}>
               <div className='flex-1 aspect-video w-full'>
                 <MapBoxChip
                   latitude={data.geometry.location.lat}
@@ -188,6 +186,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 margin='5rem'
                 main={`レビュー・${data.rating}`}
                 sub={`${data.user_ratings_total}件のレビュー`}
+                isLoading={true}
               />
             )}
           </main>

@@ -13,7 +13,7 @@ const DescriptiveChip = ({
   isLoading?: boolean
 }) => {
   if (isLoading) {
-    return <div className='h-16 w-full rounded-md select-none bg-gh-l-gray animate-pulse'></div>
+    return <div className='h-20 w-full rounded-md select-none bg-gh-l-gray animate-pulse'></div>
   }
 
   return (
