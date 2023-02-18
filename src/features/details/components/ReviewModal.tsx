@@ -1,13 +1,15 @@
 import { Input, PanelHeader } from '@/components/ui'
 import { colors } from '@/config/colors'
 import ModalLayout from '@/layouts/ModalLayout'
+import { ReviewStatus } from '@prisma/client'
 
 const STATUS = ['good', 'bad', 'ok', 'new'] as const
 
-const COLORS: Record<typeof STATUS[number], string> = {
-  good: colors['gh-l-green'],
-  bad: colors['gh-l-red'],
-  ok: 'yellow',
+const COLORS: Record<ReviewStatus, string> = {
+  GOOD: colors['gh-l-green'],
+  BAD: colors['gh-l-red'],
+  NEW: colors['gh-l-gray'],
+  OK: 'yellow',
 }
 
 type Props = {
@@ -15,7 +17,7 @@ type Props = {
   onClose?: React.MouseEventHandler<HTMLButtonElement>
   data: {
     memo: string
-    status: typeof STATUS[number]
+    status: ReviewStatus
   }
 }
 

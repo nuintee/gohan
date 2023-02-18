@@ -180,7 +180,14 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         data={data}
         onClose={() => setIsBasicInfoModalOpen(false)}
       />
-      <ReviewModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)} />
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        data={{
+          memo: data?.memo,
+          status: data?.reviewStatus,
+        }}
+      />
       <ImageModal
         isOpen={isImageModalOpen}
         data={data.photos?.map((v) => ({
