@@ -34,6 +34,7 @@ import { createProxySSGHelpers } from '@trpc/react-query/ssg'
 import { appRouter } from '@/server/routers/_app'
 import superjson from 'superjson'
 import { useSession } from 'next-auth/react'
+import ErrorFallBack from '@/components/fallback/ErrorFallback'
 
 const IMG_SRC = images.random()
 
@@ -72,13 +73,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 
   if (isFetching) return <>Loading...</>
 
-  if (isError)
-    return (
-      <section>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-      </section>
-    )
+  if (isError) return <ErrorFallBack error={error} />
 
   // Animation
   if (router.query?.effect) return <>Effected!</>
