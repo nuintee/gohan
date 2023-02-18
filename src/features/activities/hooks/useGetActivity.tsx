@@ -3,8 +3,6 @@ import { trpc } from '@/libs/trpc'
 import { useRouter } from 'next/router'
 
 const useGetActivity = (props: Parameters<typeof trpc.getActivity.useQuery>[0]) => {
-  const router = useRouter()
-
   return trpc.getActivity.useQuery(props, {
     enabled: !!props.place_id,
     retry: false,
@@ -12,9 +10,7 @@ const useGetActivity = (props: Parameters<typeof trpc.getActivity.useQuery>[0]) 
       console.log(data)
     },
     onError: (error) => {
-      console.error(error)
-      console.dir(error)
-
+      if (!props.userId) return // ユーザーIDが不正の場合はトースト表示SKIP
       if (error instanceof Error) {
         useToast.error(error.message)
       }
