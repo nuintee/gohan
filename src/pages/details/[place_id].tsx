@@ -102,7 +102,9 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 </p>
               </div>
               <div className='flex gap-4 w-fit'>
-                <Button text='評価を変更' onClick={() => setIsReviewModalOpen(true)} />
+                {status === 'authenticated' && (
+                  <Button text='評価を変更' onClick={() => setIsReviewModalOpen(true)} />
+                )}
                 <Button
                   text='基本情報を表示'
                   outline
