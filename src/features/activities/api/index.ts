@@ -12,6 +12,11 @@ import { sleep } from '@/utils/sleep'
 // data
 import { details as detailsData } from '@/data/details'
 import { TRPCError } from '@trpc/server'
+import {
+  DetailsAPI,
+  PlacesDetailsStatus,
+  PLACES_RESPONSE_STATUS,
+} from '@/features/restaurants/types'
 
 export const getActivity = procedure
   .input(
@@ -36,17 +41,22 @@ export const getActivity = procedure
         })
       }
 
-      const detailed = detailsData.result(input?.place_id as string)
+      const detailsResult = detailsData.result(input?.place_id)
+      const detailsResponse = (): PlacesDetailsStatus => {
+        if (!detailsResult) {
+          return 'ZERO_RESULTS'
+        } else {
+          return 'OK'
+        }
+      }
 
-      if (!detailed || (detailed && !Object.keys(detailed).length))
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'An unexpected error occurred, please try again later.',
-          // optional: pass the original error to retain stack trace
-          cause: 400,
-        })
+      const detailedResponse: DetailsAPI = {
+        ...detailsData,
+        result: detailsResult,
+        status: detailsResponse(),
+      }
 
-      return { ...data, ...detailed }
+      return { ...data, ...detailedResponse.result }
     } else if (IS_PRODMODE) {
       // Google API
     } else {

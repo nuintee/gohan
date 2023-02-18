@@ -20,13 +20,13 @@ export type PlacesDetailsStatus = keyof Omit<typeof PLACES_RESPONSE_STATUS, 'NOT
 export interface PlacesAPI {
   html_attributions?: null[] | null
   results?: ResultsEntity[] | null
-  status: PlacesSearchStatus[number]
+  status: PlacesSearchStatus
 }
 
 export interface DetailsAPI {
   html_attributions?: null[] | null
   result?: ResultsEntity | null
-  status: PlacesDetailsStatus[number]
+  status: PlacesDetailsStatus
 }
 
 export interface ResultsEntity {
