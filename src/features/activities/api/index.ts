@@ -52,8 +52,16 @@ export const getActivity = procedure
 
       const detailedResponse: DetailsAPI = {
         ...detailsData,
-        result: detailsResult,
+        result: detailsResult || {},
         status: detailsResponse(),
+      }
+
+      if (detailedResponse.status !== 'OK') {
+        // throw TRPC Error
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: detailedResponse.status,
+        })
       }
 
       return { ...data, ...detailedResponse.result }

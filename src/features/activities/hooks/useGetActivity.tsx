@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 const useGetActivity = (props: Parameters<typeof trpc.getActivity.useQuery>[0]) => {
   return trpc.getActivity.useQuery(props, {
     enabled: !!props.place_id,
+    onSuccess: (data) => {
+      console.log(data)
+    },
     onError: (error) => {
       console.error(error)
       if (error instanceof Error) {
