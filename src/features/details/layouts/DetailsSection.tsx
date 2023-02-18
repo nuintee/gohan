@@ -6,6 +6,7 @@ type Props = {
   marginDirection?: 'y' | 'x'
   actionCallback?: () => void
   actionLabel?: string
+  isLoading?: boolean
 } & Omit<React.ComponentProps<typeof Texts>, 'size'>
 
 const DetailsSection = ({
@@ -16,6 +17,7 @@ const DetailsSection = ({
   margin = '2rem',
   actionCallback,
   actionLabel,
+  isLoading = false,
 }: Props) => {
   const style = {
     ...(marginDirection == 'x'
@@ -28,6 +30,11 @@ const DetailsSection = ({
           marginBottom: margin,
         }),
   }
+
+  if (isLoading)
+    return (
+      <div className='bg-gh-l-gray w-full h-[30rem] animate-pulse rounded-md' style={style}></div>
+    )
 
   return (
     <section className={`outline rounded-md p-4 outline-gh-pale`} style={style}>
