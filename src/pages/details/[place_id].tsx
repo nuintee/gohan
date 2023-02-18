@@ -51,6 +51,17 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
     place_id: id,
   })
 
+  const dropdownMenu = [
+    {
+      label: '公式ホームページを開く',
+      onDropDownItemClick: () => {},
+    },
+    {
+      label: 'ライブラリから削除',
+      onDropDownItemClick: () => {},
+    },
+  ]
+
   const [dominant, setDominant] = useState({
     color: colors['gh-l-gray'],
     isLoading: true,
@@ -162,7 +173,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                       src: <Dots />,
                     }}
                     square
-                    menu={[{ label: 'HI', onDropDownItemClick: () => console.log('hi') }]}
+                    menu={dropdownMenu}
                   />
                 </div>
               )}
