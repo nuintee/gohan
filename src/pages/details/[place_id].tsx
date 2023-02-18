@@ -99,50 +99,54 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 }
                 gap={true}
               />
-              <div className='flex gap-4 w-fit'>
-                {status === 'authenticated' && (
+              {!isFetching ? (
+                <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
+              ) : (
+                <div className='flex gap-4 w-fit'>
+                  {status === 'authenticated' && (
+                    <Button
+                      text={
+                        !data?.reviewStatus || data?.reviewStatus === 'NEW'
+                          ? '評価を追加'
+                          : '評価を変更'
+                      }
+                      onClick={() => setIsReviewModalOpen(true)}
+                      icon={{
+                        position: 'after',
+                        src:
+                          !data?.reviewStatus || data?.reviewStatus === 'NEW' ? (
+                            ' ✨'
+                          ) : (
+                            <Chevron direction='bottom' />
+                          ),
+                      }}
+                    />
+                  )}
                   <Button
-                    text={
-                      !data?.reviewStatus || data?.reviewStatus === 'NEW'
-                        ? '評価を追加'
-                        : '評価を変更'
-                    }
-                    onClick={() => setIsReviewModalOpen(true)}
+                    text='基本情報を表示'
+                    outline
+                    onClick={() => setIsBasicInfoModalOpen(true)}
+                  />
+                  <Button
+                    text='共有'
+                    outline
+                    onClick={() => share({ url: location.href })}
                     icon={{
-                      position: 'after',
-                      src:
-                        !data?.reviewStatus || data?.reviewStatus === 'NEW' ? (
-                          ' ✨'
-                        ) : (
-                          <Chevron direction='bottom' />
-                        ),
+                      position: 'before',
+                      src: <Share />,
                     }}
                   />
-                )}
-                <Button
-                  text='基本情報を表示'
-                  outline
-                  onClick={() => setIsBasicInfoModalOpen(true)}
-                />
-                <Button
-                  text='共有'
-                  outline
-                  onClick={() => share({ url: location.href })}
-                  icon={{
-                    position: 'before',
-                    src: <Share />,
-                  }}
-                />
-                <Button
-                  text=''
-                  outline
-                  icon={{
-                    position: 'after',
-                    src: <Dots />,
-                  }}
-                  square
-                />
-              </div>
+                  <Button
+                    text=''
+                    outline
+                    icon={{
+                      position: 'after',
+                      src: <Dots />,
+                    }}
+                    square
+                  />
+                </div>
+              )}
             </div>
           </div>
           <main className='px-[10%]'>
