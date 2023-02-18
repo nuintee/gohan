@@ -4,6 +4,7 @@ import usePatchActivity from '@/features/activities/hooks/usePatchActivity'
 import ModalLayout from '@/layouts/ModalLayout'
 import useToast from '@/libs/react-toastify'
 import { ReviewStatus } from '@prisma/client'
+import { useCallback, useMemo } from 'react'
 
 // lib
 import { FieldValues, useForm, UseFormRegister } from 'react-hook-form'
@@ -83,15 +84,22 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<{
     reviewMemo?: string
     reviewStatus: ReviewStatus
-  }>()
+  }>({
+    defaultValues: {
+      reviewMemo: data.memo,
+      reviewStatus: data.status,
+    },
+  })
 
   const updateActivity = usePatchActivity()
 
   const onSubmit = handleSubmit((submittedData) => {
+    if (!isDirty) return !!onClose && onClose()
+
     console.log(submittedData)
     const { reviewStatus, reviewMemo: memo } = submittedData
 
