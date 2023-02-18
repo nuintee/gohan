@@ -118,42 +118,15 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
         >
           <h2 className='font-semibold text-xl'>この場所への評価を教えて下さい。</h2>
           <div className='flex items-center justify-center gap-4 mb-10'>
-            {/* {STATUS.filter((v) => v !== 'new').map((v) => (
-              <button
-                className='bg-red-200 h-20 aspect-square rounded-full'
-                style={{
-                  backgroundColor: COLORS[v],
-                }}
-                key={v}
-              >
-                {v}
-              </button>
-            ))} */}
-
-            {/* <input
-              type='radio'
-              id='reviewStatus-grouop'
-              value='GOOD'
-              defaultChecked={data.status === 'GOOD'}
-              {...register('reviewStatus')}
-            />
-            <label htmlFor='reviewStatus-grouop'>GOOD</label>
-            <input
-              type='radio'
-              id='reviewStatus-grouop'
-              value='BAD'
-              defaultChecked={data.status === 'BAD'}
-              {...register('reviewStatus')}
-            />
-            <label htmlFor='reviewStatus-grouop'>BAD</label>
-            <br></br> */}
             <StatusRadioGroup status={data.status} register={register} />
           </div>
           <Input
+            type={'text'}
             placeholder='この場所についてのメモを追加 (任意)'
             defaultValue={data?.memo}
             register={register}
             registerName={'reviewMemo'}
+            required={false}
           />
         </form>
       </section>
