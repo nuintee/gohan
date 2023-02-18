@@ -8,6 +8,7 @@ import Input from './Input'
 import Cover from './Cover'
 import ImageChip from './ImageChip'
 import DescriptiveChip from './DescriptiveChip'
+import DrowDown from './DropDown'
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   Cover,
   ImageChip,
   DescriptiveChip,
+  DrowDown,
 }

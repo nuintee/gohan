@@ -1,4 +1,4 @@
-import { Button, GohanButton, ToastCatcher } from '@/components/ui'
+import { Button, DrowDown, GohanButton, ToastCatcher } from '@/components/ui'
 // import useDirections from '@/features/directions/hooks'
 import MapBox from '@/features/mapbox/components/MapBox'
 import { mapBoxState } from '@/features/mapbox/stores'
@@ -108,6 +108,7 @@ const Index = () => {
             disabled={restaurants.isFetching}
             size={40}
           />
+          <DrowDown />
         </div>
       </div>
       {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
