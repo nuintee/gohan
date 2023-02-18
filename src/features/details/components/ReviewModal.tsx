@@ -10,7 +10,7 @@ import { FieldValues, useForm, UseFormRegister } from 'react-hook-form'
 
 type Props = {
   isOpen: boolean
-  onClose?: React.MouseEventHandler<HTMLButtonElement>
+  onClose?: () => void
   data: {
     memo: string
     status: ReviewStatus
@@ -102,7 +102,10 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
       {
         onSuccess: (data) => {
           useToast.success('レビュー更新完了')
-          onClose()
+
+          if (!!onClose) {
+            onClose()
+          }
         },
       },
     )
