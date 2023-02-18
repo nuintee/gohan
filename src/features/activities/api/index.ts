@@ -17,6 +17,7 @@ import {
   PlacesDetailsStatus,
   PLACES_RESPONSE_STATUS,
 } from '@/features/restaurants/types'
+import { isAuthedMiddleWare } from '@/server/middleware'
 
 export const getActivity = procedure
   .input(
@@ -92,6 +93,7 @@ export const getActivity = procedure
   })
 
 export const deleteActivity = procedure
+  .use(isAuthedMiddleWare)
   .input(
     z.object({
       activityId: z.optional(z.string()),
@@ -100,14 +102,6 @@ export const deleteActivity = procedure
   )
   .mutation(async ({ input, ctx }) => {
     if (IS_DEVMODE) {
-      // mock
-      // const data = await prisma.activity.delete({
-      //   where: {
-      //     id: input.activityId,
-      //   },
-      // })
-      // return data
-
       const data = await prisma.activity.delete({
         where: {
           userId_place_id: {
@@ -125,6 +119,7 @@ export const deleteActivity = procedure
   })
 
 export const updateActivity = procedure
+  .use(isAuthedMiddleWare)
   .input(UpdateActivitySchema)
   .mutation(async ({ input, ctx }) => {
     const { payload } = input
@@ -156,31 +151,34 @@ export const updateActivity = procedure
     }
   })
 
-export const addActivity = procedure.input(AddActivitySchema).mutation(async ({ input }) => {
-  const {
-    activityId = randomUUID(),
-    userId,
-    place_id = '',
-    memo = '',
-    reviewStatus = 'NEW',
-  } = input
+export const addActivity = procedure
+  .use(isAuthedMiddleWare)
+  .input(AddActivitySchema)
+  .mutation(async ({ input }) => {
+    const {
+      activityId = randomUUID(),
+      userId,
+      place_id = '',
+      memo = '',
+      reviewStatus = 'NEW',
+    } = input
 
-  if (IS_DEVMODE) {
-    const data = await prisma.activity.create({
-      data: {
-        id: activityId,
-        place_id,
-        memo,
-        reviewStatus,
-        userId,
-        discovered_at: new Date(),
-      },
-    })
-    return data
-  } else if (IS_PRODMODE) {
-  } else {
-  }
-})
+    if (IS_DEVMODE) {
+      const data = await prisma.activity.create({
+        data: {
+          id: activityId,
+          place_id,
+          memo,
+          reviewStatus,
+          userId,
+          discovered_at: new Date(),
+        },
+      })
+      return data
+    } else if (IS_PRODMODE) {
+    } else {
+    }
+  })
 
 export const getUserActivities = procedure
   .input(
