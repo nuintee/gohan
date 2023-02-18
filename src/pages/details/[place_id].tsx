@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
-import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/components/ui'
+import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts, DropDown } from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
@@ -145,7 +145,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                       src: <Share />,
                     }}
                   />
-                  <Button
+                  {/* <Button
                     text=''
                     outline
                     icon={{
@@ -153,6 +153,16 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                       src: <Dots />,
                     }}
                     square
+                  /> */}
+                  <DropDown
+                    text=''
+                    outline
+                    icon={{
+                      position: 'after',
+                      src: <Dots />,
+                    }}
+                    square
+                    menu={[{ label: 'HI', onDropDownItemClick: () => console.log('hi') }]}
                   />
                 </div>
               )}

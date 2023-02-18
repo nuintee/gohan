@@ -108,8 +108,6 @@ const Index = () => {
             disabled={restaurants.isFetching}
             size={40}
           />
-          <DropDown />
-          <DropDown />
         </div>
       </div>
       {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
