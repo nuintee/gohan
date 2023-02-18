@@ -107,6 +107,7 @@ export const deleteActivity = procedure
       //   },
       // })
       // return data
+
       const data = await prisma.activity.delete({
         where: {
           userId_place_id: {
