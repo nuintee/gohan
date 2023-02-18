@@ -3,14 +3,19 @@ import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
 import { neededDetailsFields } from '../constants'
 
-export type PlacesSearchStatus = [
-  'OK',
-  'ZERO_RESULTS',
-  'INVALID_REQUEST',
-  'OVER_QUERY_LIMIT',
-  'REQUEST_DENIED',
-  'UNKNOWN_ERROR',
-]
+export const PLACES_RESPONSE_STATUS = {
+  OK: 'OK',
+  ZERO_RESULTS: 'ZERO_RESULTS',
+  INVALID_REQUEST: 'INVALID_REQUEST',
+  OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
+  NOT_FOUND: 'NOT_FOUND',
+  REQUEST_DENIED: 'REQUEST_DENIED',
+  UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+} as const
+
+export type PlacesSearchStatus = keyof typeof PLACES_RESPONSE_STATUS
+
+export type PlacesDetailsStatus = keyof Omit<typeof PLACES_RESPONSE_STATUS, 'NOT_FOUND'>
 
 export interface PlacesAPI {
   html_attributions?: null[] | null
@@ -21,7 +26,7 @@ export interface PlacesAPI {
 export interface DetailsAPI {
   html_attributions?: null[] | null
   result?: ResultsEntity | null
-  status: PlacesSearchStatus[number]
+  status: PlacesDetailsStatus[number]
 }
 
 export interface ResultsEntity {
