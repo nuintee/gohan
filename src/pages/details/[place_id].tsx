@@ -13,7 +13,7 @@ import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/compo
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
-import { Clock, Dots, Share, Star } from '@/components/icons'
+import { Clock, Dots, Chevron, Share, Star } from '@/components/icons'
 import { getRestaurants } from '@/features/restaurants/api'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useToast from '@/libs/react-toastify'
@@ -103,7 +103,14 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
               </div>
               <div className='flex gap-4 w-fit'>
                 {status === 'authenticated' && (
-                  <Button text='評価を変更' onClick={() => setIsReviewModalOpen(true)} />
+                  <Button
+                    text={data?.reviewStatus === 'NEW' ? '評価を追加' : '評価を変更'}
+                    onClick={() => setIsReviewModalOpen(true)}
+                    icon={{
+                      position: 'after',
+                      src: data?.reviewStatus === 'NEW' ? ' ✨' : <Chevron direction='bottom' />,
+                    }}
+                  />
                 )}
                 <Button
                   text='基本情報を表示'

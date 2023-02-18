@@ -16,7 +16,7 @@ import Clock from './Clock'
 import Star from './Star'
 import Share from './Share'
 import Dots from './Dots'
-import RightChevron from './RightChevron'
+import Chevron from './Chevron'
 
 export {
   Check,
@@ -37,5 +37,5 @@ export {
   Star,
   Share,
   Dots,
-  RightChevron,
+  Chevron,
 }
