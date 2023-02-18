@@ -41,7 +41,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   const router = useRouter()
   const { data: session, status } = useSession()
 
-  const { data, isFetching, isError } = useGetActivity({
+  const { data, isFetching, isError, error } = useGetActivity({
     userId: session?.user.id,
     place_id: id,
   })
@@ -72,7 +72,13 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 
   if (isFetching) return <>Loading...</>
 
-  if (isError) return <>Navigate</>
+  if (isError)
+    return (
+      <section>
+        <h1>Error</h1>
+        <p>{error.message}</p>
+      </section>
+    )
 
   // Animation
   if (router.query?.effect) return <>Effected!</>

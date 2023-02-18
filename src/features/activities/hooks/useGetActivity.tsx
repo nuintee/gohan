@@ -7,18 +7,16 @@ const useGetActivity = (props: Parameters<typeof trpc.getActivity.useQuery>[0]) 
 
   return trpc.getActivity.useQuery(props, {
     enabled: !!props.place_id,
+    retry: false,
     onSuccess: (data) => {
       console.log(data)
     },
     onError: (error) => {
       console.error(error)
-
-      if (error.message === 'ZERO_RESULTS') {
-        return router.push('/404')
-      }
+      console.dir(error)
 
       if (error instanceof Error) {
-        return useToast.error(error.message)
+        useToast.error(error.message)
       }
     },
   })

@@ -42,11 +42,29 @@ export const getActivity = procedure
       }
 
       const detailsResult = detailsData.result(input?.place_id)
+
       const detailsResponse = (): PlacesDetailsStatus => {
         if (!detailsResult) {
           return 'ZERO_RESULTS'
         } else {
           return 'OK'
+        }
+      }
+
+      const detailsErrorMessage = (status: PlacesDetailsStatus) => {
+        switch (status) {
+          case 'ZERO_RESULTS':
+            return '該当するデータが見つかりませんでした。'
+          case 'OVER_QUERY_LIMIT':
+            return 'API通信回数制限を超えました。'
+          case 'REQUEST_DENIED':
+            return 'リクエストが拒否されました。'
+          case 'UNKNOWN_ERROR':
+            return '予期しないエラーが発生しました。'
+          case 'INVALID_REQUEST':
+            return '無効なリクエストです。'
+          default:
+            return ''
         }
       }
 
@@ -59,9 +77,9 @@ export const getActivity = procedure
       if (detailedResponse.status !== 'OK') {
         // throw TRPC Error
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: detailedResponse.status,
+          code: 'BAD_REQUEST',
           cause: detailedResponse.status,
+          message: detailsErrorMessage(detailedResponse.status),
         })
       }
 
