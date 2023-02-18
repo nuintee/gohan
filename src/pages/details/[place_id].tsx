@@ -41,7 +41,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   const router = useRouter()
   const { data: session, status } = useSession()
 
-  const { data, isFetching, isError, error } = useGetActivity({
+  const { data, isFetching, isError } = useGetActivity({
     userId: session?.user.id,
     place_id: id,
   })

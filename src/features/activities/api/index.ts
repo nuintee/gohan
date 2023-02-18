@@ -61,6 +61,7 @@ export const getActivity = procedure
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: detailedResponse.status,
+          cause: detailedResponse.status,
         })
       }
 
