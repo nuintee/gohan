@@ -26,7 +26,6 @@ type Props = {
   isOpen?: boolean
   data?: ActivityResolved[]
   onClose?: React.MouseEventHandler<HTMLButtonElement>
-  onClickItem: (item: ActivityResolved) => void
 }
 
 const ActivityPanel = (props: Props) => {
@@ -38,7 +37,6 @@ const ActivityPanel = (props: Props) => {
     isOpen = isPanelOpen ?? false,
     onClose = closePanel,
     data = getUserAll.data ?? [],
-    onClickItem,
   } = props
 
   const { onActivityClicked, mapbox } = useMapBox()

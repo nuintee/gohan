@@ -8,7 +8,7 @@ export type Props = {
   text: string
   icon?: {
     position: 'before' | 'after'
-    src: React.ReactElement
+    src: JSX.Element | string
   }
   loading?: boolean
   danger?: boolean

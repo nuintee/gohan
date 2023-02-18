@@ -1,23 +1,24 @@
 import { colors } from '@/config/colors'
 
-const STATUSES = ['good', 'bad', 'ok', 'new'] as const
+// Schema
+import { ReviewStatusType } from '../schemas/index.schema'
 
-const COLOR: Record<typeof STATUSES[number], string> = {
-  good: colors['gh-green'],
-  bad: colors['gh-red'],
-  ok: colors['gh-yellow'],
-  new: colors['gh-gray'],
+const COLOR: Record<ReviewStatusType, string> = {
+  GOOD: colors['gh-green'],
+  BAD: colors['gh-red'],
+  OK: colors['gh-yellow'],
+  NEW: colors['gh-gray'],
 }
 
 // i18n
-const TEXT: Record<typeof STATUSES[number], string> = {
-  good: 'いいね評価済み',
-  bad: '悪い評価済み',
-  ok: '普通評価済み',
-  new: 'NEW ✨',
+const TEXT: Record<ReviewStatusType, string> = {
+  GOOD: 'いいね評価済み',
+  BAD: '悪い評価済み',
+  OK: '普通評価済み',
+  NEW: 'NEW ✨',
 }
 
-const ActivityStatus = ({ status = 'new' }: { status: typeof STATUSES[number] }) => {
+const ActivityStatus = ({ status = 'NEW' }: { status?: ReviewStatusType }) => {
   return (
     <span
       className='p-2 rounded-full w-fit text-white font-semibold text-sm select-none'

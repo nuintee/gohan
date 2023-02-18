@@ -13,7 +13,7 @@ import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/compo
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
-import { Clock, Dots, Share, Star } from '@/components/icons'
+import { Clock, Dots, Chevron, Share, Star } from '@/components/icons'
 import { getRestaurants } from '@/features/restaurants/api'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useToast from '@/libs/react-toastify'
@@ -26,11 +26,30 @@ import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
 import ModalLayout from '@/layouts/ModalLayout'
 import ImageModal from '@/features/details/components/ImageModal'
+import { trpc } from '@/libs/trpc'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
+
+// SSG
+import { createProxySSGHelpers } from '@trpc/react-query/ssg'
+import { appRouter } from '@/server/routers/_app'
+import superjson from 'superjson'
+import { useSession } from 'next-auth/react'
+import ErrorFallBack from '@/components/fallback/ErrorFallback'
+import { GetServerSideProps } from 'next/types'
+import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
+import { createContext } from '@/server/context'
+import { DetailsAPI } from '@/features/restaurants/types'
 
 const IMG_SRC = images.random()
 
-const DetailsPage = ({ data }: { data: ActivityResolved }) => {
+const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) => {
   const router = useRouter()
+  const { data: session, status } = useSession()
+
+  const { data, isFetching, isError, error, refetch } = useGetActivity({
+    userId: session?.user.id,
+    place_id: id,
+  })
 
   const [dominant, setDominant] = useState({
     color: colors['gh-l-gray'],
@@ -56,6 +75,12 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
     init()
   }, [])
 
+  if (isFetching) return <DetailsLoadingFallback />
+
+  if (isError) return <ErrorFallBack error={error} />
+
+  if (!data) return <>INVALID DATA</>
+
   // Animation
   if (router.query?.effect) return <>Effected!</>
 
@@ -67,88 +92,119 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
           <Cover color={dominant.color} />
           <div className='px-[10%] pt-16 pb-6 flex gap-8'>
             <ImageChip
-              isLoading={dominant.isLoading}
+              isLoading={isFetching}
               src={IMG_SRC}
               onClick={() => setIsImageModalOpen(true)}
             />
             <div className='flex-1 flex flex-col justify-between py-2'>
-              <div className='flex flex-col gap-2'>
-                <div className='flex gap-4'>
-                  <h1 className='text-3xl font-bold text-white'>{data.name}</h1>
-                  <ActivityStatus status='good' />
+              <Texts
+                size={'large'}
+                main={data?.name}
+                sub={data?.editorial_summary?.overview || data?.types?.join('・')}
+                mainColor={'white'}
+                subColor={'white'}
+                mainDecoration={
+                  status === 'authenticated' && <ActivityStatus status={data?.reviewStatus} />
+                }
+                gap={true}
+              />
+              {isFetching ? (
+                <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
+              ) : (
+                <div className='flex gap-4 w-fit'>
+                  {status === 'authenticated' && (
+                    <Button
+                      text={
+                        !data?.reviewStatus || data?.reviewStatus === 'NEW'
+                          ? '評価を追加'
+                          : '評価を変更'
+                      }
+                      onClick={() => setIsReviewModalOpen(true)}
+                      icon={{
+                        position: 'after',
+                        src:
+                          !data?.reviewStatus || data?.reviewStatus === 'NEW' ? (
+                            ' ✨'
+                          ) : (
+                            <Chevron direction='bottom' />
+                          ),
+                      }}
+                    />
+                  )}
+                  <Button
+                    text='基本情報を表示'
+                    outline
+                    onClick={() => setIsBasicInfoModalOpen(true)}
+                  />
+                  <Button
+                    text='共有'
+                    outline
+                    onClick={() => share({ url: location.href })}
+                    icon={{
+                      position: 'before',
+                      src: <Share />,
+                    }}
+                  />
+                  <Button
+                    text=''
+                    outline
+                    icon={{
+                      position: 'after',
+                      src: <Dots />,
+                    }}
+                    square
+                  />
                 </div>
-                <p className='text-white text-md'>
-                  {data.editorial_summary?.overview || data.types?.join('・')}
-                </p>
-              </div>
-              <div className='flex gap-4 w-fit'>
-                <Button text='評価を変更' onClick={() => setIsReviewModalOpen(true)} />
-                <Button
-                  text='基本情報を表示'
-                  outline
-                  onClick={() => setIsBasicInfoModalOpen(true)}
-                />
-                <Button
-                  text='共有'
-                  outline
-                  onClick={() => share({ url: location.href })}
-                  icon={{
-                    position: 'before',
-                    src: <Share />,
-                  }}
-                />
-                <Button
-                  text=''
-                  outline
-                  icon={{
-                    position: 'after',
-                    src: <Dots />,
-                  }}
-                  square
-                />
-              </div>
+              )}
             </div>
           </div>
           <main className='px-[10%]'>
-            <section className='flex flex-col gap-2 mb-14'>
-              <h1 className='text-gh-dark font-semibold text-xl'>この場所についてのメモ</h1>
-              {/* <Input placeholder='メモ' /> */}
-              <p className='text-gh-gray'>メモ</p>
-            </section>
-            <section className='flex items-center justify-between gap-4  mb-14'>
+            {status === 'authenticated' && (
+              <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
+            )}
+            <section className='flex items-center justify-between gap-4 my-14'>
               <DescriptiveChip
                 title='超高級'
-                description={data.price_level}
+                description={data?.price_level?.toString()}
                 icon={<Price fill={colors['gh-red']} />}
+                isLoading={isFetching}
               />
               <DescriptiveChip
                 title='営業中'
                 description={`営業時間: ${
-                  data.opening_hours?.periods && data.opening_hours?.periods[0]
+                  data?.opening_hours?.periods && data?.opening_hours?.periods[0]
                 }`}
                 icon={<Clock fill={colors['gh-green']} />}
+                isLoading={isFetching}
               />
-              {data.user_ratings_total > 0 && (
+              {data?.user_ratings_total && data?.user_ratings_total > 0 && (
                 <DescriptiveChip
                   title={`悪い評価`}
-                  description={`Googleでの評価は${data.rating}です。`}
+                  description={`Googleでの評価は${data?.rating}です。`}
                   icon={<Star fill={colors['gh-red']} />}
+                  isLoading={isFetching}
                 />
               )}
             </section>
-            <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity}>
+            <DetailsSection
+              margin='5rem'
+              main='ロケーション'
+              sub={data?.vicinity}
+              isLoading={isFetching}
+            >
               <div className='flex-1 aspect-video w-full'>
                 <MapBoxChip
-                  latitude={data.geometry.location.lat}
-                  longitude={data.geometry.location.lng}
+                  latitude={data?.geometry?.location.lat}
+                  longitude={data?.geometry?.location.lng}
                 />
               </div>
             </DetailsSection>
-            {data.user_ratings_total > 0 && (
+            {data?.user_ratings_total && data?.user_ratings_total > 0 && (
               <DetailsSection
                 margin='5rem'
-                main={`レビュー・${data.rating}`}
-                sub={`${data.user_ratings_total}件のレビュー`}
+                main={`レビュー・${data?.rating}`}
+                sub={`${data?.user_ratings_total}件のレビュー`}
+                isLoading={isFetching}
               />
             )}
           </main>
@@ -159,7 +215,17 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
         data={data}
         onClose={() => setIsBasicInfoModalOpen(false)}
       />
-      <ReviewModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)} />
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        onReviewSuccess={refetch}
+        data={{
+          memo: data.memo,
+          status: data?.reviewStatus,
+          id: data?.id,
+          place_id: data?.place_id,
+        }}
+      />
       <ImageModal
         isOpen={isImageModalOpen}
         data={data.photos?.map((v) => ({
@@ -173,12 +239,19 @@ const DetailsPage = ({ data }: { data: ActivityResolved }) => {
   )
 }
 
-export async function getServerSideProps({ query }) {
+export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  })
+
+  await ssg.getActivity.prefetch({ userId: '', place_id: query.place_id as string })
+
   return {
     props: {
-      data:
-        details.result(query.place_id) ||
-        places.results[Math.floor(Math.random() * places.results.length - 1)],
+      trpcState: ssg.dehydrate(),
+      id: query.place_id,
     },
   }
 }

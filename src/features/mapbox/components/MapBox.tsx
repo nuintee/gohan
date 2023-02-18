@@ -80,8 +80,8 @@ const MapBox = () => {
         />
         {getUserAll.data?.map((activity) => (
           <MarkerPin
-            latitude={activity.geometry?.location?.lat}
-            longitude={activity.geometry?.location?.lng}
+            latitude={activity?.geometry?.location?.lat}
+            longitude={activity?.geometry?.location?.lng}
             focused={mapbox.focusedPlaceId === activity.place_id}
             onClick={() => onActivityClicked(activity)}
             data={activity}

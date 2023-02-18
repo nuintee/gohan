@@ -41,7 +41,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
             sub={cardConfig.textsSub(data?.types?.join('・'))}
             size={cardConfig.textSize}
           />
-          <ActivityStatus status='good' />
+          <ActivityStatus status={data?.reviewStatus} />
           {/* <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} /> */}
         </div>
         <button className='p-4'>

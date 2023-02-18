@@ -34,15 +34,16 @@ const useRestaurants = (
     onSuccess: (data) => {
       console.log(data)
 
-      props.successCallback && props.successCallback(data)
+      props?.successCallback && props?.successCallback(data)
 
       if (status !== 'authenticated') return
 
       if (!!props.place_id) return
 
       addActivity.mutate({
-        place_id: data.place_id,
-        is_liked: false,
+        place_id: data?.place_id,
+        reviewStatus: 'NEW',
+        memo: '',
         userId: session.user.id,
       })
     },
