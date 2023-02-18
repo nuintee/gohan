@@ -109,6 +109,7 @@ const Index = () => {
             size={40}
           />
           <DrowDown />
+          <DrowDown />
         </div>
       </div>
       {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
