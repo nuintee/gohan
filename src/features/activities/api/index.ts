@@ -94,15 +94,25 @@ export const getActivity = procedure
 export const deleteActivity = procedure
   .input(
     z.object({
-      activityId: z.string(),
+      activityId: z.optional(z.string()),
+      place_id: z.string(),
     }),
   )
-  .mutation(async ({ input }) => {
+  .mutation(async ({ input, ctx }) => {
     if (IS_DEVMODE) {
       // mock
+      // const data = await prisma.activity.delete({
+      //   where: {
+      //     id: input.activityId,
+      //   },
+      // })
+      // return data
       const data = await prisma.activity.delete({
         where: {
-          id: input.activityId,
+          userId_place_id: {
+            userId: ctx.session?.user.id,
+            place_id: input.place_id,
+          },
         },
       })
       return data
@@ -116,7 +126,7 @@ export const deleteActivity = procedure
 export const updateActivity = procedure
   .input(UpdateActivitySchema)
   .mutation(async ({ input, ctx }) => {
-    const { payload, activityId } = input
+    const { payload } = input
     if (IS_DEVMODE) {
       const data = await prisma.activity.upsert({
         where: {
