@@ -86,11 +86,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         <div className='flex flex-1 flex-col relative'>
           <Cover color={dominant.color} />
           <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-            <ImageChip
-              isLoading={dominant.isLoading}
-              src={IMG_SRC}
-              onClick={() => setIsImageModalOpen(true)}
-            />
+            <ImageChip isLoading={true} src={IMG_SRC} onClick={() => setIsImageModalOpen(true)} />
             <div className='flex-1 flex flex-col justify-between py-2'>
               <div className='flex flex-col gap-2'>
                 <div className='flex gap-4'>

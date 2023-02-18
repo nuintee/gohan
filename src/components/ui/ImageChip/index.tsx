@@ -9,6 +9,12 @@ const ImageChip = (props: Props) => {
     onClick = () => {},
   } = props
 
+  if (isLoading) {
+    return (
+      <div className='h-60 w-60 relative bg-gh-l-gray rounded-md animate-pulse ring-2 ring-gh-white' />
+    )
+  }
+
   return (
     <img
       {...props}
