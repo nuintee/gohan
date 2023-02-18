@@ -104,11 +104,20 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
               <div className='flex gap-4 w-fit'>
                 {status === 'authenticated' && (
                   <Button
-                    text={data?.reviewStatus === 'NEW' ? '評価を追加' : '評価を変更'}
+                    text={
+                      !data?.reviewStatus || data?.reviewStatus === 'NEW'
+                        ? '評価を追加'
+                        : '評価を変更'
+                    }
                     onClick={() => setIsReviewModalOpen(true)}
                     icon={{
                       position: 'after',
-                      src: data?.reviewStatus === 'NEW' ? ' ✨' : <Chevron direction='bottom' />,
+                      src:
+                        !data?.reviewStatus || data?.reviewStatus === 'NEW' ? (
+                          ' ✨'
+                        ) : (
+                          <Chevron direction='bottom' />
+                        ),
                     }}
                   />
                 )}
