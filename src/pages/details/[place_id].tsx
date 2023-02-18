@@ -43,7 +43,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   const router = useRouter()
   const { data: session, status } = useSession()
 
-  const { data, isFetching, isError, error } = useGetActivity({
+  const { data, isFetching, isError, error, refetch } = useGetActivity({
     userId: session?.user.id,
     place_id: id,
   })
@@ -185,6 +185,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
       <ReviewModal
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
+        onReviewSuccess={refetch}
         data={{
           memo: data?.memo,
           status: data?.reviewStatus,

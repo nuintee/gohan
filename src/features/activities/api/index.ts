@@ -113,22 +113,24 @@ export const deleteActivity = procedure
     }
   })
 
-export const updateActivity = procedure.input(UpdateActivitySchema).mutation(async ({ input }) => {
-  if (IS_DEVMODE) {
-    // mock
-    const data = await prisma.activity.update({
-      where: {
-        id: input.activityId,
-      },
-      data: input.payload,
-    })
-    return data
-  } else if (IS_PRODMODE) {
-    // Google API
-  } else {
-    // test
-  }
-})
+export const updateActivity = procedure
+  .input(UpdateActivitySchema)
+  .mutation(async ({ input, ctx }) => {
+    if (IS_DEVMODE) {
+      // mock
+      const data = await prisma.activity.update({
+        where: {
+          id: input.activityId,
+        },
+        data: input.payload,
+      })
+      return data
+    } else if (IS_PRODMODE) {
+      // Google API
+    } else {
+      // test
+    }
+  })
 
 export const addActivity = procedure.input(AddActivitySchema).mutation(async ({ input }) => {
   const {

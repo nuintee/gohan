@@ -12,6 +12,7 @@ import { FieldValues, useForm, UseFormRegister } from 'react-hook-form'
 type Props = {
   isOpen: boolean
   onClose?: () => void
+  onReviewSuccess?: () => void
   data: {
     memo: string
     status: ReviewStatus
@@ -79,7 +80,7 @@ const StatusRadioGroup = ({
   )
 }
 
-const ReviewModal = ({ isOpen, onClose, data }: Props) => {
+const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
   const {
     register,
     handleSubmit,
@@ -113,6 +114,10 @@ const ReviewModal = ({ isOpen, onClose, data }: Props) => {
       },
       {
         onSuccess: () => {
+          if (!!onReviewSuccess) {
+            onReviewSuccess()
+          }
+
           useToast.success('レビュー更新完了')
 
           if (!!onClose) {
