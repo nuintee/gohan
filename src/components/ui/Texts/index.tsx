@@ -17,7 +17,7 @@ const sizes = {
 }
 
 type Props = {
-  main: string
+  main?: string
   sub?: string | JSX.Element
   size?: 'small' | 'normal' | 'large'
   mainColor?: string

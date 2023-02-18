@@ -84,7 +84,17 @@ export const getActivity = procedure
         })
       }
 
-      return { ...data, ...detailedResponse.result }
+      const result = { ...data, ...detailedResponse.result }
+
+      if (!result || !Object.keys(result).length) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          cause: detailedResponse.status,
+          message: detailsErrorMessage('ZERO_RESULTS'),
+        })
+      }
+
+      return result
     } else if (IS_PRODMODE) {
       // Google API
     } else {

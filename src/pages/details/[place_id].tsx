@@ -37,6 +37,8 @@ import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { GetServerSideProps } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
+import { createContext } from '@/server/context'
+import { DetailsAPI } from '@/features/restaurants/types'
 
 const IMG_SRC = images.random()
 
@@ -77,6 +79,8 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 
   if (isError) return <ErrorFallBack error={error} />
 
+  if (!data) return <>INVALID DATA</>
+
   // Animation
   if (router.query?.effect) return <>Effected!</>
 
@@ -96,7 +100,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
               <Texts
                 size={'large'}
                 main={data?.name}
-                sub={data.editorial_summary?.overview || data.types?.join('・')}
+                sub={data?.editorial_summary?.overview || data?.types?.join('・')}
                 mainColor={'white'}
                 subColor={'white'}
                 mainDecoration={
@@ -161,22 +165,22 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
             <section className='flex items-center justify-between gap-4 my-14'>
               <DescriptiveChip
                 title='超高級'
-                description={data.price_level}
+                description={data?.price_level?.toString()}
                 icon={<Price fill={colors['gh-red']} />}
                 isLoading={isFetching}
               />
               <DescriptiveChip
                 title='営業中'
                 description={`営業時間: ${
-                  data.opening_hours?.periods && data.opening_hours?.periods[0]
+                  data?.opening_hours?.periods && data?.opening_hours?.periods[0]
                 }`}
                 icon={<Clock fill={colors['gh-green']} />}
                 isLoading={isFetching}
               />
-              {data.user_ratings_total > 0 && (
+              {data?.user_ratings_total && data?.user_ratings_total > 0 && (
                 <DescriptiveChip
                   title={`悪い評価`}
-                  description={`Googleでの評価は${data.rating}です。`}
+                  description={`Googleでの評価は${data?.rating}です。`}
                   icon={<Star fill={colors['gh-red']} />}
                   isLoading={isFetching}
                 />
@@ -185,21 +189,21 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
             <DetailsSection
               margin='5rem'
               main='ロケーション'
-              sub={data.vicinity}
+              sub={data?.vicinity}
               isLoading={isFetching}
             >
               <div className='flex-1 aspect-video w-full'>
                 <MapBoxChip
-                  latitude={data.geometry.location.lat}
-                  longitude={data.geometry.location.lng}
+                  latitude={data?.geometry?.location.lat}
+                  longitude={data?.geometry?.location.lng}
                 />
               </div>
             </DetailsSection>
-            {data.user_ratings_total > 0 && (
+            {data?.user_ratings_total && data?.user_ratings_total > 0 && (
               <DetailsSection
                 margin='5rem'
-                main={`レビュー・${data.rating}`}
-                sub={`${data.user_ratings_total}件のレビュー`}
+                main={`レビュー・${data?.rating}`}
+                sub={`${data?.user_ratings_total}件のレビュー`}
                 isLoading={isFetching}
               />
             )}
@@ -216,7 +220,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         onClose={() => setIsReviewModalOpen(false)}
         onReviewSuccess={refetch}
         data={{
-          memo: data?.memo,
+          memo: data.memo,
           status: data?.reviewStatus,
           id: data?.id,
           place_id: data?.place_id,
@@ -235,7 +239,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: {},
