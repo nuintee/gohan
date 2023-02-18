@@ -72,7 +72,7 @@ const Texts = (props: Props) => {
               color: subColor,
             }}
           >
-            {sub || 'Description'}
+            {sub}
           </p>
           {subDecoration}
         </div>

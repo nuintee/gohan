@@ -73,7 +73,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
     init()
   }, [])
 
-  if (!isFetching) return <DetailsLoadingFallback />
+  if (isFetching) return <DetailsLoadingFallback />
 
   if (isError) return <ErrorFallBack error={error} />
 
@@ -155,7 +155,9 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
             </div>
           </div>
           <main className='px-[10%]'>
-            {status === 'authenticated' && <Texts main='この場所についてのメモ' sub={data?.memo} />}
+            {status === 'authenticated' && (
+              <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
+            )}
             <section className='flex items-center justify-between gap-4 my-14'>
               <DescriptiveChip
                 title='超高級'
