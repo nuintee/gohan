@@ -36,6 +36,7 @@ import superjson from 'superjson'
 import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { GetServerSideProps } from 'next/types'
+import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
 
 const IMG_SRC = images.random()
 
@@ -72,7 +73,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
     init()
   }, [])
 
-  if (isFetching) return <>Loading...</>
+  if (!isFetching) return <DetailsLoadingFallback />
 
   if (isError) return <ErrorFallBack error={error} />
 
@@ -86,11 +87,15 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         <div className='flex flex-1 flex-col relative'>
           <Cover color={dominant.color} />
           <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-            <ImageChip isLoading={true} src={IMG_SRC} onClick={() => setIsImageModalOpen(true)} />
+            <ImageChip
+              isLoading={isFetching}
+              src={IMG_SRC}
+              onClick={() => setIsImageModalOpen(true)}
+            />
             <div className='flex-1 flex flex-col justify-between py-2'>
               <Texts
                 size={'large'}
-                main={data.name}
+                main={data?.name}
                 sub={data.editorial_summary?.overview || data.types?.join('・')}
                 mainColor={'white'}
                 subColor={'white'}
@@ -99,7 +104,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 }
                 gap={true}
               />
-              {!isFetching ? (
+              {isFetching ? (
                 <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
               ) : (
                 <div className='flex gap-4 w-fit'>
@@ -156,7 +161,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 title='超高級'
                 description={data.price_level}
                 icon={<Price fill={colors['gh-red']} />}
-                isLoading={true}
+                isLoading={isFetching}
               />
               <DescriptiveChip
                 title='営業中'
@@ -164,18 +169,23 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                   data.opening_hours?.periods && data.opening_hours?.periods[0]
                 }`}
                 icon={<Clock fill={colors['gh-green']} />}
-                isLoading={true}
+                isLoading={isFetching}
               />
               {data.user_ratings_total > 0 && (
                 <DescriptiveChip
                   title={`悪い評価`}
                   description={`Googleでの評価は${data.rating}です。`}
                   icon={<Star fill={colors['gh-red']} />}
-                  isLoading={true}
+                  isLoading={isFetching}
                 />
               )}
             </section>
-            <DetailsSection margin='5rem' main='ロケーション' sub={data.vicinity} isLoading={true}>
+            <DetailsSection
+              margin='5rem'
+              main='ロケーション'
+              sub={data.vicinity}
+              isLoading={isFetching}
+            >
               <div className='flex-1 aspect-video w-full'>
                 <MapBoxChip
                   latitude={data.geometry.location.lat}
@@ -188,7 +198,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 margin='5rem'
                 main={`レビュー・${data.rating}`}
                 sub={`${data.user_ratings_total}件のレビュー`}
-                isLoading={true}
+                isLoading={isFetching}
               />
             )}
           </main>

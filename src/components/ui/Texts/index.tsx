@@ -43,7 +43,7 @@ const Texts = (props: Props) => {
 
   const textSize = sizes[size || 'normal']
 
-  if (!isLoading)
+  if (isLoading)
     return (
       <div className='flex flex-col gap-2 animate-pulse'>
         <div className='bg-gh-l-gray p-1 w-52 h-8 rounded-md'></div>
