@@ -27,8 +27,6 @@ const Input = forwardRef((props: Props, ref) => {
     ...rest
   } = props
 
-  const cob = true
-
   return (
     <div className='flex flex-col gap-1 w-full'>
       {label && <label className='text-gh-gray'>{label}</label>}

@@ -186,6 +186,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         data={{
           memo: data?.memo,
           status: data?.reviewStatus,
+          id: data?.id,
         }}
       />
       <ImageModal
