@@ -18,7 +18,7 @@ const TEXT: Record<ReviewStatusType, string> = {
   NEW: 'NEW ✨',
 }
 
-const ActivityStatus = ({ status = 'NEW' }: { status: ReviewStatusType }) => {
+const ActivityStatus = ({ status = 'NEW' }: { status?: ReviewStatusType }) => {
   return (
     <span
       className='p-2 rounded-full w-fit text-white font-semibold text-sm select-none'

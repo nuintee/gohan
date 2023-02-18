@@ -97,7 +97,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 mainDecoration={
                   status === 'authenticated' && <ActivityStatus status={data?.reviewStatus} />
                 }
-                gap
+                gap={true}
               />
               <div className='flex gap-4 w-fit'>
                 {status === 'authenticated' && (
