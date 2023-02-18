@@ -116,13 +116,26 @@ export const deleteActivity = procedure
 export const updateActivity = procedure
   .input(UpdateActivitySchema)
   .mutation(async ({ input, ctx }) => {
+    const { payload, activityId } = input
     if (IS_DEVMODE) {
-      // mock
-      const data = await prisma.activity.update({
+      const data = await prisma.activity.upsert({
         where: {
-          id: input.activityId,
+          userId_place_id: {
+            userId: ctx.session?.user.id,
+            place_id: payload.place_id,
+          },
         },
-        data: input.payload,
+        create: {
+          discovered_at: new Date(),
+          userId: ctx.session?.user.id,
+          place_id: payload.place_id,
+          reviewStatus: payload.reviewStatus,
+          memo: payload.memo || '',
+        },
+        update: {
+          memo: payload.memo,
+          reviewStatus: payload.reviewStatus,
+        },
       })
       return data
     } else if (IS_PRODMODE) {

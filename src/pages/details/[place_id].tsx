@@ -219,6 +219,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
           memo: data?.memo,
           status: data?.reviewStatus,
           id: data?.id,
+          place_id: data?.place_id,
         }}
       />
       <ImageModal

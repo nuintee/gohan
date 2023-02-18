@@ -19,6 +19,7 @@ type Props = {
     memo: string
     status: ReviewStatus
     id: string
+    place_id: string
   }
 }
 
@@ -52,6 +53,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
         payload: {
           reviewStatus,
           memo,
+          place_id: data.place_id,
         },
       },
       {

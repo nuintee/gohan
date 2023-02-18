@@ -14,10 +14,11 @@ export const AddActivitySchema = z.object({
 })
 
 export const UpdateActivitySchema = z.object({
-  activityId: z.string(),
+  activityId: z.optional(z.string()),
   payload: z.object({
     memo: z.optional(z.string()),
     reviewStatus: REVIEW_STATUS_ENUM,
+    place_id: z.string(),
   }),
 })
 
