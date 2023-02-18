@@ -6,6 +6,7 @@ const useGetActivity = (props: Parameters<typeof trpc.getActivity.useQuery>[0]) 
   return trpc.getActivity.useQuery(props, {
     enabled: !!props.place_id,
     retry: false,
+    refetchOnWindowFocus: false,
     onSuccess: (data) => {
       console.log(data)
     },
