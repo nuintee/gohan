@@ -5,20 +5,10 @@ import calculateDistance from '@/libs/haversine-distance'
 
 // Components
 import PanelHeader from '@/components/ui/PanelHeader'
-import { Activity } from '@prisma/client'
-import { ActivityResolved } from '../types'
 import { useSession } from 'next-auth/react'
-import { QueryClient, UseMutationResult } from '@tanstack/react-query'
-import useModals from '@/hooks/modals'
-import usePatchActivity from '../hooks/usePatchActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
-import useExperimentalRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
-import MapBoxCore from '@/features/mapbox/components/MapBoxChip'
-import MapBox from '@/features/mapbox/components/MapBox'
-import { useRecoilState } from 'recoil'
-import { mapBoxState } from '@/features/mapbox/stores'
 import useMapBox from '@/features/mapbox/hooks'
 import { DropDown } from '@/components/ui'
 import { Dots } from '@/components/icons'
@@ -27,8 +17,76 @@ import useDeleteActivity from '../hooks/useDeleteActivity'
 
 type Props = {
   isOpen?: boolean
-  data?: ActivityResolved[]
   onClose?: React.MouseEventHandler<HTMLButtonElement>
+}
+
+const ContentsRenderer = ({
+  userActivities,
+}: {
+  userActivities: ReturnType<typeof useGetUserActivities>
+}) => {
+  const { onActivityClicked, mapbox } = useMapBox()
+  // Query
+  const deleteActivity = useDeleteActivity()
+
+  const router = useRouter()
+
+  if (userActivities.isFetching) {
+    return <div>Loading...</div>
+  }
+
+  if (userActivities.data && userActivities.data?.length <= 0) {
+    return <div>Empty</div>
+  }
+
+  return (
+    <div className='flex flex-col gap-2 p-2'>
+      {userActivities.data?.map((activity) => (
+        <div className='flex gap-2 items-center justify-between' key={activity.id}>
+          <RestaurantBoard
+            data={activity}
+            onClick={() => onActivityClicked(activity)}
+            isFocused={mapbox.focusedPlaceId === activity.place_id}
+            isLocked={false}
+          />
+          <DropDown
+            text=''
+            menu={[
+              {
+                label: '詳細を表示',
+                onDropDownItemClick: () => {
+                  router.push(`/details/${activity.place_id}`)
+                },
+              },
+              {
+                label: 'ライブラリから削除',
+                onDropDownItemClick: () => {
+                  console.log(activity)
+                  deleteActivity.mutate(
+                    {
+                      activityId: activity.id,
+                      place_id: activity.place_id,
+                    },
+                    {
+                      onSuccess: (data) => {
+                        userActivities.refetch()
+                      },
+                    },
+                  )
+                },
+              },
+            ]}
+            square
+            outline
+            icon={{
+              position: 'after',
+              src: <Dots />,
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  )
 }
 
 const ActivityPanel = (props: Props) => {
@@ -37,17 +95,8 @@ const ActivityPanel = (props: Props) => {
 
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
-  const deleteActivity = useDeleteActivity()
 
-  const router = useRouter()
-
-  const {
-    isOpen = isPanelOpen ?? false,
-    onClose = closePanel,
-    data = getUserAll.data ?? [],
-  } = props
-
-  const { onActivityClicked, mapbox } = useMapBox()
+  const { isOpen = isPanelOpen ?? false, onClose = closePanel } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
@@ -57,52 +106,7 @@ const ActivityPanel = (props: Props) => {
     >
       <PanelHeader title={'ライブラリ'} onClose={onClose} />
       <hr></hr>
-      <div className='p-4 flex-1 overflow-auto'>
-        {getUserAll.data?.map((activity) => (
-          <div className='flex gap-2 items-center justify-between' key={activity.id}>
-            <RestaurantBoard
-              data={activity}
-              compact
-              onClick={() => onActivityClicked(activity)}
-              isFocused={mapbox.focusedPlaceId === activity.place_id}
-            />
-            <DropDown
-              text=''
-              menu={[
-                {
-                  label: '詳細を表示',
-                  onDropDownItemClick: () => {
-                    router.push(`/details/${activity.place_id}`)
-                  },
-                },
-                {
-                  label: 'ライブラリから削除',
-                  onDropDownItemClick: () => {
-                    console.log(activity)
-                    deleteActivity.mutate(
-                      {
-                        activityId: activity.id,
-                        place_id: activity.place_id,
-                      },
-                      {
-                        onSuccess: (data) => {
-                          getUserAll.refetch()
-                        },
-                      },
-                    )
-                  },
-                },
-              ]}
-              square
-              outline
-              icon={{
-                position: 'after',
-                src: <Dots />,
-              }}
-            />
-          </div>
-        ))}
-      </div>
+      <ContentsRenderer userActivities={getUserAll} />
     </div>
   )
 }
