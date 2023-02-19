@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
-import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts } from '@/components/ui'
+import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts, DropDown } from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
@@ -39,6 +39,7 @@ import { GetServerSideProps } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
 import { createContext } from '@/server/context'
 import { DetailsAPI } from '@/features/restaurants/types'
+import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
 
 const IMG_SRC = images.random()
 
@@ -145,15 +146,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                       src: <Share />,
                     }}
                   />
-                  <Button
-                    text=''
-                    outline
-                    icon={{
-                      position: 'after',
-                      src: <Dots />,
-                    }}
-                    square
-                  />
+                  <ActivityDropDown activity={data} onMutated={() => refetch()} />
                 </div>
               )}
             </div>
