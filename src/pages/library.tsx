@@ -15,25 +15,10 @@ import images from '@/data/images.json'
 
 const LibraryPage = () => {
   const { gps } = useGPS()
-  const router = useRouter()
 
   const restaurants = useRestaurants({
     latitude: gps.coords.latitude,
     longitude: gps.coords.longitude,
-    successCallback: async (data) => {
-      // getColor
-      const dominantColor = await getDominantColor(images.random())
-
-      const url = new URL(`${BASE_URL}/discover`)
-      url.searchParams.append('place_id', data.place_id)
-      url.searchParams.append('main', data.name)
-      url.searchParams.append('color', dominantColor)
-      url.searchParams.append(
-        'sub',
-        data.editorial_summary?.overview || (data?.types?.join('・') as string),
-      )
-      router.push(url.toString(), `/details/${data.place_id}`)
-    },
   })
 
   return (

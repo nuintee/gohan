@@ -1,10 +1,17 @@
+import { BASE_URL } from '@/config/env'
 import useAddActivity from '@/features/activities/hooks/useAddActivity'
 import useGPS from '@/hooks/gps'
 import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'
+import { getDominantColor } from '@/libs/rgbaster'
 import { trpc } from '@/libs/trpc'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { ResultsEntity } from '../types'
+
+//data
+import images from '@/data/images.json'
+import useDiscoveredNavigation from './useDiscoveredNavigation'
 
 const useRestaurants = (
   props: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
@@ -14,6 +21,7 @@ const useRestaurants = (
   const { status, data: session } = useSession()
   const addActivity = useAddActivity()
   const { isGPSFetching, isGPSError } = useGPS()
+  const { navigate } = useDiscoveredNavigation()
 
   return trpc.getRestaurants.useQuery(props, {
     enabled: !!props.place_id,
@@ -31,10 +39,12 @@ const useRestaurants = (
         }
       }
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       console.log(data)
 
       props?.successCallback && props?.successCallback(data)
+
+      navigate(data)
 
       if (status !== 'authenticated') return
 
