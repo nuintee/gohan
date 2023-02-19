@@ -9,7 +9,16 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
-import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts, DropDown } from '@/components/ui'
+import {
+  Button,
+  Input,
+  Cover,
+  ImageChip,
+  DescriptiveChip,
+  Texts,
+  DropDown,
+  GohanButton,
+} from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
@@ -198,6 +207,9 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 isLoading={isFetching}
               />
             )}
+            <span className='fixed bottom-8 right-8'>
+              <GohanButton size={25} />
+            </span>
           </main>
         </div>
       </div>

@@ -16,7 +16,7 @@ type Props = {
 }
 
 const GohanButton = (props: Props) => {
-  const { isLoading = false, isNavigating = false, disabled = false, onClick, size } = props
+  const { isLoading = false, isNavigating = false, disabled = false, onClick, size = 40 } = props
 
   const ui = () =>
     isLoading ? (

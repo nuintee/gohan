@@ -152,7 +152,6 @@ const Index = () => {
             onClick={() => restaurants.refetch()}
             isLoading={restaurants.isFetching}
             disabled={restaurants.isFetching || gps.isFetching}
-            size={40}
           />
           <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
         </div>
