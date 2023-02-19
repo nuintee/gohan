@@ -45,6 +45,7 @@ const MapBox = () => {
   }
 
   const handleError = (error) => {
+    console.dir(error)
     useToast.error(error.message)
   }
 
