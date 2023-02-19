@@ -164,7 +164,7 @@ export const updateActivity = procedure
 export const addActivity = procedure
   .use(isAuthedMiddleWare)
   .input(AddActivitySchema)
-  .mutation(async ({ input }) => {
+  .mutation(async ({ input, ctx }) => {
     const {
       activityId = randomUUID(),
       userId,
@@ -174,8 +174,15 @@ export const addActivity = procedure
     } = input
 
     if (IS_DEVMODE) {
-      const data = await prisma.activity.create({
-        data: {
+      const data = await prisma.activity.upsert({
+        where: {
+          userId_place_id: {
+            userId: ctx.session.user.id,
+            place_id,
+          },
+        },
+        update: {},
+        create: {
           id: activityId,
           place_id,
           memo,
