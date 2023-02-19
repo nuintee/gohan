@@ -1,16 +1,10 @@
-import { BASE_URL } from '@/config/env'
 import useAddActivity from '@/features/activities/hooks/useAddActivity'
 import useGPS from '@/hooks/gps'
-import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'
-import { getDominantColor } from '@/libs/rgbaster'
 import { trpc } from '@/libs/trpc'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
 import { ResultsEntity } from '../types'
 
-//data
-import images from '@/data/images.json'
 import useDiscoveredNavigation from './useDiscoveredNavigation'
 
 const useRestaurants = (
@@ -50,6 +44,7 @@ const useRestaurants = (
 
       if (!!props.place_id) return
 
+      // add if doesn't exists
       addActivity.mutate({
         place_id: data?.place_id,
         reviewStatus: 'NEW',
