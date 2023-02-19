@@ -14,6 +14,7 @@ import { DropDown } from '@/components/ui'
 import { Dots } from '@/components/icons'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
+import ActivityDropDown from './ActivityDropDown'
 
 type Props = {
   isOpen?: boolean
@@ -27,9 +28,6 @@ const ContentsRenderer = ({
 }) => {
   const { onActivityClicked, mapbox } = useMapBox()
   // Query
-  const deleteActivity = useDeleteActivity()
-
-  const router = useRouter()
 
   if (userActivities.isFetching) {
     return <div>Loading...</div>
@@ -49,40 +47,7 @@ const ContentsRenderer = ({
             isFocused={mapbox.focusedPlaceId === activity.place_id}
             isLocked={false}
           />
-          <DropDown
-            text=''
-            menu={[
-              {
-                label: '詳細を表示',
-                onDropDownItemClick: () => {
-                  router.push(`/details/${activity.place_id}`)
-                },
-              },
-              {
-                label: 'ライブラリから削除',
-                onDropDownItemClick: () => {
-                  console.log(activity)
-                  deleteActivity.mutate(
-                    {
-                      activityId: activity.id,
-                      place_id: activity.place_id,
-                    },
-                    {
-                      onSuccess: (data) => {
-                        userActivities.refetch()
-                      },
-                    },
-                  )
-                },
-              },
-            ]}
-            square
-            outline
-            icon={{
-              position: 'after',
-              src: <Dots />,
-            }}
-          />
+          <ActivityDropDown activity={activity} onItemDeleted={() => userActivities.refetch()} />
         </div>
       ))}
     </div>
