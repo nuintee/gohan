@@ -1,5 +1,5 @@
 // components
-import { Button, Texts, Label } from '@/components/ui'
+import { Button, Texts, Label, DropDown } from '@/components/ui'
 import LikeButton from './LikeButton'
 
 // icons
@@ -16,7 +16,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
   const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
 
   const compactStyle = {
-    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-fill ${
+    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-full ${
       isFocused && 'bg-gh-white'
     } cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95`,
     img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
@@ -44,9 +44,6 @@ const RestaurantBoard = (props: RestaurantProps) => {
           <ActivityStatus status={data?.reviewStatus} />
           {/* <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} /> */}
         </div>
-        <button className='p-4'>
-          <Dots />
-        </button>
       </div>
     </div>
   )

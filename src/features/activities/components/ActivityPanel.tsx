@@ -21,6 +21,9 @@ import MapBox from '@/features/mapbox/components/MapBox'
 import { useRecoilState } from 'recoil'
 import { mapBoxState } from '@/features/mapbox/stores'
 import useMapBox from '@/features/mapbox/hooks'
+import { DropDown } from '@/components/ui'
+import { Dots } from '@/components/icons'
+import { useRouter } from 'next/router'
 
 type Props = {
   isOpen?: boolean
@@ -32,6 +35,7 @@ const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { status, data: session } = useSession()
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
+  const router = useRouter()
 
   const {
     isOpen = isPanelOpen ?? false,
@@ -51,12 +55,31 @@ const ActivityPanel = (props: Props) => {
       <hr></hr>
       <div className='p-4 flex-1 overflow-auto'>
         {getUserAll.data?.map((activity) => (
-          <RestaurantBoard
-            data={activity}
-            compact
-            onClick={() => onActivityClicked(activity)}
-            isFocused={mapbox.focusedPlaceId === activity.place_id}
-          />
+          <div className='flex gap-2 items-center justify-between' key={activity.id}>
+            <RestaurantBoard
+              data={activity}
+              compact
+              onClick={() => onActivityClicked(activity)}
+              isFocused={mapbox.focusedPlaceId === activity.place_id}
+            />
+            <DropDown
+              text=''
+              menu={[
+                {
+                  label: '詳細を表示',
+                  onDropDownItemClick: () => {
+                    router.push(`/details/${activity.place_id}`)
+                  },
+                },
+              ]}
+              square
+              outline
+              icon={{
+                position: 'after',
+                src: <Dots />,
+              }}
+            />
+          </div>
         ))}
       </div>
     </div>

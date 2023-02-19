@@ -28,12 +28,15 @@ const DropDown = ({ menu, ...buttonProps }: Props) => {
         <div
           className='h-screen w-screen top-0 left-0 absolute'
           onClick={() => setIsOpen(false)}
+          style={{
+            zIndex: 1,
+          }}
         ></div>
       )}
       <div
         className='relative'
         style={{
-          ...(isOpen && { zIndex: 100 }),
+          ...(isOpen && { zIndex: 1 }),
         }}
       >
         <Button {...buttonProps} onClick={() => setIsOpen((prev) => !prev)} />
