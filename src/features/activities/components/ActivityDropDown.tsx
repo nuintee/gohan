@@ -17,41 +17,48 @@ const ActivityDropDown = ({
 
   const deleteActivity = useDeleteActivity()
 
+  const menu = [
+    {
+      label: '公式ホームページを表示',
+      onDropDownItemClick: () => {
+        if (!activity.website) return
+        window.open(activity.website, '_blank')
+      },
+      ignored: !activity.website,
+    },
+    {
+      label: '詳細を表示',
+      onDropDownItemClick: () => {
+        router.push(`/details/${activity.place_id}`)
+      },
+      ignored: router.asPath === `/details/${activity.place_id}`,
+    },
+    {
+      label: 'ライブラリから削除',
+      onDropDownItemClick: () => {
+        console.log(activity)
+        deleteActivity.mutate(
+          {
+            activityId: activity.id,
+            place_id: activity.place_id,
+          },
+          {
+            onSuccess: (data) => {
+              onMutated()
+            },
+          },
+        )
+      },
+      ignored: !activity.reviewStatus,
+    },
+  ].filter((v) => !v.ignored)
+
+  if (menu.length <= 0) return <></>
+
   return (
     <DropDown
       text=''
-      menu={[
-        {
-          label: '公式ホームページを表示',
-          onDropDownItemClick: () => {
-            if (!activity.website) return
-            window.open(activity.website, '_blank')
-          },
-        },
-        {
-          label: '詳細を表示',
-          onDropDownItemClick: () => {
-            router.push(`/details/${activity.place_id}`)
-          },
-        },
-        {
-          label: 'ライブラリから削除',
-          onDropDownItemClick: () => {
-            console.log(activity)
-            deleteActivity.mutate(
-              {
-                activityId: activity.id,
-                place_id: activity.place_id,
-              },
-              {
-                onSuccess: (data) => {
-                  onMutated()
-                },
-              },
-            )
-          },
-        },
-      ]}
+      menu={menu}
       square
       outline
       icon={{
