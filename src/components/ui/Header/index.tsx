@@ -15,7 +15,7 @@ const Header = () => {
           router.pathname === '/library' && 'border-gh-orange text-white'
         }`}
       >
-        Library
+        ライブラリ
       </Link>
       <div className='flex items-center'>
         <User />
