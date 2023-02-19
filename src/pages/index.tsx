@@ -42,6 +42,8 @@ const LocationLoader = ({
   isError: boolean
   error?: string | null
 }) => {
+  const absoluteClassName = 'absolute left-1/2 bottom-6 -translate-x-1/2 '
+
   const ui = () => {
     switch (true) {
       case isLoading:
@@ -69,7 +71,7 @@ const LocationLoader = ({
   }
 
   return (
-    <div className='absolute left-1/2 bottom-6 -translate-x-1/2 flex gap-2 items-center justify-center border-2 px-4 py-2 border-gray-100 rounded-full'>
+    <div className='flex gap-2 items-center justify-center border-2 px-4 py-2 border-gray-100 rounded-full'>
       {ui()}
     </div>
   )
