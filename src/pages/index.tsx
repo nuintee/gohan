@@ -131,12 +131,8 @@ const Index = () => {
     latitude: gps.coords.latitude,
     longitude: gps.coords.longitude,
     successCallback: async (data) => {
-      const abortController = new AbortController()
-
       // getColor
-      const dominantColor = await getDominantColor(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAA1BMVEX3ycnvcU6cAAAASElEQVR4nO3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIC3AcUIAAFkqh/QAAAAAElFTkSuQmCC',
-      )
+      const dominantColor = await getDominantColor('https://source.unsplash.com/random')
 
       const url = new URL(`${BASE_URL}/discover`)
       url.searchParams.append('place_id', data.place_id)
