@@ -70,15 +70,24 @@ const Index = () => {
   const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
 
   useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        ({ timestamp, coords }) => {
-          updateSafeGeolocation({ coords, timestamp, isFetching: false })
-        },
-        (error) => {
-          updateGeolocationStatus({ isError: true, isFetching: false })
-        },
-      )
+    const watchId = navigator.geolocation.watchPosition(
+      ({ timestamp, coords }) => {
+        updateSafeGeolocation({
+          coords,
+          timestamp,
+          isFetching: false,
+        })
+      },
+      (error) => {
+        updateGeolocationStatus({ isError: true, isFetching: false })
+      },
+      {
+        enableHighAccuracy: true,
+      },
+    )
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId)
     }
   }, [])
 

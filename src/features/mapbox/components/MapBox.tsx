@@ -45,6 +45,7 @@ const MapBox = () => {
   }
 
   const handleError = (error) => {
+    console.dir(error)
     useToast.error(error.message)
   }
 
@@ -62,6 +63,10 @@ const MapBox = () => {
         pitchWithRotate={false}
         onClick={() => clearActivityFocus()}
         onError={(e) => handleError(e.error)}
+        onMoveEnd={(e) => {
+          console.log(e)
+          console.log(gps)
+        }}
         onLoad={handleLoad}
         ref={setMapBoxRef}
       >
