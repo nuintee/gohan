@@ -6,7 +6,6 @@ import calculateDistance from '@/libs/haversine-distance'
 // Components
 import PanelHeader from '@/components/ui/PanelHeader'
 import { Activity } from '@prisma/client'
-import RestaurantCard from '@/features/restaurants/components/RestaurantCard'
 import { ActivityResolved } from '../types'
 import { useSession } from 'next-auth/react'
 import { QueryClient, UseMutationResult } from '@tanstack/react-query'
@@ -36,6 +35,7 @@ const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { status, data: session } = useSession()
 
+  // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
   const deleteActivity = useDeleteActivity()
 
