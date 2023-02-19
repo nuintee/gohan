@@ -29,7 +29,7 @@ const ActivityDropDown = ({
     {
       label: '詳細を表示',
       onDropDownItemClick: () => {
-        router.push(`/details/${activity.place_id}`)
+        router.push(`/details/${activity.place_id}`, '', { shallow: true })
       },
       ignored: router.asPath === `/details/${activity.place_id}`,
     },
