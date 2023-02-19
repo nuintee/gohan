@@ -14,6 +14,7 @@ const MENUS = [
 type DropDownMenu = {
   label: string
   onDropDownItemClick: () => void
+  ignored: boolean
 }[]
 
 type Props = {
