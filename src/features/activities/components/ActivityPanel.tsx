@@ -24,6 +24,7 @@ import useMapBox from '@/features/mapbox/hooks'
 import { DropDown } from '@/components/ui'
 import { Dots } from '@/components/icons'
 import { useRouter } from 'next/router'
+import useDeleteActivity from '../hooks/useDeleteActivity'
 
 type Props = {
   isOpen?: boolean
@@ -34,7 +35,10 @@ type Props = {
 const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { status, data: session } = useSession()
+
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
+  const deleteActivity = useDeleteActivity()
+
   const router = useRouter()
 
   const {
@@ -69,6 +73,23 @@ const ActivityPanel = (props: Props) => {
                   label: '詳細を表示',
                   onDropDownItemClick: () => {
                     router.push(`/details/${activity.place_id}`)
+                  },
+                },
+                {
+                  label: 'ライブラリから削除',
+                  onDropDownItemClick: () => {
+                    console.log(activity)
+                    deleteActivity.mutate(
+                      {
+                        activityId: activity.id,
+                        place_id: activity.place_id,
+                      },
+                      {
+                        onSuccess: (data) => {
+                          getUserAll.refetch()
+                        },
+                      },
+                    )
                   },
                 },
               ]}

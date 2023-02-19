@@ -1,3 +1,4 @@
+import { ActivityResolved } from '@/features/activities/types'
 import { useState } from 'react'
 import Button from '../Button'
 
