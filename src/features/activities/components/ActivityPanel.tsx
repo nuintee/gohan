@@ -47,7 +47,7 @@ const ContentsRenderer = ({
             isFocused={mapbox.focusedPlaceId === activity.place_id}
             isLocked={false}
           />
-          <ActivityDropDown activity={activity} onItemDeleted={() => userActivities.refetch()} />
+          <ActivityDropDown activity={activity} onMutated={() => userActivities.refetch()} />
         </div>
       ))}
     </div>

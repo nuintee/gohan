@@ -8,10 +8,10 @@ import { ActivityResolved } from '../types'
 
 const ActivityDropDown = ({
   activity,
-  onItemDeleted,
+  onMutated,
 }: {
   activity: ActivityResolved
-  onItemDeleted: () => void
+  onMutated: () => void
 }) => {
   const router = useRouter()
 
@@ -21,6 +21,13 @@ const ActivityDropDown = ({
     <DropDown
       text=''
       menu={[
+        {
+          label: '公式ホームページを表示',
+          onDropDownItemClick: () => {
+            if (!activity.website) return
+            window.open(activity.website, '_blank')
+          },
+        },
         {
           label: '詳細を表示',
           onDropDownItemClick: () => {
@@ -38,7 +45,7 @@ const ActivityDropDown = ({
               },
               {
                 onSuccess: (data) => {
-                  onItemDeleted()
+                  onMutated()
                 },
               },
             )

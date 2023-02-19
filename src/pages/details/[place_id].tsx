@@ -39,6 +39,7 @@ import { GetServerSideProps } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
 import { createContext } from '@/server/context'
 import { DetailsAPI } from '@/features/restaurants/types'
+import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
 
 const IMG_SRC = images.random()
 
@@ -50,17 +51,6 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
     userId: session?.user.id,
     place_id: id,
   })
-
-  const dropdownMenu = [
-    {
-      label: '公式ホームページを開く',
-      onDropDownItemClick: () => {},
-    },
-    {
-      label: 'ライブラリから削除',
-      onDropDownItemClick: () => {},
-    },
-  ]
 
   const [dominant, setDominant] = useState({
     color: colors['gh-l-gray'],
@@ -156,25 +146,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                       src: <Share />,
                     }}
                   />
-                  {/* <Button
-                    text=''
-                    outline
-                    icon={{
-                      position: 'after',
-                      src: <Dots />,
-                    }}
-                    square
-                  /> */}
-                  <DropDown
-                    text=''
-                    outline
-                    icon={{
-                      position: 'after',
-                      src: <Dots />,
-                    }}
-                    square
-                    menu={dropdownMenu}
-                  />
+                  <ActivityDropDown activity={data} onMutated={() => refetch()} />
                 </div>
               )}
             </div>
