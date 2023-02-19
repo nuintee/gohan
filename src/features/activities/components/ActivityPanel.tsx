@@ -61,7 +61,7 @@ const ActivityPanel = (props: Props) => {
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
-  const { isOpen = isPanelOpen ?? false, onClose = closePanel } = props
+  const { isOpen = isPanelOpen ?? true, onClose = closePanel } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
