@@ -29,32 +29,6 @@ import { Router, useRouter } from 'next/router'
 import useGPS from '@/hooks/gps'
 import { getDominantColor } from '@/libs/rgbaster'
 
-const DetailsModal = ({
-  isOpen = false,
-  onClose = () => {},
-  duration = 1000,
-  title,
-  description,
-}: {
-  isOpen: boolean
-  onClose?: () => void
-  duration?: number
-  title?: string
-  description?: string
-}) => {
-  const openClassName = isOpen ? 'scale-100' : 'scale-0'
-  const router = useRouter()
-
-  return (
-    <div
-      className={`h-screen w-screen bg-red-400 absolute top-0 left-0 flex items-center justify-center flex-col duration-200 ease-in-out ${openClassName}`}
-    >
-      <h1 className='text-4xl text-white'>{title || 'Manuever Cafe'}</h1>
-      <p className='text-xl text-white'>{description || 'Description'}</p>
-    </div>
-  )
-}
-
 const LocationLoader = ({
   isLoading,
   isError,
@@ -132,12 +106,12 @@ const Index = () => {
     longitude: gps.coords.longitude,
     successCallback: async (data) => {
       // getColor
-      const dominantColor = await getDominantColor('https://source.unsplash.com/random')
+      // const dominantColor = await getDominantColor('https://source.unsplash.com/random')
 
       const url = new URL(`${BASE_URL}/discover`)
       url.searchParams.append('place_id', data.place_id)
       url.searchParams.append('main', data.name)
-      url.searchParams.append('color', dominantColor)
+      url.searchParams.append('color', 'black')
       url.searchParams.append(
         'sub',
         data.editorial_summary?.overview || (data?.types?.join('・') as string),

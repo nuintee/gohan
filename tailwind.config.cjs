@@ -14,6 +14,15 @@ module.exports = {
       fontFamily: {
         poppins: ['Poppins', ...fontFamily.sans],
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { transform: 'translateY(100%)', opacity: '0' },
+          '100%': { opacity: '100' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 1s ease-in-out',
+      },
     },
   },
   plugins: [],

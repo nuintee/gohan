@@ -15,7 +15,7 @@ const DiscoverPage = () => {
     if (!router.query.debug) {
       timeout = setTimeout(() => {
         router.replace(`/details/${place_id}`)
-      }, 2000)
+      }, 2500)
     }
 
     return () => {
@@ -30,8 +30,8 @@ const DiscoverPage = () => {
         background: color || 'dark',
       }}
     >
-      <h1 className='text-4xl text-white'>{main}</h1>
-      <p className='text-xl text-white'>{sub}</p>
+      <h1 className='text-4xl text-white animate-fadeIn'>{main}</h1>
+      <p className='text-xl text-white animate-fadeIn'>{sub}</p>
     </div>
   )
 }
