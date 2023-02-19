@@ -151,9 +151,13 @@ const Index = () => {
           {/* Layout */}
           <div className='flex flex-col gap-2 items-center justify-center'>
             <h1 className='text-4xl font-semibold'>
-              {restaurants.isFetching ? 'Searching perfect place' : 'Where should I eat'}
+              {restaurants.isFetching
+                ? 'あなたにピッタリのレストランを探しています。'
+                : '「どこで食べようかな」を解決'}
             </h1>
-            {!restaurants.isFetching && <p className='text-gh-d-gray text-lg'>Click to Gohan</p>}
+            {!restaurants.isFetching && (
+              <p className='text-gh-d-gray text-lg'>クリックしてGohanする</p>
+            )}
           </div>
           <GohanButton
             onClick={() => restaurants.refetch()}
