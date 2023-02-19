@@ -23,7 +23,7 @@ import useGetUser from '@/features/user/hooks/useGetUser'
 import useUpdateUser from '@/features/user/hooks/useUpdateUser'
 
 import Header from '@/components/ui/Header'
-import { Logo } from '@/components/icons'
+import { Check, Close, Logo, PulseLoader } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { Router, useRouter } from 'next/router'
 import useGPS from '@/hooks/gps'
@@ -59,6 +59,48 @@ const DetailsModal = ({
     >
       <h1 className='text-4xl text-white'>{title || 'Manuever Cafe'}</h1>
       <p className='text-xl text-white'>{description || 'Description'}</p>
+    </div>
+  )
+}
+
+const LocationLoader = ({
+  isLoading,
+  isError,
+  error,
+}: {
+  isLoading: boolean
+  isError: boolean
+  error?: string | null
+}) => {
+  const ui = () => {
+    switch (true) {
+      case isLoading:
+        return (
+          <>
+            <PulseLoader size={5} color={'gray'} />
+            <p className='text-gh-dark'>現在地を取得中</p>
+          </>
+        )
+      case isError:
+        return (
+          <>
+            <Close />
+            <p className='text-gh-dark'>{error || '現在地の取得に失敗'}</p>
+          </>
+        )
+      default:
+        return (
+          <>
+            <Check />
+            <p className='text-gh-dark'>現在地取得済み</p>
+          </>
+        )
+    }
+  }
+
+  return (
+    <div className='absolute left-1/2 bottom-6 -translate-x-1/2 flex gap-2 items-center justify-center border-2 px-4 py-2 border-gray-100 rounded-full'>
+      {ui()}
     </div>
   )
 }
@@ -116,9 +158,10 @@ const Index = () => {
           <GohanButton
             onClick={() => restaurants.refetch()}
             isLoading={restaurants.isFetching}
-            disabled={restaurants.isFetching}
+            disabled={restaurants.isFetching || gps.isFetching}
             size={40}
           />
+          <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
         </div>
       </div>
       {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
