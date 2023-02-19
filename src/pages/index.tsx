@@ -27,51 +27,25 @@ import { Check, Close, Logo, PulseLoader } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { Router, useRouter } from 'next/router'
 import useGPS from '@/hooks/gps'
+import { getDominantColor } from '@/libs/rgbaster'
 
-const DetailsModal = ({
-  isOpen = false,
-  onClose = () => {},
-  duration = 1000,
-  title,
-  description,
-}: {
-  isOpen: boolean
-  onClose?: () => void
-  duration?: number
-  title?: string
-  description?: string
-}) => {
-  const openClassName = isOpen ? 'scale-100' : 'scale-0'
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!isOpen) return
-
-    const timer = setTimeout(() => {
-      router.push('/details/1')
-    }, 1000)
-    return () => clearTimeout(timer)
-  }, [isOpen])
-
-  return (
-    <div
-      className={`h-screen w-screen bg-red-400 absolute top-0 left-0 flex items-center justify-center flex-col duration-200 ease-in-out ${openClassName}`}
-    >
-      <h1 className='text-4xl text-white'>{title || 'Manuever Cafe'}</h1>
-      <p className='text-xl text-white'>{description || 'Description'}</p>
-    </div>
-  )
-}
+// data
+import images from '@/data/images.json'
+import { sleep } from '@/utils/sleep'
 
 const LocationLoader = ({
   isLoading,
   isError,
   error,
+  absolute = false,
 }: {
   isLoading: boolean
   isError: boolean
   error?: string | null
+  absolute?: boolean
 }) => {
+  const absoluteClassName = 'absolute left-1/2 bottom-6 -translate-x-1/2'
+
   const ui = () => {
     switch (true) {
       case isLoading:
@@ -99,7 +73,11 @@ const LocationLoader = ({
   }
 
   return (
-    <div className='absolute left-1/2 bottom-6 -translate-x-1/2 flex gap-2 items-center justify-center border-2 px-4 py-2 border-gray-100 rounded-full'>
+    <div
+      className={`${
+        absolute && absoluteClassName
+      } flex gap-2 items-center justify-center border-2 px-4 py-2 border-gray-100 rounded-full`}
+    >
       {ui()}
     </div>
   )
@@ -138,8 +116,19 @@ const Index = () => {
   const restaurants = useRestaurants({
     latitude: gps.coords.latitude,
     longitude: gps.coords.longitude,
-    successCallback: (data) => {
-      router.push(`/details/${data.place_id}`)
+    successCallback: async (data) => {
+      // getColor
+      const dominantColor = await getDominantColor(images.random())
+
+      const url = new URL(`${BASE_URL}/discover`)
+      url.searchParams.append('place_id', data.place_id)
+      url.searchParams.append('main', data.name)
+      url.searchParams.append('color', dominantColor)
+      url.searchParams.append(
+        'sub',
+        data.editorial_summary?.overview || (data?.types?.join('・') as string),
+      )
+      router.push(url.toString(), `/details/${data.place_id}`)
     },
   })
 
@@ -168,8 +157,6 @@ const Index = () => {
           <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
         </div>
       </div>
-      {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
-      {/* <MapBox /> */}
     </>
   )
 }
