@@ -29,6 +29,10 @@ import { Router, useRouter } from 'next/router'
 import useGPS from '@/hooks/gps'
 import { getDominantColor } from '@/libs/rgbaster'
 
+// data
+import images from '@/data/images.json'
+import { sleep } from '@/utils/sleep'
+
 const LocationLoader = ({
   isLoading,
   isError,
@@ -106,12 +110,12 @@ const Index = () => {
     longitude: gps.coords.longitude,
     successCallback: async (data) => {
       // getColor
-      // const dominantColor = await getDominantColor('https://source.unsplash.com/random')
+      const dominantColor = await getDominantColor(images.random())
 
       const url = new URL(`${BASE_URL}/discover`)
       url.searchParams.append('place_id', data.place_id)
       url.searchParams.append('main', data.name)
-      url.searchParams.append('color', 'black')
+      url.searchParams.append('color', dominantColor)
       url.searchParams.append(
         'sub',
         data.editorial_summary?.overview || (data?.types?.join('・') as string),
@@ -145,8 +149,6 @@ const Index = () => {
           <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
         </div>
       </div>
-      {/* <DetailsModal isOpen={restaurants.isFetchedAfterMount} /> */}
-      {/* <MapBox /> */}
     </>
   )
 }
