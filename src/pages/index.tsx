@@ -27,6 +27,7 @@ import { Check, Close, Logo, PulseLoader } from '@/components/icons'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import { Router, useRouter } from 'next/router'
 import useGPS from '@/hooks/gps'
+import { getDominantColor } from '@/libs/rgbaster'
 
 const DetailsModal = ({
   isOpen = false,
@@ -43,15 +44,6 @@ const DetailsModal = ({
 }) => {
   const openClassName = isOpen ? 'scale-100' : 'scale-0'
   const router = useRouter()
-
-  useEffect(() => {
-    if (!isOpen) return
-
-    const timer = setTimeout(() => {
-      router.push('/details/1')
-    }, 1000)
-    return () => clearTimeout(timer)
-  }, [isOpen])
 
   return (
     <div
@@ -138,8 +130,23 @@ const Index = () => {
   const restaurants = useRestaurants({
     latitude: gps.coords.latitude,
     longitude: gps.coords.longitude,
-    successCallback: (data) => {
-      router.push(`/details/${data.place_id}`)
+    successCallback: async (data) => {
+      const abortController = new AbortController()
+
+      // getColor
+      const dominantColor = await getDominantColor(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAA1BMVEX3ycnvcU6cAAAASElEQVR4nO3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIC3AcUIAAFkqh/QAAAAAElFTkSuQmCC',
+      )
+
+      const url = new URL(`${BASE_URL}/discover`)
+      url.searchParams.append('place_id', data.place_id)
+      url.searchParams.append('main', data.name)
+      url.searchParams.append('color', dominantColor)
+      url.searchParams.append(
+        'sub',
+        data.editorial_summary?.overview || (data?.types?.join('・') as string),
+      )
+      router.push(url.toString(), `/details/${data.place_id}`)
     },
   })
 
@@ -168,7 +175,7 @@ const Index = () => {
           <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
         </div>
       </div>
-      {/* <DetailsModal isOpen={restaurants.isSuccess} /> */}
+      {/* <DetailsModal isOpen={restaurants.isFetchedAfterMount} /> */}
       {/* <MapBox /> */}
     </>
   )

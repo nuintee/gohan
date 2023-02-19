@@ -45,9 +45,10 @@ const IMG_SRC = images.random()
 
 const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) => {
   const router = useRouter()
+
   const { data: session, status } = useSession()
 
-  const { data, isFetching, isError, error, refetch } = useGetActivity({
+  const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
     userId: session?.user.id,
     place_id: id,
   })
@@ -81,9 +82,6 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   if (isError) return <ErrorFallBack error={error} />
 
   if (!data) return <>INVALID DATA</>
-
-  // Animation
-  if (router.query?.effect) return <>Effected!</>
 
   return (
     <>
@@ -233,6 +231,8 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
+  console.log({ query })
+
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: {},
