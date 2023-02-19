@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import Map, {
   Source,
   Layer,
@@ -33,7 +33,7 @@ import { mapBoxState } from '../stores'
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
 
-  const { gps } = useGPS()
+  const { gps, updateSafeGeolocation, isGPSFetching } = useGPS()
 
   const { mapbox, setMapBoxRef, onActivityClicked, clearActivityFocus } = useMapBox()
 
@@ -47,6 +47,13 @@ const MapBox = () => {
   const handleError = (error) => {
     console.dir(error)
     useToast.error(error.message)
+  }
+
+  const handleGeolocate = (e) => {
+    updateSafeGeolocation({
+      coords: e.coords,
+      isFetching: false,
+    })
   }
 
   return (
@@ -63,10 +70,6 @@ const MapBox = () => {
         pitchWithRotate={false}
         onClick={() => clearActivityFocus()}
         onError={(e) => handleError(e.error)}
-        onMoveEnd={(e) => {
-          console.log(e)
-          console.log(gps)
-        }}
         onLoad={handleLoad}
         ref={setMapBoxRef}
       >
@@ -77,6 +80,7 @@ const MapBox = () => {
           showUserHeading
           position='bottom-right'
           onError={handleError}
+          onGeolocate={handleGeolocate}
           style={{
             padding: '0.5rem',
             borderRadius: '100%',

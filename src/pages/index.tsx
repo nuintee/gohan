@@ -70,6 +70,8 @@ const Index = () => {
   const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
 
   useEffect(() => {
+    if (!gps.isFetching) return
+
     const watchId = navigator.geolocation.watchPosition(
       ({ timestamp, coords }) => {
         updateSafeGeolocation({
