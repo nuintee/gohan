@@ -14,7 +14,7 @@ const SearchModal = ({
     <div
       className={`w-screen h-screen duration-700 ease-in-out flex flex-col bg-white ${slideIn}`}
       style={{
-        ...(isOpen && { zIndex: '1000' }),
+        ...(isOpen && { zIndex: '1000', position: 'absolute' }),
       }}
     >
       <button onClick={() => onClose()}>Close</button>
