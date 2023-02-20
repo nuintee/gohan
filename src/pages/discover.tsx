@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useMemo, useRef } from 'react'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 
 // framer-motion
 const variants = {
@@ -49,7 +48,6 @@ const DiscoverPage = () => {
         background: color || 'dark',
       }}
     >
-      <Link href={'/'}>Home</Link>
       <h1 className='text-4xl text-white animate-fadeIn'>{memo.main}</h1>
       <p className='text-xl text-white animate-fadeIn'>{memo.sub}</p>
     </motion.main>
