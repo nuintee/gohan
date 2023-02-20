@@ -55,7 +55,7 @@ const Texts = (props: Props) => {
 
   return (
     <div className='flex w-full items-center justify-between rounded-md gap-2 whitespace-nowrap'>
-      <div className={`flex flex-col ${gap && 'gap-2'}`}>
+      <div className={`flex flex-col w-full ${gap && 'gap-2'}`}>
         <div className='flex gap-4 w-full'>
           <h1
             className={`font-bold ${textSize.main}`}
@@ -74,6 +74,8 @@ const Texts = (props: Props) => {
             className={`${textSize.sub}`}
             style={{
               color: subColor,
+              textAlign,
+              ...(textAlign === 'center' && { width: '100%' }),
             }}
           >
             {sub}
