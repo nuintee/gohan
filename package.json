@@ -42,6 +42,7 @@
     "@trpc/server": "^10.10.0",
     "axios": "^1.2.3",
     "dayjs": "^1.11.7",
+    "framer-motion": "^9.0.4",
     "haversine-distance": "^1.2.1",
     "install": "^0.13.0",
     "mapbox-gl": "^2.10.0",
