@@ -19,6 +19,7 @@ import ActivityDropDown from './ActivityDropDown'
 type Props = {
   isOpen?: boolean
   onClose?: React.MouseEventHandler<HTMLButtonElement>
+  query?: Partial<ReturnType<typeof useGetUserActivities>>
 }
 
 const ContentsRenderer = ({
@@ -56,12 +57,12 @@ const ContentsRenderer = ({
 
 const ActivityPanel = (props: Props) => {
   const { isPanelOpen, closePanel } = useActivityPanel()
-  const { status, data: session } = useSession()
+  const { data: session } = useSession()
 
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
-  const { isOpen = isPanelOpen ?? true, onClose = closePanel } = props
+  const { isOpen = isPanelOpen ?? true, onClose = closePanel, query = getUserAll } = props
 
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
@@ -71,7 +72,7 @@ const ActivityPanel = (props: Props) => {
     >
       <PanelHeader title={'ライブラリ'} onClose={onClose} />
       <hr></hr>
-      <ContentsRenderer userActivities={getUserAll} />
+      <ContentsRenderer userActivities={query} />
     </div>
   )
 }

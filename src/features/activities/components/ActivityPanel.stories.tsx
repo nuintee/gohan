@@ -14,5 +14,23 @@ export default {
 const Template: ComponentStory<typeof ActivityPanel> = (args) => <ActivityPanel {...args} />
 
 export const Default = Template.bind({})
+export const Loading = Template.bind({})
+export const Empty = Template.bind({})
 
-Default.args = {}
+Default.args = {
+  query: {
+    data: [],
+  },
+}
+
+Loading.args = {
+  query: {
+    isFetching: true,
+  },
+}
+
+Empty.args = {
+  query: {
+    data: [],
+  },
+}
