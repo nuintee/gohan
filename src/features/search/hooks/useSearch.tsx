@@ -3,13 +3,13 @@ import { useState } from 'react'
 const useSearch = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
 
-  const mangaeSearchModal = (isOpen: boolean) => {
+  const manageSearchModal = (isOpen: boolean) => {
     setIsSearchModalOpen(isOpen)
   }
 
   return {
     isSearchModalOpen,
-    mangaeSearchModal,
+    manageSearchModal,
     setIsSearchModalOpenDangerously: setIsSearchModalOpen,
   }
 }

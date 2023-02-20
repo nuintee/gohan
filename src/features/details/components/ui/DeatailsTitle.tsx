@@ -7,7 +7,7 @@ const DetailsTitle = ({ data }: { data: ActivityResolved }) => {
   const { status } = useSession()
 
   const activity_status = () => {
-    if (status === 'unauthenticated') {
+    if (status === 'authenticated') {
       return <ActivityStatus status={data?.reviewStatus} />
     } else {
       return <></>

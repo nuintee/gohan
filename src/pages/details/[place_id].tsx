@@ -56,204 +56,25 @@ import { MainLayout } from '@/layouts/layout'
 import DetailsTitle from '@/features/details/components/ui/DeatailsTitle'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
+import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
 
 const IMG_SRC = images.random()
-
-// const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) => {
-//   const { data: session, status } = useSession()
-
-//   const { isSearchModalOpen, mangaeSearchModal } = useSearch()
-
-//   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
-//     userId: session?.user.id,
-//     place_id: id,
-//   })
-
-//   const [dominant, setDominant] = useState({
-//     color: colors['gh-l-gray'],
-//     isLoading: true,
-//   })
-
-//   // Modals states ->  implement with useDetailsModal hook
-//   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
-//   const [isBasicInfoModalOpen, setIsBasicInfoModalOpen] = useState(false)
-//   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
-
-//   useEffect(() => {
-//     const init = async () => {
-//       if (!IMG_SRC) return
-
-//       const color = await getDominantColor(IMG_SRC)
-//       console.log(color)
-//       setDominant({ color, isLoading: false })
-
-//       console.log(data)
-//     }
-
-//     init()
-//   }, [])
-
-//   if (isFetching) return <DetailsLoadingFallback />
-
-//   if (isError) return <ErrorFallBack error={error} />
-
-//   if (!data) return <>INVALID DATA</>
-
-//   return (
-//     <>
-//       <div className='flex flex-col h-screen w-screen overflow-auto'>
-//         <Header />
-//         <div className='flex flex-1 flex-col relative'>
-//           <Cover color={dominant.color} />
-//           <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-//             <ImageChip
-//               isLoading={isFetching}
-//               src={IMG_SRC}
-//               onClick={() => setIsImageModalOpen(true)}
-//             />
-//             <div className='flex-1 flex flex-col justify-between py-2'>
-//               <Texts
-//                 size={'large'}
-//                 main={data?.name}
-//                 sub={data?.editorial_summary?.overview || data?.types?.join('・')}
-//                 mainColor={'white'}
-//                 subColor={'white'}
-//                 mainDecoration={
-//                   status === 'authenticated' && <ActivityStatus status={data?.reviewStatus} />
-//                 }
-//                 gap={true}
-//               />
-//               {isFetching ? (
-//                 <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
-//               ) : (
-//                 <div className='flex gap-4 w-fit'>
-//                   {status === 'authenticated' && (
-//                     <Button
-//                       text={
-//                         !data?.reviewStatus || data?.reviewStatus === 'NEW'
-//                           ? '評価を追加'
-//                           : '評価を変更'
-//                       }
-//                       onClick={() => setIsReviewModalOpen(true)}
-//                       icon={{
-//                         position: 'after',
-//                         src:
-//                           !data?.reviewStatus || data?.reviewStatus === 'NEW' ? (
-//                             ' ✨'
-//                           ) : (
-//                             <Chevron direction='bottom' />
-//                           ),
-//                       }}
-//                     />
-//                   )}
-//                   <Button
-//                     text='基本情報を表示'
-//                     outline
-//                     onClick={() => setIsBasicInfoModalOpen(true)}
-//                   />
-//                   <Button
-//                     text='共有'
-//                     outline
-//                     onClick={() => share({ url: location.href })}
-//                     icon={{
-//                       position: 'before',
-//                       src: <Share />,
-//                     }}
-//                   />
-//                   <ActivityDropDown activity={data} onMutated={() => refetch()} />
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-//           <main className='px-[10%]'>
-//             {status === 'authenticated' && (
-//               <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
-//             )}
-//             <section className='flex items-center justify-between gap-4 my-14'>
-//               <DescriptiveChip
-//                 title='超高級'
-//                 description={data?.price_level?.toString()}
-//                 icon={<Price fill={colors['gh-red']} />}
-//                 isLoading={isFetching}
-//               />
-//               <DescriptiveChip
-//                 title='営業中'
-//                 description={`営業時間: ${
-//                   data?.opening_hours?.periods && data?.opening_hours?.periods[0]
-//                 }`}
-//                 icon={<Clock fill={colors['gh-green']} />}
-//                 isLoading={isFetching}
-//               />
-//               {data?.user_ratings_total && data?.user_ratings_total > 0 && (
-//                 <DescriptiveChip
-//                   title={`悪い評価`}
-//                   description={`Googleでの評価は${data?.rating}です。`}
-//                   icon={<Star fill={colors['gh-red']} />}
-//                   isLoading={isFetching}
-//                 />
-//               )}
-//             </section>
-//             <DetailsSection
-//               margin='5rem'
-//               main='ロケーション'
-//               sub={data?.vicinity}
-//               isLoading={isFetching}
-//             >
-//               <div className='flex-1 aspect-video w-full'>
-//                 <MapBoxChip
-//                   latitude={data?.geometry?.location.lat}
-//                   longitude={data?.geometry?.location.lng}
-//                 />
-//               </div>
-//             </DetailsSection>
-//             {data?.user_ratings_total && data?.user_ratings_total > 0 && (
-//               <DetailsSection
-//                 margin='5rem'
-//                 main={`レビュー・${data?.rating}`}
-//                 sub={`${data?.user_ratings_total}件のレビュー`}
-//                 isLoading={isFetching}
-//               />
-//             )}
-//             <span className='fixed bottom-8 right-8'>
-//               <GohanButton size={25} onClick={() => mangaeSearchModal(true)} />
-//             </span>
-//           </main>
-//         </div>
-//       </div>
-//       <BasicInfoModal
-//         isOpen={isBasicInfoModalOpen}
-//         data={data}
-//         onClose={() => setIsBasicInfoModalOpen(false)}
-//       />
-//       <ReviewModal
-//         isOpen={isReviewModalOpen}
-//         onClose={() => setIsReviewModalOpen(false)}
-//         onReviewSuccess={refetch}
-//         data={{
-//           memo: data.memo,
-//           status: data?.reviewStatus,
-//           id: data?.id,
-//           place_id: data?.place_id,
-//         }}
-//       />
-//       <ImageModal
-//         isOpen={isImageModalOpen}
-//         data={data.photos?.map((v) => ({
-//           ...v,
-//           src: IMG_SRC,
-//           id: v.photo_reference,
-//         }))}
-//         onClose={() => setIsImageModalOpen(false)}
-//       />
-//       <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
-//     </>
-//   )
-// }
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
-  const { isSearchModalOpen, mangaeSearchModal } = useSearch()
+  const { isSearchModalOpen, manageSearchModal } = useSearch()
+
+  // Modal manage
+  const [detailsModal, setDetailsModal] = useState<'BASIC' | 'REVIEW' | 'IMAGE' | ''>('') //ID: BASIC, REVIEW, IMAGE
+
+  const clearModal = () => {
+    setDetailsModal('')
+  }
+
+  const checkIsOpen = (id: 'BASIC' | 'REVIEW' | 'IMAGE') => {
+    return detailsModal === id
+  }
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
     userId: session?.user.id,
@@ -271,19 +92,49 @@ const DetailsPage = ({ id }: { id: string }) => {
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <Cover color={'black'} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-          <ImageChip isLoading={false} src={IMG_SRC} onClick={() => {}} />
+          <ImageChip isLoading={false} src={IMG_SRC} onClick={() => setDetailsModal('IMAGE')} />
           <div className='flex-1 flex flex-col justify-between py-2'>
             <DetailsTitle data={data} />
+            <DetailsActionGroup
+              data={data}
+              isLoading={isFetching}
+              modalSetter={setDetailsModal}
+              refetch={refetch}
+            />
           </div>
         </div>
         <main className='px-[10%]'>
-          {status === 'authenticated' && (
-            <Texts main='この場所についてのメモ' sub={'data?.memo' || 'メモ'} />
-          )}
+          <div className='flex-1 flex flex-col justify-between py-2'>
+            {status === 'authenticated' && (
+              <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
+            )}
+          </div>
           <DetailsDescriptiveGroup data={data} isLoading={isFetching} />
           <DetailsSectionGroup data={data} isLoading={isFetching} />
         </main>
       </div>
+      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearModal} />
+      <ReviewModal
+        isOpen={checkIsOpen('REVIEW')}
+        onClose={clearModal}
+        onReviewSuccess={refetch}
+        data={{
+          memo: data.memo,
+          status: data?.reviewStatus,
+          id: data?.id,
+          place_id: data?.place_id,
+        }}
+      />
+      <ImageModal
+        isOpen={checkIsOpen('IMAGE')}
+        data={data.photos?.map((v) => ({
+          ...v,
+          src: IMG_SRC,
+          id: v.photo_reference,
+        }))}
+        onClose={clearModal}
+      />
+      <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )
 }
