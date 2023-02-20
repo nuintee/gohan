@@ -106,7 +106,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 
   return (
     <>
-      <div className='flex flex-col h-screen w-screen'>
+      <div className='flex flex-col h-screen w-screen overflow-auto'>
         <Header />
         <div className='flex flex-1 flex-col relative'>
           <Cover color={dominant.color} />

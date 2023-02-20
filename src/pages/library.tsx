@@ -21,7 +21,7 @@ const LibraryPage = () => {
 
   return (
     <>
-      <div className='flex flex-col h-full w-full overflow-hidden'>
+      <div className='flex flex-col h-full w-full'>
         <Header />
         <main className='relative flex-1 bg-gh-l-gray'>
           <section className='absolute top-4 right-4 z-[1]'>
