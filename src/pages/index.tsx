@@ -37,32 +37,6 @@ import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 
 const Index = () => {
-  const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
-
-  useEffect(() => {
-    if (!gps.isFetching) return
-
-    const watchId = navigator.geolocation.watchPosition(
-      ({ timestamp, coords }) => {
-        updateSafeGeolocation({
-          coords,
-          timestamp,
-          isFetching: false,
-        })
-      },
-      (error) => {
-        updateGeolocationStatus({ isError: true, isFetching: false })
-      },
-      {
-        enableHighAccuracy: true,
-      },
-    )
-
-    return () => {
-      navigator.geolocation.clearWatch(watchId)
-    }
-  }, [])
-
   return (
     <>
       <div className='flex flex-col gap-4 h-full w-full'>
