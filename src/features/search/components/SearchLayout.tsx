@@ -38,7 +38,7 @@ const SearchLayout = ({ trigger = false }: { trigger?: boolean }) => {
   })
 
   // Style
-  const absoluteStyle = restaurants.isFetching && 'h-screen w-screen absolute'
+  const absoluteStyle = restaurants.isFetching && 'h-screen w-screen fixed top-0'
 
   return (
     <div
