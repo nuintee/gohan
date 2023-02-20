@@ -6,9 +6,9 @@ import Link from 'next/link'
 
 // framer-motion
 const variants = {
-  hidden: { opacity: 1, x: 0, y: -100 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 1, x: 0, y: -250 },
+  hidden: { opacity: 1, x: 0, y: 0 },
+  enter: { opacity: 1, x: 0, y: 0, transition: { duration: 1.25 } },
+  exit: { opacity: 1, x: 0, y: '-100%', transition: { duration: 1.25 } },
 }
 
 const DiscoverPage = () => {
@@ -50,8 +50,8 @@ const DiscoverPage = () => {
       }}
     >
       <Link href={'/'}>Home</Link>
-      <motion.h1 className='text-4xl text-white '>{memo.main}</motion.h1>
-      <p className='text-xl text-white '>{memo.sub}</p>
+      <h1 className='text-4xl text-white animate-fadeIn'>{memo.main}</h1>
+      <p className='text-xl text-white animate-fadeIn'>{memo.sub}</p>
     </motion.main>
   )
 }
