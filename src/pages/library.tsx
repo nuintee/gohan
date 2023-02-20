@@ -16,9 +16,14 @@ import SearchModal from '@/features/search/components/SearchModal'
 import { ReactElement, useState } from 'react'
 import useSearch from '@/features/search/hooks/useSearch'
 import { MainLayout } from '@/layouts/layout'
+import { useSession } from 'next-auth/react'
+import AuthFallback from '@/components/fallback/AuthFallback'
 
 const LibraryPage = () => {
   const { isSearchModalOpen, manageSearchModal } = useSearch()
+  const { status } = useSession()
+
+  if (status === 'unauthenticated') return <AuthFallback />
 
   return (
     <>
