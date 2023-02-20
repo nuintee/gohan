@@ -11,28 +11,25 @@ import DetailsSection from '../layouts/DetailsSection'
 const DetailsLoadingFallback = () => {
   return (
     <>
-      <div className='flex flex-col h-screen w-screen'>
-        <Header />
-        <div className='flex flex-1 flex-col relative'>
-          <Cover />
-          <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-            <ImageChip isLoading={true} />
-            <div className='flex-1 flex flex-col justify-between py-2'>
-              <Texts isLoading={true} main='LOADING_TEXTS' />
-              <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
-            </div>
+      <div className='flex flex-1 flex-col relative'>
+        <Cover />
+        <div className='px-[10%] pt-16 pb-6 flex gap-8'>
+          <ImageChip isLoading={true} />
+          <div className='flex-1 flex flex-col justify-between py-2'>
+            <Texts isLoading={true} main='LOADING_TEXTS' />
+            <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
           </div>
-          <main className='px-[10%]'>
-            <Texts main='LOADING_TEXTS' isLoading={true} />
-            <section className='flex items-center justify-between gap-4 my-14'>
-              <DescriptiveChip isLoading={true} />
-              <DescriptiveChip isLoading={true} />
-              <DescriptiveChip isLoading={true} />
-            </section>
-            <DetailsSection isLoading={true} main='LOADING_SECTION' />
-            <DetailsSection isLoading={true} main='LOADING_SECTION' />
-          </main>
         </div>
+        <main className='px-[10%]'>
+          <Texts main='LOADING_TEXTS' isLoading={true} />
+          <section className='flex items-center justify-between gap-4 my-14'>
+            <DescriptiveChip isLoading={true} />
+            <DescriptiveChip isLoading={true} />
+            <DescriptiveChip isLoading={true} />
+          </section>
+          <DetailsSection isLoading={true} main='LOADING_SECTION' />
+          <DetailsSection isLoading={true} main='LOADING_SECTION' />
+        </main>
       </div>
     </>
   )
