@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -8,7 +8,7 @@ import Link from 'next/link'
 const variants = {
   hidden: { opacity: 1, x: 0, y: -100 },
   enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 1, x: 0, y: -100 },
+  exit: { opacity: 1, x: 0, y: -250 },
 }
 
 const DiscoverPage = () => {
@@ -19,10 +19,9 @@ const DiscoverPage = () => {
   const sub = router.query?.sub
   const color = router.query?.color as string
 
-  const meta = useRef({
-    main,
-    sub,
-  })
+  const memo = useMemo(() => {
+    return { main, sub }
+  }, [router.isReady])
 
   useEffect(() => {
     let timeout: NodeJS.Timeout
@@ -51,8 +50,8 @@ const DiscoverPage = () => {
       }}
     >
       <Link href={'/'}>Home</Link>
-      <motion.h1 className='text-4xl text-white '>{meta.current.main}</motion.h1>
-      <p className='text-xl text-white '>{meta.current.sub}</p>
+      <motion.h1 className='text-4xl text-white '>{memo.main}</motion.h1>
+      <p className='text-xl text-white '>{memo.sub}</p>
     </motion.main>
   )
 }
