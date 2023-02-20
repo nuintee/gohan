@@ -1,6 +1,14 @@
 import SearchLayout from './SearchLayout'
 
-const SearchModal = ({ isOpen, onClose = () => {} }: { isOpen: boolean; onClose?: () => void }) => {
+const SearchModal = ({
+  isOpen,
+  onClose = () => {},
+  trigger = false,
+}: {
+  isOpen: boolean
+  onClose?: () => void
+  trigger?: boolean
+}) => {
   const slideIn = isOpen ? '-transform-y-full' : 'translate-y-full'
   return (
     <div
@@ -10,7 +18,7 @@ const SearchModal = ({ isOpen, onClose = () => {} }: { isOpen: boolean; onClose?
       }}
     >
       <button onClick={() => onClose()}>Close</button>
-      <SearchLayout />
+      <SearchLayout trigger={trigger} />
     </div>
   )
 }

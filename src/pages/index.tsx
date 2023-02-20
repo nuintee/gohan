@@ -69,7 +69,7 @@ const Index = () => {
       <div className='flex flex-col gap-4 h-full w-full'>
         <Header />
         <button onClick={() => setIsModalOpen((prev) => !prev)}>TOGGLE</button>
-        <SearchLayout />
+        <SearchLayout trigger={isModalOpen} />
       </div>
       <SearchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>

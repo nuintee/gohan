@@ -20,10 +20,10 @@ const LibraryPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const restaurants = useRestaurants({
-    latitude: gps.coords.latitude,
-    longitude: gps.coords.longitude,
-  })
+  // const restaurants = useRestaurants({
+  //   latitude: gps.coords.latitude,
+  //   longitude: gps.coords.longitude,
+  // })
 
   return (
     <div className='flex flex-col h-full w-full'>
@@ -38,7 +38,11 @@ const LibraryPage = () => {
           <GohanButton onClick={() => setIsModalOpen(true)} size={25} />
         </section>
       </main>
-      <SearchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <SearchModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        trigger={isModalOpen}
+      />
     </div>
   )
 }

@@ -10,6 +10,7 @@ import useDiscoveredNavigation from './useDiscoveredNavigation'
 const useRestaurants = (
   props: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
     successCallback?: (data: ResultsEntity) => void
+    trigger?: boolean
   },
 ) => {
   const { status, data: session } = useSession()
@@ -18,7 +19,7 @@ const useRestaurants = (
   const { navigate } = useDiscoveredNavigation()
 
   return trpc.getRestaurants.useQuery(props, {
-    enabled: !!props.place_id,
+    enabled: !!props.place_id || (props.trigger ?? false),
     retry: isGPSError || isGPSFetching ? 0 : 3,
     onError: (error) => {
       console.error(error)

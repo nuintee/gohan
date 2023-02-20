@@ -1,14 +1,40 @@
 import { GohanButton } from '@/components/ui'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useGPS from '@/hooks/gps'
+import { useEffect } from 'react'
 import LocationLoader from './LocationLoader'
 
 const SearchLayout = ({ trigger = false }: { trigger?: boolean }) => {
-  const { gps } = useGPS()
+  const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
+
+  useEffect(() => {
+    if (!gps.isFetching) return
+
+    const watchId = navigator.geolocation.watchPosition(
+      ({ timestamp, coords }) => {
+        updateSafeGeolocation({
+          coords,
+          timestamp,
+          isFetching: false,
+        })
+      },
+      (error) => {
+        updateGeolocationStatus({ isError: true, isFetching: false })
+      },
+      {
+        enableHighAccuracy: true,
+      },
+    )
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId)
+    }
+  }, [])
 
   const restaurants = useRestaurants({
     latitude: gps.coords.latitude,
     longitude: gps.coords.longitude,
+    trigger,
   })
 
   // Style
