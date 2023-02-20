@@ -7,7 +7,7 @@ const Header = () => {
   const router = useRouter()
 
   return (
-    <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full '>
+    <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full'>
       <Brand margin={true} />
       <Link
         href='/library'

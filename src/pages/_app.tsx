@@ -13,8 +13,8 @@ import { ToastCatcher } from '@/components/ui'
 
 // Override
 import '@/utils/__arrayOverride__'
-import useGPS from '@/hooks/gps'
-import { useEffect } from 'react'
+import { NextPage } from 'next'
+import { ReactElement, ReactNode } from 'react'
 
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {
@@ -24,14 +24,24 @@ if (process.env.NODE_ENV === 'development') {
 
 const queryClient = new QueryClient()
 
-function App({ Component, pageProps }: AppProps<{ session: Session }>) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <ErrorBoundary>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
             <main className={`font-poppins h-screen w-screen overflow-hidden`}>
-              <Component {...pageProps} />
+              {getLayout(<Component {...pageProps} />)}
               <ToastCatcher position='top-center' />
             </main>
             <ReactQueryDevtools />
