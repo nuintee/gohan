@@ -54,6 +54,8 @@ import useSearch from '@/features/search/hooks/useSearch'
 import SearchModal from '@/features/search/components/SearchModal'
 import { MainLayout } from '@/layouts/layout'
 import DetailsTitle from '@/features/details/components/ui/DeatailsTitle'
+import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
+import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
 
 const IMG_SRC = images.random()
 
@@ -248,22 +250,6 @@ const IMG_SRC = images.random()
 //   )
 // }
 
-const descriptive_chips = ({ data, isLoading }: { data: ActivityResolved; isLoading: boolean }) => {
-  const PICKED_FIELDS: Partial<keyof typeof data>[] = ['price_level', 'opening_hours', 'rating']
-
-  const preparedArray = Object.keys(data)
-    .filter((label) => PICKED_FIELDS.includes(label))
-    .map((v) => data[v])
-
-  return (
-    <section className='flex items-center justify-between gap-4 my-14'>
-      {preparedArray.map((v) => (
-        <DescriptiveChip title={''} />
-      ))}
-    </section>
-  )
-}
-
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
@@ -282,7 +268,7 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   return (
     <>
-      <div className='flex flex-1 flex-col relative'>
+      <div className='flex flex-1 flex-col relative overflow-auto'>
         <Cover color={'black'} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
           <ImageChip isLoading={false} src={IMG_SRC} onClick={() => {}} />
@@ -294,6 +280,8 @@ const DetailsPage = ({ id }: { id: string }) => {
           {status === 'authenticated' && (
             <Texts main='この場所についてのメモ' sub={'data?.memo' || 'メモ'} />
           )}
+          <DetailsDescriptiveGroup data={data} isLoading={isFetching} />
+          <DetailsSectionGroup data={data} isLoading={isFetching} />
         </main>
       </div>
     </>

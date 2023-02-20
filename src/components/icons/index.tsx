@@ -17,6 +17,7 @@ import Star from './Star'
 import Share from './Share'
 import Dots from './Dots'
 import Chevron from './Chevron'
+import Price from './Price'
 
 export {
   Check,
@@ -38,4 +39,5 @@ export {
   Share,
   Dots,
   Chevron,
+  Price,
 }

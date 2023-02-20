@@ -15,7 +15,7 @@ const DetailsTitle = ({ data }: { data: ActivityResolved }) => {
   }
 
   return (
-    <Texts // must be wrapped in other file
+    <Texts
       size={'large'}
       main={data.name}
       sub={data?.editorial_summary?.overview || data?.types?.join('・')}
