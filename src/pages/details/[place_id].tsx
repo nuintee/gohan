@@ -9,7 +9,16 @@ import { useEffect, useState } from 'react'
 import { GCP_API_KEY, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
-import { Button, Input, Cover, ImageChip, DescriptiveChip, Texts, DropDown } from '@/components/ui'
+import {
+  Button,
+  Input,
+  Cover,
+  ImageChip,
+  DescriptiveChip,
+  Texts,
+  DropDown,
+  GohanButton,
+} from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import Price from '@/components/icons/Price'
@@ -40,6 +49,9 @@ import DetailsLoadingFallback from '@/features/details/components/DetailsLoading
 import { createContext } from '@/server/context'
 import { DetailsAPI } from '@/features/restaurants/types'
 import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
+import useGPS from '@/hooks/gps'
+import useSearch from '@/features/search/hooks/useSearch'
+import SearchModal from '@/features/search/components/SearchModal'
 
 const IMG_SRC = images.random()
 
@@ -47,6 +59,15 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   const router = useRouter()
 
   const { data: session, status } = useSession()
+
+  const { gps } = useGPS()
+
+  const { isSearchModalOpen, mangaeSearchModal } = useSearch()
+
+  const restaurants = useRestaurants({
+    latitude: gps.coords.latitude,
+    longitude: gps.coords.longitude,
+  })
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
     userId: session?.user.id,
@@ -198,6 +219,9 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
                 isLoading={isFetching}
               />
             )}
+            <span className='fixed bottom-8 right-8'>
+              <GohanButton size={25} onClick={() => mangaeSearchModal(true)} />
+            </span>
           </main>
         </div>
       </div>
@@ -226,6 +250,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         }))}
         onClose={() => setIsImageModalOpen(false)}
       />
+      <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )
 }

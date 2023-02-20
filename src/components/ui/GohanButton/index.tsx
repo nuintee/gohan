@@ -3,6 +3,7 @@ import { MouseEventHandler } from 'react'
 // Icons
 import { Logo, Close } from '@/components/icons'
 import { PulseLoader } from '@/components/icons'
+import useGPS from '@/hooks/gps'
 
 // Hooks
 // import useDirections from '@/features/directions/hooks'
@@ -12,11 +13,14 @@ type Props = {
   size?: number
   isNavigating?: boolean
   disabled?: boolean
-  onClick?: MouseEventHandler<HTMLButtonElement>
+  onClick?: () => void
 }
 
 const GohanButton = (props: Props) => {
-  const { isLoading = false, isNavigating = false, disabled = false, onClick, size } = props
+  const { isLoading = false, isNavigating = false, disabled = false, onClick, size = 40 } = props
+
+  const { gps, isGPSError, isGPSFetching, updateGeolocationStatus, updateSafeGeolocation } =
+    useGPS()
 
   const ui = () =>
     isLoading ? (
