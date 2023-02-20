@@ -32,7 +32,7 @@ import { getDominantColor } from '@/libs/rgbaster'
 // data
 import images from '@/data/images.json'
 import { sleep } from '@/utils/sleep'
-import SearchWindow from '@/features/search/components/SearchWindow'
+import SearchLayout from '@/features/search/components/SearchLayout'
 
 const Index = () => {
   // User
@@ -68,7 +68,7 @@ const Index = () => {
     <>
       <div className='flex flex-col gap-4 h-full w-full'>
         <Header />
-        <SearchWindow />
+        <SearchLayout />
       </div>
     </>
   )

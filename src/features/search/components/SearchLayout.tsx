@@ -11,8 +11,13 @@ const SearchWindow = () => {
     longitude: gps.coords.longitude,
   })
 
+  // Style
+  const absoluteStyle = restaurants.isFetching && 'h-screen w-screen absolute'
+
   return (
-    <div className='flex flex-1 flex-col gap-4 items-center justify-center'>
+    <div
+      className={`flex flex-1 flex-col gap-4 items-center justify-center bg-white duration-700 ease-in-out ${absoluteStyle}`}
+    >
       {/* Layout */}
       <div className='flex flex-col gap-2 items-center justify-center'>
         <h1 className='text-4xl font-semibold'>
