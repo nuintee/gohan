@@ -85,8 +85,6 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   if (isError) return <ErrorFallBack error={error} />
 
-  if (!data) return <>INVALID DATA</>
-
   return (
     <>
       <div className='flex flex-1 flex-col relative overflow-auto'>
@@ -109,8 +107,8 @@ const DetailsPage = ({ id }: { id: string }) => {
               <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
             )}
           </div>
-          <DetailsDescriptiveGroup data={data} isLoading={isFetching} />
-          <DetailsSectionGroup data={data} isLoading={isFetching} />
+          <DetailsDescriptiveGroup data={data} isLoading={false} />
+          <DetailsSectionGroup data={data} isLoading={false} />
           <section className='fixed bottom-8 right-8'>
             <GohanButton onClick={() => manageSearchModal(true)} size={25} />
           </section>
