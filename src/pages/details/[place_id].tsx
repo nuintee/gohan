@@ -50,6 +50,8 @@ import { createContext } from '@/server/context'
 import { DetailsAPI } from '@/features/restaurants/types'
 import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
 import useGPS from '@/hooks/gps'
+import useSearch from '@/features/search/hooks/useSearch'
+import SearchModal from '@/features/search/components/SearchModal'
 
 const IMG_SRC = images.random()
 
@@ -59,6 +61,8 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   const { data: session, status } = useSession()
 
   const { gps } = useGPS()
+
+  const { isSearchModalOpen, mangaeSearchModal } = useSearch()
 
   const restaurants = useRestaurants({
     latitude: gps.coords.latitude,
@@ -216,12 +220,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
               />
             )}
             <span className='fixed bottom-8 right-8'>
-              <GohanButton
-                size={25}
-                onClick={() => restaurants.refetch()}
-                isLoading={restaurants.isFetching}
-                disabled={restaurants.isFetching}
-              />
+              <GohanButton size={25} onClick={() => mangaeSearchModal(true)} />
             </span>
           </main>
         </div>
@@ -251,6 +250,7 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         }))}
         onClose={() => setIsImageModalOpen(false)}
       />
+      <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )
 }

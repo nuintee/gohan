@@ -34,10 +34,9 @@ import images from '@/data/images.json'
 import { sleep } from '@/utils/sleep'
 import SearchLayout from '@/features/search/components/SearchLayout'
 import SearchModal from '@/features/search/components/SearchModal'
+import useSearch from '@/features/search/hooks/useSearch'
 
 const Index = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
   const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
 
   useEffect(() => {
@@ -68,10 +67,8 @@ const Index = () => {
     <>
       <div className='flex flex-col gap-4 h-full w-full'>
         <Header />
-        <button onClick={() => setIsModalOpen((prev) => !prev)}>TOGGLE</button>
-        <SearchLayout trigger={isModalOpen} />
+        <SearchLayout />
       </div>
-      <SearchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   )
 }

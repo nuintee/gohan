@@ -14,16 +14,10 @@ import { useRouter } from 'next/router'
 import images from '@/data/images.json'
 import SearchModal from '@/features/search/components/SearchModal'
 import { useState } from 'react'
+import useSearch from '@/features/search/hooks/useSearch'
 
 const LibraryPage = () => {
-  const { gps } = useGPS()
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  // const restaurants = useRestaurants({
-  //   latitude: gps.coords.latitude,
-  //   longitude: gps.coords.longitude,
-  // })
+  const { isSearchModalOpen, mangaeSearchModal } = useSearch()
 
   return (
     <div className='flex flex-col h-full w-full'>
@@ -35,13 +29,13 @@ const LibraryPage = () => {
         <ActivityPanel />
         <MapBox />
         <section className='absolute bottom-6 -translate-x-1/2 left-1/2'>
-          <GohanButton onClick={() => setIsModalOpen(true)} size={25} />
+          <GohanButton onClick={() => mangaeSearchModal(true)} size={25} />
         </section>
       </main>
       <SearchModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        trigger={isModalOpen}
+        isOpen={isSearchModalOpen}
+        onClose={() => mangaeSearchModal(false)}
+        trigger={isSearchModalOpen}
       />
     </div>
   )
