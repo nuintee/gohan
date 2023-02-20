@@ -20,7 +20,7 @@ export const Empty = Template.bind({})
 
 Default.args = {
   query: {
-    data: activities,
+    data: [...activities, ...activities, ...activities],
   },
 }
 

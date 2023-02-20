@@ -54,7 +54,7 @@ const ContentsRenderer = ({
   }
 
   return (
-    <div className='flex flex-col gap-2 p-2'>
+    <div className='flex flex-col gap-2 p-2 flex-1 overflow-auto'>
       {userActivities.data?.map((activity) => (
         <div className='flex gap-2 items-center justify-between' key={activity.id}>
           <RestaurantBoard
@@ -83,7 +83,7 @@ const ActivityPanel = (props: Props) => {
 
   return (
     <div
-      className={`absolute top-0 right-0 h-screen bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1000]  shadow-md ${slideIn}`}
+      className={`absolute top-0 right-0 h-screen overflow-hidden bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1000]  shadow-md ${slideIn}`}
     >
       <PanelHeader title={'ライブラリ'} onClose={onClose} />
       <hr></hr>
