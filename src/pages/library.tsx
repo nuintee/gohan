@@ -20,24 +20,26 @@ const LibraryPage = () => {
   const { isSearchModalOpen, mangaeSearchModal } = useSearch()
 
   return (
-    <div className='flex flex-col h-full w-full'>
-      <Header />
-      <main className='relative flex-1 bg-gh-l-gray'>
-        <section className='absolute top-4 right-4 z-[1]'>
-          <AcitvityButton />
-        </section>
-        <ActivityPanel />
-        <MapBox />
-        <section className='absolute bottom-6 -translate-x-1/2 left-1/2'>
-          <GohanButton onClick={() => mangaeSearchModal(true)} size={25} />
-        </section>
-      </main>
+    <>
+      <div className='flex flex-col h-full w-full overflow-hidden'>
+        <Header />
+        <main className='relative flex-1 bg-gh-l-gray'>
+          <section className='absolute top-4 right-4 z-[1]'>
+            <AcitvityButton />
+          </section>
+          <ActivityPanel />
+          <MapBox />
+          <section className='absolute bottom-6 -translate-x-1/2 left-1/2'>
+            <GohanButton onClick={() => mangaeSearchModal(true)} size={25} />
+          </section>
+        </main>
+      </div>
       <SearchModal
         isOpen={isSearchModalOpen}
         onClose={() => mangaeSearchModal(false)}
         trigger={isSearchModalOpen}
       />
-    </div>
+    </>
   )
 }
 
