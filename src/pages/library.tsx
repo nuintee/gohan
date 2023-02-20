@@ -18,7 +18,7 @@ import useSearch from '@/features/search/hooks/useSearch'
 import { MainLayout } from '@/layouts/layout'
 
 const LibraryPage = () => {
-  const { isSearchModalOpen, mangaeSearchModal } = useSearch()
+  const { isSearchModalOpen, manageSearchModal } = useSearch()
 
   return (
     <>
@@ -31,11 +31,11 @@ const LibraryPage = () => {
       </main>
       <MapBox />
       <section className='absolute bottom-4 -translate-x-1/2 left-1/2'>
-        <GohanButton onClick={() => mangaeSearchModal(true)} size={25} />
+        <GohanButton onClick={() => manageSearchModal(true)} size={25} />
       </section>
       <SearchModal
         isOpen={isSearchModalOpen}
-        onClose={() => mangaeSearchModal(false)}
+        onClose={() => manageSearchModal(false)}
         trigger={isSearchModalOpen}
       />
     </>

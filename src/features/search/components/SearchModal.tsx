@@ -13,9 +13,9 @@ const SearchModal = ({
 
   return (
     <div
-      className={`absolute w-screen h-screen duration-700 ease-in-out flex flex-col bg-white ${slideIn}`}
+      className={`fixed w-screen h-screen duration-700 ease-in-out flex flex-col bg-white ${slideIn}`}
       style={{
-        ...(isOpen && { zIndex: '1000' }),
+        ...(isOpen && { zIndex: '1000', top: '0' }),
       }}
     >
       <SearchLayout trigger={trigger} />

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { details } from '@/data/details'
 import places from '@/data/_places.json'
 import { ActivityResolved } from '@/features/activities/types'
-import { useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { GCP_API_KEY, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import Image from 'next/image'
 import { colors } from '@/config/colors'
@@ -52,51 +52,34 @@ import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
 import useGPS from '@/hooks/gps'
 import useSearch from '@/features/search/hooks/useSearch'
 import SearchModal from '@/features/search/components/SearchModal'
+import { MainLayout } from '@/layouts/layout'
+import DetailsTitle from '@/features/details/components/ui/DeatailsTitle'
+import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
+import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
+import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
 
 const IMG_SRC = images.random()
 
-const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) => {
-  const router = useRouter()
-
+const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
-  const { gps } = useGPS()
+  const { isSearchModalOpen, manageSearchModal } = useSearch()
 
-  const { isSearchModalOpen, mangaeSearchModal } = useSearch()
+  // Modal manage
+  const [detailsModal, setDetailsModal] = useState<'BASIC' | 'REVIEW' | 'IMAGE' | ''>('') //ID: BASIC, REVIEW, IMAGE
 
-  const restaurants = useRestaurants({
-    latitude: gps.coords.latitude,
-    longitude: gps.coords.longitude,
-  })
+  const clearModal = () => {
+    setDetailsModal('')
+  }
+
+  const checkIsOpen = (id: 'BASIC' | 'REVIEW' | 'IMAGE') => {
+    return detailsModal === id
+  }
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
     userId: session?.user.id,
     place_id: id,
   })
-
-  const [dominant, setDominant] = useState({
-    color: colors['gh-l-gray'],
-    isLoading: true,
-  })
-
-  // Modals states -> later implement with recoil modals
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
-  const [isBasicInfoModalOpen, setIsBasicInfoModalOpen] = useState(false)
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
-
-  useEffect(() => {
-    const init = async () => {
-      if (!IMG_SRC) return
-
-      const color = await getDominantColor(IMG_SRC)
-      console.log(color)
-      setDominant({ color, isLoading: false })
-
-      console.log(data)
-    }
-
-    init()
-  }, [])
 
   if (isFetching) return <DetailsLoadingFallback />
 
@@ -106,133 +89,37 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
 
   return (
     <>
-      <div className='flex flex-col h-screen w-screen overflow-auto'>
-        <Header />
-        <div className='flex flex-1 flex-col relative'>
-          <Cover color={dominant.color} />
-          <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-            <ImageChip
+      <div className='flex flex-1 flex-col relative overflow-auto'>
+        <Cover color={'black'} />
+        <div className='px-[10%] pt-16 pb-6 flex gap-8'>
+          <ImageChip isLoading={false} src={IMG_SRC} onClick={() => setDetailsModal('IMAGE')} />
+          <div className='flex-1 flex flex-col justify-between py-2'>
+            <DetailsTitle data={data} />
+            <DetailsActionGroup
+              data={data}
               isLoading={isFetching}
-              src={IMG_SRC}
-              onClick={() => setIsImageModalOpen(true)}
+              modalSetter={setDetailsModal}
+              refetch={refetch}
             />
-            <div className='flex-1 flex flex-col justify-between py-2'>
-              <Texts
-                size={'large'}
-                main={data?.name}
-                sub={data?.editorial_summary?.overview || data?.types?.join('・')}
-                mainColor={'white'}
-                subColor={'white'}
-                mainDecoration={
-                  status === 'authenticated' && <ActivityStatus status={data?.reviewStatus} />
-                }
-                gap={true}
-              />
-              {isFetching ? (
-                <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
-              ) : (
-                <div className='flex gap-4 w-fit'>
-                  {status === 'authenticated' && (
-                    <Button
-                      text={
-                        !data?.reviewStatus || data?.reviewStatus === 'NEW'
-                          ? '評価を追加'
-                          : '評価を変更'
-                      }
-                      onClick={() => setIsReviewModalOpen(true)}
-                      icon={{
-                        position: 'after',
-                        src:
-                          !data?.reviewStatus || data?.reviewStatus === 'NEW' ? (
-                            ' ✨'
-                          ) : (
-                            <Chevron direction='bottom' />
-                          ),
-                      }}
-                    />
-                  )}
-                  <Button
-                    text='基本情報を表示'
-                    outline
-                    onClick={() => setIsBasicInfoModalOpen(true)}
-                  />
-                  <Button
-                    text='共有'
-                    outline
-                    onClick={() => share({ url: location.href })}
-                    icon={{
-                      position: 'before',
-                      src: <Share />,
-                    }}
-                  />
-                  <ActivityDropDown activity={data} onMutated={() => refetch()} />
-                </div>
-              )}
-            </div>
           </div>
-          <main className='px-[10%]'>
+        </div>
+        <main className='px-[10%]'>
+          <div className='flex-1 flex flex-col justify-between py-2'>
             {status === 'authenticated' && (
               <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
             )}
-            <section className='flex items-center justify-between gap-4 my-14'>
-              <DescriptiveChip
-                title='超高級'
-                description={data?.price_level?.toString()}
-                icon={<Price fill={colors['gh-red']} />}
-                isLoading={isFetching}
-              />
-              <DescriptiveChip
-                title='営業中'
-                description={`営業時間: ${
-                  data?.opening_hours?.periods && data?.opening_hours?.periods[0]
-                }`}
-                icon={<Clock fill={colors['gh-green']} />}
-                isLoading={isFetching}
-              />
-              {data?.user_ratings_total && data?.user_ratings_total > 0 && (
-                <DescriptiveChip
-                  title={`悪い評価`}
-                  description={`Googleでの評価は${data?.rating}です。`}
-                  icon={<Star fill={colors['gh-red']} />}
-                  isLoading={isFetching}
-                />
-              )}
-            </section>
-            <DetailsSection
-              margin='5rem'
-              main='ロケーション'
-              sub={data?.vicinity}
-              isLoading={isFetching}
-            >
-              <div className='flex-1 aspect-video w-full'>
-                <MapBoxChip
-                  latitude={data?.geometry?.location.lat}
-                  longitude={data?.geometry?.location.lng}
-                />
-              </div>
-            </DetailsSection>
-            {data?.user_ratings_total && data?.user_ratings_total > 0 && (
-              <DetailsSection
-                margin='5rem'
-                main={`レビュー・${data?.rating}`}
-                sub={`${data?.user_ratings_total}件のレビュー`}
-                isLoading={isFetching}
-              />
-            )}
-            <span className='fixed bottom-8 right-8'>
-              <GohanButton size={25} onClick={() => mangaeSearchModal(true)} />
-            </span>
-          </main>
-        </div>
+          </div>
+          <DetailsDescriptiveGroup data={data} isLoading={isFetching} />
+          <DetailsSectionGroup data={data} isLoading={isFetching} />
+          <section className='fixed bottom-8 right-8'>
+            <GohanButton onClick={() => manageSearchModal(true)} size={25} />
+          </section>
+        </main>
       </div>
-      <BasicInfoModal
-        isOpen={isBasicInfoModalOpen}
-        data={data}
-        onClose={() => setIsBasicInfoModalOpen(false)}
-      />
+      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearModal} />
       <ReviewModal
-        isOpen={isReviewModalOpen}
-        onClose={() => setIsReviewModalOpen(false)}
+        isOpen={checkIsOpen('REVIEW')}
+        onClose={clearModal}
         onReviewSuccess={refetch}
         data={{
           memo: data.memo,
@@ -242,13 +129,13 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
         }}
       />
       <ImageModal
-        isOpen={isImageModalOpen}
+        isOpen={checkIsOpen('IMAGE')}
         data={data.photos?.map((v) => ({
           ...v,
           src: IMG_SRC,
           id: v.photo_reference,
         }))}
-        onClose={() => setIsImageModalOpen(false)}
+        onClose={clearModal}
       />
       <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
@@ -272,6 +159,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
       id: query.place_id,
     },
   }
+}
+
+DetailsPage.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>
 }
 
 export default DetailsPage
