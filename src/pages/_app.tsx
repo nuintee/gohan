@@ -11,6 +11,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { trpc } from '@/libs/trpc'
 import { ToastCatcher } from '@/components/ui'
 
+import { AnimatePresence } from 'framer-motion'
+
 // Override
 import '@/utils/__arrayOverride__'
 import { NextPage } from 'next'
@@ -32,7 +34,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-function App({ Component, pageProps }: AppPropsWithLayout) {
+function App({ Component, pageProps, router }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
@@ -41,7 +43,11 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
         <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
             <main className={`font-poppins h-screen w-screen overflow-hidden`}>
-              {getLayout(<Component {...pageProps} />)}
+              {getLayout(
+                <AnimatePresence mode='wait' initial={false}>
+                  <Component {...pageProps} key={router.pathname} />
+                </AnimatePresence>,
+              )}
               <ToastCatcher position='top-center' />
             </main>
             <ReactQueryDevtools />
