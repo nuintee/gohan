@@ -40,18 +40,26 @@ const SearchLayout = ({ trigger = false }: { trigger?: boolean }) => {
   // Style
   const absoluteStyle = restaurants.isFetching && 'h-screen w-screen fixed top-0'
 
+  const textUI = () => {
+    if (restaurants.isFetching) {
+      return 'あなたにピッタリのレストランを探しています。'
+    } else {
+      return !trigger && '「どこで食べようかな」を解決'
+    }
+  }
+
   return (
     <div
       className={`flex flex-1 flex-col gap-4 items-center justify-center bg-white duration-700 ease-in-out ${absoluteStyle}`}
     >
       {/* Layout */}
       <div className='flex flex-col gap-2 items-center justify-center'>
-        <h1 className='text-4xl font-semibold'>
-          {restaurants.isFetching
-            ? 'あなたにピッタリのレストランを探しています。'
-            : '「どこで食べようかな」を解決'}
+        <h1 className={`text-4xl font-semibold ${restaurants.isFetching && 'animate-fadeIn'}`}>
+          {textUI()}
         </h1>
-        {!restaurants.isFetching && <p className='text-gh-d-gray text-lg'>クリックしてGohanする</p>}
+        {!restaurants.isFetching && !trigger && (
+          <p className='text-gh-d-gray text-lg'>クリックしてGohanする</p>
+        )}
       </div>
       <GohanButton
         onClick={() => restaurants.refetch()}
