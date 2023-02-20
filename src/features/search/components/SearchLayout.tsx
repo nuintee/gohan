@@ -3,7 +3,7 @@ import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useGPS from '@/hooks/gps'
 import LocationLoader from './LocationLoader'
 
-const SearchWindow = () => {
+const SearchLayout = () => {
   const { gps } = useGPS()
 
   const restaurants = useRestaurants({
@@ -37,4 +37,4 @@ const SearchWindow = () => {
   )
 }
 
-export default SearchWindow
+export default SearchLayout

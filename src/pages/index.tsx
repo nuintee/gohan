@@ -33,10 +33,10 @@ import { getDominantColor } from '@/libs/rgbaster'
 import images from '@/data/images.json'
 import { sleep } from '@/utils/sleep'
 import SearchLayout from '@/features/search/components/SearchLayout'
+import SearchModal from '@/features/search/components/SearchModal'
 
 const Index = () => {
-  // User
-  const router = useRouter()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
 
@@ -68,8 +68,10 @@ const Index = () => {
     <>
       <div className='flex flex-col gap-4 h-full w-full'>
         <Header />
+        <button onClick={() => setIsModalOpen((prev) => !prev)}>TOGGLE</button>
         <SearchLayout />
       </div>
+      <SearchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   )
 }
