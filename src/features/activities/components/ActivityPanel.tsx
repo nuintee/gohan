@@ -19,7 +19,7 @@ import ActivityDropDown from './ActivityDropDown'
 type Props = {
   isOpen?: boolean
   onClose?: React.MouseEventHandler<HTMLButtonElement>
-  query?: Partial<ReturnType<typeof useGetUserActivities>>
+  query?: Partial<ReturnType<typeof useGetUserActivities>> | null
 }
 
 const ContentsRenderer = ({
