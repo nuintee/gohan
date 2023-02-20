@@ -6,8 +6,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import ActivityPanel from './ActivityPanel'
 
-import { decorators } from '@/../.storybook/preview'
-
 export default {
   title: 'Features/Activities/Panel',
   component: ActivityPanel,
