@@ -1,32 +1,13 @@
 import '!style-loader!css-loader!postcss-loader!tailwindcss/tailwind.css'
 
-import { RecoilRoot } from 'recoil'
-import { SessionProvider } from 'next-auth/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
+import { decorators as decoratorsConfig } from '@/config/storybook/decorators'
+import { WithNextRouter } from 'storybook-addon-next-router/dist/decorators'
+import { RouterContext } from 'next/dist/shared/lib/router-context'
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
-  },
-  backgrounds: {
-    default: 'dark',
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 }
 
-export const decorators = [
-  (Story) => (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <SessionProvider>
-          <Story />
-        </SessionProvider>
-      </QueryClientProvider>
-    </RecoilRoot>
-  ),
-]
+export const decorators = [...decoratorsConfig, WithNextRouter]

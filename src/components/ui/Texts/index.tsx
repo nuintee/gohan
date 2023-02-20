@@ -26,6 +26,7 @@ type Props = {
   subDecoration?: JSX.Element | string
   gap?: boolean
   isLoading?: boolean
+  textAlign?: 'center' | 'left' | 'right'
 }
 
 const Texts = (props: Props) => {
@@ -39,6 +40,7 @@ const Texts = (props: Props) => {
     subDecoration,
     gap = false,
     isLoading = false,
+    textAlign = 'left',
   } = props
 
   const textSize = sizes[size || 'normal']
@@ -54,11 +56,13 @@ const Texts = (props: Props) => {
   return (
     <div className='flex w-full items-center justify-between rounded-md gap-2 whitespace-nowrap'>
       <div className={`flex flex-col ${gap && 'gap-2'}`}>
-        <div className='flex gap-4'>
+        <div className='flex gap-4 w-full'>
           <h1
             className={`font-bold ${textSize.main}`}
             style={{
               color: mainColor,
+              textAlign,
+              ...(textAlign === 'center' && { width: '100%' }),
             }}
           >
             {main || 'Name'}
