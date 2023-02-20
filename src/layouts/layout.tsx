@@ -6,9 +6,9 @@ type LayoutProps = Required<{
 
 export const MainLayout = ({ children }: LayoutProps) => (
   <>
-    <div className='flex flex-col gap-4 h-full w-full'>
+    <div className='flex flex-col h-full w-full'>
       <Header />
-      {children}
+      <div className='flex-1 h-full w-full flex flex-col relative'>{children}</div>
     </div>
   </>
 )

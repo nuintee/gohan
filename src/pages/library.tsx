@@ -13,27 +13,26 @@ import { useRouter } from 'next/router'
 // data
 import images from '@/data/images.json'
 import SearchModal from '@/features/search/components/SearchModal'
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
 import useSearch from '@/features/search/hooks/useSearch'
+import { MainLayout } from '@/layouts/layout'
 
 const LibraryPage = () => {
   const { isSearchModalOpen, mangaeSearchModal } = useSearch()
 
   return (
     <>
-      <div className='flex flex-col h-full w-full'>
-        <Header />
-        <main className='relative flex-1 bg-gh-l-gray'>
-          <section className='absolute top-4 right-4 z-[1]'>
-            <AcitvityButton />
-          </section>
-          <ActivityPanel />
-          <MapBox />
-          <section className='absolute bottom-6 -translate-x-1/2 left-1/2'>
-            <GohanButton onClick={() => mangaeSearchModal(true)} size={25} />
-          </section>
-        </main>
-      </div>
+      <main className='relative flex-1 bg-gh-l-gray'>
+        <section className='absolute top-4 right-4 z-[1]'>
+          <AcitvityButton />
+        </section>
+        <ActivityPanel />
+        <MapBox />
+      </main>
+      <MapBox />
+      <section className='absolute bottom-4 -translate-x-1/2 left-1/2'>
+        <GohanButton onClick={() => mangaeSearchModal(true)} size={25} />
+      </section>
       <SearchModal
         isOpen={isSearchModalOpen}
         onClose={() => mangaeSearchModal(false)}
@@ -41,6 +40,10 @@ const LibraryPage = () => {
       />
     </>
   )
+}
+
+LibraryPage.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>
 }
 
 export default LibraryPage

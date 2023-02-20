@@ -7,19 +7,11 @@ import SearchLayout from '@/features/search/components/SearchLayout'
 import { ReactElement } from 'react'
 
 const Index = () => {
-  return (
-    <>
-      <SearchLayout />
-    </>
-  )
+  return <SearchLayout />
 }
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <MainLayout>
-      <Index />
-    </MainLayout>
-  )
+  return <MainLayout>{page}</MainLayout>
 }
 
 export default Index

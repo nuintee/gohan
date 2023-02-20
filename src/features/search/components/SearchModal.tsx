@@ -9,15 +9,15 @@ const SearchModal = ({
   onClose?: () => void
   trigger?: boolean
 }) => {
-  const slideIn = isOpen ? '-translate-y-full' : 'translate-y-full'
+  const slideIn = isOpen ? '-translate-y-0' : 'translate-y-full'
+
   return (
     <div
-      className={`w-screen h-screen duration-700 ease-in-out flex flex-col bg-white ${slideIn}`}
+      className={`absolute w-screen h-screen duration-700 ease-in-out flex flex-col bg-white ${slideIn}`}
       style={{
-        ...(isOpen && { zIndex: '1000', position: 'absolute' }),
+        ...(isOpen && { zIndex: '1000' }),
       }}
     >
-      <button onClick={() => onClose()}>Close</button>
       <SearchLayout trigger={trigger} />
     </div>
   )
