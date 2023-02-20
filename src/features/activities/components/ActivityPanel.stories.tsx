@@ -11,7 +11,6 @@ export default {
   component: ActivityPanel,
 } as ComponentMeta<typeof ActivityPanel>
 
-//👇 We create a “template” of how args map to rendering
 const Template: ComponentStory<typeof ActivityPanel> = (args) => <ActivityPanel {...args} />
 
 export const Default = Template.bind({})
