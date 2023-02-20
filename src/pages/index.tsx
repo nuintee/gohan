@@ -32,56 +32,7 @@ import { getDominantColor } from '@/libs/rgbaster'
 // data
 import images from '@/data/images.json'
 import { sleep } from '@/utils/sleep'
-
-const LocationLoader = ({
-  isLoading,
-  isError,
-  error,
-  absolute = false,
-}: {
-  isLoading: boolean
-  isError: boolean
-  error?: string | null
-  absolute?: boolean
-}) => {
-  const absoluteClassName = 'absolute left-1/2 bottom-6 -translate-x-1/2'
-
-  const ui = () => {
-    switch (true) {
-      case isLoading:
-        return (
-          <>
-            <PulseLoader size={5} color={'gray'} />
-            <p className='text-gh-dark'>現在地を取得中</p>
-          </>
-        )
-      case isError:
-        return (
-          <>
-            <Close />
-            <p className='text-gh-dark'>{error || '現在地の取得に失敗'}</p>
-          </>
-        )
-      default:
-        return (
-          <>
-            <Check />
-            <p className='text-gh-dark'>現在地取得済み</p>
-          </>
-        )
-    }
-  }
-
-  return (
-    <div
-      className={`${
-        absolute && absoluteClassName
-      } flex gap-2 items-center justify-center border-2 px-4 py-2 border-gray-100 rounded-full`}
-    >
-      {ui()}
-    </div>
-  )
-}
+import SearchWindow from '@/features/search/components/SearchWindow'
 
 const Index = () => {
   // User
@@ -113,34 +64,11 @@ const Index = () => {
     }
   }, [])
 
-  const restaurants = useRestaurants({
-    latitude: gps.coords.latitude,
-    longitude: gps.coords.longitude,
-  })
-
   return (
     <>
       <div className='flex flex-col gap-4 h-full w-full'>
         <Header />
-        <div className='flex flex-1 flex-col gap-4 items-center justify-center'>
-          {/* Layout */}
-          <div className='flex flex-col gap-2 items-center justify-center'>
-            <h1 className='text-4xl font-semibold'>
-              {restaurants.isFetching
-                ? 'あなたにピッタリのレストランを探しています。'
-                : '「どこで食べようかな」を解決'}
-            </h1>
-            {!restaurants.isFetching && (
-              <p className='text-gh-d-gray text-lg'>クリックしてGohanする</p>
-            )}
-          </div>
-          <GohanButton
-            onClick={() => restaurants.refetch()}
-            isLoading={restaurants.isFetching}
-            disabled={restaurants.isFetching || gps.isFetching}
-          />
-          <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
-        </div>
+        <SearchWindow />
       </div>
     </>
   )
