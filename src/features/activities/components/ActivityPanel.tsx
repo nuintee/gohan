@@ -10,7 +10,7 @@ import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 import useMapBox from '@/features/mapbox/hooks'
-import { DropDown } from '@/components/ui'
+import { DropDown, Texts } from '@/components/ui'
 import { Dots } from '@/components/icons'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
@@ -19,7 +19,7 @@ import ActivityDropDown from './ActivityDropDown'
 type Props = {
   isOpen?: boolean
   onClose?: React.MouseEventHandler<HTMLButtonElement>
-  query?: Partial<ReturnType<typeof useGetUserActivities>> | null
+  query?: ReturnType<typeof useGetUserActivities>
 }
 
 const ContentsRenderer = ({
@@ -31,11 +31,26 @@ const ContentsRenderer = ({
   // Query
 
   if (userActivities.isFetching) {
-    return <div>Loading...</div>
+    const COUNT = 3
+
+    return Array(COUNT)
+      .fill(null)
+      .map((v) => (
+        <div className='bg-gh-l-gray h-24 w-[20rem] animate-pulse rounded-md m-4 mb-0'></div>
+      ))
   }
 
   if (userActivities.data && userActivities.data?.length <= 0) {
-    return <div>Empty</div>
+    return (
+      <div className='flex-1 p-4 flex items-center justify-center'>
+        <Texts
+          main='データがありません。'
+          sub={'Gohanをして、早速新しい場所を発見しましょう。'}
+          size={'small'}
+          textAlign='center'
+        />
+      </div>
+    )
   }
 
   return (

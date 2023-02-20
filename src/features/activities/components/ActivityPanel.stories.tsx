@@ -5,6 +5,7 @@ import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import ActivityPanel from './ActivityPanel'
+import { activities } from '@/data/activities'
 
 export default {
   title: 'Features/Activities/Panel',
@@ -19,11 +20,7 @@ export const Empty = Template.bind({})
 
 Default.args = {
   query: {
-    data: [
-      {
-        name: 'fea',
-      },
-    ],
+    data: activities,
   },
 }
 
