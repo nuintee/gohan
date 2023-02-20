@@ -56,18 +56,9 @@ import SearchModal from '@/features/search/components/SearchModal'
 const IMG_SRC = images.random()
 
 const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) => {
-  const router = useRouter()
-
   const { data: session, status } = useSession()
 
-  const { gps } = useGPS()
-
   const { isSearchModalOpen, mangaeSearchModal } = useSearch()
-
-  const restaurants = useRestaurants({
-    latitude: gps.coords.latitude,
-    longitude: gps.coords.longitude,
-  })
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
     userId: session?.user.id,
