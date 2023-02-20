@@ -12,9 +12,13 @@ import { useRouter } from 'next/router'
 
 // data
 import images from '@/data/images.json'
+import SearchModal from '@/features/search/components/SearchModal'
+import { useState } from 'react'
 
 const LibraryPage = () => {
   const { gps } = useGPS()
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const restaurants = useRestaurants({
     latitude: gps.coords.latitude,
@@ -31,14 +35,10 @@ const LibraryPage = () => {
         <ActivityPanel />
         <MapBox />
         <section className='absolute bottom-6 -translate-x-1/2 left-1/2'>
-          <GohanButton
-            onClick={() => restaurants.refetch()}
-            isLoading={restaurants.isFetching}
-            disabled={restaurants.isFetching || gps.isFetching}
-            size={25}
-          />
+          <GohanButton onClick={() => setIsModalOpen(true)} size={25} />
         </section>
       </main>
+      <SearchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   )
 }
