@@ -111,6 +111,9 @@ const DetailsPage = ({ id }: { id: string }) => {
           </div>
           <DetailsDescriptiveGroup data={data} isLoading={isFetching} />
           <DetailsSectionGroup data={data} isLoading={isFetching} />
+          <section className='fixed bottom-8 right-8'>
+            <GohanButton onClick={() => manageSearchModal(true)} size={25} />
+          </section>
         </main>
       </div>
       <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearModal} />
