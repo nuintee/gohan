@@ -7,7 +7,6 @@ import ToastCatcher from './ToastCatcher'
 import Input from './Input'
 import Cover from './Cover'
 import ImageChip from './ImageChip'
-import DescriptiveChip from './DescriptiveChip'
 import DropDown from './DropDown'
 
 export {
@@ -20,6 +19,5 @@ export {
   Input,
   Cover,
   ImageChip,
-  DescriptiveChip,
   DropDown,
 }

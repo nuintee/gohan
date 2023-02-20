@@ -1,6 +1,6 @@
 import { Clock, Star, Price } from '@/components/icons'
 
-import { DescriptiveChip } from '@/components/ui'
+import DescriptiveChip from './DescriptiveChip/index'
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
 
