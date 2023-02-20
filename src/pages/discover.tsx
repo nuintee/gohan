@@ -1,5 +1,15 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+
+// framer-motion
+const variants = {
+  hidden: { opacity: 1, x: 0, y: -100 },
+  enter: { opacity: 1, x: 0, y: 0 },
+  exit: { opacity: 1, x: 0, y: -100 },
+}
 
 const DiscoverPage = () => {
   const router = useRouter()
@@ -8,6 +18,11 @@ const DiscoverPage = () => {
   const main = router.query?.main
   const sub = router.query?.sub
   const color = router.query?.color as string
+
+  const meta = useRef({
+    main,
+    sub,
+  })
 
   useEffect(() => {
     let timeout: NodeJS.Timeout
@@ -24,15 +39,21 @@ const DiscoverPage = () => {
   }, [router])
 
   return (
-    <div
-      className={`h-screen w-screen absolute top-0 left-0 flex items-center justify-center flex-col duration-200 ease-in-out`}
+    <motion.main
+      variants={variants}
+      initial='hidden'
+      exit={'exit'}
+      animate='enter'
+      transition={{ type: 'linear' }}
+      className={`h-screen w-screen flex flex-col gap-1 items-center justify-center`}
       style={{
         background: color || 'dark',
       }}
     >
-      <h1 className='text-4xl text-white animate-fadeIn'>{main}</h1>
-      <p className='text-xl text-white animate-fadeIn'>{sub}</p>
-    </div>
+      <Link href={'/'}>Home</Link>
+      <motion.h1 className='text-4xl text-white '>{meta.current.main}</motion.h1>
+      <p className='text-xl text-white '>{meta.current.sub}</p>
+    </motion.main>
   )
 }
 

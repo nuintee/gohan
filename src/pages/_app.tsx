@@ -43,11 +43,9 @@ function App({ Component, pageProps, router }: AppPropsWithLayout) {
         <QueryClientProvider client={queryClient}>
           <SessionProvider session={pageProps.session}>
             <main className={`font-poppins h-screen w-screen overflow-hidden`}>
-              {getLayout(
-                <AnimatePresence mode='wait' initial={false}>
-                  <Component {...pageProps} key={router.pathname} />
-                </AnimatePresence>,
-              )}
+              <AnimatePresence mode='wait' initial={false}>
+                {getLayout(<Component {...pageProps} key={router.pathname} />)}
+              </AnimatePresence>
               <ToastCatcher position='top-center' />
             </main>
             <ReactQueryDevtools />
