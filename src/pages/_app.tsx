@@ -13,6 +13,8 @@ import { ToastCatcher } from '@/components/ui'
 
 // Override
 import '@/utils/__arrayOverride__'
+import useGPS from '@/hooks/gps'
+import { useEffect } from 'react'
 
 if (process.env.NODE_ENV === 'development') {
   import('@/mocks/worker').then((worker) => {

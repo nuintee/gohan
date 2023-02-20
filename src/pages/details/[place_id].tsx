@@ -49,6 +49,7 @@ import DetailsLoadingFallback from '@/features/details/components/DetailsLoading
 import { createContext } from '@/server/context'
 import { DetailsAPI } from '@/features/restaurants/types'
 import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
+import useGPS from '@/hooks/gps'
 
 const IMG_SRC = images.random()
 
@@ -56,6 +57,13 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
   const router = useRouter()
 
   const { data: session, status } = useSession()
+
+  const { gps } = useGPS()
+
+  const restaurants = useRestaurants({
+    latitude: gps.coords.latitude,
+    longitude: gps.coords.longitude,
+  })
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
     userId: session?.user.id,
@@ -208,7 +216,12 @@ const DetailsPage = ({ passed, id }: { passed: ActivityResolved; id: string }) =
               />
             )}
             <span className='fixed bottom-8 right-8'>
-              <GohanButton size={25} />
+              <GohanButton
+                size={25}
+                onClick={() => restaurants.refetch()}
+                isLoading={restaurants.isFetching}
+                disabled={restaurants.isFetching}
+              />
             </span>
           </main>
         </div>
