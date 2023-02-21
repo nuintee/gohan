@@ -1,4 +1,4 @@
-import SuspenseImage from '../../../../components/ui/SuspenseImage'
+import SuspenseImage from '@/components/ui/SuspenseImage'
 
 type Props = {
   isLoading?: boolean
