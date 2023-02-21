@@ -54,7 +54,7 @@ const ContentsRenderer = ({
   }
 
   return (
-    <div className='flex flex-col gap-2 p-2 flex-1 overflow-auto'>
+    <div className='flex flex-col gap-2 p-2 pb-20 flex-1 overflow-auto'>
       {userActivities.data?.map((activity) => (
         <div className='flex gap-2 items-center justify-between' key={activity.id}>
           <RestaurantBoard
