@@ -58,7 +58,6 @@ const DetailsPage = ({ id }: { id: string }) => {
           <ImageChip
             isLoading={false}
             src={usePlacePhotos(data?.photos).url}
-            attributes={usePlacePhotos(data?.photos).htmlAttributes}
             onClick={() => setDetailsModal('IMAGE')}
           />
           <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
