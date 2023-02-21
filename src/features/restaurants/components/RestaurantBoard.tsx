@@ -3,7 +3,7 @@ import { Button, Texts, Label, DropDown } from '@/components/ui'
 import LikeButton from './LikeButton'
 
 // icons
-import { Close, Dots } from '@/components/icons'
+import { Close, Dots, PulseLoader } from '@/components/icons'
 
 // Types
 import { RestaurantProps } from '../types'
@@ -11,9 +11,25 @@ import { RestaurantProps } from '../types'
 // Constants
 import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
+import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
+import { useState } from 'react'
+import useToast from '@/libs/react-toastify'
 
 const RestaurantBoard = (props: RestaurantProps) => {
   const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
+
+  // add image hook
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+
+  const handleImageLoad = (callback?: () => void) => {
+    setIsImageLoaded(true)
+    callback && callback()
+  }
+
+  const handleImageError = (callback?: () => void) => {
+    setIsImageLoaded(true)
+    callback && callback()
+  }
 
   const compactStyle = {
     container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-full ${
@@ -29,10 +45,16 @@ const RestaurantBoard = (props: RestaurantProps) => {
 
   return (
     <div className={theme.container} onClick={onClick}>
+      {!isImageLoaded && <PulseLoader color='gray' size={5} />}
       <img
-        src={cardConfig.imgSrc(data?.photos)}
+        src={usePlacePhotos(data?.photos).url}
         alt={cardConfig.imgAlt(data?.name)}
         className={theme.img}
+        onError={() => handleImageError()}
+        onLoad={() => handleImageLoad()}
+        style={{
+          ...(!isImageLoaded && { display: 'none' }),
+        }}
       />
       <div className={theme.contents}>
         <div className={theme.infoContainer}>
