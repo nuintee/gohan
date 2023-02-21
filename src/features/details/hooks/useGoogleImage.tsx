@@ -7,6 +7,7 @@ const usePlacePhotos = (photos: ResultsEntity['photos']) => {
   const url = new URL('https://maps.googleapis.com/maps/api/place/photo')
   url.searchParams.append('photo_reference', photos[0]?.photo_reference)
   url.searchParams.append('key', GCP_API_KEY)
+  url.searchParams.append('maxwidth', '400')
   return { ...photos[0], url: url.toString() }
 }
 
