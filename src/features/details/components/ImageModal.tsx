@@ -26,12 +26,11 @@ const ImageModal = ({ isOpen, onClose, data }: Props) => {
         {Boolean(data.html_attributions?.length) && (
           <div className='flex gap-1 mt-2 absolute left-0 bottom-0 bg-white bg-opacity-90 py-2 px-1 text-sm'>
             <p>撮影者: </p>
-            {data.html_attributions?.map((v, i) => {
-              const isLast = i === data.html_attributions.length - 1
+            {data.html_attributions?.map((v, i, arr) => {
               return (
                 <>
                   <div className='font-semibold' dangerouslySetInnerHTML={{ __html: v }} />
-                  {!isLast && ', '}
+                  {!Boolean(i === arr.length - 1) && ', '}
                 </>
               )
             })}
