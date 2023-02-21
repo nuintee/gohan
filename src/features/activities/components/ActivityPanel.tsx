@@ -15,7 +15,6 @@ import { Dots } from '@/components/icons'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
 import ActivityDropDown from './ActivityDropDown'
-import { isScrollable } from '@/utils/isScrollable'
 
 type Props = {
   isOpen?: boolean
