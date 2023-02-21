@@ -47,7 +47,8 @@
       "scope": "GOOGLE",
       "types": ["point_of_interest", "establishment"],
       "user_ratings_total": 10,
-      "vicinity": "Жилищен комплекс Дружба 2 бл.322, Sofia"
+      "vicinity": "Жилищен комплекс Дружба 2 бл.322, Sofia",
+      "price_level": 2
     },
     {
       "business_status": "OPERATIONAL",
@@ -82,7 +83,8 @@
       "reference": "ChIJ58PFO_yGqkAR1a2dnhgIBiQ",
       "scope": "GOOGLE",
       "types": ["point_of_interest", "establishment"],
-      "vicinity": "Sofia, Drujba-2, bl. 304 ent. \"G\" - ground floor, вх. \"Г\" - партер, Sofia"
+      "vicinity": "Sofia, Drujba-2, bl. 304 ent. \"G\" - ground floor, вх. \"Г\" - партер, Sofia",
+      "price_level": 3
     },
     {
       "business_status": "OPERATIONAL",
@@ -129,7 +131,8 @@
       "scope": "GOOGLE",
       "types": ["car_repair", "store", "point_of_interest", "establishment"],
       "user_ratings_total": 75,
-      "vicinity": "Boulevard \"Professor Tsvetan Lazarov\" 132, Sofia"
+      "vicinity": "Boulevard \"Professor Tsvetan Lazarov\" 132, Sofia",
+      "price_level": 2
     },
     {
       "business_status": "OPERATIONAL",
@@ -176,7 +179,8 @@
       "scope": "GOOGLE",
       "types": ["veterinary_care", "point_of_interest", "establishment"],
       "user_ratings_total": 59,
-      "vicinity": "ж.к. Дружба 311Г, Sofia"
+      "vicinity": "ж.к. Дружба 311Г, Sofia",
+      "price_level": 4
     },
     {
       "business_status": "OPERATIONAL",
@@ -223,7 +227,8 @@
       "scope": "GOOGLE",
       "types": ["pet_store", "store", "point_of_interest", "establishment"],
       "user_ratings_total": 318,
-      "vicinity": "до бл, 306, София"
+      "vicinity": "до бл, 306, София",
+      "price_level": 2
     },
     {
       "business_status": "OPERATIONAL",
@@ -270,7 +275,8 @@
       "scope": "GOOGLE",
       "types": ["clothing_store", "store", "point_of_interest", "establishment"],
       "user_ratings_total": 23,
-      "vicinity": "гр. София, жк. бл. 304, до вх. А, Дружба 2, Sofia"
+      "vicinity": "гр. София, жк. бл. 304, до вх. А, Дружба 2, Sofia",
+      "price_level": 4
     },
     {
       "business_status": "OPERATIONAL",
@@ -317,7 +323,8 @@
       "scope": "GOOGLE",
       "types": ["dentist", "health", "point_of_interest", "establishment"],
       "user_ratings_total": 25,
-      "vicinity": "302-Г, ж.к. Дружба 302Г, Sofia"
+      "vicinity": "302-Г, ж.к. Дружба 302Г, Sofia",
+      "price_level": 4
     },
     {
       "business_status": "OPERATIONAL",
@@ -354,7 +361,8 @@
       "scope": "GOOGLE",
       "types": ["store", "point_of_interest", "establishment"],
       "user_ratings_total": 6,
-      "vicinity": "302-Б, ж.к. Дружба 302Б, Sofia"
+      "vicinity": "302-Б, ж.к. Дружба 302Б, Sofia",
+      "price_level": 2
     },
     {
       "business_status": "OPERATIONAL",
@@ -401,7 +409,8 @@
       "scope": "GOOGLE",
       "types": ["store", "point_of_interest", "establishment"],
       "user_ratings_total": 3,
-      "vicinity": "Дружба 2, Бл.302, Sofia"
+      "vicinity": "Дружба 2, Бл.302, Sofia",
+      "price_level": 3
     },
     {
       "business_status": "OPERATIONAL",
@@ -448,7 +457,8 @@
       "scope": "GOOGLE",
       "types": ["post_office", "finance", "point_of_interest", "establishment"],
       "user_ratings_total": 31,
-      "vicinity": "ж.к. Дружба 304Б, 304-Б, Sofia"
+      "vicinity": "ж.к. Дружба 304Б, 304-Б, Sofia",
+      "price_level": 3
     },
     {
       "business_status": "OPERATIONAL",
@@ -495,7 +505,8 @@
       "scope": "GOOGLE",
       "types": ["store", "point_of_interest", "establishment"],
       "user_ratings_total": 123,
-      "vicinity": "бл. 304, вх. Г, търговска зала № 3, Жилищен комплекс Дружба 2, Sofia"
+      "vicinity": "бл. 304, вх. Г, търговска зала № 3, Жилищен комплекс Дружба 2, Sofia",
+      "price_level": 2
     },
     {
       "business_status": "OPERATIONAL",
@@ -542,7 +553,8 @@
       "scope": "GOOGLE",
       "types": ["electronics_store", "store", "point_of_interest", "establishment"],
       "user_ratings_total": 12,
-      "vicinity": "Дружба 2, Sofia"
+      "vicinity": "Дружба 2, Sofia",
+      "price_level": 4
     },
     {
       "business_status": "OPERATIONAL",
@@ -579,7 +591,8 @@
       "scope": "GOOGLE",
       "types": ["store", "point_of_interest", "establishment"],
       "user_ratings_total": 4,
-      "vicinity": "кв. бл.304, вх. Г, ет.2, ап.1, ulitsa \"Druzhba\" 2, Sofia"
+      "vicinity": "кв. бл.304, вх. Г, ет.2, ап.1, ulitsa \"Druzhba\" 2, Sofia",
+      "price_level": 3
     },
     {
       "business_status": "OPERATIONAL",
@@ -626,7 +639,8 @@
       "scope": "GOOGLE",
       "types": ["point_of_interest", "establishment"],
       "user_ratings_total": 28,
-      "vicinity": "ж.к. Дружба 2, Sofia"
+      "vicinity": "ж.к. Дружба 2, Sofia",
+      "price_level": 4
     },
     {
       "business_status": "OPERATIONAL",
@@ -663,7 +677,8 @@
       "scope": "GOOGLE",
       "types": ["atm", "finance", "point_of_interest", "establishment"],
       "user_ratings_total": 5,
-      "vicinity": "140 Prof. Tsv. Lazarov blvd., Supermarket - Fantastiko, София"
+      "vicinity": "140 Prof. Tsv. Lazarov blvd., Supermarket - Fantastiko, София",
+      "price_level": 2
     },
     {
       "business_status": "OPERATIONAL",
@@ -710,7 +725,8 @@
       "scope": "GOOGLE",
       "types": ["finance", "point_of_interest", "establishment"],
       "user_ratings_total": 257,
-      "vicinity": "жк. Дружба-2, ул. Делийска воденица №5, срещу блок 314, Sofia"
+      "vicinity": "жк. Дружба-2, ул. Делийска воденица №5, срещу блок 314, Sofia",
+      "price_level": 1
     },
     {
       "business_status": "OPERATIONAL",
@@ -752,7 +768,7 @@
         "compound_code": "MC23+2V Sofia, Bulgaria",
         "global_code": "8GJ5MC23+2V"
       },
-      "price_level": 2,
+      "price_level": 3,
       "rating": 4,
       "reference": "ChIJU8sB2fuGqkARUsWSGC_2_24",
       "scope": "GOOGLE",
@@ -853,7 +869,8 @@
       "scope": "GOOGLE",
       "types": ["finance", "point_of_interest", "establishment"],
       "user_ratings_total": 201,
-      "vicinity": "жк. Дружба-2, бл.284, до вх. Ж, Sofia"
+      "vicinity": "жк. Дружба-2, бл.284, до вх. Ж, Sofia",
+      "price_level": 2
     },
     {
       "business_status": "OPERATIONAL",
@@ -900,7 +917,8 @@
       "scope": "GOOGLE",
       "types": ["school", "point_of_interest", "establishment"],
       "user_ratings_total": 8,
-      "vicinity": "Комплекс Цариградски, Sofia"
+      "vicinity": "Комплекс Цариградски, Sofia",
+      "price_level": 2
     }
   ],
   "status": "OK"
