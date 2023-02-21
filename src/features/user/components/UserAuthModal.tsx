@@ -1,4 +1,4 @@
-import { Header, Button, Input } from '@/components/ui'
+import { PanelHeader, Button, Input } from '@/components/ui'
 import ModalLayout from '@/layouts/ModalLayout'
 import { forwardRef, useState } from 'react'
 
@@ -37,7 +37,7 @@ const UserAuthModal = (props: Props) => {
   return (
     <ModalLayout isOpen={isOpen}>
       <section className='min-w-[20rem] bg-white'>
-        <Header title='Auth' onClose={onClose} />
+        <PanelHeader title='Auth' onClose={onClose} />
         {tabs.map((tab, index) => (
           <button
             className={`border-b-2 h-full px-4 py-2 text-gh-gray box-border ${
