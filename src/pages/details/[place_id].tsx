@@ -25,8 +25,6 @@ import DetailsSectionGroup from '@/features/details/components/ui/DetailsSection
 import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
 import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
 
-const IMG_SRC = images.random()
-
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
@@ -98,15 +96,11 @@ const DetailsPage = ({ id }: { id: string }) => {
           place_id: data?.place_id,
         }}
       />
-      {/* <ImageModal
+      <ImageModal
         isOpen={checkIsOpen('IMAGE')}
-        data={data.photos?.map((v) => ({
-          ...v,
-          src: usePlacePhotos(data?.photos).url,
-          id: v.photo_reference,
-        }))}
+        data={usePlacePhotos(data?.photos)}
         onClose={clearModal}
-      /> */}
+      />
       <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )

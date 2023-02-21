@@ -1,24 +1,24 @@
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
+import usePlacePhotos from '../hooks/useGoogleImage'
 
 type Props = {
   isOpen: boolean
   onClose?: React.MouseEventHandler<HTMLButtonElement>
-  data: {
-    src: string
-    width?: number
-    height?: number
-    id: string
-  }[]
+  data: ReturnType<typeof usePlacePhotos>
 }
 
 const ImageModal = ({ isOpen, onClose, data }: Props) => {
   return (
     <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
-      <section>
-        {data?.map((v) => (
-          <img src={v.src} width={v.width} height={v.height} key={v.id} />
-        ))}
+      <section className='h-full w-full p-4 overflow-hidden object-contain'>
+        {data.htmlAttributes ? (
+          data.htmlAttributes.map((attribute) => (
+            <div dangerouslySetInnerHTML={{ __html: attribute }}></div>
+          ))
+        ) : (
+          <img src={data.url} width={data?.width} height={data?.height} />
+        )}
       </section>
     </ModalLayout>
   )
