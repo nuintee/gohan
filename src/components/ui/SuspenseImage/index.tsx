@@ -13,6 +13,7 @@ const FALLBACK = ({ isLoading, component }: { isLoading: boolean; component?: JS
 
 type SuspenseImageProps = {
   fallback?: JSX.Element
+  disabled?: boolean
   onErrorCallback?: () => void
   onLoadCallback?: () => void
 } & DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
@@ -21,9 +22,10 @@ const SuspenseImage = ({
   fallback,
   onErrorCallback,
   onLoadCallback,
+  disabled = false,
   ...imgProps
 }: SuspenseImageProps) => {
-  const [isImageLoaded, setIsImageLoaded] = useState(false)
+  const [isImageLoaded, setIsImageLoaded] = useState(disabled)
 
   function handleError() {
     setIsImageLoaded(true)

@@ -1,3 +1,5 @@
+import SuspenseImage from '../SuspenseImage'
+
 type Props = {
   isLoading?: boolean
   attributes?: string[] // parse as a html
@@ -19,7 +21,7 @@ const ImageChip = (props: Props) => {
   }
 
   return (
-    <img
+    <SuspenseImage
       {...props}
       src={!isLoading && src}
       alt={!isLoading && 'Image'}
