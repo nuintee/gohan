@@ -2,6 +2,9 @@ import { ActivityResolved } from '@/features/activities/types'
 import { useState } from 'react'
 import Button from '../Button'
 
+// lib
+import { motion } from 'framer-motion'
+
 type DropDownMenu = {
   label: string
   onDropDownItemClick: () => void
@@ -12,6 +15,25 @@ type Props = {
   menu: DropDownMenu
   direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
 } & Parameters<typeof Button>[0]
+
+const subMenuAnimate = {
+  enter: {
+    opacity: 1,
+    transition: {
+      duration: 0.25,
+    },
+    display: 'flex',
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.25,
+    },
+    transitionEnd: {
+      display: 'none',
+    },
+  },
+}
 
 const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -48,11 +70,12 @@ const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
       >
         <Button {...buttonProps} onClick={() => setIsOpen((prev) => !prev)} />
         {menu?.length > 0 && (
-          <div
+          <motion.div
             onClick={() => setIsOpen(false)}
-            className={`peer absolute ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in ${
-              isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-            }`}
+            className={`peer absolute flex flex-col ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in`}
+            initial='exit'
+            animate={isOpen ? 'enter' : 'exit'}
+            variants={subMenuAnimate}
           >
             {menu.map((v) => (
               <button
@@ -62,7 +85,7 @@ const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
                 {v.label}
               </button>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </>
