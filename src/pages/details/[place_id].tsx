@@ -1,41 +1,11 @@
-import Header from '@/components/ui/Header'
-import { useRouter } from 'next/router'
-
-// data
-import { details } from '@/data/details'
-import places from '@/data/_places.json'
-import { ActivityResolved } from '@/features/activities/types'
 import { ReactElement, useEffect, useState } from 'react'
-import { GCP_API_KEY, MAPBOX_PUBLIC_TOKEN } from '@/config/env'
-import Image from 'next/image'
-import { colors } from '@/config/colors'
-import {
-  Button,
-  Input,
-  Cover,
-  ImageChip,
-  DescriptiveChip,
-  Texts,
-  DropDown,
-  GohanButton,
-} from '@/components/ui'
-import ActivityStatus from '@/features/activities/components/ActivityStatus'
-import DetailsSection from '@/features/details/layouts/DetailsSection'
-import Price from '@/components/icons/Price'
-import { Clock, Dots, Chevron, Share, Star } from '@/components/icons'
-import { getRestaurants } from '@/features/restaurants/api'
-import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
-import useToast from '@/libs/react-toastify'
-import { share } from '@/utils/share'
-import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
-import { getDominantColor } from '@/libs/rgbaster'
+
+import { Button, Input, Cover, ImageChip, Texts, DropDown, GohanButton } from '@/components/ui'
 
 import images from '@/data/images.json'
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
-import ModalLayout from '@/layouts/ModalLayout'
 import ImageModal from '@/features/details/components/ImageModal'
-import { trpc } from '@/libs/trpc'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 
 // SSG
@@ -46,10 +16,6 @@ import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { GetServerSideProps } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
-import { createContext } from '@/server/context'
-import { DetailsAPI } from '@/features/restaurants/types'
-import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
-import useGPS from '@/hooks/gps'
 import useSearch from '@/features/search/hooks/useSearch'
 import SearchModal from '@/features/search/components/SearchModal'
 import { MainLayout } from '@/layouts/layout'

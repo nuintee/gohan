@@ -1,6 +1,6 @@
 import { Props } from '../index.types'
 
-const Star = ({ height = 20, width = 20, fill = 'black' }: Props) => {
+const Star = ({ height = 20, width = 20, fill = 'white' }: Props) => {
   return (
     <svg
       width={width}
