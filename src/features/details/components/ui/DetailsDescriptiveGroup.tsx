@@ -49,17 +49,34 @@ function _getOpenHours<T extends ActivityResolved['opening_hours']>(opening_hour
 
   const hasHoursPeriods = opening_hours.periods && opening_hours?.periods[0].open.date
 
+  function _getTodayWorkingHour() {
+    if (!hasHoursPeriods) return ''
+
+    const currentDay = opening_hours.periods?.find((v) => v.open.day === new Date().getDay())
+
+    if (!currentDay) return ''
+
+    const open = currentDay.open
+    const close = currentDay.close
+
+    const _formatted = (str: string) => {
+      return str.match(/.{1,2}/g)?.join(':')
+    }
+
+    return `${_formatted(open.time)} - ${close && _formatted(close.time)}`
+  }
+
   if (opening_hours.open_now) {
     return {
       title: '営業中',
       color: colors['gh-green'],
-      description: hasHoursPeriods ? `平日の営業時間: ${hasHoursPeriods}` : '',
+      description: _getTodayWorkingHour(),
     }
   } else {
     return {
       title: '準備中',
       color: colors['gh-red'],
-      description: hasHoursPeriods ? `平日の営業時間: ${hasHoursPeriods}` : '',
+      description: _getTodayWorkingHour(),
     }
   }
 }
