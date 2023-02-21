@@ -22,8 +22,8 @@ const ImageModal = ({ isOpen, onClose, data }: Props) => {
         <SuspenseImage
           alt='alt'
           src={data.url}
-          width={data?.width || 400}
-          height={data?.height || 400}
+          width={data?.width}
+          height={data?.height}
           className={'h-full w-full object-scale-down'}
           fallback={
             <div className=' h-full w-full flex items-center justify-center'>
