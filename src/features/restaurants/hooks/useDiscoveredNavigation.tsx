@@ -3,14 +3,14 @@ import { getDominantColor } from '@/libs/rgbaster'
 import { useRouter } from 'next/router'
 
 // data
-import images from '@/data/images.json'
+import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
 
 const useDiscoveredNavigation = () => {
   const router = useRouter()
 
   const navigate = async (data) => {
     if (data) {
-      const dominantColor = await getDominantColor(images.random())
+      const dominantColor = await getDominantColor(usePlacePhotos(data.photos).url)
 
       const url = new URL(`${BASE_URL}/discover`)
       url.searchParams.append('place_id', data.place_id)

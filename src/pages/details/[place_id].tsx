@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from 'react'
 
 import { Button, Input, Cover, ImageChip, Texts, DropDown, GohanButton } from '@/components/ui'
 
-import images from '@/data/images.json'
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
 import ImageModal from '@/features/details/components/ImageModal'
