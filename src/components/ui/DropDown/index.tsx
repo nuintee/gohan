@@ -2,15 +2,6 @@ import { ActivityResolved } from '@/features/activities/types'
 import { useState } from 'react'
 import Button from '../Button'
 
-const MENUS = [
-  {
-    label: 'Edit',
-  },
-  {
-    label: 'Show Details',
-  },
-]
-
 type DropDownMenu = {
   label: string
   onDropDownItemClick: () => void
