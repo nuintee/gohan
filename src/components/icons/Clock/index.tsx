@@ -1,6 +1,6 @@
 import { Props } from '../index.types'
 
-const Clock = ({ width = 20, height = 20, fill = 'black' }: Props) => {
+const Clock = ({ width = 20, height = 20, fill = 'white' }: Props) => {
   return (
     <svg
       width={width}

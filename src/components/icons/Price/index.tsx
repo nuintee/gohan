@@ -1,6 +1,6 @@
 import { Props } from '../index.types'
 
-const Price = ({ width = 27, height = 27, fill = 'black' }: Props) => {
+const Price = ({ width = 27, height = 27, fill = 'white' }: Props) => {
   return (
     <svg
       width={width}

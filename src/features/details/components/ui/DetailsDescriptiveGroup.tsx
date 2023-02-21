@@ -4,6 +4,36 @@ import DescriptiveChip from './DescriptiveChip/index'
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
 
+function _getPriceLevel<T>(price_level: T) {
+  switch (price_level) {
+    case 0:
+      return {
+        label: '無料',
+      }
+    case 1:
+      return {
+        label: '比較的安価',
+        color: colors['gh-gray'],
+      }
+    case 2:
+      return {
+        label: '普通',
+      }
+    case 3:
+      return {
+        label: '高級',
+      }
+    case 4:
+      return {
+        label: 'とても高級',
+      }
+    default:
+      return {
+        label: '',
+      }
+  }
+}
+
 const DetailsDescriptiveGroup = ({
   data,
   isLoading = false,
@@ -13,11 +43,11 @@ const DetailsDescriptiveGroup = ({
 }) => {
   return (
     <section className='flex items-center justify-between gap-4 my-14'>
-      {data.price_level && (
+      {3 && (
         <DescriptiveChip
-          title={'高級'}
+          title={_getPriceLevel(3).label}
           description={''}
-          icon={<Price fill={colors['gh-red']} />}
+          icon={<Price />}
           isLoading={isLoading}
         />
       )}
@@ -27,7 +57,7 @@ const DetailsDescriptiveGroup = ({
           description={`営業時間: ${
             data.opening_hours?.periods && data?.opening_hours?.periods[0]
           }`}
-          icon={<Clock fill={colors['gh-green']} />}
+          icon={<Clock />}
           isLoading={isLoading}
         />
       )}
@@ -35,7 +65,7 @@ const DetailsDescriptiveGroup = ({
         <DescriptiveChip
           title={`悪い評価`}
           description={`Googleでの評価は${data?.rating}です。`}
-          icon={<Star fill={colors['gh-red']} />}
+          icon={<Star />}
           isLoading={isLoading}
         />
       )}
