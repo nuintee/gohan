@@ -11,7 +11,6 @@ import { getDominantColor } from '@/libs/rgbaster'
 import { useRouter } from 'next/router'
 
 // data
-import images from '@/data/images.json'
 import SearchModal from '@/features/search/components/SearchModal'
 import { ReactElement, useState } from 'react'
 import useSearch from '@/features/search/hooks/useSearch'

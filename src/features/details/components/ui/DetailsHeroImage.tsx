@@ -1,8 +1,11 @@
+import SuspenseImage from '@/components/ui/SuspenseImage'
+import usePlacePhotos from '../../hooks/useGoogleImage'
+
 type Props = {
   isLoading?: boolean
 } & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
 
-const ImageChip = (props: Props) => {
+const DetailsHeroImage = (props: Props) => {
   const {
     isLoading = false,
     src = 'https://source.unsplash.com/random',
@@ -14,14 +17,15 @@ const ImageChip = (props: Props) => {
   }
 
   return (
-    <img
+    <SuspenseImage
       {...props}
       src={!isLoading && src}
       alt={!isLoading && 'Image'}
       className='aspect-square object-cover h-60 w-60 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
       onClick={onClick}
+      disabled
     />
   )
 }
 
-export default ImageChip
+export default DetailsHeroImage

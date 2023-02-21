@@ -3,7 +3,7 @@ import { Button, Texts, Label, DropDown } from '@/components/ui'
 import LikeButton from './LikeButton'
 
 // icons
-import { Close, Dots } from '@/components/icons'
+import { Close, Dots, PulseLoader } from '@/components/icons'
 
 // Types
 import { RestaurantProps } from '../types'
@@ -11,6 +11,10 @@ import { RestaurantProps } from '../types'
 // Constants
 import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
+import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
+import { useState } from 'react'
+import useToast from '@/libs/react-toastify'
+import SuspenseImage from '@/components/ui/SuspenseImage'
 
 const RestaurantBoard = (props: RestaurantProps) => {
   const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
@@ -29,8 +33,8 @@ const RestaurantBoard = (props: RestaurantProps) => {
 
   return (
     <div className={theme.container} onClick={onClick}>
-      <img
-        src={cardConfig.imgSrc(data?.photos)}
+      <SuspenseImage
+        src={usePlacePhotos(data?.photos).url}
         alt={cardConfig.imgAlt(data?.name)}
         className={theme.img}
       />

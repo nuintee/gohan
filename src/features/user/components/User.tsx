@@ -7,6 +7,7 @@ import { SessionContextValue, signIn, signOut, useSession } from 'next-auth/reac
 import { MouseEventHandler, useState } from 'react'
 import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'
+import SuspenseImage from '@/components/ui/SuspenseImage'
 
 type UserProps = {
   isLoading?: boolean
@@ -52,10 +53,11 @@ const User = (props: UserProps) => {
   return (
     <button className={theme} onClick={onClick}>
       {session.status === 'authenticated' ? (
-        <img
+        <SuspenseImage
           src={`https://ui-avatars.com/api/?name=${session.user?.name}&background=random`}
           alt='Profile Image'
           className='h-full w-full'
+          disabled
         />
       ) : isLoading ? (
         <PulseLoader color={colors['gh-l-gray']} loading={true} size={5} speedMultiplier={0.5} />

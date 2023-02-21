@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from 'react'
 
 import { Button, Input, Cover, ImageChip, Texts, DropDown, GohanButton } from '@/components/ui'
 
-import images from '@/data/images.json'
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
 import ImageModal from '@/features/details/components/ImageModal'
@@ -23,8 +22,7 @@ import DetailsTitle from '@/features/details/components/ui/DeatailsTitle'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
 import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
-
-const IMG_SRC = images.random()
+import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
@@ -56,8 +54,12 @@ const DetailsPage = ({ id }: { id: string }) => {
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <Cover color={'black'} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-          <ImageChip isLoading={false} src={IMG_SRC} onClick={() => setDetailsModal('IMAGE')} />
-          <div className='flex-1 flex flex-col justify-between py-2'>
+          <ImageChip
+            isLoading={false}
+            src={usePlacePhotos(data?.photos).url}
+            onClick={() => setDetailsModal('IMAGE')}
+          />
+          <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
             <DetailsTitle data={data} />
             <DetailsActionGroup
               data={data}
@@ -94,11 +96,7 @@ const DetailsPage = ({ id }: { id: string }) => {
       />
       <ImageModal
         isOpen={checkIsOpen('IMAGE')}
-        data={data.photos?.map((v) => ({
-          ...v,
-          src: IMG_SRC,
-          id: v.photo_reference,
-        }))}
+        data={usePlacePhotos(data?.photos)}
         onClose={clearModal}
       />
       <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />

@@ -6,13 +6,12 @@ import useDeleteActivity from '../hooks/useDeleteActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import { ActivityResolved } from '../types'
 
-const ActivityDropDown = ({
-  activity,
-  onMutated,
-}: {
+type ActivityDropDownProps = {
   activity: ActivityResolved
   onMutated: () => void
-}) => {
+} & Pick<React.ComponentProps<typeof DropDown>, 'direction'>
+
+const ActivityDropDown = ({ activity, onMutated, direction }: ActivityDropDownProps) => {
   const router = useRouter()
 
   const deleteActivity = useDeleteActivity()
@@ -61,6 +60,7 @@ const ActivityDropDown = ({
       menu={menu}
       square
       outline
+      direction={direction}
       icon={{
         position: 'after',
         src: <Dots />,

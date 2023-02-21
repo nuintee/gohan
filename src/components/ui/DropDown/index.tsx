@@ -2,14 +2,8 @@ import { ActivityResolved } from '@/features/activities/types'
 import { useState } from 'react'
 import Button from '../Button'
 
-const MENUS = [
-  {
-    label: 'Edit',
-  },
-  {
-    label: 'Show Details',
-  },
-]
+// lib
+import { motion } from 'framer-motion'
 
 type DropDownMenu = {
   label: string
@@ -19,10 +13,43 @@ type DropDownMenu = {
 
 type Props = {
   menu: DropDownMenu
+  direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
 } & Parameters<typeof Button>[0]
 
-const DropDown = ({ menu, ...buttonProps }: Props) => {
+const subMenuAnimate = {
+  enter: {
+    opacity: 1,
+    transition: {
+      duration: 0.25,
+    },
+    display: 'flex',
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.25,
+    },
+    transitionEnd: {
+      display: 'none',
+    },
+  },
+}
+
+const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const directionClass = () => {
+    switch (direction) {
+      case 'left-top':
+        return 'right-full top-0 mr-2'
+      case 'left-bottom':
+        return 'right-full bottom-0 mr-2'
+      case 'top':
+        return 'right-0 bottom-full mb-2'
+      default:
+        return 'right-0 mt-2'
+    }
+  }
 
   return (
     <>
@@ -43,11 +70,12 @@ const DropDown = ({ menu, ...buttonProps }: Props) => {
       >
         <Button {...buttonProps} onClick={() => setIsOpen((prev) => !prev)} />
         {menu?.length > 0 && (
-          <div
+          <motion.div
             onClick={() => setIsOpen(false)}
-            className={`peer absolute right-0 min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 mt-2 p-1 rounded-md flex flex-col duration-200 origin-top-right ease-in ${
-              isOpen ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`peer absolute flex flex-col ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in`}
+            initial='exit'
+            animate={isOpen ? 'enter' : 'exit'}
+            variants={subMenuAnimate}
           >
             {menu.map((v) => (
               <button
@@ -57,7 +85,7 @@ const DropDown = ({ menu, ...buttonProps }: Props) => {
                 {v.label}
               </button>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </>

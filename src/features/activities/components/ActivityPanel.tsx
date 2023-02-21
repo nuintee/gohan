@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 // Function
 import calculateDistance from '@/libs/haversine-distance'
@@ -28,7 +28,6 @@ const ContentsRenderer = ({
   userActivities: ReturnType<typeof useGetUserActivities>
 }) => {
   const { onActivityClicked, mapbox } = useMapBox()
-  // Query
 
   if (userActivities.isFetching) {
     const COUNT = 3
@@ -54,8 +53,8 @@ const ContentsRenderer = ({
   }
 
   return (
-    <div className='flex flex-col gap-2 p-2 flex-1 overflow-auto'>
-      {userActivities.data?.map((activity) => (
+    <div className='flex flex-col gap-2 p-2 pb-20 flex-1 overflow-auto'>
+      {userActivities.data?.map((activity, index, original) => (
         <div className='flex gap-2 items-center justify-between' key={activity.id}>
           <RestaurantBoard
             data={activity}
@@ -63,7 +62,13 @@ const ContentsRenderer = ({
             isFocused={mapbox.focusedPlaceId === activity.place_id}
             isLocked={false}
           />
-          <ActivityDropDown activity={activity} onMutated={() => userActivities.refetch()} />
+          <ActivityDropDown
+            activity={activity}
+            onMutated={() => userActivities.refetch()}
+            direction={
+              original.length > 1 && index === original.length - 1 ? 'left-bottom' : 'bottom'
+            }
+          />
         </div>
       ))}
     </div>
