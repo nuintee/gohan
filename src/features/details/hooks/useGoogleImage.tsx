@@ -4,7 +4,7 @@ import { PhotosEntity, ResultsEntity } from '@/features/restaurants/types'
 const usePlacePhotos = (photos: ResultsEntity['photos']) => {
   if (!photos)
     return {
-      url: 'https://source.unsplash.com/random',
+      url: 'https://via.placeholder.com/600x400/FFF/png?text',
       width: 400,
       height: 400,
       html_attributions: [],
