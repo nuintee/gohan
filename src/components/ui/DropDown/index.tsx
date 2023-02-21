@@ -10,10 +10,24 @@ type DropDownMenu = {
 
 type Props = {
   menu: DropDownMenu
+  direction: 'bottom' | 'left-top' | 'left-bottom' | 'top'
 } & Parameters<typeof Button>[0]
 
-const DropDown = ({ menu, ...buttonProps }: Props) => {
+const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const directionClass = () => {
+    switch (direction) {
+      case 'left-top':
+        return 'right-full top-0 mr-2'
+      case 'left-bottom':
+        return 'right-full bottom-0 mr-2'
+      case 'top':
+        return 'right-0 bottom-full mb-2'
+      default:
+        return 'right-0 mt-2'
+    }
+  }
 
   return (
     <>
@@ -36,7 +50,7 @@ const DropDown = ({ menu, ...buttonProps }: Props) => {
         {menu?.length > 0 && (
           <div
             onClick={() => setIsOpen(false)}
-            className={`peer absolute right-0 min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 mt-2 p-1 rounded-md flex flex-col duration-200 origin-top-right ease-in ${
+            className={`peer absolute ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in ${
               isOpen ? 'opacity-100' : 'opacity-0'
             }`}
           >
