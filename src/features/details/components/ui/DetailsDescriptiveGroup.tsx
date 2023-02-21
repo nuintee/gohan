@@ -46,9 +46,10 @@ const DetailsDescriptiveGroup = ({
       {3 && (
         <DescriptiveChip
           title={_getPriceLevel(3).label}
-          description={''}
+          description={'営業'}
           icon={<Price />}
           isLoading={isLoading}
+          circleBackgroundColor={colors['gh-red']}
         />
       )}
       {data.opening_hours && (
@@ -59,6 +60,7 @@ const DetailsDescriptiveGroup = ({
           }`}
           icon={<Clock />}
           isLoading={isLoading}
+          circleBackgroundColor={colors['gh-green']}
         />
       )}
       {data?.user_ratings_total && data?.user_ratings_total > 0 && (
@@ -67,6 +69,7 @@ const DetailsDescriptiveGroup = ({
           description={`Googleでの評価は${data?.rating}です。`}
           icon={<Star />}
           isLoading={isLoading}
+          circleBackgroundColor={colors['gh-green']}
         />
       )}
     </section>

@@ -7,16 +7,16 @@ const DescriptiveChip = ({
   title = 'タイトル',
   description = '説明',
   isLoading = false,
-  backgroundColor = colors['gh-l-gray'],
+  circleBackgroundColor = colors['gh-l-gray'],
 }: {
   icon?: JSX.Element
   title?: string
   description?: string
   isLoading?: boolean
-  backgroundColor?: string
+  circleBackgroundColor?: string
 }) => {
   if (isLoading) {
-    return <div className='h-20 w-full rounded-md select-none bg-gh-l-gray animate-pulse'></div>
+    return <div className='min-h-20 w-full rounded-md select-none bg-gh-l-gray animate-pulse'></div>
   }
 
   return (
@@ -24,7 +24,7 @@ const DescriptiveChip = ({
       <section
         className='bg-white p-4 rounded-full'
         style={{
-          backgroundColor,
+          backgroundColor: circleBackgroundColor,
         }}
       >
         {icon}
