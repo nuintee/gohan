@@ -10,7 +10,7 @@ type DropDownMenu = {
 
 type Props = {
   menu: DropDownMenu
-  direction: 'bottom' | 'left-top' | 'left-bottom' | 'top'
+  direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
 } & Parameters<typeof Button>[0]
 
 const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
