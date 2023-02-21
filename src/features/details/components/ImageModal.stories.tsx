@@ -13,6 +13,24 @@ export default {
 
 const Template: ComponentStory<typeof ImageModal> = (args) => <ImageModal {...args} />
 
-export const Default = Template.bind({})
+export const Portrait = Template.bind({})
+export const Landscape = Template.bind({})
 
-Default.args = {}
+Landscape.args = {
+  isOpen: true,
+  data: {
+    url: 'https://via.placeholder.com/1600x900',
+    width: 1600,
+    height: 90,
+    html_attributions: [],
+  },
+}
+Portrait.args = {
+  isOpen: true,
+  data: {
+    url: 'https://via.placeholder.com/900x1600',
+    width: 900,
+    height: 1600,
+    html_attributions: [],
+  },
+}

@@ -9,22 +9,33 @@ type Props = {
 }
 
 const ImageModal = ({ isOpen, onClose, data }: Props) => {
+  console.log(data)
+
   if (!data) return <></>
 
   return (
     <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
-      <section className='h-screen w-screen flex-1 p-[3rem] object-contain' onClick={onClose}>
-        {data.htmlAttributes ? (
-          data.htmlAttributes.map((attribute) => (
-            <div dangerouslySetInnerHTML={{ __html: attribute }}></div>
-          ))
-        ) : (
-          <img
-            src={data.url}
-            width={data?.width}
-            height={data?.height}
-            className={'h-full w-full object-scale-down'}
-          />
+      <section className='h-screen w-screen flex-1 p-12 object-contain' onClick={onClose}>
+        <img
+          src={data.url}
+          width={data?.width}
+          height={data?.height}
+          className={'h-full w-full object-scale-down'}
+        />
+
+        {Boolean(data.html_attributions?.length) && (
+          <div className='flex gap-1 mt-2 absolute left-0 bottom-0 bg-white bg-opacity-90 py-2 px-1 text-sm'>
+            <p>撮影者: </p>
+            {data.html_attributions?.map((v, i) => {
+              const isLast = i === data.html_attributions.length - 1
+              return (
+                <>
+                  <div className='font-semibold' dangerouslySetInnerHTML={{ __html: v }} />
+                  {!isLast && ', '}
+                </>
+              )
+            })}
+          </div>
         )}
       </section>
     </ModalLayout>
