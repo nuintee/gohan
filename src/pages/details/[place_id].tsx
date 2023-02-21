@@ -63,7 +63,7 @@ const DetailsPage = ({ id }: { id: string }) => {
             attributes={usePlacePhotos(data?.photos).htmlAttributes}
             onClick={() => setDetailsModal('IMAGE')}
           />
-          <div className='flex-1 flex flex-col justify-between py-2'>
+          <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
             <DetailsTitle data={data} />
             <DetailsActionGroup
               data={data}
