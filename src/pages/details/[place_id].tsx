@@ -23,6 +23,7 @@ import DetailsTitle from '@/features/details/components/ui/DeatailsTitle'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
 import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
+import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
 
 const IMG_SRC = images.random()
 
@@ -56,7 +57,12 @@ const DetailsPage = ({ id }: { id: string }) => {
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <Cover color={'black'} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-          <ImageChip isLoading={false} src={IMG_SRC} onClick={() => setDetailsModal('IMAGE')} />
+          <ImageChip
+            isLoading={false}
+            src={usePlacePhotos(data?.photos).url}
+            attributes={usePlacePhotos(data?.photos).htmlAttributes}
+            onClick={() => setDetailsModal('IMAGE')}
+          />
           <div className='flex-1 flex flex-col justify-between py-2'>
             <DetailsTitle data={data} />
             <DetailsActionGroup
@@ -92,15 +98,15 @@ const DetailsPage = ({ id }: { id: string }) => {
           place_id: data?.place_id,
         }}
       />
-      <ImageModal
+      {/* <ImageModal
         isOpen={checkIsOpen('IMAGE')}
         data={data.photos?.map((v) => ({
           ...v,
-          src: IMG_SRC,
+          src: usePlacePhotos(data?.photos).url,
           id: v.photo_reference,
         }))}
         onClose={clearModal}
-      />
+      /> */}
       <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )

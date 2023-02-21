@@ -1,5 +1,6 @@
 type Props = {
   isLoading?: boolean
+  attributes?: string[] // parse as a html
 } & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
 
 const ImageChip = (props: Props) => {
@@ -11,6 +12,10 @@ const ImageChip = (props: Props) => {
 
   if (isLoading) {
     return <div className='h-60 w-60 relative bg-gh-l-gray rounded-md shadow-sm' />
+  }
+
+  if (props.attributes) {
+    return props.attributes.map((v) => <div dangerouslySetInnerHTML={{ __html: v }}></div>)
   }
 
   return (
