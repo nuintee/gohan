@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 // Function
 import calculateDistance from '@/libs/haversine-distance'
@@ -30,8 +30,6 @@ const ContentsRenderer = ({
 }) => {
   const { onActivityClicked, mapbox } = useMapBox()
 
-  const scrollerRef = useRef(null)
-
   if (userActivities.isFetching) {
     const COUNT = 3
 
@@ -56,7 +54,7 @@ const ContentsRenderer = ({
   }
 
   return (
-    <div className='flex flex-col gap-2 p-2 pb-20 flex-1 overflow-auto' ref={scrollerRef}>
+    <div className='flex flex-col gap-2 p-2 pb-20 flex-1 overflow-auto'>
       {userActivities.data?.map((activity, index, original) => (
         <div className='flex gap-2 items-center justify-between' key={activity.id}>
           <RestaurantBoard
@@ -69,11 +67,8 @@ const ContentsRenderer = ({
             activity={activity}
             onMutated={() => userActivities.refetch()}
             direction={
-              index === original.length && isScrollable(scrollerRef.current)
-                ? 'left-bottom'
-                : 'bottom'
+              original.length > 1 && index === original.length - 1 ? 'left-bottom' : 'bottom'
             }
-            // add left-top direction if parent is scrollable and it's last item
           />
         </div>
       ))}
