@@ -1,11 +1,11 @@
-import SuspenseImage from '../SuspenseImage'
+import SuspenseImage from '../../../../components/ui/SuspenseImage'
 
 type Props = {
   isLoading?: boolean
   attributes?: string[] // parse as a html
 } & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
 
-const ImageChip = (props: Props) => {
+const DetailsHeroImage = (props: Props) => {
   const {
     isLoading = false,
     src = 'https://source.unsplash.com/random',
@@ -32,4 +32,4 @@ const ImageChip = (props: Props) => {
   )
 }
 
-export default ImageChip
+export default DetailsHeroImage
