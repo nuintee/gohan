@@ -27,6 +27,7 @@ const ImageChip = (props: Props) => {
       alt={!isLoading && 'Image'}
       className='aspect-square object-cover h-60 w-60 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
       onClick={onClick}
+      disabled
     />
   )
 }
