@@ -9,15 +9,22 @@ type Props = {
 }
 
 const ImageModal = ({ isOpen, onClose, data }: Props) => {
+  if (!data) return <></>
+
   return (
     <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
-      <section className='h-full w-full p-4 overflow-hidden object-contain'>
+      <section className='h-screen w-screen flex-1 p-[3rem] object-contain' onClick={onClose}>
         {data.htmlAttributes ? (
           data.htmlAttributes.map((attribute) => (
             <div dangerouslySetInnerHTML={{ __html: attribute }}></div>
           ))
         ) : (
-          <img src={data.url} width={data?.width} height={data?.height} />
+          <img
+            src={data.url}
+            width={data?.width}
+            height={data?.height}
+            className={'h-full w-full object-scale-down'}
+          />
         )}
       </section>
     </ModalLayout>
