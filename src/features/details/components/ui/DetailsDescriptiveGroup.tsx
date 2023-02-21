@@ -102,17 +102,15 @@ const DetailsDescriptiveGroup = ({
   data: ActivityResolved
   isLoading: boolean
 }) => {
-  const _PRICE_LEVEL = 1 || data.price_level
-
   return (
     <section className='flex items-center justify-between gap-4 my-14'>
-      {_PRICE_LEVEL && (
+      {data.price_level && (
         <DescriptiveChip
-          title={_getPriceLevel(_PRICE_LEVEL).label}
+          title={_getPriceLevel(data.price_level).label}
           description={'平均的な価格帯'}
           icon={<Price />}
           isLoading={isLoading}
-          circleBackgroundColor={_getPriceLevel(_PRICE_LEVEL).color}
+          circleBackgroundColor={_getPriceLevel(data.price_level).color}
         />
       )}
       {data.opening_hours && (
