@@ -3,6 +3,7 @@ import { Texts } from '@/components/ui'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import { ActivityResolved } from '@/features/activities/types'
+import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
 import { useRouter } from 'next/router'
 import { Marker } from 'react-map-gl'
 
@@ -54,7 +55,7 @@ const Pin = ({
         </div>
         <div className='h-14 w-14 bg-white flex items-center justify-center relative rounded-full p-1 duration-700 ease-in-out shadow-sm'>
           <SuspenseImage
-            src={'https://source.unsplash.com/random'}
+            src={usePlacePhotos(data.photos).url}
             className='aspect-square rounded-full object-cover z-10'
             disabled
           />
