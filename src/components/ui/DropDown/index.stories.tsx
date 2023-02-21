@@ -28,7 +28,7 @@ export default {
 //👇 We create a “template” of how args map to rendering
 const Template: ComponentStory<typeof DropDown> = (args) => <DropDown {...args} />
 const FixedSizeTemplate: ComponentStory<typeof DropDown> = (args) => (
-  <div className='relative flex justify-end'>
+  <div className='relative flex justify-end py-[7.5rem]'>
     <DropDown {...args} />
   </div>
 )
