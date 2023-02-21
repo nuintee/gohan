@@ -32,8 +32,6 @@ const ContentsRenderer = ({
 
   const scrollerRef = useRef(null)
 
-  // Query
-
   if (userActivities.isFetching) {
     const COUNT = 3
 
@@ -70,7 +68,11 @@ const ContentsRenderer = ({
           <ActivityDropDown
             activity={activity}
             onMutated={() => userActivities.refetch()}
-            direction={isScrollable(scrollerRef.current) ? 'left-top' : 'bottom'}
+            direction={
+              index === original.length && isScrollable(scrollerRef.current)
+                ? 'left-bottom'
+                : 'bottom'
+            }
             // add left-top direction if parent is scrollable and it's last item
           />
         </div>

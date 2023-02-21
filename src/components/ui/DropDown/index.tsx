@@ -51,7 +51,7 @@ const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
           <div
             onClick={() => setIsOpen(false)}
             className={`peer absolute ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in ${
-              isOpen ? 'opacity-100' : 'opacity-0'
+              isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
             }`}
           >
             {menu.map((v) => (

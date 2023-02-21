@@ -1,7 +1,7 @@
 export function isScrollable(element: Element | null) {
-  if (!element) return false
+  if (element) {
+    const hasScrollableContent = element.scrollHeight > element.clientHeight
 
-  const hasScrollableContent = element.scrollHeight > element.clientHeight
-
-  return hasScrollableContent
+    return hasScrollableContent
+  }
 }
