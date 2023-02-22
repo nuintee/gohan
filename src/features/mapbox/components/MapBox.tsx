@@ -1,39 +1,23 @@
-import { forwardRef, useEffect, useState } from 'react'
-import Map, {
-  Source,
-  Layer,
-  GeolocateControl,
-  useMap,
-  GeolocateResultEvent,
-  GeolocateControlRef,
-  Marker,
-  MapRef,
-} from 'react-map-gl'
+import Map, { GeolocateControl, GeolocateControlRef } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 // config
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { mapStyles } from '../config'
 import useMapBox from '../hooks'
-import { useQueryClient } from '@tanstack/react-query'
 import useToast from '@/libs/react-toastify'
 import { useRef } from 'react'
 
 // hooks
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
 import { useSession } from 'next-auth/react'
-import { ActivityResolved } from '@/features/activities/types'
-import { Close } from '@/components/icons'
 import MarkerPin from './MarkerPin'
-import { colors } from '@/config/colors'
 import useGPS from '@/hooks/gps'
-import { useRecoilState } from 'recoil'
-import { mapBoxState } from '../stores'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
 
-  const { gps, updateSafeGeolocation, isGPSFetching } = useGPS()
+  const { gps, updateSafeGeolocation } = useGPS()
 
   const { mapbox, setMapBoxRef, onActivityClicked, clearActivityFocus } = useMapBox()
 
