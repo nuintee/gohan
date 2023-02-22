@@ -5,6 +5,7 @@ export const modalKeys = [
   'usersettings',
   'usersignout',
   'restaurantdiscovered',
+  'deactivation',
 ] as const
 
 type Managed = {

@@ -19,15 +19,16 @@ const User = (props: UserProps) => {
   // Contexts
   const { status, data } = useSession()
   const [isSignInProccess, setIsSignInProccess] = useState(false)
+  const { open } = useModals()
 
   const handleOnClick = async () => {
     if (status === 'authenticated') {
       // navigate to profile page
-      signOut()
+      open('usersettings')
     } else if (status === 'unauthenticated') {
       setIsSignInProccess(true)
 
-      const signinResult = await signIn('auth0')
+      const signinResult = await signIn('google')
 
       if (signinResult?.ok) {
         setIsSignInProccess(false)
@@ -54,7 +55,10 @@ const User = (props: UserProps) => {
     <button className={theme} onClick={onClick}>
       {session.status === 'authenticated' ? (
         <SuspenseImage
-          src={`https://ui-avatars.com/api/?name=${session.user?.name}&background=random`}
+          src={
+            data?.user?.image ||
+            `https://ui-avatars.com/api/?name=${session.user?.name}&background=random`
+          }
           alt='Profile Image'
           className='h-full w-full'
           disabled

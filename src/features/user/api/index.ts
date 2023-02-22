@@ -1,8 +1,10 @@
 import { procedure } from '@/server/trpc'
 import prisma from '@/libs/prisma'
 import { z } from 'zod'
+import { isAuthedMiddleWare } from '@/server/middleware'
 
 export const getUser = procedure
+  .use(isAuthedMiddleWare)
   .input(
     z.object({
       userId: z.string(),
@@ -14,6 +16,7 @@ export const getUser = procedure
   })
 
 export const updateUser = procedure
+  .use(isAuthedMiddleWare)
   .input(
     z.object({
       userId: z.string(),
@@ -31,3 +34,12 @@ export const updateUser = procedure
     })
     return data
   })
+
+export const deleteUser = procedure.use(isAuthedMiddleWare).mutation(async ({ ctx }) => {
+  const deleted = await prisma.user.delete({
+    where: {
+      id: ctx.session.user.id,
+    },
+  })
+  return deleted
+})
