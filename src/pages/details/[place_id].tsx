@@ -23,6 +23,7 @@ import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDes
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
 import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
+import { useRouter } from 'next/router'
 
 const DetailsPage = memo(({ id }: { id: string }) => {
   const { data: session, status } = useSession()
@@ -36,8 +37,8 @@ const DetailsPage = memo(({ id }: { id: string }) => {
     setDetailsModal('')
   }
 
-  const checkIsOpen = (id: 'BASIC' | 'REVIEW' | 'IMAGE') => {
-    return detailsModal === id
+  const checkIsOpen = (modalId: 'BASIC' | 'REVIEW' | 'IMAGE') => {
+    return detailsModal === modalId
   }
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
