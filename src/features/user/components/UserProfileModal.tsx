@@ -10,44 +10,49 @@ import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import useDeleteUser from '../hooks/useDeleteUser'
 
-type Props = {
-  isOpen?: boolean
-  onClose?: Function
-  onClickAction?: React.MouseEventHandler<HTMLButtonElement>
-  user: User
-}
-
-const UserSettingsModal = (props: Props) => {
+const UserSettingsModal = () => {
   const { data: session } = useSession()
   const { isOpen, open, close } = useModals()
 
-  const { onClose = () => close('usersettings'), user = session?.user ?? {} } = props
-
   const handleDeleteAccount = () => {
-    onClose()
+    close('usersettings')
     open('deactivation')
   }
 
-  if (!user) return <></>
+  if (!session?.user) return <></>
 
   return (
     <ModalLayout isOpen={isOpen('usersettings')}>
       <section className='min-w-[20rem] bg-white'>
-        <PanelHeader title='プロフィール' onClose={onClose} />
+        <PanelHeader title='プロフィール' onClose={() => close('usersettings')} />
         <main className='p-4 flex flex-col gap-4'>
           <Input
+            registerName='settings-username'
+            required={false}
             placeholder='ex: john0906'
             label='Username'
-            value={user.name}
+            value={session?.user.name}
             disabled
             action={{
               label: 'Change',
+              onClick: () => {
+                return {}
+              },
             }}
           />
-          <Input placeholder='ex: john@example.com' label='Email' value={user.email} disabled />
           <Input
+            registerName='settings-email'
+            required={false}
+            placeholder='ex: john@example.com'
+            label='Email'
+            value={session?.user.email}
+            disabled
+          />
+          <Input
+            registerName='settings-registered_date'
+            required={false}
             label='Registered at'
-            value={dayjs(user.registered_at).format('MMMM D, YYYY h:mm A')}
+            value={dayjs(session?.user?.registered_at).format('MMMM D, YYYY h:mm A')}
             disabled
           />
           <details>
@@ -59,7 +64,7 @@ const UserSettingsModal = (props: Props) => {
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
-          <Button text='Signout' onClick={signOut} />
+          <Button text='Signout' onClick={() => signOut} />
         </footer>
       </section>
     </ModalLayout>
