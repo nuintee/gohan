@@ -64,7 +64,7 @@ const UserSettingsModal = () => {
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
-          <Button text='Signout' onClick={() => signOut} />
+          <Button text='Signout' onClick={() => signOut()} />
         </footer>
       </section>
     </ModalLayout>
