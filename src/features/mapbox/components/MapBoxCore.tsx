@@ -46,7 +46,7 @@ const MapBoxCore = ({
       mapStyle='mapbox://styles/nuinteedev/cldaz8llv002c01mgt375yl40'
       ref={setMapBoxRef}
     >
-      <GeolocateControl {...geolocateProps} />
+      {geolocateProps.trackUserLocation && <GeolocateControl {...geolocateProps} />}
       {children}
     </Map>
   )
