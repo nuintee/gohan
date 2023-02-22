@@ -1,6 +1,7 @@
 import { colors } from '@/config/colors'
 import { GCP_API_KEY } from '@/config/env'
 import { PhotosEntity, ResultsEntity } from '@/features/restaurants/types'
+import { useCallback, useMemo } from 'react'
 
 function _generatePastelColor() {
   let R = Math.floor(Math.random() * 127 + 127)

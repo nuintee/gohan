@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { memo, ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Button, Input, Cover, ImageChip, Texts, DropDown, GohanButton } from '@/components/ui'
 
@@ -24,7 +24,7 @@ import DetailsSectionGroup from '@/features/details/components/ui/DetailsSection
 import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 
-const DetailsPage = ({ id }: { id: string }) => {
+const DetailsPage = memo(({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
   const { isSearchModalOpen, manageSearchModal } = useSearch()
@@ -45,6 +45,11 @@ const DetailsPage = ({ id }: { id: string }) => {
     place_id: id,
   })
 
+  // Memorized
+  const memorizedPhoto = useMemo(() => {
+    return usePlacePhotos(data?.photos)
+  }, [data?.photos])
+
   if (isFetching) return <DetailsLoadingFallback />
 
   if (isError) return <ErrorFallBack error={error} />
@@ -56,9 +61,10 @@ const DetailsPage = ({ id }: { id: string }) => {
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
           <ImageChip
             isLoading={false}
-            src={usePlacePhotos(data?.photos).url}
+            src={memorizedPhoto.url}
             onClick={() => setDetailsModal('IMAGE')}
           />
+          {/* {memorizedImage} */}
           <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
             <DetailsTitle data={data} />
             <DetailsActionGroup
@@ -94,15 +100,11 @@ const DetailsPage = ({ id }: { id: string }) => {
           place_id: data?.place_id,
         }}
       />
-      <ImageModal
-        isOpen={checkIsOpen('IMAGE')}
-        data={usePlacePhotos(data?.photos)}
-        onClose={clearModal}
-      />
+      <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearModal} />
       <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )
-}
+})
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   console.log({ query })
