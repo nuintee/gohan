@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Auth0Provider from 'next-auth/providers/auth0'
+import GoogleProvider from 'next-auth/providers/google'
 import type { NextAuthOptions } from 'next-auth'
 import prisma from '@/libs/prisma'
 
@@ -24,6 +25,10 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: { prompt: 'login' },
       },
+    }),
+    GoogleProvider({
+      clientId: process.env.NEXT_PUBLIC_GCP_CLIENT_ID,
+      clientSecret: process.env.NEXT_PUBLIC_GCP_CLIENT_SECRET,
     }),
   ],
   callbacks: {
