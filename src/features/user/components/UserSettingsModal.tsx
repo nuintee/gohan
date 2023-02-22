@@ -12,7 +12,7 @@ type Props = {
   isOpen?: boolean
   onClose?: Function
   onClickAction?: React.MouseEventHandler<HTMLButtonElement>
-  user?: User
+  user: User
 }
 
 const UserSettingsModal = (props: Props) => {
@@ -30,7 +30,7 @@ const UserSettingsModal = (props: Props) => {
   return (
     <ModalLayout isOpen={isOpen}>
       <section className='min-w-[20rem] bg-white'>
-        <PanelHeader title='Settings' onClose={onClose} />
+        <PanelHeader title='プロフィール' onClose={onClose} />
         <main className='p-4 flex flex-col gap-4'>
           <Input
             placeholder='ex: john0906'
@@ -48,7 +48,7 @@ const UserSettingsModal = (props: Props) => {
             disabled
           />
           <details>
-            <summary className='text-gh-gray select-none cursor-pointer'>Danger</summary>
+            <summary className='text-gh-gray select-none cursor-pointer'>高度な設定</summary>
             <div className='flex flex-col pt-4 gap-2'>
               <Button text='Delete account' danger />
             </div>

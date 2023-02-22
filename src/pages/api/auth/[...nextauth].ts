@@ -21,6 +21,9 @@ export const authOptions: NextAuthOptions = {
       clientId: AUTH0_CLIENT_ID,
       clientSecret: AUTH0_CLIENT_SECRET,
       issuer: AUTH0_ISSUER,
+      authorization: {
+        params: { prompt: 'login' },
+      },
     }),
   ],
   callbacks: {
