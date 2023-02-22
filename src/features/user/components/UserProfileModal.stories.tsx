@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react'
 
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import UserSettingsModal from './UserSettingsModal'
+import UserSettingsModal from './UserProfileModal'
 
 // data
 import { user } from '@/data/user'

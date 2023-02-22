@@ -9,6 +9,7 @@ const ModalLayout = (props: ComponentProps<typeof Modal> & { children: JSX.Eleme
       style={{
         overlay: {
           background: `rgba(0,0,0, 0.5)`,
+          ...(props.isOpen && { zIndex: '1000' }),
         },
         content: {
           top: '50%',
