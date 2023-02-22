@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 
 import { User } from 'next-auth'
 import { signOut, useSession } from 'next-auth/react'
+import useDeleteUser from '../hooks/useDeleteUser'
 
 type Props = {
   isOpen?: boolean
@@ -24,6 +25,8 @@ const UserSettingsModal = (props: Props) => {
     onClose = () => close('usersettings'),
     user = session?.user ?? {},
   } = props
+
+  const userDeletion = useDeleteUser()
 
   if (!user) return <></>
 
@@ -50,7 +53,12 @@ const UserSettingsModal = (props: Props) => {
           <details>
             <summary className='text-gh-gray select-none cursor-pointer'>高度な設定</summary>
             <div className='flex flex-col pt-4 gap-2'>
-              <Button text='Delete account' danger />
+              <Button
+                text='Delete account'
+                danger
+                onClick={() => userDeletion.mutate()}
+                loading={userDeletion.isLoading}
+              />
             </div>
           </details>
         </main>
