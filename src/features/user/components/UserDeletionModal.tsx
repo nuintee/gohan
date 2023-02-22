@@ -1,20 +1,28 @@
 import { Button, Texts } from '@/components/ui'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
+import useToast from '@/libs/react-toastify'
 import { useRef, useState } from 'react'
+import useDeleteUser from '../hooks/useDeleteUser'
 
 const UserDeletionModal = () => {
-  const { close } = useModals()
+  const { close, isOpen } = useModals()
   const [isChecked, setIsChecked] = useState(false)
 
-  const handleAccountDeletion = () => {
-    if (!isChecked) return console.log('NO_CHECK')
+  const deleteQuery = useDeleteUser()
 
-    console.log('Delete')
+  const handleAccountDeletion = async () => {
+    if (!isChecked) return
+
+    deleteQuery.mutate(undefined, {
+      onSuccess: () => {
+        useToast.success('アカウントを削除しました。')
+      },
+    })
   }
 
   return (
-    <ModalLayout isOpen={true}>
+    <ModalLayout isOpen={isOpen('deactivation')}>
       <section className='bg-white p-10 flex flex-col gap-10 border-t-4 border-gh-red'>
         <div className='flex flex-col gap-4'>
           <Texts
@@ -32,7 +40,7 @@ const UserDeletionModal = () => {
           </div>
         </div>
         <footer className='flex gap-5'>
-          <Button text='キャンセル' outline onClick={() => close()} />
+          <Button text='キャンセル' outline onClick={() => close('deactivation')} />
           <Button
             text='アカウント削除'
             danger

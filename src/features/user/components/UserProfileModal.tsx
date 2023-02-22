@@ -19,24 +19,19 @@ type Props = {
 
 const UserSettingsModal = (props: Props) => {
   const { data: session } = useSession()
-  const { isOpen: isSettingsOpen, close } = useModals()
-  const router = useRouter()
+  const { isOpen, open, close } = useModals()
 
-  const {
-    isOpen = isSettingsOpen('usersettings') ?? false,
-    onClose = () => close('usersettings'),
-    user = session?.user ?? {},
-  } = props
+  const { onClose = () => close('usersettings'), user = session?.user ?? {} } = props
 
   const handleDeleteAccount = () => {
-    router.push('/cancelation')
     onClose()
+    open('deactivation')
   }
 
   if (!user) return <></>
 
   return (
-    <ModalLayout isOpen={isOpen}>
+    <ModalLayout isOpen={isOpen('usersettings')}>
       <section className='min-w-[20rem] bg-white'>
         <PanelHeader title='プロフィール' onClose={onClose} />
         <main className='p-4 flex flex-col gap-4'>
