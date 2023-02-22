@@ -3,7 +3,7 @@ import { Texts } from '@/components/ui'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import { ActivityResolved } from '@/features/activities/types'
-import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
+import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
 import { Marker } from 'react-map-gl'
 

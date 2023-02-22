@@ -11,7 +11,7 @@ import { RestaurantProps } from '../types'
 // Constants
 import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
-import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
+import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useState } from 'react'
 import useToast from '@/libs/react-toastify'
 import SuspenseImage from '@/components/ui/SuspenseImage'

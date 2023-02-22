@@ -22,7 +22,7 @@ import DetailsTitle from '@/features/details/components/ui/DeatailsTitle'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
 import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
-import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
+import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()

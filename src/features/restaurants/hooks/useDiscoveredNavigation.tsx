@@ -3,7 +3,7 @@ import { getDominantColor } from '@/libs/rgbaster'
 import { useRouter } from 'next/router'
 
 // data
-import usePlacePhotos from '@/features/details/hooks/useGoogleImage'
+import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 
 const useDiscoveredNavigation = () => {
   const router = useRouter()
