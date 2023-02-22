@@ -12,7 +12,7 @@ import { RestaurantProps } from '../types'
 import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import useToast from '@/libs/react-toastify'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 
@@ -31,10 +31,15 @@ const RestaurantBoard = (props: RestaurantProps) => {
 
   const theme = compactStyle
 
+  // Memorized
+  const memorizedPhoto = useMemo(() => {
+    return usePlacePhotos(data?.photos)
+  }, [data?.photos])
+
   return (
     <div className={theme.container} onClick={onClick}>
       <SuspenseImage
-        src={usePlacePhotos(data?.photos).url}
+        src={memorizedPhoto.url}
         alt={cardConfig.imgAlt(data?.name)}
         className={theme.img}
       />
