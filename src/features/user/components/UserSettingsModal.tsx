@@ -1,4 +1,4 @@
-import { Button, Header, Input } from '@/components/ui'
+import { Button, PanelHeader, Input } from '@/components/ui'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
 
@@ -30,7 +30,7 @@ const UserSettingsModal = (props: Props) => {
   return (
     <ModalLayout isOpen={isOpen}>
       <section className='min-w-[20rem] bg-white'>
-        <Header title='Settings' onClose={onClose} />
+        <PanelHeader title='Settings' onClose={onClose} />
         <main className='p-4 flex flex-col gap-4'>
           <Input
             placeholder='ex: john0906'

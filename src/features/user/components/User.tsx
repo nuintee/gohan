@@ -19,11 +19,12 @@ const User = (props: UserProps) => {
   // Contexts
   const { status, data } = useSession()
   const [isSignInProccess, setIsSignInProccess] = useState(false)
+  const { open } = useModals()
 
   const handleOnClick = async () => {
     if (status === 'authenticated') {
       // navigate to profile page
-      signOut()
+      open('usersettings')
     } else if (status === 'unauthenticated') {
       setIsSignInProccess(true)
 
