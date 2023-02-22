@@ -40,6 +40,8 @@ export const authOptions: NextAuthOptions = {
     async redirect({ url, baseUrl }) {
       if (url === `${baseUrl}/api/federate-logout`) {
         return `https://${AUTH0_DOMAIN}/v2/logout?returnTo=${baseUrl}&client_id=${AUTH0_CLIENT_ID}&federated`
+      } else if (url === `${baseUrl}/cancelation`) {
+        return baseUrl
       } else {
         return url
       }
