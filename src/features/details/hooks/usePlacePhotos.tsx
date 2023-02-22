@@ -12,11 +12,9 @@ function _generatePastelColor() {
 }
 
 const usePlacePhotos = (photos: ResultsEntity['photos']) => {
-  const RANDOM_COLOR = _generatePastelColor()
-
   if (!photos)
     return {
-      url: `https://via.placeholder.com/600x400/${RANDOM_COLOR}/FFF.png?text=NO_IMAGE`,
+      url: `https://via.placeholder.com/600x400/${_generatePastelColor()}/FFF.png?text=NO_IMAGE`,
       width: 400,
       height: 400,
       html_attributions: [],
