@@ -25,7 +25,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
-      console.log({ token, user, account, profile, isNewUser })
       return token
     },
     async redirect({ url, baseUrl }) {
