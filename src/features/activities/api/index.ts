@@ -32,6 +32,7 @@ export const getActivity = procedure
 
       if (input.userId) {
         // Get activity when authed
+
         data = await prisma.activity.findUnique({
           where: {
             userId_place_id: {

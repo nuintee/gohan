@@ -28,7 +28,7 @@ const ActivityDropDown = ({ activity, onMutated, direction }: ActivityDropDownPr
     {
       label: '詳細を表示',
       onDropDownItemClick: () => {
-        router.push(`/details/${activity.place_id}`, '', { shallow: true })
+        router.push(`/details/[place_id]`, `/details/${activity.place_id}`, { shallow: true })
       },
       ignored: router.asPath === `/details/${activity.place_id}`,
     },

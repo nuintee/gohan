@@ -1,35 +1,10 @@
 import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
+import { sleep } from '@/utils/sleep'
 import { z } from 'zod'
 import { procedure } from '../trpc'
 
-export const getExperiment = procedure
-  .input(
-    z.object({
-      a: z.number(),
-      b: z.number(),
-    }),
-  )
-  .query(async ({ input }) => {
-    if (IS_DEVMODE) {
-      return input.a + input.b
-    } else if (IS_PRODMODE) {
-    } else {
-      // test
-    }
-  })
+export const getExperiment = procedure.input(z.null()).query(async (q) => {
+  await sleep(1000 * 5)
 
-export const getExperimentWithMutation = procedure
-  .input(
-    z.object({
-      a: z.number(),
-      b: z.number(),
-    }),
-  )
-  .mutation(async ({ input }) => {
-    if (IS_DEVMODE) {
-      return input.a + input.b
-    } else if (IS_PRODMODE) {
-    } else {
-      // test
-    }
-  })
+  return Math.random()
+})
