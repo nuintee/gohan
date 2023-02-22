@@ -1,4 +1,5 @@
 import Header from '@/components/ui/Header'
+import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
 import useModals from '@/hooks/modals'
 
@@ -16,6 +17,7 @@ export const MainLayout = ({ children }: LayoutProps) => {
         <div className='flex-1 h-full w-full flex flex-col relative'>{children}</div>
       </div>
       <UserProfileModal isOpen={isOpen('usersettings')} />
+      <UserDeletionModal />
     </>
   )
 }
