@@ -1,14 +1,16 @@
 import { Button, Texts } from '@/components/ui'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const UserDeletionModal = () => {
   const { close } = useModals()
-  const checkboxRef = useRef(null)
+  const [isChecked, setIsChecked] = useState(false)
 
   const handleAccountDeletion = () => {
-    if (!checkboxRef.current?.checked) return
+    if (!isChecked) return console.log('NO_CHECK')
+
+    console.log('Delete')
   }
 
   return (
@@ -19,15 +21,25 @@ const UserDeletionModal = () => {
             main='アカウントを削除して本当によろしいですか？'
             sub={'保存されているデータは全て削除されます。'}
           />
-          <hr></hr>
-          <label className='flex gap-2 text-gh-gray'>
-            <input type='checkbox' ref={checkboxRef} />
-            理解しました。
-          </label>
+          <hr className=' fill-red-200 border-gh-white'></hr>
+          <div className='flex gap-2 h-fit'>
+            <input
+              type='checkbox'
+              onChange={(e) => setIsChecked(e.target.checked)}
+              className='bg-red-200'
+            />
+            <label className='flex gap-2 text-gh-gray'>理解しました。</label>
+          </div>
         </div>
         <footer className='flex gap-5'>
           <Button text='キャンセル' outline onClick={() => close()} />
-          <Button text='アカウント削除' danger outline={false} disabled />
+          <Button
+            text='アカウント削除'
+            danger
+            outline={false}
+            disabled={!isChecked}
+            onClick={handleAccountDeletion}
+          />
         </footer>
       </section>
     </ModalLayout>
