@@ -24,7 +24,7 @@ const Pin = ({
 
   const handleDetailsClick = (e) => {
     e.stopPropagation()
-    router.push(`/details/${data.place_id}`, '', { shallow: true })
+    router.push(`/details/[place_id]`, `/details/${data.place_id}`, { shallow: true })
   }
 
   return (
