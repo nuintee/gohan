@@ -5,6 +5,7 @@ import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import { ActivityResolved } from '@/features/activities/types'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 import { Marker } from 'react-map-gl'
 
 const Pin = ({
@@ -26,6 +27,10 @@ const Pin = ({
     e.stopPropagation()
     router.push(`/details/[place_id]`, `/details/${data.place_id}`, { shallow: true })
   }
+
+  const memorizedImage = useMemo(() => {
+    return usePlacePhotos(data.photos)
+  }, [data.photos])
 
   return (
     <Marker
@@ -55,7 +60,7 @@ const Pin = ({
         </div>
         <div className='h-14 w-14 bg-white flex items-center justify-center relative rounded-full p-1 duration-700 ease-in-out shadow-sm'>
           <SuspenseImage
-            src={usePlacePhotos(data.photos).url}
+            src={memorizedImage.url}
             className='aspect-square rounded-full object-cover z-10'
             disabled
           />
