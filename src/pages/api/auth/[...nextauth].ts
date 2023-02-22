@@ -11,6 +11,8 @@ import {
   AUTH0_ISSUER,
   AUTH0_DOMAIN,
   IS_DEVMODE,
+  GCP_CLIENT_ID,
+  GCP_CLIENT_SECRET,
 } from '@/config/env'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
@@ -27,8 +29,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_GCP_CLIENT_ID,
-      clientSecret: process.env.NEXT_PUBLIC_GCP_CLIENT_SECRET,
+      clientId: GCP_CLIENT_ID,
+      clientSecret: GCP_CLIENT_SECRET,
     }),
   ],
   callbacks: {
