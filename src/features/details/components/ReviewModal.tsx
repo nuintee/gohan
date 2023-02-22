@@ -1,4 +1,4 @@
-import { Input, PanelHeader } from '@/components/ui'
+import { Button, Input, PanelHeader } from '@/components/ui'
 import { colors } from '@/config/colors'
 import usePatchActivity from '@/features/activities/hooks/usePatchActivity'
 import ModalLayout from '@/layouts/ModalLayout'
@@ -92,6 +92,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
             registerName={'reviewMemo'}
             required={false}
           />
+          <Button text={'保存'} disabled={!isDirty} />
         </form>
       </section>
     </ModalLayout>
