@@ -1,4 +1,4 @@
-const REVIEWS = [
+export const REVIEWS = [
   {
     author_name: 'Allix Mears',
     relative_time_description: '7/26/2022',

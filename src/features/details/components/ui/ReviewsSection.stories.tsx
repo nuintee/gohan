@@ -1,10 +1,17 @@
-// Button.stories.ts|tsx
-
 import React from 'react'
 
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import ReviewsSection from './ReviewsSection'
+
+// data
+import { details } from '@/data/details'
+import { REVIEWS } from '@/data/_reviews'
+
+const DATA = {
+  ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
+  reviews: REVIEWS,
+}
 
 export default {
   title: 'Features/Details/ReviewSection',
@@ -16,4 +23,6 @@ const Template: ComponentStory<typeof ReviewsSection> = (args) => <ReviewsSectio
 
 export const Default = Template.bind({})
 
-Default.parameters = {}
+Default.args = {
+  data: DATA,
+}
