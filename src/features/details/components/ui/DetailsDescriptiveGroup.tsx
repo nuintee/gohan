@@ -3,6 +3,7 @@ import { Clock, Star, Price } from '@/components/icons'
 import DescriptiveChip from './DescriptiveChip/index'
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
+import useRatingLevel from '../../hooks/useRatingLevel'
 
 function _getPriceLevel<T extends ActivityResolved['price_level']>(price_level: T) {
   switch (price_level) {
@@ -81,37 +82,6 @@ function _getOpenHours<T extends ActivityResolved['opening_hours']>(opening_hour
   }
 }
 
-function _getRatingLevel<T extends ActivityResolved['rating']>(rating: T) {
-  // rating is between 1.0 to 5.0
-  switch (true) {
-    case rating >= 1 && rating < 2:
-      return {
-        label: '良くない評価',
-        color: colors['gh-red'],
-      }
-    case rating >= 2 && rating < 3:
-      return {
-        label: '平均的な評価',
-        color: colors['gh-yellow'],
-      }
-    case rating >= 3 && rating < 4:
-      return {
-        label: '良い評価',
-        color: colors['gh-green'],
-      }
-    case rating >= 4 && rating <= 5:
-      return {
-        label: 'とても良い評価',
-        color: colors['gh-green'],
-      }
-    default:
-      return {
-        label: '',
-        color: colors['gh-l-gray'],
-      }
-  }
-}
-
 const DetailsDescriptiveGroup = ({
   data,
   isLoading = false,
@@ -141,11 +111,11 @@ const DetailsDescriptiveGroup = ({
       )}
       {data?.user_ratings_total && data?.user_ratings_total > 0 && (
         <DescriptiveChip
-          title={_getRatingLevel(data.rating).label}
+          title={useRatingLevel(data.rating).label}
           description={`Googleでの評価は${data?.rating}です。`}
           icon={<Star />}
           isLoading={isLoading}
-          circleBackgroundColor={_getRatingLevel(data.rating).color}
+          circleBackgroundColor={useRatingLevel(data.rating).color}
         />
       )}
     </section>
