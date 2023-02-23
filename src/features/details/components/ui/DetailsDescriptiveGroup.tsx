@@ -5,41 +5,41 @@ import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
 import useRatingLevel from '../../hooks/useRatingLevel'
 import useOpenHours from '../../hooks/useOpenHours'
+import usePriceLevel from '../../hooks/usePriceLevel'
 
-function _getPriceLevel<T extends ActivityResolved['price_level']>(price_level: T) {
-  switch (price_level) {
-    case 0:
-      return {
-        label: '無料',
-        color: colors['gh-green'],
-      }
-    case 1:
-      return {
-        label: '比較的安価',
-        color: colors['gh-green'],
-      }
-    case 2:
-      return {
-        label: '普通',
-        color: colors['gh-yellow'],
-      }
-    case 3:
-      return {
-        label: '高級',
-        color: colors['gh-red'],
-      }
-    case 4:
-      return {
-        label: 'とても高級',
-        color: colors['gh-red'],
-      }
-    default:
-      return {
-        label: '',
-        color: colors['gh-l-gray'],
-      }
-  }
-}
+//   switch (price_level) {
+//     case 0:
+//       return {
+//         label: '無料',
+//         color: colors['gh-green'],
+//       }
+//     case 1:
+//       return {
+//         label: '比較的安価',
+//         color: colors['gh-green'],
+//       }
+//     case 2:
+//       return {
+//         label: '普通',
+//         color: colors['gh-yellow'],
+//       }
+//     case 3:
+//       return {
+//         label: '高級',
+//         color: colors['gh-red'],
+//       }
+//     case 4:
+//       return {
+//         label: 'とても高級',
+//         color: colors['gh-red'],
+//       }
+//     default:
+//       return {
+//         label: '',
+//         color: colors['gh-l-gray'],
+//       }
+//   }
+// }
 
 // memorize
 
@@ -54,11 +54,11 @@ const DetailsDescriptiveGroup = ({
     <section className='flex items-center justify-between gap-4 my-14'>
       {data.price_level && (
         <DescriptiveChip
-          title={_getPriceLevel(data.price_level).label}
+          title={usePriceLevel(data.price_level).label}
           description={'平均的な価格帯'}
           icon={<Price />}
           isLoading={isLoading}
-          circleBackgroundColor={_getPriceLevel(data.price_level).color}
+          circleBackgroundColor={usePriceLevel(data.price_level).color}
         />
       )}
       {data.opening_hours && (
