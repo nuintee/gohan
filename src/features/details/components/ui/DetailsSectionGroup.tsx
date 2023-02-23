@@ -22,6 +22,7 @@ const DetailsSectionGroup = ({
           <MapBoxChip
             latitude={data?.geometry?.location.lat}
             longitude={data?.geometry?.location.lng}
+            dragPan={true}
           >
             <Pin
               latitude={data?.geometry?.location.lat}
