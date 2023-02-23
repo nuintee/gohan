@@ -1,7 +1,7 @@
 import { Button, Texts } from '@/components/ui'
 
 type Props = {
-  children?: JSX.Element
+  children?: JSX.Element[]
   margin?: string
   marginDirection?: 'y' | 'x'
   actionCallback?: () => void
