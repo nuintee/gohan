@@ -42,7 +42,7 @@ export interface ResultsEntity {
   place_id: string
   plus_code: PlusCode
   price_level?: 0 | 1 | 2 | 3 | 4 | null
-  reviews: PlaceReview | null
+  reviews: PlaceReview[] | null
   rating: number
   reference: string
   scope: string

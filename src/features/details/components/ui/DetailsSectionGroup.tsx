@@ -36,13 +36,17 @@ const DetailsSectionGroup = ({
           </div>
         </div>
       </DetailsSection>
-      {data?.user_ratings_total && data?.user_ratings_total > 0 && (
+      {data?.reviews && data?.reviews.length > 0 && (
         <DetailsSection
           margin='5rem'
           main={`レビュー・${data?.rating}`}
           sub={`${data?.user_ratings_total}件のレビュー`}
           isLoading={isLoading}
-        />
+        >
+          {data.reviews?.map((review) => (
+            <p>{REVIEW_DATA.author_name.example}</p>
+          ))}
+        </DetailsSection>
       )}
     </>
   )
