@@ -16,8 +16,8 @@ const ReviewsSection = ({
       isLoading={isLoading}
       ignored={!Boolean(data?.reviews && data?.reviews.length > 0)}
     >
-      {data.reviews?.map((review) => (
-        <p>{review.author_name}</p>
+      {data?.reviews?.map((review) => (
+        <p>{review?.author_name}</p>
       ))}
     </DetailsSection>
   )
