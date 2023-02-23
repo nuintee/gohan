@@ -41,7 +41,7 @@ const DetailsSection = ({
     )
 
   return (
-    <section className={`outline rounded-md p-4 outline-gh-pale`} style={style}>
+    <section className={`outline rounded-md p-4 outline-gh-pale h-fit overflow-auto`} style={style}>
       <header className='flex gap-2 justify-between'>
         <Texts main={main} sub={sub} />
         {actionLabel && <Button text={actionLabel} outline onClick={actionCallback} />}

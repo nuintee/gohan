@@ -17,10 +17,11 @@ const ReviewsSection = ({
       isLoading={isLoading}
       ignored={!Boolean(data?.reviews && data?.reviews.length > 0)}
     >
-      <div className='flex flex-col gap-8'>
+      <hr className='border-gh-pale'></hr>
+      <div className='flex flex-col gap-8 h-[30rem] overflow-auto pt-4'>
         {data?.reviews?.map((review) => (
           <div className='flex flex-col gap-2'>
-            <div className='flex gap-2'>
+            <div className='flex gap-2 items-center justify-start'>
               <SuspenseImage
                 src={review.profile_photo_url}
                 height={300}
@@ -29,6 +30,7 @@ const ReviewsSection = ({
                 alt={`${review.author_name}'s image`}
               />
               <Texts main={review.author_name} sub={review.time.toString()} />
+              <p className=''>{review.rating}</p>
             </div>
             <p className='text-gh-d-gray'>{review.text}</p>
           </div>
