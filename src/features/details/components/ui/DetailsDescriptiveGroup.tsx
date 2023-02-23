@@ -4,6 +4,7 @@ import DescriptiveChip from './DescriptiveChip/index'
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
 import useRatingLevel from '../../hooks/useRatingLevel'
+import useOpenHours from '../../hooks/useOpenHours'
 
 function _getPriceLevel<T extends ActivityResolved['price_level']>(price_level: T) {
   switch (price_level) {
@@ -40,47 +41,7 @@ function _getPriceLevel<T extends ActivityResolved['price_level']>(price_level: 
   }
 }
 
-function _getOpenHours<T extends ActivityResolved['opening_hours']>(opening_hours: T) {
-  if (!opening_hours)
-    return {
-      title: '',
-      color: colors['gh-gray'],
-      description: '',
-    }
-
-  const hasHoursPeriods = opening_hours.periods && opening_hours?.periods[0].open.date
-
-  function _getTodayWorkingHour() {
-    if (!hasHoursPeriods) return ''
-
-    const currentDay = opening_hours.periods?.find((v) => v.open.day === new Date().getDay())
-
-    if (!currentDay) return ''
-
-    const open = currentDay.open
-    const close = currentDay.close
-
-    const _formatted = (str: string) => {
-      return str.match(/.{1,2}/g)?.join(':')
-    }
-
-    return `${_formatted(open.time)} - ${close && _formatted(close.time)}`
-  }
-
-  if (opening_hours.open_now) {
-    return {
-      title: '営業中',
-      color: colors['gh-green'],
-      description: _getTodayWorkingHour(),
-    }
-  } else {
-    return {
-      title: '準備中',
-      color: colors['gh-red'],
-      description: _getTodayWorkingHour(),
-    }
-  }
-}
+// memorize
 
 const DetailsDescriptiveGroup = ({
   data,
@@ -102,11 +63,11 @@ const DetailsDescriptiveGroup = ({
       )}
       {data.opening_hours && (
         <DescriptiveChip
-          title={_getOpenHours(data.opening_hours).title}
-          description={_getOpenHours(data.opening_hours).description}
+          title={useOpenHours(data.opening_hours).title}
+          description={useOpenHours(data.opening_hours).description}
           icon={<Clock />}
           isLoading={isLoading}
-          circleBackgroundColor={_getOpenHours(data.opening_hours).color}
+          circleBackgroundColor={useOpenHours(data.opening_hours).color}
         />
       )}
       {data?.user_ratings_total && data?.user_ratings_total > 0 && (
