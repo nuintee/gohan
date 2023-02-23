@@ -7,6 +7,7 @@ type Props = {
   actionCallback?: () => void
   actionLabel?: string
   isLoading?: boolean
+  ignored?: boolean // condition to be not rendered
 } & Omit<React.ComponentProps<typeof Texts>, 'size'>
 
 const DetailsSection = ({
@@ -18,6 +19,7 @@ const DetailsSection = ({
   actionCallback,
   actionLabel,
   isLoading = false,
+  ignored = false,
 }: Props) => {
   const style = {
     ...(marginDirection == 'x'
@@ -30,6 +32,8 @@ const DetailsSection = ({
           marginBottom: margin,
         }),
   }
+
+  if (ignored) return <></>
 
   if (isLoading)
     return (
