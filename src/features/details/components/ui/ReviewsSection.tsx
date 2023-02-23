@@ -1,6 +1,7 @@
 import { SuspenseImage, Texts } from '@/components/ui'
 import { ActivityResolved } from '@/features/activities/types'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
+import useRatingLevel from '../../hooks/useRatingLevel'
 
 const ReviewsSection = ({
   data,
@@ -21,7 +22,7 @@ const ReviewsSection = ({
       <div className='flex flex-col gap-8 h-[30rem] overflow-auto pt-4'>
         {data?.reviews?.map((review) => (
           <div className='flex flex-col gap-2'>
-            <div className='flex gap-2 items-center justify-start'>
+            <div className='flex gap-4 items-center justify-start w-fit'>
               <SuspenseImage
                 src={review.profile_photo_url}
                 height={300}
@@ -30,7 +31,14 @@ const ReviewsSection = ({
                 alt={`${review.author_name}'s image`}
               />
               <Texts main={review.author_name} sub={review.time.toString()} />
-              <p className=''>{review.rating}</p>
+              <span
+                className='p-2 rounded-md text-white flex whitespace-nowrap'
+                style={{
+                  background: useRatingLevel(review.rating).color,
+                }}
+              >
+                評価: {review.rating}
+              </span>
             </div>
             <p className='text-gh-d-gray'>{review.text}</p>
           </div>
