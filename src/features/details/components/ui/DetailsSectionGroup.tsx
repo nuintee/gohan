@@ -5,6 +5,7 @@ import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
 import { useRouter } from 'next/router'
 import DetailsSection from '../../layouts/DetailsSection'
+import ReviewsSection from './ReviewsSection'
 
 const DetailsSectionGroup = ({
   data,
@@ -36,17 +37,7 @@ const DetailsSectionGroup = ({
           </div>
         </div>
       </DetailsSection>
-      <DetailsSection
-        margin='5rem'
-        main={`レビュー・${data?.rating}`}
-        sub={`${data?.user_ratings_total}件のレビュー`}
-        isLoading={isLoading}
-        ignored={!Boolean(data?.reviews && data?.reviews.length > 0)}
-      >
-        {data.reviews?.map((review) => (
-          <p>{REVIEW_DATA.author_name.example}</p>
-        ))}
-      </DetailsSection>
+      <ReviewsSection data={data} isLoading={isLoading} />
     </>
   )
 }
