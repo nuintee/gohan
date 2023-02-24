@@ -15,14 +15,14 @@ const BasicInfoModal = (props: Props) => {
   const { isOpen, onClose, data } = props
 
   const ui = (modalKey: any) => {
-    if (modalKey === 'opening_hours') {
-      if (!data.opening_hours?.periods?.length) return <></>
+    if (modalKey === 'opening_hours' && !data.opening_hours?.periods?.length) return <></>
 
-      return (
-        <div
-          className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
-          key={modalKey}
-        >
+    return (
+      <div
+        className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
+        key={modalKey}
+      >
+        {modalKey === 'opening_hours' ? (
           <details className='w-full group'>
             <summary className='flex items-center justify-between  cursor-pointer'>
               <div className='flex items-center gap-2'>
@@ -49,19 +49,14 @@ const BasicInfoModal = (props: Props) => {
               ))}
             </div>
           </details>
-        </div>
-      )
-    } else {
-      return (
-        <div
-          className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
-          key={modalKey}
-        >
-          <p>{modalKey}</p>
-          <h2>{data[modalKey]}</h2>
-        </div>
-      )
-    }
+        ) : (
+          <>
+            <p>{modalKey}</p>
+            <h2>{data[modalKey]}</h2>
+          </>
+        )}
+      </div>
+    )
   }
 
   return (
