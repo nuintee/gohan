@@ -9,6 +9,7 @@ import Cover from './Cover'
 import ImageChip from '../../features/details/components/ui/DetailsHeroImage'
 import DropDown from './DropDown'
 import SuspenseImage from './SuspenseImage'
+import DetailsSummary from './DetailsSummary'
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   ImageChip,
   DropDown,
   SuspenseImage,
+  DetailsSummary,
 }
