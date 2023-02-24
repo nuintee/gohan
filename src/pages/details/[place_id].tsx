@@ -76,9 +76,9 @@ const DetailsPage = memo(({ id }: { id: string }) => {
           </div>
           <DetailsDescriptiveGroup data={data} isLoading={false} />
           <DetailsSectionGroup data={data} isLoading={false} />
-          <section className='fixed bottom-8 right-8'>
+          {/* <section className='fixed bottom-8 right-8'>
             <GohanButton onClick={() => manageSearchModal(true)} size={25} />
-          </section>
+          </section> */}
         </main>
       </div>
       <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearLocalModal} />
@@ -94,7 +94,7 @@ const DetailsPage = memo(({ id }: { id: string }) => {
         }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
-      <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
+      {/* <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} /> */}
     </>
   )
 })
