@@ -15,7 +15,7 @@ const BasicInfoModal = (props: Props) => {
   const { isOpen, onClose, data } = props
 
   const ui = (modalKey: any) => {
-    if (modalKey === 'opening_hours' && !data.opening_hours?.periods?.length) return <></>
+    // if (modalKey === 'opening_hours' && !data.opening_hours?.periods?.length) return <></>
 
     return (
       <div
@@ -23,10 +23,16 @@ const BasicInfoModal = (props: Props) => {
         key={modalKey}
       >
         {modalKey === 'opening_hours' ? (
-          <details className='w-full group'>
+          <details
+            className={`w-full group ${
+              !data.opening_hours?.periods?.length && 'pointer-events-none'
+            }`}
+          >
             <summary className='flex items-center justify-between  cursor-pointer'>
               <div className='flex items-center gap-2'>
-                <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />
+                {data.opening_hours?.periods?.length && (
+                  <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />
+                )}
                 <p>{modalKey}</p>
               </div>
               <h2>{useOpenHours(data.opening_hours).title}</h2>
