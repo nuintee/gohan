@@ -48,7 +48,7 @@ const KeyFeaturesSection = ({
         </div>
       )
     } else {
-      return <p className='text-gh-gray'>Googleユーザーの評価コメントはありません。</p>
+      return <p className='text-gh-gray'>この場所についての特徴は登録されていません。</p>
     }
   }
 
