@@ -43,13 +43,15 @@ const DiscoverPage = () => {
       exit={'exit'}
       animate='enter'
       transition={{ type: 'linear' }}
-      className={`h-screen w-screen flex flex-col gap-1 items-center justify-center`}
+      className={`h-screen w-screen flex flex-col gap-1 sm:items-center justify-center p-8`}
       style={{
         background: color || 'dark',
       }}
     >
-      <h1 className='text-4xl text-white animate-fadeIn'>{memo.main}</h1>
-      <p className='text-xl text-white animate-fadeIn'>{memo.sub}</p>
+      <h1 className='sm:text-4xl sm:font-normal font-bold text-white animate-fadeIn text-2xl text-start'>
+        {memo.main}
+      </h1>
+      <p className='text-md text-white animate-fadeIn sm:text-xl'>{memo.sub}</p>
     </motion.main>
   )
 }
