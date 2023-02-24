@@ -6,6 +6,7 @@ import { ActivityResolved } from '@/features/activities/types'
 import useRatingLevel from '../../hooks/useRatingLevel'
 import useOpenHours from '../../hooks/useOpenHours'
 import usePriceLevel from '../../hooks/usePriceLevel'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 
 //   switch (price_level) {
 //     case 0:
@@ -47,12 +48,12 @@ const DetailsDescriptiveGroup = ({
   data,
   isLoading = false,
 }: {
-  data: ActivityResolved
+  data: ReturnType<typeof useGetActivity>['data']
   isLoading: boolean
 }) => {
   return (
     <section className='flex items-center justify-between gap-4 my-14'>
-      {data.price_level && (
+      {data?.price_level && (
         <DescriptiveChip
           title={usePriceLevel(data.price_level).label}
           description={'平均的な価格帯'}
@@ -61,7 +62,7 @@ const DetailsDescriptiveGroup = ({
           circleBackgroundColor={usePriceLevel(data.price_level).color}
         />
       )}
-      {data.opening_hours && (
+      {data?.opening_hours && (
         <DescriptiveChip
           title={useOpenHours(data.opening_hours).title}
           description={useOpenHours(data.opening_hours).description}
