@@ -44,7 +44,7 @@ const ReviewsSection = ({
         </>
       )
     } else {
-      return <p>Googleユーザーの評価コメントはありません。</p>
+      return <p className='text-gh-gray'>Googleユーザーの評価コメントはありません。</p>
     }
   }
 
@@ -54,7 +54,6 @@ const ReviewsSection = ({
       main={`レビュー・${data?.rating}`}
       sub={`${data?.user_ratings_total}件のレビュー`}
       isLoading={isLoading}
-      ignored={!Boolean(data?.reviews && data?.reviews.length > 0)}
     >
       {ui()}
     </DetailsSection>
