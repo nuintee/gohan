@@ -2,6 +2,7 @@ import { Close, Chevron } from '@/components/icons'
 import { Texts } from '@/components/ui'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import { ActivityResolved } from '@/features/activities/types'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
@@ -19,18 +20,18 @@ const Pin = ({
   longitude?: number
   focused?: boolean
   onClick?: () => void
-  data: ActivityResolved
+  data: ReturnType<typeof useGetActivity>['data']
 }) => {
   const router = useRouter()
 
   const handleDetailsClick = (e) => {
     e.stopPropagation()
-    router.push(`/details/[place_id]`, `/details/${data.place_id}`, { shallow: true })
+    router.push(`/details/[place_id]`, `/details/${data?.place_id}`, { shallow: true })
   }
 
   const memorizedImage = useMemo(() => {
-    return usePlacePhotos(data.photos)
-  }, [data.photos])
+    return usePlacePhotos(data?.photos)
+  }, [data?.photos])
 
   return (
     <Marker
@@ -53,7 +54,7 @@ const Pin = ({
           role='button'
         >
           <div className='flex gap-4 items-center group-hover:bg-gh-pale p-2 rounded-md'>
-            <Texts main={data.name} sub='2km' />
+            <Texts main={data?.name} sub='2km' />
             <Chevron scale={1.2} />
           </div>
           <span className='h-3 w-3 bg-white rotate-45 absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 shadow-sm'></span>
