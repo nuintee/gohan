@@ -19,7 +19,10 @@ const BasicInfoModal = (props: Props) => {
       if (!data.opening_hours?.periods?.length) return <></>
 
       return (
-        <>
+        <div
+          className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
+          key={modalKey}
+        >
           <details className='w-full group'>
             <summary className='flex items-center justify-between  cursor-pointer'>
               <div className='flex items-center gap-2'>
@@ -46,14 +49,17 @@ const BasicInfoModal = (props: Props) => {
               ))}
             </div>
           </details>
-        </>
+        </div>
       )
     } else {
       return (
-        <>
+        <div
+          className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
+          key={modalKey}
+        >
           <p>{modalKey}</p>
           <h2>{data[modalKey]}</h2>
-        </>
+        </div>
       )
     }
   }
@@ -65,14 +71,7 @@ const BasicInfoModal = (props: Props) => {
         <main className='min-w-[30rem] flex flex-col'>
           {Object.keys(data)
             .filter((v) => BASIC_INFO_KEYS.includes(v))
-            .map((j) => (
-              <div
-                className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
-                key={j}
-              >
-                {ui(j)}
-              </div>
-            ))}
+            .map((j) => ui(j))}
         </main>
       </section>
     </ModalLayout>
