@@ -8,6 +8,7 @@ import BasicInfoModal from './BasicInfoModal'
 
 //data
 import { details } from '@/data/details'
+import { PERIODS } from '@/data/_openingHours'
 
 export default {
   title: 'Features/Details/Modals/Basic',
@@ -22,13 +23,7 @@ Default.args = {
   data: {
     ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
     opening_hours: {
-      periods: [
-        {
-          open: {
-            time: 'gea',
-          },
-        },
-      ],
+      periods: PERIODS,
     },
   },
 }

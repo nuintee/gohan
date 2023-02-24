@@ -16,6 +16,8 @@ const BasicInfoModal = (props: Props) => {
 
   const ui = (modalKey: any) => {
     if (modalKey === 'opening_hours') {
+      if (!data.opening_hours?.periods?.length) return <></>
+
       return (
         <>
           <details className='w-full group'>
@@ -26,11 +28,21 @@ const BasicInfoModal = (props: Props) => {
               </div>
               <h2>{useOpenHours(data.opening_hours).title}</h2>
             </summary>
-            <div>
-              {data[modalKey].periods?.map((v) => (
-                <div className='flex items-center justify-between w-full'>
-                  <p>{v.open.time}</p>
-                </div>
+            <div className='py-2 divide-y flex flex-col gap-1'>
+              {data.opening_hours?.periods?.map((v, i, original) => (
+                <>
+                  <div className='flex items-center justify-between w-full'>
+                    <p>
+                      {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
+                        weekday: 'long',
+                      })}
+                    </p>
+                    <p>
+                      {v?.open?.time} - {v?.close?.time}
+                    </p>
+                  </div>
+                  {!Boolean(i === original.length - 1) && <hr></hr>}
+                </>
               ))}
             </div>
           </details>
