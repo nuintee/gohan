@@ -113,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
 }
 
 DetailsPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout disableSearch={true}>{page}</MainLayout>
+  return <MainLayout>{page}</MainLayout>
 }
 
 export default DetailsPage
