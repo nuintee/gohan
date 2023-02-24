@@ -20,7 +20,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
   const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
 
   const compactStyle = {
-    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-full ${
+    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-full overflow-hidden ${
       isFocused && 'bg-gh-white'
     } cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95`,
     img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
