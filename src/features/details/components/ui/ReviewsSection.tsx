@@ -1,4 +1,5 @@
 import { SuspenseImage, Texts } from '@/components/ui'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import { ActivityResolved } from '@/features/activities/types'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import useRatingLevel from '../../hooks/useRatingLevel'
@@ -7,7 +8,7 @@ const ReviewsSection = ({
   data,
   isLoading = false,
 }: {
-  data: ActivityResolved
+  data: ReturnType<typeof useGetActivity>['data']
   isLoading?: boolean
 }) => {
   return (

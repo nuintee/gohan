@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import { ActivityResolved } from '@/features/activities/types'
 import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import Pin from '@/features/mapbox/components/MarkerPin'
@@ -11,7 +12,7 @@ const DetailsSectionGroup = ({
   data,
   isLoading,
 }: {
-  data: ActivityResolved
+  data: ReturnType<typeof useGetActivity>['data']
   isLoading: boolean
 }) => {
   const { onActivityClicked, mapbox } = useMapBox()
