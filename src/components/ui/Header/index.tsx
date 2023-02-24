@@ -11,7 +11,7 @@ const Header = () => {
       <Brand margin={true} />
       <Link
         href='/library'
-        className={`ml-auto p-2 items-center flex border-b-2 border-transparent hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
+        className={`ml-auto p-2 items-center flex border-b-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
           router.pathname === '/library' && 'border-gh-orange text-white'
         }`}
       >
