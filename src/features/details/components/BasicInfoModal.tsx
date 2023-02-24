@@ -51,6 +51,7 @@ const BasicInfoModal = (props: Props) => {
           <DetailsSummray
             summaryTitle={modalKey}
             summaryValue={useOpenHours(data.opening_hours).title}
+            ignored={!data.opening_hours?.periods?.length}
           >
             <div className='py-2 divide-y flex flex-col gap-1'>
               {data.opening_hours?.periods?.map((v, i, original) => (
