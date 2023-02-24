@@ -1,3 +1,4 @@
+import { Check } from '@/components/icons'
 import { Button } from '@/components/ui'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import { ActivityResolved } from '@/features/activities/types'
@@ -6,6 +7,7 @@ import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
 import { useRouter } from 'next/router'
 import DetailsSection from '../../layouts/DetailsSection'
+import KeyFeaturesSection from './KeyFeaturesSection'
 import ReviewsSection from './ReviewsSection'
 
 const DetailsSectionGroup = ({
@@ -19,6 +21,7 @@ const DetailsSectionGroup = ({
 
   return (
     <>
+      <KeyFeaturesSection data={data} isLoading={isLoading} />
       <DetailsSection margin='5rem' main='ロケーション' sub={data?.vicinity} isLoading={isLoading}>
         <div className='flex-1 aspect-video w-full relative'>
           <MapBoxChip
