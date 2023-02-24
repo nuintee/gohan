@@ -25,8 +25,8 @@ const RestaurantBoard = (props: RestaurantProps) => {
     } cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95`,
     img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
     closeButton: '',
-    contents: 'flex flex-1 gap-4 items-center justify-between',
-    infoContainer: 'flex flex-col gap-2',
+    contents: 'flex flex-1 gap-4 items-center justify-between overflow-hidden',
+    infoContainer: 'flex flex-col gap-2 flex-1 overflow-hidden',
   }
 
   const theme = compactStyle
