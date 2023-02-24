@@ -18,7 +18,7 @@ const _createdFeatures = () => {
 const DATA = {
   ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
   reviews: REVIEWS,
-  ..._createdFeatures(),
+  // ..._createdFeatures(),
 }
 
 export default {

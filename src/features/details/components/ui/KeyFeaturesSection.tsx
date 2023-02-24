@@ -35,18 +35,26 @@ const KeyFeaturesSection = ({
 }) => {
   const keyFeatures = useKeyFeatures(data)
 
-  if (!keyFeatures.length) return <></>
+  const ui = () => {
+    if (keyFeatures.length) {
+      return (
+        <div className='flex gap-2 flex-wrap'>
+          {keyFeatures?.map((v) => (
+            <span className='flex gap-2 items-center bg-gh-pale px-2 py-1 rounded-md text-gh-d-gray w-fit'>
+              <Check />
+              {v.feature}
+            </span>
+          ))}
+        </div>
+      )
+    } else {
+      return <p className='text-gh-gray'>Googleユーザーの評価コメントはありません。</p>
+    }
+  }
 
   return (
     <DetailsSection margin='5rem' main='この場所の特徴' isLoading={isLoading}>
-      <div className='flex gap-2 flex-wrap'>
-        {keyFeatures?.map((v) => (
-          <span className='flex gap-2 items-center bg-gh-pale px-2 py-1 rounded-md text-gh-d-gray w-fit'>
-            <Check />
-            {v.feature}
-          </span>
-        ))}
-      </div>
+      {ui()}
     </DetailsSection>
   )
 }
