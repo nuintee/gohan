@@ -23,7 +23,6 @@ Router.events.on('routeChangeComplete', (e) => {
 })
 
 const LibraryPage = () => {
-  const { isSearchModalOpen, manageSearchModal } = useSearch()
   const { status } = useSession()
 
   if (status === 'unauthenticated') return <AuthFallback />
@@ -37,20 +36,12 @@ const LibraryPage = () => {
         <ActivityPanel />
         <MapBox />
       </main>
-      <section className='absolute bottom-4 -translate-x-1/2 left-1/2'>
-        <GohanButton onClick={() => manageSearchModal(true)} size={25} />
-      </section>
-      <SearchModal
-        isOpen={isSearchModalOpen}
-        onClose={() => manageSearchModal(false)}
-        trigger={isSearchModalOpen}
-      />
     </>
   )
 }
 
 LibraryPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>
+  return <MainLayout searchButtonPosition='bottom-center'>{page}</MainLayout>
 }
 
 export default LibraryPage

@@ -29,8 +29,6 @@ import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 const DetailsPage = memo(({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
-  const { isSearchModalOpen, manageSearchModal } = useSearch()
-
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
@@ -76,9 +74,6 @@ const DetailsPage = memo(({ id }: { id: string }) => {
           </div>
           <DetailsDescriptiveGroup data={data} isLoading={false} />
           <DetailsSectionGroup data={data} isLoading={false} />
-          {/* <section className='fixed bottom-8 right-8'>
-            <GohanButton onClick={() => manageSearchModal(true)} size={25} />
-          </section> */}
         </main>
       </div>
       <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearLocalModal} />
@@ -94,7 +89,6 @@ const DetailsPage = memo(({ id }: { id: string }) => {
         }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
-      {/* <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} /> */}
     </>
   )
 })
@@ -119,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
 }
 
 DetailsPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>
+  return <MainLayout disableSearch={true}>{page}</MainLayout>
 }
 
 export default DetailsPage
