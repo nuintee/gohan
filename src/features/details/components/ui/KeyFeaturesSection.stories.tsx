@@ -18,7 +18,6 @@ const _createdFeatures = () => {
 const DATA = {
   ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
   reviews: REVIEWS,
-  // ..._createdFeatures(),
 }
 
 export default {
@@ -32,7 +31,12 @@ const Template: ComponentStory<typeof KeyFeaturesSection> = (args) => (
 )
 
 export const Default = Template.bind({})
+export const Empty = Template.bind({})
 
 Default.args = {
+  data: { ...DATA, ..._createdFeatures() },
+}
+
+Empty.args = {
   data: DATA,
 }
