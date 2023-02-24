@@ -7,7 +7,7 @@ import KeyFeaturesSection from './KeyFeaturesSection'
 // data
 import { details } from '@/data/details'
 import { REVIEWS } from '@/data/_reviews'
-import { KEY_FEATURES } from '../../constants/keyFeatures'
+import { KEY_FEATURES } from '../../constants'
 
 const _createdFeatures = () => {
   const formatted = KEY_FEATURES.map((v) => [v, true])

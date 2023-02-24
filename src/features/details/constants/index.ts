@@ -9,3 +9,5 @@ export const KEY_FEATURES = [
   'serves_vegetarian_food',
   'wheelchair_accessible_entrance',
 ] as const
+
+export const DETAILS_MODAL_KEYS = ['BASIC', 'REVIEW', 'IMAGE'] as const

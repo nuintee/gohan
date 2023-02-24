@@ -24,22 +24,14 @@ import DetailsSectionGroup from '@/features/details/components/ui/DetailsSection
 import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
+import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 
 const DetailsPage = memo(({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
   const { isSearchModalOpen, manageSearchModal } = useSearch()
 
-  // Modal manage
-  const [detailsModal, setDetailsModal] = useState<'BASIC' | 'REVIEW' | 'IMAGE' | ''>('') //ID: BASIC, REVIEW, IMAGE
-
-  const clearModal = () => {
-    setDetailsModal('')
-  }
-
-  const checkIsOpen = (modalId: 'BASIC' | 'REVIEW' | 'IMAGE') => {
-    return detailsModal === modalId
-  }
+  const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
   const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
     userId: session?.user.id,
@@ -63,7 +55,7 @@ const DetailsPage = memo(({ id }: { id: string }) => {
           <ImageChip
             isLoading={false}
             src={memorizedPhoto.url}
-            onClick={() => setDetailsModal('IMAGE')}
+            onClick={() => openLocalModal('IMAGE')}
           />
           {/* {memorizedImage} */}
           <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
@@ -71,7 +63,7 @@ const DetailsPage = memo(({ id }: { id: string }) => {
             <DetailsActionGroup
               data={data}
               isLoading={isFetching}
-              modalSetter={setDetailsModal}
+              modalSetter={openLocalModal}
               refetch={refetch}
             />
           </div>
@@ -89,10 +81,10 @@ const DetailsPage = memo(({ id }: { id: string }) => {
           </section>
         </main>
       </div>
-      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearModal} />
+      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearLocalModal} />
       <ReviewModal
         isOpen={checkIsOpen('REVIEW')}
-        onClose={clearModal}
+        onClose={clearLocalModal}
         onReviewSuccess={refetch}
         data={{
           memo: data.memo,
@@ -101,7 +93,7 @@ const DetailsPage = memo(({ id }: { id: string }) => {
           place_id: data?.place_id,
         }}
       />
-      <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearModal} />
+      <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
       <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )
