@@ -20,7 +20,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
   const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
 
   const compactStyle = {
-    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-full overflow-hidden ${
+    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 flex-1  ${
       isFocused && 'bg-gh-white'
     } cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95`,
     img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
@@ -37,23 +37,51 @@ const RestaurantBoard = (props: RestaurantProps) => {
   }, [data?.photos])
 
   return (
-    <div className={theme.container} onClick={onClick}>
+    // <div className={theme.container} onClick={onClick}>
+    //   <SuspenseImage
+    //     src={memorizedPhoto.url}
+    //     alt={cardConfig.imgAlt(data?.name)}
+    //     className={theme.img}
+    //   />
+    //   <div className={theme.contents}>
+    //     <div className={theme.infoContainer}>
+    //       <Texts
+    //         main={cardConfig.textsMain(data?.name)}
+    //         sub={cardConfig.textsSub(data?.types?.join('・'))}
+    //         size={cardConfig.textSize}
+    //       />
+    //       <ActivityStatus status={data?.reviewStatus} />
+    //       {/* <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} /> */}
+    //     </div>
+    //   </div>
+    // </div>
+    <div
+      className={`flex gap-2 rounded-md justify-between cursor-pointer p-2 hover:bg-gh-white active:bg-gh-white active:scale-95 ${
+        isFocused && 'bg-gh-white'
+      }`}
+      onClick={onClick}
+    >
       <SuspenseImage
         src={memorizedPhoto.url}
         alt={cardConfig.imgAlt(data?.name)}
-        className={theme.img}
+        className={'h-12 w-12 aspect-square object-cover rounded-md'}
       />
-      <div className={theme.contents}>
-        <div className={theme.infoContainer}>
+      <div className={'flex-1 max-w-[10rem]'}>
+        <Texts
+          main={cardConfig.textsMain(data?.name)}
+          sub={cardConfig.textsSub(data?.types?.join('・'))}
+          size={'small'}
+        />
+      </div>
+      {/* <div className={''}>
+        <div className={''}>
           <Texts
             main={cardConfig.textsMain(data?.name)}
             sub={cardConfig.textsSub(data?.types?.join('・'))}
             size={cardConfig.textSize}
           />
-          <ActivityStatus status={data?.reviewStatus} />
-          {/* <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} /> */}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
