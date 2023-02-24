@@ -9,7 +9,7 @@ const Index = () => {
 }
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>
+  return <MainLayout disableSearch={true}>{page}</MainLayout>
 }
 
 export default Index
