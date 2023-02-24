@@ -1,6 +1,7 @@
 import { colors } from '@/config/colors'
+import { ActivityResolved } from '@/features/activities/types'
 
-const useRatingLevel = (rating: number) => {
+function useRatingLevel<T>(rating: T) {
   // rating is between 1.0 to 5.0
   switch (true) {
     case rating >= 1 && rating < 2:
