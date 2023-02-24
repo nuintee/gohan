@@ -7,10 +7,18 @@ import KeyFeaturesSection from './KeyFeaturesSection'
 // data
 import { details } from '@/data/details'
 import { REVIEWS } from '@/data/_reviews'
+import { KEY_FEATURES } from '../../constants/keyFeatures'
+
+const _createdFeatures = () => {
+  const formatted = KEY_FEATURES.map((v) => [v, true])
+  const obj = Object.fromEntries(formatted)
+  return obj
+}
 
 const DATA = {
   ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
   reviews: REVIEWS,
+  ..._createdFeatures(),
 }
 
 export default {

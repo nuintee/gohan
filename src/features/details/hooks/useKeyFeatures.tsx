@@ -5,11 +5,11 @@ import { ActivityResolved } from '@/features/activities/types'
 import { KEY_FEATURES } from '../constants/keyFeatures'
 
 function useKeyFeatures<T extends ReturnType<typeof useGetActivity>['data']>(data: T) {
-  const FEATURES = Object.keys(data).filter((v) => KEY_FEATURES.includes(v))
+  const FEATURES = Object.keys(data)
+    .filter((v) => KEY_FEATURES.includes(v))
+    .map((v) => ({ feature: v }))
 
-  console.log(FEATURES)
-
-  return []
+  return FEATURES
 }
 
 export default useKeyFeatures

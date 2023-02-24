@@ -39,7 +39,7 @@ const KeyFeaturesSection = ({
 
   return (
     <DetailsSection margin='5rem' main='この場所の特徴' isLoading={isLoading}>
-      <div className='flex gap-2'>
+      <div className='flex gap-2 flex-wrap'>
         {keyFeatures?.map((v) => (
           <span className='flex gap-2 items-center bg-gh-pale px-2 py-1 rounded-md text-gh-d-gray w-fit'>
             <Check />
