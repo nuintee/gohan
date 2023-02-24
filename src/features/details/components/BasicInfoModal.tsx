@@ -25,7 +25,7 @@ const BasicInfoModal = (props: Props) => {
               ))}
             </div>
           </details>
-          <h2>{data.opening_hours?.open_now?.toString()}</h2>
+          <h2>{useOpenHours(data.opening_hours).title}</h2>
         </>
       )
     } else {
@@ -47,7 +47,7 @@ const BasicInfoModal = (props: Props) => {
             .filter((v) => BASIC_INFO_KEYS.includes(v))
             .map((j) => (
               <div
-                className='even:bg-gh-pale bg-white p-4 flex gap-2 items-center justify-between'
+                className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
                 key={j}
               >
                 {ui(j)}
