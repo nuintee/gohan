@@ -19,9 +19,9 @@ const ReviewsSection = ({
       ignored={!Boolean(data?.reviews && data?.reviews.length > 0)}
     >
       <hr className='border-gh-pale'></hr>
-      <div className='flex flex-col gap-8 h-[30rem] overflow-auto pt-4'>
+      <div className='flex flex-col gap-8 h-[30rem] overflow-auto pt-4 '>
         {data?.reviews?.map((review) => (
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 hover:bg-gh-white rounded-md p-2'>
             <div className='flex gap-4 items-center justify-start w-fit'>
               <SuspenseImage
                 src={review.profile_photo_url}
