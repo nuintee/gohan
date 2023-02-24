@@ -15,7 +15,7 @@ const DetailsSummary = ({
     <details className={`w-full group ${ignored && 'pointer-events-none'}`}>
       <summary className='flex items-center justify-between  cursor-pointer'>
         <div className='flex items-center gap-2'>
-          {!ignored && <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />}
+          {!ignored && <Chevron overrideClassName='rotate-90 group-open:-rotate-90 ml-1' />}
           <p>{summaryTitle}</p>
         </div>
         <h2>{summaryValue}</h2>

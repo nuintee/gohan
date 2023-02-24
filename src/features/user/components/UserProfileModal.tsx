@@ -1,4 +1,4 @@
-import { Button, PanelHeader, Input } from '@/components/ui'
+import { Button, PanelHeader, Input, DetailsSummary } from '@/components/ui'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
 
@@ -55,12 +55,15 @@ const UserSettingsModal = () => {
             value={dayjs(session?.user?.registered_at).format('MMMM D, YYYY h:mm A')}
             disabled
           />
-          <details>
+          {/* <details>
             <summary className='text-gh-gray select-none cursor-pointer'>高度な設定</summary>
             <div className='flex flex-col pt-4 gap-2'>
               <Button text='Delete account' danger onClick={handleDeleteAccount} />
             </div>
-          </details>
+          </details> */}
+          <DetailsSummary summaryTitle='高度な設定'>
+            <Button text='Delete account' danger onClick={handleDeleteAccount} />
+          </DetailsSummary>
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
