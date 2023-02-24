@@ -25,5 +25,7 @@ Default.args = {
     opening_hours: {
       periods: PERIODS,
     },
+    website: 'https://localhost:3000',
+    international_phone_number: '+00 00-0000-0000',
   },
 }
