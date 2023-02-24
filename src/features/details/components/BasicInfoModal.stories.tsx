@@ -10,6 +10,8 @@ import BasicInfoModal from './BasicInfoModal'
 import { details } from '@/data/details'
 import { PERIODS } from '@/data/_openingHours'
 
+const onlyOpenProp = PERIODS.map((v) => ({ open: v.open }))
+
 export default {
   title: 'Features/Details/Modals/Basic',
   component: BasicInfoModal,
@@ -18,12 +20,24 @@ export default {
 const Template: ComponentStory<typeof BasicInfoModal> = (args) => <BasicInfoModal {...args} />
 
 export const Default = Template.bind({})
+export const NoCloseHours = Template.bind({})
 
 Default.args = {
   data: {
     ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
     opening_hours: {
       periods: PERIODS,
+    },
+    website: 'https://localhost:3000',
+    international_phone_number: '+00 00-0000-0000',
+  },
+}
+
+NoCloseHours.args = {
+  data: {
+    ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
+    opening_hours: {
+      periods: onlyOpenProp,
     },
     website: 'https://localhost:3000',
     international_phone_number: '+00 00-0000-0000',

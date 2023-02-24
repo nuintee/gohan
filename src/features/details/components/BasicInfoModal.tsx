@@ -50,7 +50,6 @@ const BasicInfoModal = (props: Props) => {
                       {v?.open?.time} - {v?.close?.time}
                     </p>
                   </div>
-                  {!Boolean(i === original.length - 1) && <hr></hr>}
                 </>
               ))}
             </div>
