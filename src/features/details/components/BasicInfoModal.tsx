@@ -1,5 +1,6 @@
 import { Chevron } from '@/components/icons'
 import { Button, PanelHeader } from '@/components/ui'
+import DetailsSummary from '@/components/ui/DetailsSummary'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
 import { BASIC_INFO_KEYS } from '../constants'
@@ -11,44 +12,42 @@ type Props = {
   data: ResultsEntity
 }
 
-const DetailsSummray = ({
-  ignored = false,
-  summaryTitle,
-  summaryValue,
-  children,
-}: {
-  ignored?: boolean
-  summaryTitle?: string
-  summaryValue?: string
-  children: JSX.Element
-}) => {
-  return (
-    <details className={`w-full group ${ignored && 'pointer-events-none'}`}>
-      <summary className='flex items-center justify-between  cursor-pointer'>
-        <div className='flex items-center gap-2'>
-          {!ignored && <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />}
-          <p>{summaryTitle}</p>
-        </div>
-        <h2>{summaryValue}</h2>
-      </summary>
-      <div className='py-2 divide-y flex flex-col gap-1'>{children}</div>
-    </details>
-  )
-}
+// const DetailsSummray = ({
+//   ignored = false,
+//   summaryTitle,
+//   summaryValue,
+//   children,
+// }: {
+//   ignored?: boolean
+//   summaryTitle?: string
+//   summaryValue?: string
+//   children: JSX.Element
+// }) => {
+//   return (
+//     <details className={`w-full group ${ignored && 'pointer-events-none'}`}>
+//       <summary className='flex items-center justify-between  cursor-pointer'>
+//         <div className='flex items-center gap-2'>
+//           {!ignored && <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />}
+//           <p>{summaryTitle}</p>
+//         </div>
+//         <h2>{summaryValue}</h2>
+//       </summary>
+//       <div className='py-2 divide-y flex flex-col gap-1'>{children}</div>
+//     </details>
+//   )
+// }
 
 const BasicInfoModal = (props: Props) => {
   const { isOpen, onClose, data } = props
 
   const ui = (modalKey: any) => {
-    // if (modalKey === 'opening_hours' && !data.opening_hours?.periods?.length) return <></>
-
     return (
       <div
         className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
         key={modalKey}
       >
         {modalKey === 'opening_hours' ? (
-          <DetailsSummray
+          <DetailsSummary
             summaryTitle={modalKey}
             summaryValue={useOpenHours(data.opening_hours).title}
             ignored={!data.opening_hours?.periods?.length}
@@ -69,7 +68,7 @@ const BasicInfoModal = (props: Props) => {
                 </>
               ))}
             </div>
-          </DetailsSummray>
+          </DetailsSummary>
         ) : (
           <>
             <p>{modalKey}</p>
