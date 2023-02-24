@@ -71,7 +71,7 @@ const Texts = (props: Props) => {
         </div>
         <div className='flex gap-4'>
           <p
-            className={`${textSize.sub}`}
+            className={`${textSize.sub} truncate whitespace-normal`}
             style={{
               color: subColor,
               textAlign,
