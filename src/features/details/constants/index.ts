@@ -10,4 +10,13 @@ export const KEY_FEATURES = [
   'wheelchair_accessible_entrance',
 ] as const
 
+export const BASIC_INFO_KEYS = [
+  'name',
+  'rating',
+  'vicinity',
+  'website',
+  'international_phone_number',
+  'opening_hours',
+] as const
+
 export const DETAILS_MODAL_KEYS = ['BASIC', 'REVIEW', 'IMAGE'] as const
