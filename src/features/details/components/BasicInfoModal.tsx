@@ -1,3 +1,4 @@
+import { Chevron } from '@/components/icons'
 import { PanelHeader } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
@@ -17,15 +18,22 @@ const BasicInfoModal = (props: Props) => {
     if (modalKey === 'opening_hours') {
       return (
         <>
-          <details>
-            <summary>{modalKey}</summary>
+          <details className='w-full group'>
+            <summary className='flex items-center justify-between  cursor-pointer'>
+              <div className='flex items-center gap-2'>
+                <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />
+                <p>{modalKey}</p>
+              </div>
+              <h2>{useOpenHours(data.opening_hours).title}</h2>
+            </summary>
             <div>
               {data[modalKey].periods?.map((v) => (
-                <p>{v.open.time}</p>
+                <div className='flex items-center justify-between w-full'>
+                  <p>{v.open.time}</p>
+                </div>
               ))}
             </div>
           </details>
-          <h2>{useOpenHours(data.opening_hours).title}</h2>
         </>
       )
     } else {
