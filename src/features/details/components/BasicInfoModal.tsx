@@ -1,5 +1,5 @@
 import { Chevron } from '@/components/icons'
-import { PanelHeader } from '@/components/ui'
+import { Button, PanelHeader } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
 import { BASIC_INFO_KEYS } from '../constants'
@@ -9,6 +9,31 @@ type Props = {
   isOpen: boolean
   onClose?: React.MouseEventHandler<HTMLButtonElement>
   data: ResultsEntity
+}
+
+const DetailsSummray = ({
+  ignored = false,
+  summaryTitle,
+  summaryValue,
+  children,
+}: {
+  ignored?: boolean
+  summaryTitle?: string
+  summaryValue?: string
+  children: JSX.Element
+}) => {
+  return (
+    <details className={`w-full group ${ignored && 'pointer-events-none'}`}>
+      <summary className='flex items-center justify-between  cursor-pointer'>
+        <div className='flex items-center gap-2'>
+          {!ignored && <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />}
+          <p>{summaryTitle}</p>
+        </div>
+        <h2>{summaryValue}</h2>
+      </summary>
+      <div className='py-2 divide-y flex flex-col gap-1'>{children}</div>
+    </details>
+  )
 }
 
 const BasicInfoModal = (props: Props) => {
@@ -23,20 +48,10 @@ const BasicInfoModal = (props: Props) => {
         key={modalKey}
       >
         {modalKey === 'opening_hours' ? (
-          <details
-            className={`w-full group ${
-              !data.opening_hours?.periods?.length && 'pointer-events-none'
-            }`}
+          <DetailsSummray
+            summaryTitle={modalKey}
+            summaryValue={useOpenHours(data.opening_hours).title}
           >
-            <summary className='flex items-center justify-between  cursor-pointer'>
-              <div className='flex items-center gap-2'>
-                {data.opening_hours?.periods?.length && (
-                  <Chevron overrideClassName='rotate-90 group-open:-rotate-90' />
-                )}
-                <p>{modalKey}</p>
-              </div>
-              <h2>{useOpenHours(data.opening_hours).title}</h2>
-            </summary>
             <div className='py-2 divide-y flex flex-col gap-1'>
               {data.opening_hours?.periods?.map((v, i, original) => (
                 <>
@@ -53,7 +68,7 @@ const BasicInfoModal = (props: Props) => {
                 </>
               ))}
             </div>
-          </details>
+          </DetailsSummray>
         ) : (
           <>
             <p>{modalKey}</p>
