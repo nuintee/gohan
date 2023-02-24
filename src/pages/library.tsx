@@ -12,6 +12,7 @@ import AuthFallback from '@/components/fallback/AuthFallback'
 import MapBox from '@/features/mapbox/components/MapBox'
 import { useQueryClient } from '@tanstack/react-query'
 import { Router, useRouter } from 'next/router'
+import useMapBox from '@/features/mapbox/hooks'
 
 Router.events.on('routeChangeStart', (e) => {
   console.time('start')

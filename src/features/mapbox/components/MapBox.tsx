@@ -13,6 +13,7 @@ import useGetUserActivities from '@/features/activities/hooks/useGetUserActiviti
 import { useSession } from 'next-auth/react'
 import MarkerPin from './MarkerPin'
 import useGPS from '@/hooks/gps'
+import MapBoxCore from './MapBoxChip'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)
@@ -82,6 +83,28 @@ const MapBox = () => {
           />
         ))}
       </Map>
+      {/* <MapBoxCore
+        latitude={gps.coords.latitude}
+        longitude={gps.coords.longitude}
+        zoom={16}
+        onClick={() => clearActivityFocus()}
+        onError={(e) => handleError(e.message)}
+        onGeolocate={handleGeolocate}
+        onLoad={handleLoad}
+        dragPan={true}
+        geolocateRef={geoLocateRef}
+      >
+        {getUserAll.data?.map((activity) => (
+          <MarkerPin
+            latitude={activity?.geometry?.location?.lat}
+            longitude={activity?.geometry?.location?.lng}
+            focused={mapbox.focusedPlaceId === activity.place_id}
+            onClick={() => onActivityClicked(activity)}
+            data={activity}
+            key={activity.place_id}
+          />
+        ))}
+      </MapBoxCore> */}
     </div>
   )
 }
