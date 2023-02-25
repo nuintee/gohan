@@ -14,9 +14,9 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
 
   return (
     <div
-      className={`bg-white absolute top-0 right-0 h-screen w-screen duration-700 ${slideIn}`}
+      className={`bg-white absolute top-0 right-0 h-screen w-screen max-w-[30rem] duration-700 ${slideIn}`}
       style={{
-        zIndex: '10',
+        zIndex: '10000',
       }}
     >
       <PanelHeader title='Gohan' onClose={onClose} />
