@@ -32,8 +32,7 @@ const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) =>
   const { data, memorizedImgURL, modalSetter } = props
 
   const reviewStatusBanner = () => {
-    console.log(data.reviewStatus)
-    if (!data.reviewStatus || data.reviewStatus === 'NEW') return <></>
+    if (!data.reviewStatus) return <></>
 
     return (
       <div
