@@ -3,13 +3,15 @@ import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import { ActivityResolved } from '@/features/activities/types'
 import { useSession } from 'next-auth/react'
 
-{
-  /* <Texts
-          main={data.name}
-          mainColor={'white'}
-          sub={data?.editorial_summary?.overview || data?.types?.join('・')}
-          textAlign='center'
-        /> */
+const ResponsiveStatus = ({ status }: React.ComponentProps<typeof ActivityStatus>) => {
+  return (
+    <>
+      <div className='sm:hidden flex'>{/* <ActivityStatus status={'BAD'} /> */}</div>
+      <div className='sm:flex hidden'>
+        <ActivityStatus status={status} />
+      </div>
+    </>
+  )
 }
 
 const DetailsTitle = ({
@@ -33,26 +35,18 @@ const DetailsTitle = ({
   }
 
   return (
-    // <Texts
-    //   size={'large'}
-    //   main={data.name}
-    //   sub={data?.editorial_summary?.overview || data?.types?.join('・')}
-    //   mainColor={'white'}
-    //   subColor={'white'}
-    //   mainDecoration={activity_status()}
-    //   gap={true}
-    // />
-    <Texts
-      size={size}
-      main={data.name}
-      mainColor={'white'}
-      sub={data?.editorial_summary?.overview || data?.types?.join('・')}
-      subColor={'white'}
-      mainDecoration={mainDecoration && activity_status()}
-      gap={gap}
-      textAlign={textAlign}
-      // textAlign='center'
-    />
+    <div className='flex flex-col sm:gap-4'>
+      <ResponsiveStatus status={data.reviewStatus} />
+      <Texts
+        size={size}
+        main={data.name}
+        mainColor={'white'}
+        sub={data?.editorial_summary?.overview || data?.types?.join('・')}
+        subColor={'white'}
+        gap={gap}
+        textAlign={textAlign}
+      />
+    </div>
   )
 }
 

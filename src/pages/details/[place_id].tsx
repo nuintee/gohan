@@ -25,6 +25,7 @@ import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGr
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
+import ActivityStatus from '@/features/activities/components/ActivityStatus'
 
 const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
   const { data, memorizedImgURL, modalSetter } = props
