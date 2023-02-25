@@ -29,34 +29,14 @@ const RestaurantBoard = (props: RestaurantProps) => {
     infoContainer: 'flex flex-col gap-2 flex-1 overflow-hidden',
   }
 
-  const theme = compactStyle
-
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(data?.photos)
   }, [data?.photos])
 
   return (
-    // <div className={theme.container} onClick={onClick}>
-    //   <SuspenseImage
-    //     src={memorizedPhoto.url}
-    //     alt={cardConfig.imgAlt(data?.name)}
-    //     className={theme.img}
-    //   />
-    //   <div className={theme.contents}>
-    //     <div className={theme.infoContainer}>
-    //       <Texts
-    //         main={cardConfig.textsMain(data?.name)}
-    //         sub={cardConfig.textsSub(data?.types?.join('・'))}
-    //         size={cardConfig.textSize}
-    //       />
-    //       <ActivityStatus status={data?.reviewStatus} />
-    //       {/* <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} /> */}
-    //     </div>
-    //   </div>
-    // </div>
     <div
-      className={`flex gap-2 rounded-md justify-between cursor-pointer p-2 hover:bg-gh-white active:bg-gh-white active:scale-95 ${
+      className={`flex gap-2 flex-1 p-2 h-20 sm:h-28 items-center cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95 ${
         isFocused && 'bg-gh-white'
       }`}
       onClick={onClick}
@@ -64,24 +44,16 @@ const RestaurantBoard = (props: RestaurantProps) => {
       <SuspenseImage
         src={memorizedPhoto.url}
         alt={cardConfig.imgAlt(data?.name)}
-        className={'h-12 w-12 aspect-square object-cover rounded-md'}
+        className={'aspect-square object-cover h-full rounded-md'}
       />
-      <div className={'flex-1 max-w-[10rem]'}>
+      <div className={'flex-1 max-w-[10rem] sm:max-w-[20rem] md:max-w-[30rem] flex flex-col gap-2'}>
         <Texts
           main={cardConfig.textsMain(data?.name)}
           sub={cardConfig.textsSub(data?.types?.join('・'))}
           size={'small'}
         />
+        {/* <ActivityStatus status={data?.reviewStatus} /> */}
       </div>
-      {/* <div className={''}>
-        <div className={''}>
-          <Texts
-            main={cardConfig.textsMain(data?.name)}
-            sub={cardConfig.textsSub(data?.types?.join('・'))}
-            size={cardConfig.textSize}
-          />
-        </div>
-      </div> */}
     </div>
   )
 }
