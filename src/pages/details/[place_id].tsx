@@ -64,7 +64,7 @@ const NormalSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>
           src={props.memorizedImgURL}
           onClick={() => props.modalSetter('IMAGE')}
         />
-        <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
+        <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem] overflow-x-clip'>
           <DetailsTitle data={props.data} />
           <DetailsActionGroup
             data={props.data}

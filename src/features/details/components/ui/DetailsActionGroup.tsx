@@ -31,7 +31,7 @@ const DetailsActionGroup = ({
   if (isLoading) return <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
 
   return (
-    <div className='flex gap-4 sm:w-fit w-full sm:px-0 px-4 mb-5 sm:mb-0'>
+    <div className='flex gap-4 lg:w-fit w-full sm:px-0 px-4 mb-5 sm:mb-0'>
       {status === 'authenticated' && (
         <Button
           text={!data?.reviewStatus || data?.reviewStatus === 'NEW' ? '評価を追加' : '評価を変更'}
