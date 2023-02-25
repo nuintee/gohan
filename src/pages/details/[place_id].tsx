@@ -94,13 +94,21 @@ const DetailsPage = memo(({ id }: { id: string }) => {
     <>
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <Cover color='black' />
-        <div className='flex items-center justify-center pt-16 sm:pb-6'>
+        <div className='flex items-center px-[10%] pt-16 pb-6 gap-4 sm:gap-8'>
           <ImageChip
             isLoading={false}
             src={memorizedPhoto.url}
             onClick={() => openLocalModal('IMAGE')}
           />
-          <div></div>
+          <div className='flex-1 flex flex-col gap-4 justify-between sm:min-h-[14rem]'>
+            <DetailsTitle data={data} />
+            <DetailsActionGroup
+              data={data}
+              isLoading={isFetching}
+              modalSetter={openLocalModal}
+              refetch={refetch}
+            />
+          </div>
         </div>
         {/* <Cover color={'black'} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
