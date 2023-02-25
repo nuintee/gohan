@@ -9,9 +9,19 @@ import { ActivityResolved } from '../types'
 type ActivityDropDownProps = {
   activity: ActivityResolved
   onMutated: () => void
+  onBasicInfoAction?: () => void
+  onShareAction?: () => void
+  responsive?: boolean
 } & Pick<React.ComponentProps<typeof DropDown>, 'direction'>
 
-const ActivityDropDown = ({ activity, onMutated, direction }: ActivityDropDownProps) => {
+const ActivityDropDown = ({
+  activity,
+  onMutated,
+  direction,
+  onBasicInfoAction = () => {},
+  onShareAction = () => {},
+  responsive = false,
+}: ActivityDropDownProps) => {
   const router = useRouter()
 
   const deleteActivity = useDeleteActivity()
@@ -26,11 +36,25 @@ const ActivityDropDown = ({ activity, onMutated, direction }: ActivityDropDownPr
       ignored: !activity.website,
     },
     {
-      label: '詳細を表示',
+      label: '詳細へ移動',
       onDropDownItemClick: () => {
         router.push(`/details/[place_id]`, `/details/${activity.place_id}`, { shallow: true })
       },
       ignored: router.asPath === `/details/${activity.place_id}`,
+    },
+    {
+      label: '基本情報を表示',
+      onDropDownItemClick: () => {
+        onBasicInfoAction()
+      },
+      ignored: !responsive,
+    },
+    {
+      label: '共有',
+      onDropDownItemClick: () => {
+        onShareAction()
+      },
+      ignored: !responsive,
     },
     {
       label: 'ライブラリから削除',

@@ -20,6 +20,14 @@ const DetailsActionGroup = ({
 }) => {
   const { status } = useSession()
 
+  const handleBasicInfoClick = () => {
+    modalSetter('BASIC')
+  }
+
+  const handleShareClick = () => {
+    share({ url: location.href })
+  }
+
   if (isLoading) return <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
 
   return (
@@ -39,17 +47,23 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      <Button text='基本情報を表示' outline onClick={() => modalSetter('BASIC')} />
+      <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
       <Button
         text='共有'
         outline
-        onClick={() => share({ url: location.href })}
+        onClick={handleShareClick}
         icon={{
           position: 'before',
           src: <Share />,
         }}
       />
-      <ActivityDropDown activity={data} onMutated={() => refetch()} />
+      <ActivityDropDown
+        activity={data}
+        onMutated={() => refetch()}
+        onBasicInfoAction={handleBasicInfoClick}
+        onShareAction={handleShareClick}
+        responsive={true}
+      />
     </div>
   )
 }
