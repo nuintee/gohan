@@ -50,11 +50,11 @@ const DetailsPage = memo(({ id }: { id: string }) => {
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <Cover color={'black'} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-          <ImageChip
+          {/* <ImageChip
             isLoading={false}
             src={memorizedPhoto.url}
             onClick={() => openLocalModal('IMAGE')}
-          />
+          /> */}
           {/* {memorizedImage} */}
           <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
             <DetailsTitle data={data} />
