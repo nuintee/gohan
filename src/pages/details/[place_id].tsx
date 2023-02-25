@@ -65,7 +65,7 @@ const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) =>
           isLoading={props.isLoading}
           modalSetter={props.modalSetter}
           refetch={props.refetcher}
-          showRegularButtons={false}
+          showRegularButtons={status === 'unauthenticated'}
         />
       </div>
     </div>

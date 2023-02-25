@@ -85,7 +85,7 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      {(status === 'unauthenticated' || showRegularButtons) && (
+      {showRegularButtons && (
         <>
           <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
           <Button
