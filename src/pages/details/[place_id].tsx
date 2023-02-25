@@ -26,6 +26,54 @@ import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 
+const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
+  return (
+    <div className='block sm:hidden'>
+      <Cover color={'black'} />
+      <div className='px-[10%] pt-16 pb-6 flex gap-8'></div>
+    </div>
+  )
+}
+
+const NormalSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
+  return (
+    <div className='hidden sm:block'>
+      <Cover color={'black'} />
+      <div className='px-[10%] pt-16 pb-6 flex gap-8'>
+        <ImageChip
+          isLoading={false}
+          src={props.memorizedImgURL}
+          onClick={() => props.modalSetter('IMAGE')}
+        />
+        <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
+          <DetailsTitle data={props.data} />
+          <DetailsActionGroup
+            data={props.data}
+            isLoading={props.isLoading}
+            modalSetter={props.modalSetter}
+            refetch={props.refetcher}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const HEROContents = (props: {
+  memorizedImgURL: string
+  data: any
+  isLoading: boolean
+  refetcher: any
+  modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
+}) => {
+  return (
+    <>
+      <SPSizeHeroContents {...props} />
+      <NormalSizeHeroContents {...props} />
+    </>
+  )
+}
+
 const DetailsPage = memo(({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
@@ -93,7 +141,7 @@ const DetailsPage = memo(({ id }: { id: string }) => {
   return (
     <>
       <div className='flex flex-1 flex-col relative overflow-auto'>
-        <Cover color='black' />
+        {/* <Cover color='black' />
         <div className='flex items-center px-[10%] pt-16 pb-6 gap-4 sm:gap-8'>
           <ImageChip
             isLoading={false}
@@ -109,7 +157,14 @@ const DetailsPage = memo(({ id }: { id: string }) => {
               refetch={refetch}
             />
           </div>
-        </div>
+        </div> */}
+        <HEROContents
+          data={data}
+          isLoading={isFetching}
+          refetcher={refetch}
+          memorizedImgURL={memorizedPhoto.url}
+          modalSetter={openLocalModal}
+        />
         {/* <Cover color={'black'} />
         <div className='px-[10%] pt-16 pb-6 flex gap-8'>
           <ImageChip
