@@ -27,10 +27,20 @@ import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 
 const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
+  const { data, memorizedImgURL, modalSetter } = props
+
   return (
     <div className='block sm:hidden'>
       <Cover color={'black'} />
-      <div className='px-[10%] pt-16 pb-6 flex gap-8'></div>
+      <div className='px-[10%] pt-8 pb-10 flex gap-4 flex-col items-center justify-center'>
+        <ImageChip isLoading={false} src={memorizedImgURL} onClick={() => modalSetter('IMAGE')} />
+        <Texts
+          main={data.name}
+          mainColor={'white'}
+          sub={data?.editorial_summary?.overview || data?.types?.join('・')}
+          textAlign='center'
+        />
+      </div>
     </div>
   )
 }
