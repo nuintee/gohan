@@ -3,7 +3,25 @@ import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import { ActivityResolved } from '@/features/activities/types'
 import { useSession } from 'next-auth/react'
 
-const DetailsTitle = ({ data }: { data: ActivityResolved }) => {
+{
+  /* <Texts
+          main={data.name}
+          mainColor={'white'}
+          sub={data?.editorial_summary?.overview || data?.types?.join('・')}
+          textAlign='center'
+        /> */
+}
+
+const DetailsTitle = ({
+  data,
+  size = 'large',
+  gap = true,
+  textAlign = 'left',
+  mainDecoration = true,
+}: {
+  data: ActivityResolved
+  mainDecoration?: boolean
+} & Pick<React.ComponentProps<typeof Texts>, 'size' | 'gap' | 'textAlign'>) => {
   const { status } = useSession()
 
   const activity_status = () => {
@@ -15,14 +33,25 @@ const DetailsTitle = ({ data }: { data: ActivityResolved }) => {
   }
 
   return (
+    // <Texts
+    //   size={'large'}
+    //   main={data.name}
+    //   sub={data?.editorial_summary?.overview || data?.types?.join('・')}
+    //   mainColor={'white'}
+    //   subColor={'white'}
+    //   mainDecoration={activity_status()}
+    //   gap={true}
+    // />
     <Texts
-      size={'large'}
+      size={size}
       main={data.name}
-      sub={data?.editorial_summary?.overview || data?.types?.join('・')}
       mainColor={'white'}
+      sub={data?.editorial_summary?.overview || data?.types?.join('・')}
       subColor={'white'}
-      mainDecoration={activity_status()}
-      gap={true}
+      mainDecoration={Boolean(mainDecoration) && activity_status()}
+      gap={gap}
+      textAlign={textAlign}
+      // textAlign='center'
     />
   )
 }

@@ -34,11 +34,12 @@ const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) =>
       <Cover color={'black'} />
       <div className='px-[10%] pt-8 pb-10 flex gap-4 flex-col items-center justify-center'>
         <ImageChip isLoading={false} src={memorizedImgURL} onClick={() => modalSetter('IMAGE')} />
-        <Texts
-          main={data.name}
-          mainColor={'white'}
-          sub={data?.editorial_summary?.overview || data?.types?.join('・')}
-          textAlign='center'
+        <DetailsTitle
+          data={data}
+          gap={false}
+          size={'normal'}
+          textAlign={'center'}
+          mainDecoration={false}
         />
       </div>
     </div>
