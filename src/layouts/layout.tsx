@@ -1,9 +1,10 @@
-import { GohanButton } from '@/components/ui'
+import { GohanButton, PanelHeader } from '@/components/ui'
 import Header from '@/components/ui/Header'
 import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
+import ModalLayout from './ModalLayout'
 
 type LayoutProps = {
   readonly children: JSX.Element
@@ -27,6 +28,19 @@ const LEFT = {
 const RIGHT = {
   bottom: BASE_MARGIN,
   right: BASE_MARGIN,
+}
+
+const HeaderSidebar = () => {
+  return (
+    <div
+      className='bg-white absolute top-0 right-0 h-screen'
+      style={{
+        zIndex: '10',
+      }}
+    >
+      <PanelHeader title='ヘッダーメニュー' />
+    </div>
+  )
 }
 
 export const MainLayout = ({
@@ -64,6 +78,7 @@ export const MainLayout = ({
           </span>
         )}
       </div>
+      {/* <HeaderSidebar /> */}
       <UserProfileModal />
       <UserDeletionModal />
       {!disableSearch && <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />}
