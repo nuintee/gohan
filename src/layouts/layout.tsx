@@ -4,7 +4,6 @@ import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
-import useModals from '@/hooks/modals'
 
 type LayoutProps = {
   readonly children: JSX.Element
@@ -12,9 +11,23 @@ type LayoutProps = {
   searchButtonPosition?: 'bottom-center' | 'bottom-left' | 'bottom-right'
 }
 
-const center = 'fixed bottom-4 -translate-x-1/2 left-1/2'
-const right = 'fixed bottom-8 right-8'
-const left = 'fixed bottom-8 left-8'
+const BASE_MARGIN = '2rem'
+
+const CENTER = {
+  bottom: BASE_MARGIN,
+  left: '50%',
+  transform: 'translate(-50%)',
+}
+
+const LEFT = {
+  bottom: BASE_MARGIN,
+  left: BASE_MARGIN,
+}
+
+const RIGHT = {
+  bottom: BASE_MARGIN,
+  right: BASE_MARGIN,
+}
 
 export const MainLayout = ({
   children,
@@ -26,29 +39,29 @@ export const MainLayout = ({
   const buttonPosition = () => {
     switch (searchButtonPosition) {
       case 'bottom-left':
-        return left
+        return LEFT
       case 'bottom-right':
-        return right
-      case 'bottom-center':
+        return RIGHT
       default:
-        return center
+        return CENTER
     }
   }
 
   return (
     <>
-      <div className='flex flex-col h-full w-full'>
+      <div className='flex flex-col h-full w-full relative'>
         <Header />
         <div className='flex-1 h-full w-full flex flex-col relative'>{children}</div>
         {!disableSearch && (
-          <section
-            className={`${buttonPosition()}`}
+          <span
             style={{
               zIndex: '10',
+              position: 'fixed',
+              ...buttonPosition(),
             }}
           >
             <GohanButton onClick={() => manageSearchModal(true)} size={25} />
-          </section>
+          </span>
         )}
       </div>
       <UserProfileModal />
