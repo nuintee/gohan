@@ -47,7 +47,7 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      <div className='sm:flex gap-4 hidden'>
+      <div className='lg:flex gap-4 hidden'>
         <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
         <Button
           text='共有'
