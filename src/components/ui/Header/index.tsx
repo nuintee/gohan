@@ -16,7 +16,7 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
   return (
     <div className={`absolute h-screen w-screen bg-gh-dark z-[1010] duration-700 ${opacity}`}>
       <div
-        className={`bg-white absolute top-0 right-0 h-screen w-screen max-w-[30rem] duration-700 ${slideIn}`}
+        className={`bg-white absolute top-0 bg-gh-dark right-0 h-screen w-screen max-w-[30rem] duration-700 ${slideIn}`}
         style={{
           zIndex: '10000',
         }}
@@ -64,7 +64,7 @@ const Header = () => {
           </button>
         )}
       </div>
-      <HeaderSidebar isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {isSmall && <HeaderSidebar isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
     </>
   )
 }
