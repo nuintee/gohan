@@ -26,14 +26,29 @@ import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
+import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
 
 const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
   const { data, memorizedImgURL, modalSetter } = props
 
+  const reviewStatusBanner = () => {
+    console.log(data.reviewStatus)
+    if (!data.reviewStatus || data.reviewStatus === 'NEW') return <></>
+
+    return (
+      <div
+        className={'flex items-center justify-center px-2 py-1 font-semibold'}
+        style={{ background: useActivityStatus(data.reviewStatus).color }}
+      >
+        <p className='text-white'>{useActivityStatus(data?.reviewStatus).label}</p>
+      </div>
+    )
+  }
+
   return (
     <div className='block sm:hidden'>
       <Cover color={'black'} />
-      <div className='px-[10%] pt-8 pb-10 flex gap-4 flex-col items-center justify-center'>
+      <div className='px-[10%] pt-8 pb-5 flex gap-4 flex-col items-center justify-center'>
         <ImageChip isLoading={false} src={memorizedImgURL} onClick={() => modalSetter('IMAGE')} />
         <DetailsTitle
           data={data}
@@ -43,6 +58,7 @@ const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) =>
           mainDecoration={false}
         />
       </div>
+      {reviewStatusBanner()}
       <div className='flex items-center justify-center my-2'>
         <DetailsActionGroup
           data={props.data}
