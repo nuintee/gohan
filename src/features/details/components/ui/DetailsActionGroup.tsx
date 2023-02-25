@@ -47,16 +47,18 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
-      <Button
-        text='共有'
-        outline
-        onClick={handleShareClick}
-        icon={{
-          position: 'before',
-          src: <Share />,
-        }}
-      />
+      <div className='sm:flex gap-4 hidden'>
+        <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
+        <Button
+          text='共有'
+          outline
+          onClick={handleShareClick}
+          icon={{
+            position: 'before',
+            src: <Share />,
+          }}
+        />
+      </div>
       <ActivityDropDown
         activity={data}
         onMutated={() => refetch()}
