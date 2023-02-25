@@ -54,8 +54,8 @@ const DetailsPage = ({ id }: { id: string }) => {
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
           data={data}
-          isLoading={isFetching}
-          refetcher={refetch}
+          isFetching={isFetching}
+          refetch={refetch}
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
         />

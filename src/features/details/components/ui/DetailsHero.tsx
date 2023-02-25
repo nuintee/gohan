@@ -1,5 +1,6 @@
 import { Cover, ImageChip } from '@/components/ui'
 import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import useMediaQuery from '@/hooks/mediaquery'
 import { useSession } from 'next-auth/react'
 import useDetailsModal from '../../hooks/useDetailsModal'
@@ -24,13 +25,12 @@ const ReviewBannerStatus = ({
   )
 }
 
-const DetailsHero = (props: {
-  memorizedImgURL: string
-  data: any
-  isLoading: boolean
-  refetcher: any
-  modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
-}) => {
+const DetailsHero = (
+  props: {
+    memorizedImgURL: string
+    modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
+  } & Pick<Awaited<ReturnType<typeof useGetActivity>>, 'data' | 'isFetching' | 'refetch'>,
+) => {
   const isSmall = useMediaQuery('sm')
 
   const smallClassName = {
@@ -73,9 +73,9 @@ const DetailsHero = (props: {
           {!isSmall && <DetailsTitle data={props.data} />}
           <DetailsActionGroup
             data={props.data}
-            isLoading={props.isLoading}
+            isLoading={props.isFetching}
             modalSetter={props.modalSetter}
-            refetch={props.refetcher}
+            refetch={props.refetch}
           />
         </div>
       </div>
