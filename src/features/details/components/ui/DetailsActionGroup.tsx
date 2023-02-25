@@ -8,35 +8,6 @@ import { useSession } from 'next-auth/react'
 import { Dispatch, SetStateAction } from 'react'
 import useDetailsModal from '../../hooks/useDetailsModal'
 
-// const ResponsiveDropDown = (
-//   props: Omit<React.ComponentProps<typeof ActivityDropDown>, 'responsive'>,
-// ) => {
-//   return (
-//     <>
-//       <div className='lg:hidden flex'>
-//         <ActivityDropDown {...props} responsive={true} />
-//       </div>
-//       <div className='lg:flex hidden'>
-//         <ActivityDropDown {...props} responsive={false} />
-//       </div>
-//     </>
-//   )
-// }
-// const ResponsiveDropDown = (
-//   props: React.ComponentProps<typeof ActivityDropDown>,
-// ) => {
-//   return (
-//     <>
-//       <div className='lg:hidden flex'>
-//         <ActivityDropDown {...props} responsive={true} />
-//       </div>
-//       <div className='lg:flex hidden'>
-//         <ActivityDropDown {...props} responsive={false} />
-//       </div>
-//     </>
-//   )
-// }
-
 const DetailsActionGroup = ({
   data,
   isLoading = false,
@@ -51,8 +22,6 @@ const DetailsActionGroup = ({
   showRegularButtons?: boolean
 }) => {
   const { status } = useSession()
-  const isSmallQuery = useMediaQuery('sm')
-  const isMediumQuery = useMediaQuery('md')
   const isLargeQuery = useMediaQuery('lg')
 
   const handleBasicInfoClick = () => {

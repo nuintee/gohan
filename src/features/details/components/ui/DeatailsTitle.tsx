@@ -1,18 +1,8 @@
 import { Texts } from '@/components/ui'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import { ActivityResolved } from '@/features/activities/types'
+import useMediaQuery from '@/hooks/mediaquery'
 import { useSession } from 'next-auth/react'
-
-const ResponsiveStatus = ({ status }: React.ComponentProps<typeof ActivityStatus>) => {
-  return (
-    <>
-      <div className='sm:hidden flex'>{/* <ActivityStatus status={'BAD'} /> */}</div>
-      <div className='sm:flex hidden'>
-        <ActivityStatus status={status} />
-      </div>
-    </>
-  )
-}
 
 const DetailsTitle = ({
   data,
@@ -25,10 +15,11 @@ const DetailsTitle = ({
   mainDecoration?: boolean
 } & Pick<React.ComponentProps<typeof Texts>, 'size' | 'gap' | 'textAlign'>) => {
   const { status } = useSession()
+  const isSmallQuery = useMediaQuery('sm')
 
   const activity_status = () => {
-    if (status === 'authenticated') {
-      return <ResponsiveStatus status={data?.reviewStatus} />
+    if (status === 'authenticated' && !isSmallQuery) {
+      return <ActivityStatus status={data?.reviewStatus} />
     } else {
       return <></>
     }
