@@ -41,7 +41,12 @@ export const MainLayout = ({
         <Header />
         <div className='flex-1 h-full w-full flex flex-col relative'>{children}</div>
         {!disableSearch && (
-          <section className={buttonPosition()}>
+          <section
+            className={`${buttonPosition()}`}
+            style={{
+              zIndex: '10',
+            }}
+          >
             <GohanButton onClick={() => manageSearchModal(true)} size={25} />
           </section>
         )}
