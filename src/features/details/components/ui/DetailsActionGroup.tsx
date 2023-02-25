@@ -28,6 +28,13 @@ const DetailsActionGroup = ({
     share({ url: location.href })
   }
 
+  const dropDownArgs = {
+    activity: data,
+    onMutated: () => refetch(),
+    onBasicInfoAction: handleBasicInfoClick,
+    onShareAction: handleShareClick,
+  }
+
   if (isLoading) return <div className='bg-gh-l-gray animate-pulse h-10 w-[30%] rounded-md'></div>
 
   return (
@@ -59,13 +66,12 @@ const DetailsActionGroup = ({
           }}
         />
       </div>
-      <ActivityDropDown
-        activity={data}
-        onMutated={() => refetch()}
-        onBasicInfoAction={handleBasicInfoClick}
-        onShareAction={handleShareClick}
-        responsive={true}
-      />
+      <div className='lg:hidden flex'>
+        <ActivityDropDown {...dropDownArgs} responsive={true} />
+      </div>
+      <div className='lg:flex hidden'>
+        <ActivityDropDown {...dropDownArgs} responsive={false} />
+      </div>
     </div>
   )
 }
