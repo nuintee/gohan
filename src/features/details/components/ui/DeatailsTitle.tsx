@@ -35,7 +35,7 @@ const DetailsTitle = ({
   }
 
   return (
-    <div className='flex flex-col sm:gap-4'>
+    <div className='flex flex-col sm:gap-4 w-full'>
       <ResponsiveStatus status={data.reviewStatus} />
       <Texts
         size={size}
