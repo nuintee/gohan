@@ -112,71 +112,9 @@ const DetailsPage = memo(({ id }: { id: string }) => {
 
   if (isError) return <ErrorFallBack error={error} />
 
-  // return (
-  //   <>
-  //     <div className='flex flex-1 flex-col relative overflow-auto'>
-  //       <Cover color={'black'} />
-  //       <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-  //         <ImageChip
-  //           isLoading={false}
-  //           src={memorizedPhoto.url}
-  //           onClick={() => openLocalModal('IMAGE')}
-  //         />
-  //         <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
-  //           <DetailsTitle data={data} />
-  //           <DetailsActionGroup
-  //             data={data}
-  //             isLoading={isFetching}
-  //             modalSetter={openLocalModal}
-  //             refetch={refetch}
-  //           />
-  //         </div>
-  //       </div>
-  //       <main className='px-[10%]'>
-  //         <div className='flex-1 flex flex-col justify-between py-2'>
-  //           {status === 'authenticated' && (
-  //             <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
-  //           )}
-  //         </div>
-  //         <DetailsDescriptiveGroup data={data} isLoading={false} />
-  //         <DetailsSectionGroup data={data} isLoading={false} />
-  //       </main>
-  //     </div>
-  //     <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearLocalModal} />
-  //     <ReviewModal
-  //       isOpen={checkIsOpen('REVIEW')}
-  //       onClose={clearLocalModal}
-  //       onReviewSuccess={refetch}
-  //       data={{
-  //         memo: data.memo,
-  //         status: data?.reviewStatus,
-  //         id: data?.id,
-  //         place_id: data?.place_id,
-  //       }}
-  //     />
-  //     <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
-  //   </>
-  // )
   return (
     <>
       <div className='flex flex-1 flex-col relative overflow-auto'>
-        {/* <Cover color='black' />
-        <div className='flex items-center px-[10%] pt-16 pb-6 gap-4 sm:gap-8'>
-          <ImageChip
-            isLoading={false}
-            src={memorizedPhoto.url}
-            onClick={() => openLocalModal('IMAGE')}
-          />
-          <div className='flex-1 flex flex-col gap-4 justify-between sm:min-h-[14rem]'>
-            <DetailsTitle data={data} />
-            <DetailsActionGroup
-              data={data}
-              isLoading={isFetching}
-              modalSetter={openLocalModal}
-              refetch={refetch}
-            />
-          </div>
-        </div> */}
         <HEROContents
           data={data}
           isLoading={isFetching}
@@ -184,23 +122,6 @@ const DetailsPage = memo(({ id }: { id: string }) => {
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
         />
-        {/* <Cover color={'black'} />
-        <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-          <ImageChip
-            isLoading={false}
-            src={memorizedPhoto.url}
-            onClick={() => openLocalModal('IMAGE')}
-          />
-          <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
-            <DetailsTitle data={data} />
-            <DetailsActionGroup
-              data={data}
-              isLoading={isFetching}
-              modalSetter={openLocalModal}
-              refetch={refetch}
-            />
-          </div>
-        </div> */}
         <main className='px-[10%]'>
           <div className='flex-1 flex flex-col justify-between py-2'>
             {status === 'authenticated' && (
