@@ -5,6 +5,7 @@ import { ActivityResolved } from '@/features/activities/types'
 import { share } from '@/utils/share'
 import { useSession } from 'next-auth/react'
 import { Dispatch, SetStateAction } from 'react'
+import useDetailsModal from '../../hooks/useDetailsModal'
 
 const DetailsActionGroup = ({
   data,
@@ -14,7 +15,7 @@ const DetailsActionGroup = ({
 }: {
   data: ActivityResolved
   isLoading: boolean
-  modalSetter: Dispatch<SetStateAction<'BASIC' | 'REVIEW' | 'IMAGE'>>
+  modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
   refetch: () => void
 }) => {
   const { status } = useSession()

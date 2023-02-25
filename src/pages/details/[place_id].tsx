@@ -42,6 +42,14 @@ const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) =>
           mainDecoration={false}
         />
       </div>
+      <div className='flex items-center justify-center my-2'>
+        <DetailsActionGroup
+          data={props.data}
+          isLoading={props.isLoading}
+          modalSetter={props.modalSetter}
+          refetch={props.refetcher}
+        />
+      </div>
     </div>
   )
 }
