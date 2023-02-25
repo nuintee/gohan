@@ -1,5 +1,6 @@
 import { Dots } from '@/components/icons'
 import { DropDown } from '@/components/ui'
+import useMediaQuery from '@/hooks/mediaquery'
 import { trpc } from '@/libs/trpc'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
@@ -11,7 +12,6 @@ type ActivityDropDownProps = {
   onMutated: () => void
   onBasicInfoAction?: () => void
   onShareAction?: () => void
-  responsive?: boolean
 } & Pick<React.ComponentProps<typeof DropDown>, 'direction'>
 
 const ActivityDropDown = ({
@@ -20,9 +20,9 @@ const ActivityDropDown = ({
   direction,
   onBasicInfoAction = () => {},
   onShareAction = () => {},
-  responsive = false,
 }: ActivityDropDownProps) => {
   const router = useRouter()
+  const isLargeQuery = useMediaQuery('lg')
 
   const deleteActivity = useDeleteActivity()
 
@@ -47,14 +47,14 @@ const ActivityDropDown = ({
       onDropDownItemClick: () => {
         onBasicInfoAction()
       },
-      ignored: !responsive,
+      ignored: !isLargeQuery,
     },
     {
       label: '共有',
       onDropDownItemClick: () => {
         onShareAction()
       },
-      ignored: !responsive,
+      ignored: !isLargeQuery,
     },
     {
       label: 'ライブラリから削除',

@@ -27,6 +27,7 @@ import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
+import useMediaQuery from '@/hooks/mediaquery'
 
 const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
   const { data, memorizedImgURL, modalSetter } = props
@@ -133,6 +134,8 @@ const HEROContents = (props: {
   refetcher: any
   modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
 }) => {
+  const isSmall = useMediaQuery('sm')
+
   return (
     <>
       <SPSizeHeroContents {...props} />

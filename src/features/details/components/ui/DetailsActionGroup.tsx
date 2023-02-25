@@ -2,6 +2,7 @@ import { Chevron, Share } from '@/components/icons'
 import { Button } from '@/components/ui'
 import ActivityDropDown from '@/features/activities/components/ActivityDropDown'
 import { ActivityResolved } from '@/features/activities/types'
+import useMediaQuery from '@/hooks/mediaquery'
 import { share } from '@/utils/share'
 import { useSession } from 'next-auth/react'
 import { Dispatch, SetStateAction } from 'react'
@@ -50,6 +51,9 @@ const DetailsActionGroup = ({
   showRegularButtons?: boolean
 }) => {
   const { status } = useSession()
+  const isSmallQuery = useMediaQuery('sm')
+  const isMediumQuery = useMediaQuery('md')
+  const isLargeQuery = useMediaQuery('lg')
 
   const handleBasicInfoClick = () => {
     modalSetter('BASIC')
@@ -85,7 +89,7 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      {showRegularButtons && (
+      {!isLargeQuery && (
         <>
           <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
           <Button
@@ -99,7 +103,7 @@ const DetailsActionGroup = ({
           />
         </>
       )}
-      <ActivityDropDown {...dropDownArgs} responsive={!showRegularButtons} />
+      <ActivityDropDown {...dropDownArgs} />
     </div>
   )
 }
