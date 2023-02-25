@@ -19,16 +19,6 @@ import SuspenseImage from '@/components/ui/SuspenseImage'
 const RestaurantBoard = (props: RestaurantProps) => {
   const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
 
-  const compactStyle = {
-    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 flex-1  ${
-      isFocused && 'bg-gh-white'
-    } cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95`,
-    img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
-    closeButton: '',
-    contents: 'flex flex-1 gap-4 items-center justify-between overflow-hidden',
-    infoContainer: 'flex flex-col gap-2 flex-1 overflow-hidden',
-  }
-
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(data?.photos)
@@ -46,13 +36,17 @@ const RestaurantBoard = (props: RestaurantProps) => {
         alt={cardConfig.imgAlt(data?.name)}
         className={'aspect-square object-cover h-full rounded-md'}
       />
-      <div className={'flex-1 max-w-[10rem] sm:max-w-[20rem] md:max-w-[30rem] flex flex-col gap-2'}>
+      <div
+        className={
+          'flex-1 max-w-[10rem] sm:max-w-[20rem] md:max-w-[30rem] flex flex-col gap-1 sm:gap-2'
+        }
+      >
         <Texts
           main={cardConfig.textsMain(data?.name)}
           sub={cardConfig.textsSub(data?.types?.join('・'))}
           size={'small'}
         />
-        {/* <ActivityStatus status={data?.reviewStatus} /> */}
+        <ActivityStatus status={data?.reviewStatus} />
       </div>
     </div>
   )

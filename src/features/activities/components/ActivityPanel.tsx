@@ -53,25 +53,6 @@ const ContentsRenderer = ({
   }
 
   return (
-    // <div className='flex flex-col gap-2 p-2 flex-1 overflow-y-auto overflow-x-hidden'>
-    //   {userActivities.data?.map((activity, index, original) => (
-    //     <div className='flex gap-2 items-center justify-between w-[20rem]' key={activity.id}>
-    //       <RestaurantBoard
-    //         data={activity}
-    //         onClick={() => onActivityClicked(activity)}
-    //         isFocused={mapbox.focusedPlaceId === activity.place_id}
-    //         isLocked={false}
-    //       />
-    //       <ActivityDropDown
-    //         activity={activity}
-    //         onMutated={() => userActivities.refetch()}
-    //         direction={
-    //           original.length > 1 && index === original.length - 1 ? 'left-bottom' : 'bottom'
-    //         }
-    //       />
-    //     </div>
-    //   ))}
-    // </div>
     <div className='flex flex-col gap-2 p-2 flex-1 overflow-y-auto overflow-x-hidden'>
       {userActivities.data?.map((activity, index, original) => (
         <div className='flex gap-2 items-center justify-between' key={activity.id}>
@@ -112,7 +93,6 @@ const ActivityPanel = (props: Props) => {
       <PanelHeader title='ライブラリ' onClose={onClose} />
       <hr></hr>
       <ContentsRenderer userActivities={query} />
-      {/* <div className='flex-1 bg-red-300'></div> */}
     </div>
   )
 }
