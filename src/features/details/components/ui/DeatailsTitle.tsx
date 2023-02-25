@@ -28,7 +28,7 @@ const DetailsTitle = ({
 
   const activity_status = () => {
     if (status === 'authenticated') {
-      return <ActivityStatus status={data?.reviewStatus} />
+      return <ResponsiveStatus status={data?.reviewStatus} />
     } else {
       return <></>
     }
@@ -36,7 +36,7 @@ const DetailsTitle = ({
 
   return (
     <div className='flex flex-col sm:gap-4 w-full'>
-      <ResponsiveStatus status={data.reviewStatus} />
+      {activity_status()}
       <Texts
         size={size}
         main={data.name}
