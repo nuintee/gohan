@@ -13,13 +13,11 @@ const DetailsActionGroup = ({
   isLoading = false,
   modalSetter,
   refetch,
-  showRegularButtons = true,
 }: {
   data: ActivityResolved
   isLoading: boolean
   modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
   refetch: () => void
-  showRegularButtons?: boolean
 }) => {
   const { status } = useSession()
   const isLargeQuery = useMediaQuery('lg')
