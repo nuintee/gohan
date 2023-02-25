@@ -73,8 +73,37 @@ const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) =>
 }
 
 const NormalSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
+  const { status } = useSession()
+
   return (
-    <div className='hidden sm:block'>
+    <div className='hidden sm:block lg:hidden'>
+      <Cover color={'black'} />
+      <div className='px-[10%] pt-16 pb-6 flex gap-8'>
+        <ImageChip
+          isLoading={false}
+          src={props.memorizedImgURL}
+          onClick={() => props.modalSetter('IMAGE')}
+        />
+        <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem] overflow-x-clip'>
+          <DetailsTitle data={props.data} />
+          <DetailsActionGroup
+            data={props.data}
+            isLoading={props.isLoading}
+            modalSetter={props.modalSetter}
+            refetch={props.refetcher}
+            showRegularButtons={status === 'unauthenticated'}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const LargeSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
+  const { status } = useSession()
+
+  return (
+    <div className='hidden lg:block'>
       <Cover color={'black'} />
       <div className='px-[10%] pt-16 pb-6 flex gap-8'>
         <ImageChip
@@ -108,6 +137,7 @@ const HEROContents = (props: {
     <>
       <SPSizeHeroContents {...props} />
       <NormalSizeHeroContents {...props} />
+      <LargeSizeHeroContents {...props} />
     </>
   )
 }
