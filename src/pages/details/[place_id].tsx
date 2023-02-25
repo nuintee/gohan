@@ -142,7 +142,7 @@ const HEROContents = (props: {
   )
 }
 
-const DetailsPage = memo(({ id }: { id: string }) => {
+const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
@@ -196,7 +196,7 @@ const DetailsPage = memo(({ id }: { id: string }) => {
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
     </>
   )
-})
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   console.log({ query })
