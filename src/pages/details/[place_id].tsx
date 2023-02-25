@@ -30,9 +30,10 @@ import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
 
 const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) => {
   const { data, memorizedImgURL, modalSetter } = props
+  const { status } = useSession()
 
   const reviewStatusBanner = () => {
-    if (!data.reviewStatus) return <></>
+    if (status === 'unauthenticated') return <></>
 
     return (
       <div
