@@ -48,7 +48,7 @@ const User = (props: UserProps) => {
 
   const theme =
     session.status === 'authenticated'
-      ? `h-12 aspect-square rounded-full overflow-hidden ${feedBack}`
+      ? `sm:h-12 h-10 aspect-square rounded-full overflow-hidden ${feedBack}`
       : `h-10 sm:min-w-[6rem] w-fit rounded-md sm:p-4 p-1 whitespace-nowrap flex items-center justify-center border-[1px] bg-white text-gh-dark ${feedBack}`
 
   return (
