@@ -13,7 +13,9 @@ const DetailsHeroImage = (props: Props) => {
   } = props
 
   if (isLoading) {
-    return <div className='h-60 w-60 relative bg-gh-l-gray rounded-md shadow-sm' />
+    return (
+      <div className='sm:h-60 sm:w-60 w-32 h-32 aspect-square relative bg-gh-l-gray rounded-md shadow-sm' />
+    )
   }
 
   return (
