@@ -7,20 +7,34 @@ import { useSession } from 'next-auth/react'
 import { Dispatch, SetStateAction } from 'react'
 import useDetailsModal from '../../hooks/useDetailsModal'
 
-const ResponsiveDropDown = (
-  props: Omit<React.ComponentProps<typeof ActivityDropDown>, 'responsive'>,
-) => {
-  return (
-    <>
-      <div className='lg:hidden flex'>
-        <ActivityDropDown {...props} responsive={true} />
-      </div>
-      <div className='lg:flex hidden'>
-        <ActivityDropDown {...props} responsive={false} />
-      </div>
-    </>
-  )
-}
+// const ResponsiveDropDown = (
+//   props: Omit<React.ComponentProps<typeof ActivityDropDown>, 'responsive'>,
+// ) => {
+//   return (
+//     <>
+//       <div className='lg:hidden flex'>
+//         <ActivityDropDown {...props} responsive={true} />
+//       </div>
+//       <div className='lg:flex hidden'>
+//         <ActivityDropDown {...props} responsive={false} />
+//       </div>
+//     </>
+//   )
+// }
+// const ResponsiveDropDown = (
+//   props: React.ComponentProps<typeof ActivityDropDown>,
+// ) => {
+//   return (
+//     <>
+//       <div className='lg:hidden flex'>
+//         <ActivityDropDown {...props} responsive={true} />
+//       </div>
+//       <div className='lg:flex hidden'>
+//         <ActivityDropDown {...props} responsive={false} />
+//       </div>
+//     </>
+//   )
+// }
 
 const DetailsActionGroup = ({
   data,
@@ -71,34 +85,21 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      {/* <div className='lg:flex gap-4 hidden'>
-        <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
-        <Button
-          text='共有'
-          outline
-          onClick={handleShareClick}
-          icon={{
-            position: 'before',
-            src: <Share />,
-          }}
-        />
-      </div> */}
-      {status === 'unauthenticated' ||
-        (showRegularButtons && (
-          <>
-            <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
-            <Button
-              text='共有'
-              outline
-              onClick={handleShareClick}
-              icon={{
-                position: 'before',
-                src: <Share />,
-              }}
-            />
-          </>
-        ))}
-      <ResponsiveDropDown {...dropDownArgs} />
+      {(status === 'unauthenticated' || showRegularButtons) && (
+        <>
+          <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
+          <Button
+            text='共有'
+            outline
+            onClick={handleShareClick}
+            icon={{
+              position: 'before',
+              src: <Share />,
+            }}
+          />
+        </>
+      )}
+      <ActivityDropDown {...dropDownArgs} responsive={!showRegularButtons} />
     </div>
   )
 }
