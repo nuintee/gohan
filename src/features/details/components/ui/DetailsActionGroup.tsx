@@ -27,11 +27,13 @@ const DetailsActionGroup = ({
   isLoading = false,
   modalSetter,
   refetch,
+  showRegularButtons = true,
 }: {
   data: ActivityResolved
   isLoading: boolean
   modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
   refetch: () => void
+  showRegularButtons?: boolean
 }) => {
   const { status } = useSession()
 
@@ -69,7 +71,7 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      <div className='lg:flex gap-4 hidden'>
+      {/* <div className='lg:flex gap-4 hidden'>
         <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
         <Button
           text='共有'
@@ -80,7 +82,22 @@ const DetailsActionGroup = ({
             src: <Share />,
           }}
         />
-      </div>
+      </div> */}
+      {status === 'unauthenticated' ||
+        (showRegularButtons && (
+          <>
+            <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
+            <Button
+              text='共有'
+              outline
+              onClick={handleShareClick}
+              icon={{
+                position: 'before',
+                src: <Share />,
+              }}
+            />
+          </>
+        ))}
       <ResponsiveDropDown {...dropDownArgs} />
     </div>
   )

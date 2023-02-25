@@ -65,6 +65,7 @@ const SPSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>) =>
           isLoading={props.isLoading}
           modalSetter={props.modalSetter}
           refetch={props.refetcher}
+          showRegularButtons={false}
         />
       </div>
     </div>
@@ -88,6 +89,7 @@ const NormalSizeHeroContents = (props: React.ComponentProps<typeof HEROContents>
             isLoading={props.isLoading}
             modalSetter={props.modalSetter}
             refetch={props.refetcher}
+            showRegularButtons={true}
           />
         </div>
       </div>
