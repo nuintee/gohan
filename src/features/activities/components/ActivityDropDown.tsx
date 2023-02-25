@@ -87,7 +87,7 @@ const ActivityDropDown = ({
       direction={direction}
       icon={{
         position: 'after',
-        src: <Dots />,
+        src: <Dots direction='vertical' />,
       }}
     />
   )

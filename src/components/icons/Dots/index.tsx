@@ -10,7 +10,7 @@ const Dots = ({
       width={size}
       height={size / 5}
       style={{
-        transform: direction === 'vertical' ? `rotate(0deg)` : '',
+        transform: direction === 'vertical' ? `rotate(90deg)` : '',
       }}
       viewBox='0 0 20 4'
       fill='none'
