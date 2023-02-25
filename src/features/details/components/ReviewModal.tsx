@@ -95,29 +95,6 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
         </form>
       </section>
     </ModalLayout>
-    // <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
-    //   <section className='bg-white'>
-    //     <PanelHeader onClose={onClose} />
-    //     <form
-    //       onSubmit={onSubmit}
-    //       className='min-w-[30rem] p-4 flex flex-col items-center gap-8 justify-center'
-    //     >
-    //       <h2 className='font-semibold text-xl'>この場所への評価を教えて下さい。</h2>
-    //       <div className='flex items-center justify-center gap-4 mb-10'>
-    //         <StatusRadioGroup status={data.status} register={register} />
-    //       </div>
-    //       <Input
-    //         type={'text'}
-    //         placeholder='この場所についてのメモを追加 (任意)'
-    //         defaultValue={data?.memo}
-    //         register={register}
-    //         registerName={'reviewMemo'}
-    //         required={false}
-    //       />
-    //       <Button text={'保存'} disabled={!isDirty} />
-    //     </form>
-    //   </section>
-    // </ModalLayout>
   )
 }
 
