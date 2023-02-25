@@ -1,4 +1,5 @@
 const { colors } = require('./src/config/colors')
+const { screens } = require('./src/config/screens')
 const { fontFamily } = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
@@ -9,6 +10,7 @@ module.exports = {
     './src/features/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    screens,
     extend: {
       colors,
       fontFamily: {
