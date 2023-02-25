@@ -81,15 +81,17 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
           <div className='flex items-center justify-center gap-4 mb-10'>
             <StatusRadioGroup status={data.status} register={register} />
           </div>
-          <Input
-            type={'text'}
-            placeholder='この場所についてのメモを追加 (任意)'
-            defaultValue={data?.memo}
-            register={register}
-            registerName={'reviewMemo'}
-            required={false}
-          />
-          <Button text={'保存'} disabled={!isDirty} />
+          <footer className='flex w-full flex-col gap-4'>
+            <Input
+              type={'text'}
+              placeholder='この場所についてのメモを追加 (任意)'
+              defaultValue={data?.memo}
+              register={register}
+              registerName={'reviewMemo'}
+              required={false}
+            />
+            <Button text={'保存'} disabled={!isDirty} />
+          </footer>
         </form>
       </section>
     </ModalLayout>
