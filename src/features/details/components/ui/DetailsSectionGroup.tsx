@@ -36,7 +36,7 @@ const DetailsSectionGroup = ({
               focused={false}
             />
           </MapBoxChip>
-          <div className='absolute right-4 top-4'>
+          <div className='absolute right-4 top-4 text-xs'>
             <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
           </div>
         </div>
