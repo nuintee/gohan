@@ -3,9 +3,21 @@ import Link from 'next/link'
 
 const LOGO_SIZE = 20
 
-const Brand = ({ margin = false }: { margin?: boolean }) => {
+const Brand = ({
+  margin = false,
+  allowNavigation = true,
+}: {
+  margin?: boolean
+  allowNavigation?: boolean
+}) => {
   return (
-    <Link href='/' className={`flex gap-2 items-center ${margin && 'm-2'}`}>
+    <Link
+      href='/'
+      className={`flex gap-2 items-center ${margin && 'm-2'}`}
+      style={{
+        ...(!allowNavigation && { pointerEvents: 'none' }),
+      }}
+    >
       <div className='bg-gh-dark h-fit w-fit p-3 rounded-full'>
         <Logo height={LOGO_SIZE} width={LOGO_SIZE} />
       </div>

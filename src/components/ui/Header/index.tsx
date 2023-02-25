@@ -22,7 +22,11 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
           zIndex: '10000',
         }}
       >
-        <PanelHeader title={<Brand />} onClose={onClose} background={colors['gh-dark']} />
+        <PanelHeader
+          title={<Brand allowNavigation={false} />}
+          onClose={onClose}
+          background={colors['gh-dark']}
+        />
         <Link
           href='/library'
           className={`ml-auto p-2 items-center flex border-b-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
