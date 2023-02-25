@@ -1,4 +1,5 @@
 import Hamburger from '@/components/icons/Hamburger'
+import { colors } from '@/config/colors'
 import User from '@/features/user/components/User'
 import useMediaQuery from '@/hooks/mediaquery'
 import Link from 'next/link'
@@ -16,12 +17,12 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
   return (
     <div className={`absolute h-screen w-screen bg-gh-dark z-[1010] duration-700 ${opacity}`}>
       <div
-        className={`bg-white absolute top-0 bg-gh-dark right-0 h-screen w-screen max-w-[30rem] duration-700 ${slideIn}`}
+        className={`absolute top-0 bg-gh-dark right-0 h-screen w-screen max-w-[30rem] duration-700 ${slideIn}`}
         style={{
           zIndex: '10000',
         }}
       >
-        <PanelHeader title='Gohan' onClose={onClose} />
+        <PanelHeader title={<Brand />} onClose={onClose} background={colors['gh-dark']} />
         <Link
           href='/library'
           className={`ml-auto p-2 items-center flex border-b-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
