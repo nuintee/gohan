@@ -42,7 +42,7 @@ const SearchLayout = ({ trigger = false }: { trigger?: boolean }) => {
 
   const textUI = () => {
     if (restaurants.isFetching) {
-      return 'あなたにピッタリのレストランを探しています。'
+      return 'ピッタリのレストランを探しています。'
     } else {
       return !trigger && '「どこで食べようかな」を解決'
     }
