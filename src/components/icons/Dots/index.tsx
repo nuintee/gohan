@@ -1,10 +1,17 @@
 import { Props } from '../index.types'
 
-const Dots = ({ size = 20, fill = 'gray' }: Pick<Props, 'fill'> & { size?: number }) => {
+const Dots = ({
+  size = 20,
+  fill = 'gray',
+  direction = 'horizontal',
+}: Pick<Props, 'fill'> & { size?: number; direction?: 'vertical' | 'horizontal' }) => {
   return (
     <svg
       width={size}
       height={size / 5}
+      style={{
+        transform: direction === 'vertical' ? `rotate(0deg)` : '',
+      }}
       viewBox='0 0 20 4'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
