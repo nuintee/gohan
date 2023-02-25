@@ -4,6 +4,9 @@ import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 import ModalLayout from './ModalLayout'
 
 type LayoutProps = {
@@ -28,19 +31,6 @@ const LEFT = {
 const RIGHT = {
   bottom: BASE_MARGIN,
   right: BASE_MARGIN,
-}
-
-const HeaderSidebar = () => {
-  return (
-    <div
-      className='bg-white absolute top-0 right-0 h-screen'
-      style={{
-        zIndex: '10',
-      }}
-    >
-      <PanelHeader title='ヘッダーメニュー' />
-    </div>
-  )
 }
 
 export const MainLayout = ({
@@ -78,7 +68,6 @@ export const MainLayout = ({
           </span>
         )}
       </div>
-      {/* <HeaderSidebar /> */}
       <UserProfileModal />
       <UserDeletionModal />
       {!disableSearch && <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />}
