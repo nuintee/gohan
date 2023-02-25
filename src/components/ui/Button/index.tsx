@@ -39,10 +39,10 @@ const Button = (props: Props) => {
       }`
       const _fallbackClass = `bg-gh-dark text-white`
       const dangerClass = danger
-        ? 'ring-gh-red ring-1 text-red-400 bg-transparent hover:text-white hover:bg-red-400'
+        ? 'border-gh-red border-[1px] text-red-400 bg-transparent hover:text-white hover:bg-red-400'
         : _fallbackClass
       const outLineClass = outline
-        ? 'ring-gray-200 ring-1 text-gh-gray bg-transparent hover:text-gh-dark hover:bg-gh-white'
+        ? 'border-gray-200 border-[1px] text-gh-gray bg-transparent hover:text-gh-dark hover:bg-gh-white'
         : _fallbackClass
 
       return `${defaultClass} ${!disabled && danger ? dangerClass : outLineClass}`
