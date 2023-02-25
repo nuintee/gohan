@@ -14,12 +14,12 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
 
   return (
     <div
-      className={`bg-white absolute top-0 right-0 h-screen duration-700 ${slideIn}`}
+      className={`bg-white absolute top-0 right-0 h-screen w-screen duration-700 ${slideIn}`}
       style={{
         zIndex: '10',
       }}
     >
-      <PanelHeader title='ヘッダーメニュー' onClose={onClose} />
+      <PanelHeader title='Gohan' onClose={onClose} />
       <Link
         href='/library'
         className={`ml-auto p-2 items-center flex border-b-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
@@ -52,7 +52,7 @@ const Header = () => {
             ライブラリ
           </Link>
         )}
-        <div className='flex items-center ml-auto'>
+        <div className={`flex items-center ${isSmall && 'ml-auto'}`}>
           <User />
         </div>
         {isSmall && (
