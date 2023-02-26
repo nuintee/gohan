@@ -2,12 +2,6 @@ import { Button } from '@/components/ui'
 import { motion } from 'framer-motion'
 import { Dispatch, SetStateAction, useState } from 'react'
 
-type DropDownMenu = {
-  label: string
-  onDropDownItemClick: () => void
-  ignored: boolean
-}[]
-
 type Props = {
   direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
   children?: JSX.Element

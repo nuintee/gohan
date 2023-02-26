@@ -10,10 +10,10 @@ type DropDownMenu = {
 
 type Props = {
   menu: DropDownMenu
-  direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
-} & Parameters<typeof Button>[0]
+  direction?: React.ComponentProps<typeof DropDownLayout>['direction']
+}
 
-const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
+const DropDown = ({ menu, direction = 'bottom' }: Props) => {
   return (
     <DropDownLayout direction={direction} ignored={!Boolean(menu?.length > 0)}>
       <>
