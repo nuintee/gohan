@@ -25,7 +25,7 @@ const ActivityDropDown = ({
   onShareAction,
 }: ActivityDropDownProps) => {
   const router = useRouter()
-  const isLargeQuery = useMediaQuery('lg')
+  const isOverLarge = useMediaQuery('lg')
 
   const deleteActivity = useDeleteActivity()
 
@@ -54,14 +54,14 @@ const ActivityDropDown = ({
       onDropDownItemClick: () => {
         onBasicInfoAction && onBasicInfoAction()
       },
-      ignored: !onBasicInfoAction || !isLargeQuery,
+      ignored: !onBasicInfoAction || isOverLarge,
     },
     {
       label: '共有',
       onDropDownItemClick: () => {
         onShareAction && onShareAction()
       },
-      ignored: !onShareAction || !isLargeQuery,
+      ignored: !onShareAction || isOverLarge,
     },
     {
       label: 'ライブラリから削除',

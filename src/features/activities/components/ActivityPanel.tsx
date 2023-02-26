@@ -84,8 +84,8 @@ const ActivityPanel = () => {
   const { data: session } = useSession()
 
   // MediaQuery
-  const isSmall = useMediaQuery('sm')
-  const maxWidth = isSmall ? '20rem' : '30rem'
+  const isOverSmall = useMediaQuery('sm')
+  const maxWidth = !isOverSmall ? '20rem' : '30rem'
 
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })

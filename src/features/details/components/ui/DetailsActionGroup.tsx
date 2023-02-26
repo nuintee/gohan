@@ -20,7 +20,7 @@ const DetailsActionGroup = ({
   refetch: () => void
 }) => {
   const { status } = useSession()
-  const isLargeQuery = useMediaQuery('lg')
+  const isOverLarge = useMediaQuery('lg')
 
   const handleBasicInfoClick = () => {
     modalSetter('BASIC')
@@ -56,7 +56,7 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      {!isLargeQuery && (
+      {isOverLarge && (
         <>
           <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
           <Button

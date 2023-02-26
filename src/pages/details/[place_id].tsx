@@ -27,7 +27,6 @@ import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
-import useMediaQuery from '@/hooks/mediaquery'
 import DetailsHero from '@/features/details/components/ui/DetailsHero'
 
 const DetailsPage = ({ id }: { id: string }) => {
