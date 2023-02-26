@@ -7,19 +7,12 @@ import PanelHeader from '../PanelHeader'
 
 // consts
 import { ROUTES } from '@/constants/routes'
+import SlideInLayout from '@/layouts/SlideInLayout'
 
-const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?: () => void }) => {
-  const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
-  const opacity = isOpen ? 'bg-opacity-80' : 'bg-opacity-0 pointer-events-none'
-
+const HeaderSidebar = ({ isOpen, onClose }: React.ComponentProps<typeof SlideInLayout>) => {
   return (
-    <div className={`absolute h-screen w-screen bg-gh-dark z-[1010] duration-700 ${opacity}`}>
-      <section
-        className={`absolute top-0 bg-gh-dark right-0 h-screen w-screen max-w-[30rem] duration-700 ${slideIn}`}
-        style={{
-          zIndex: '10000',
-        }}
-      >
+    <SlideInLayout isOpen={isOpen} onClose={onClose} contentBackgroundColor={colors['gh-dark']}>
+      <>
         <PanelHeader
           title={<Brand allowNavigation={false} />}
           onClose={onClose}
@@ -39,8 +32,8 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
           activeBackgroundColor={colors['gh-brown']}
           passiveTextColor={colors['gh-gray']}
         />
-      </section>
-    </div>
+      </>
+    </SlideInLayout>
   )
 }
 
