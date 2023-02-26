@@ -30,7 +30,7 @@ const Header = () => {
           </button>
         )}
       </div>
-      {isSmall && <HeaderSidebar isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+      {!isSmall && <HeaderSidebar isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
     </>
   )
 }
