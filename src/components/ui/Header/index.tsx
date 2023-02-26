@@ -16,7 +16,7 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
 
   return (
     <div className={`absolute h-screen w-screen bg-gh-dark z-[1010] duration-700 ${opacity}`}>
-      <div
+      <section
         className={`absolute top-0 bg-gh-dark right-0 h-screen w-screen max-w-[30rem] duration-700 ${slideIn}`}
         style={{
           zIndex: '10000',
@@ -45,7 +45,7 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
         >
           ライブラリ
         </Link>
-      </div>
+      </section>
     </div>
   )
 }
