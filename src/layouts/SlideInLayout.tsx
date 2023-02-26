@@ -33,7 +33,7 @@ const SlideInLayout = ({
   maxWidth?: string
   zIndex?: string
 }) => {
-  const content = `absolute top-0 flex flex-col right-0 h-screen w-screen  duration-700`
+  const content = `absolute top-0 flex flex-col right-0 h-screen w-screen  duration-700 overflow-y-hidden`
 
   return (
     <motion.aside

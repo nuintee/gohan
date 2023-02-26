@@ -26,7 +26,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
 
   return (
     <div
-      className={`h-24 cursor-pointer flex-1 flex gap-2 overflow-x-hidden rounded-md p-2 hover:bg-gh-white active:bg-gh-white active:scale-95 ${
+      className={`h-24 cursor-pointer w-full flex gap-2 overflow-x-hidden rounded-md p-2 hover:bg-gh-white active:bg-gh-white active:scale-95 ${
         isFocused && 'bg-gh-white'
       }`}
       onClick={onClick}
