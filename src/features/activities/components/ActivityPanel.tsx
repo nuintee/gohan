@@ -92,16 +92,9 @@ const ActivityPanel = () => {
 
   return (
     <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>
-      {/* <div className='flex flex-col'>
-        <PanelHeader title='ライブラリ' onClose={closePanel} />
-        <hr></hr>
-        <ContentsRenderer userActivities={getUserAll} />
-      </div> */}
-      {/* <div className='flex flex-col flex-1'> */}
       <PanelHeader title='ライブラリ' onClose={closePanel} />
       <hr></hr>
       <ContentsRenderer userActivities={getUserAll} />
-      {/* </div> */}
     </SlideInLayout>
   )
 }
