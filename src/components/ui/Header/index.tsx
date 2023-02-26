@@ -13,6 +13,8 @@ import { ROUTES } from '@/constants/routes'
 
 const Header = () => {
   const isSmall = useMediaQuery('sm')
+  const isMedium = useMediaQuery('md')
+  const isLarge = useMediaQuery('lg')
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -20,11 +22,11 @@ const Header = () => {
     <>
       <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full items-center sm:items-stretch'>
         <Brand margin={true} />
-        {!isSmall && <NavLink href={ROUTES.LIBRARY.path} label={ROUTES.LIBRARY.label} />}
-        <div className={`flex items-center ${isSmall && 'ml-auto'}`}>
+        {isSmall && <NavLink href={ROUTES.LIBRARY.path} label={ROUTES.LIBRARY.label} />}
+        <div className={`flex items-center ${!isSmall && 'ml-auto'}`}>
           <User />
         </div>
-        {isSmall && (
+        {!isSmall && (
           <button onClick={() => setIsModalOpen(true)}>
             <Hamburger height={20} width={20} />
           </button>

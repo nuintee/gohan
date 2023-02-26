@@ -15,7 +15,7 @@ const useMediaQuery = (query: keyof typeof screens) => {
   }, [])
 
   useEffect(() => {
-    const media = window.matchMedia(`(max-width: ${screens[query]})`)
+    const media = window.matchMedia(`(min-width: ${screens[query]})`)
     media.addListener(updateTarget)
 
     // Check on mount (callback is not called until a change occurs)
