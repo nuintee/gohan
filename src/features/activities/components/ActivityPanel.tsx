@@ -92,9 +92,11 @@ const ActivityPanel = () => {
 
   return (
     <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>
-      <PanelHeader title='ライブラリ' onClose={closePanel} />
-      <hr></hr>
-      <ContentsRenderer userActivities={getUserAll} />
+      <>
+        <PanelHeader title='ライブラリ' onClose={closePanel} />
+        <hr></hr>
+        <ContentsRenderer userActivities={getUserAll} />
+      </>
     </SlideInLayout>
   )
 }
