@@ -1,4 +1,5 @@
 import { colors } from '@/config/colors'
+import useMediaQuery from '@/hooks/mediaquery'
 
 const Cover = ({ color = colors['gh-gray'] }: { color?: string }) => {
   return (
