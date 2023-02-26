@@ -8,8 +8,10 @@ import Brand from '../Brand'
 import HeaderSidebar from '../HeaderSidebar'
 import NavLink from '../NavLink'
 
+// constans
+import { ROUTES } from '@/constants/routes'
+
 const Header = () => {
-  const router = useRouter()
   const isSmall = useMediaQuery('sm')
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -18,7 +20,7 @@ const Header = () => {
     <>
       <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full items-center sm:items-stretch'>
         <Brand margin={true} />
-        {!isSmall && <NavLink href='/library' label='ライブラリ' />}
+        {!isSmall && <NavLink href={ROUTES.LIBRARY.path} label={ROUTES.LIBRARY.label} />}
         <div className={`flex items-center ${isSmall && 'ml-auto'}`}>
           <User />
         </div>
