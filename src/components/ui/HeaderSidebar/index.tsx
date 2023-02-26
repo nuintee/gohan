@@ -5,6 +5,9 @@ import Brand from '../Brand'
 import NavLink from '../NavLink'
 import PanelHeader from '../PanelHeader'
 
+// consts
+import { ROUTES } from '@/constants/routes'
+
 const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?: () => void }) => {
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
   const opacity = isOpen ? 'bg-opacity-80' : 'bg-opacity-0 pointer-events-none'
@@ -23,15 +26,15 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
           background={colors['gh-dark']}
         />
         <NavLink
-          label='ホーム'
-          href='/'
+          label={ROUTES.HOME.label}
+          href={ROUTES.HOME.path}
           borderDirection='left'
           activeBackgroundColor={colors['gh-brown']}
           passiveTextColor={colors['gh-gray']}
         />
         <NavLink
-          label='ライブラリ'
-          href='/library'
+          label={ROUTES.LIBRARY.label}
+          href={ROUTES.LIBRARY.path}
           borderDirection='left'
           activeBackgroundColor={colors['gh-brown']}
           passiveTextColor={colors['gh-gray']}
