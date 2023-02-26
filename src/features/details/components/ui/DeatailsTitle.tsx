@@ -10,10 +10,14 @@ const DetailsTitle = ({
   gap = true,
   textAlign = 'left',
   mainDecoration = true,
+  ...rest
 }: {
   data: ActivityResolved
   mainDecoration?: boolean
-} & Pick<React.ComponentProps<typeof Texts>, 'size' | 'gap' | 'textAlign'>) => {
+} & Pick<
+  React.ComponentProps<typeof Texts>,
+  'size' | 'gap' | 'textAlign' | 'allowCopy' | 'copyColor' | 'copyValue'
+>) => {
   const { status } = useSession()
   const isOverSmall = useMediaQuery('sm')
 
@@ -36,6 +40,7 @@ const DetailsTitle = ({
         subColor={'white'}
         gap={gap}
         textAlign={textAlign}
+        {...rest}
       />
     </div>
   )
