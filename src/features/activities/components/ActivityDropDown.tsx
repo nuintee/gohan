@@ -7,6 +7,9 @@ import useDeleteActivity from '../hooks/useDeleteActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import { ActivityResolved } from '../types'
 
+// constants
+import { ROUTES } from '@/constants/routes'
+
 type ActivityDropDownProps = {
   activity: ActivityResolved
   onMutated: () => void
@@ -36,11 +39,15 @@ const ActivityDropDown = ({
       ignored: !activity.website,
     },
     {
-      label: '詳細へ移動',
+      label: `${ROUTES.DETAILS.label}へ移動`,
       onDropDownItemClick: () => {
-        router.push(`/details/[place_id]`, `/details/${activity.place_id}`, { shallow: true })
+        router.push(
+          `${ROUTES.DETAILS.path}/[place_id]`,
+          `${ROUTES.DETAILS.path}/${activity.place_id}`,
+          { shallow: true },
+        )
       },
-      ignored: router.asPath === `/details/${activity.place_id}`,
+      ignored: router.asPath === `${ROUTES.DETAILS.path}/${activity.place_id}`,
     },
     {
       label: '基本情報を表示',

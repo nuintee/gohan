@@ -11,4 +11,8 @@ export const ROUTES = {
     path: '/details',
     label: '詳細',
   },
+  DISCOVER: {
+    path: '/discover',
+    label: '発見',
+  },
 }
