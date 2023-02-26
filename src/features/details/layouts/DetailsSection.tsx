@@ -20,6 +20,7 @@ const DetailsSection = ({
   actionLabel,
   isLoading = false,
   ignored = false,
+  ...textProps
 }: Props) => {
   const style = {
     ...(marginDirection == 'x'
@@ -43,7 +44,7 @@ const DetailsSection = ({
   return (
     <section className={`outline rounded-md p-4 outline-gh-pale h-fit overflow-auto`} style={style}>
       <header className='flex gap-2 justify-between'>
-        <Texts main={main} sub={sub} />
+        <Texts main={main} sub={sub} {...textProps} />
         {actionLabel && <Button text={actionLabel} outline onClick={actionCallback} />}
       </header>
       <main className='flex-1 pt-4'>{children}</main>
