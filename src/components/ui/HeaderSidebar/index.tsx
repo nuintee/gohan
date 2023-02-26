@@ -6,8 +6,6 @@ import NavLink from '../NavLink'
 import PanelHeader from '../PanelHeader'
 
 const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?: () => void }) => {
-  const router = useRouter()
-
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
   const opacity = isOpen ? 'bg-opacity-80' : 'bg-opacity-0 pointer-events-none'
 
