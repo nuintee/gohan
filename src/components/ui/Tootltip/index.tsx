@@ -1,6 +1,6 @@
 import DropDownLayout from '@/layouts/DropDownLayout'
 
-const ToolTip = (props) => {
+const ToolTip = ({ text }: { text?: string }) => {
   return (
     <DropDownLayout
       controller={
@@ -10,7 +10,7 @@ const ToolTip = (props) => {
       }
       direction={'top'}
     >
-      <p className='text-sm'>これはTooltipsです</p>
+      <p className='text-sm'>{text}</p>
     </DropDownLayout>
   )
 }
