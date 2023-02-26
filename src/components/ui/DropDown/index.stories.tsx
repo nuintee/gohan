@@ -4,9 +4,6 @@ import React from 'react'
 
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-// Icon
-import { Dots } from '@/components/icons'
-
 import DropDown from './index'
 
 // data

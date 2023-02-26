@@ -9,10 +9,9 @@ export default {
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>
 
-const Template: ComponentStory<typeof Tooltip> = (args) => <Tooltip {...args} />
-const FixedSizeTemplate: ComponentStory<typeof DropDown> = (args) => (
+const Template: ComponentStory<typeof Tooltip> = (args) => (
   <div className='relative flex justify-end py-[7.5rem]'>
-    <DropDown {...args} />
+    <Tooltip {...args} />
   </div>
 )
 
