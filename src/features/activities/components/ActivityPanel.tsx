@@ -78,21 +78,19 @@ const ContentsRenderer = ({
   )
 }
 
-const ActivityPanel = (props: Props) => {
+const ActivityPanel = () => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { data: session } = useSession()
 
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
-  const { isOpen = isPanelOpen ?? true, onClose = closePanel, query = getUserAll } = props
-
   return (
-    <SlideInLayout isOpen={isOpen} onClose={onClose} translucentBackground={false}>
+    <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} translucentBackground={false}>
       <>
-        <PanelHeader title='ライブラリ' onClose={onClose} />
+        <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>
-        <ContentsRenderer userActivities={query} />
+        <ContentsRenderer userActivities={getUserAll} />
       </>
     </SlideInLayout>
   )
