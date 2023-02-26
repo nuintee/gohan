@@ -56,7 +56,7 @@ const ContentsRenderer = ({
   return (
     <div className='flex flex-col gap-2 p-2 flex-1 overflow-y-auto overflow-x-hidden'>
       {userActivities.data?.map((activity, index, original) => (
-        <div className='flex gap-2 items-center justify-between' key={activity.id}>
+        <div className='flex gap-2 flex-1 items-center justify-between' key={activity.id}>
           <RestaurantBoard
             data={activity}
             onClick={() => onActivityClicked(activity)}

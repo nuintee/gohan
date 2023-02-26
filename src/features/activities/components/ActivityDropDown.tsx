@@ -21,8 +21,8 @@ const ActivityDropDown = ({
   activity,
   onMutated,
   direction,
-  onBasicInfoAction = () => {},
-  onShareAction = () => {},
+  onBasicInfoAction,
+  onShareAction,
 }: ActivityDropDownProps) => {
   const router = useRouter()
   const isLargeQuery = useMediaQuery('lg')
@@ -52,16 +52,16 @@ const ActivityDropDown = ({
     {
       label: '基本情報を表示',
       onDropDownItemClick: () => {
-        onBasicInfoAction()
+        onBasicInfoAction && onBasicInfoAction()
       },
-      ignored: !isLargeQuery,
+      ignored: !onBasicInfoAction || !isLargeQuery,
     },
     {
       label: '共有',
       onDropDownItemClick: () => {
-        onShareAction()
+        onShareAction && onShareAction()
       },
-      ignored: !isLargeQuery,
+      ignored: !onShareAction || !isLargeQuery,
     },
     {
       label: 'ライブラリから削除',

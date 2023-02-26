@@ -38,7 +38,9 @@ const RestaurantBoard = (props: RestaurantProps) => {
       />
       <div
         className={
-          'flex-1 max-w-[10rem] sm:max-w-[20rem] md:max-w-[30rem] flex flex-col gap-1 sm:gap-2'
+          // 'flex-1 max-w-[10rem] sm:max-w-[20rem] md:max-w-[30rem] flex flex-col gap-1 sm:gap-2'
+          // 'flex-1 max-w-[15rem] md:max-w-[17.5rem] flex flex-col gap-1 sm:gap-2'
+          'flex flex-col overflow-hidden'
         }
       >
         <Texts
