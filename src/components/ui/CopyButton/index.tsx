@@ -15,7 +15,7 @@ const CopyButton = ({
   }
 
   return (
-    <button onClick={handleClick}>
+    <button onClick={handleClick} className='active:opacity-50'>
       <Copy fill={copyColor} size={20} />
     </button>
   )
