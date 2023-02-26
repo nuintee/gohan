@@ -10,12 +10,14 @@ import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 import useMapBox from '@/features/mapbox/hooks'
-import { DropDown, Texts } from '@/components/ui'
+import { DropDown, SuspenseImage, Texts } from '@/components/ui'
 import { Dots } from '@/components/icons'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
 import ActivityDropDown from './ActivityDropDown'
 import SlideInLayout from '@/layouts/SlideInLayout'
+import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
+import ActivityStatus from './ActivityStatus'
 
 type Props = {
   isOpen?: boolean
