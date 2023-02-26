@@ -1,14 +1,14 @@
 import { Dots } from '@/components/icons'
 import { Button } from '@/components/ui'
 import { motion } from 'framer-motion'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, HTMLAttributes, SetStateAction, useState } from 'react'
 
 type Props = {
   direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
   children?: JSX.Element
   ignored?: boolean
   controller?: JSX.Element
-  overrideStyle?: string
+  overrideStyle?: React.ComponentProps<'div'>['className']
 }
 
 const subMenuAnimate = {
