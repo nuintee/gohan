@@ -1,40 +1,57 @@
 import { colors } from '@/config/colors'
 
+import { motion } from 'framer-motion'
+
+const subMenuAnimate = {
+  enter: {
+    x: 0,
+    transition: {
+      duration: 0.25,
+    },
+    display: 'flex',
+  },
+  exit: {
+    x: '100%',
+    transition: {
+      duration: 0.25,
+    },
+    transitionEnd: {
+      display: 'none',
+    },
+  },
+}
+
 const SlideInLayout = ({
   isOpen = false,
   onClose,
   children,
   contentBackgroundColor = 'white',
-  translucentBackground = true,
   maxWidth = '30rem',
+  zIndex = '20',
 }: {
   isOpen?: boolean
   onClose?: () => void
   children: JSX.Element
-  translucentBackground?: boolean
   contentBackgroundColor?: string
   maxWidth?: string
+  zIndex?: string
 }) => {
-  const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
-  const opacity = isOpen ? 'bg-opacity-80' : 'bg-opacity-0 pointer-events-none'
-  const background = translucentBackground
-    ? `absolute h-screen w-screen bg-gh-dark z-[1010] duration-700 ${opacity}`
-    : ''
-  const content = `absolute top-0  right-0 h-screen w-screen  duration-700 ${slideIn}`
+  const content = `absolute top-0 flex flex-col right-0 h-screen w-screen  duration-700`
 
   return (
-    <div className={background}>
-      <section
-        className={content}
-        style={{
-          zIndex: '100',
-          backgroundColor: contentBackgroundColor,
-          maxWidth,
-        }}
-      >
-        {children}
-      </section>
-    </div>
+    <motion.aside
+      variants={subMenuAnimate}
+      initial='exit'
+      animate={isOpen ? 'enter' : 'exit'}
+      className={content}
+      style={{
+        zIndex,
+        backgroundColor: contentBackgroundColor,
+        maxWidth,
+      }}
+    >
+      {children}
+    </motion.aside>
   )
 }
 

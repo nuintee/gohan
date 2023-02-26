@@ -91,17 +91,12 @@ const ActivityPanel = () => {
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
   return (
-    <SlideInLayout
-      isOpen={isPanelOpen}
-      onClose={closePanel}
-      translucentBackground={false}
-      maxWidth={maxWidth}
-    >
-      <>
+    <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>
+      <div>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>
         <ContentsRenderer userActivities={getUserAll} />
-      </>
+      </div>
     </SlideInLayout>
   )
 }
