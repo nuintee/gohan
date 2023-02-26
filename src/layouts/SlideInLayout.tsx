@@ -27,7 +27,7 @@ const SlideInLayout = ({
       <section
         className={content}
         style={{
-          zIndex: '10000',
+          zIndex: '100',
           backgroundColor: contentBackgroundColor,
           maxWidth,
         }}
