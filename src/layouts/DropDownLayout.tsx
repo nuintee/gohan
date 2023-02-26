@@ -1,3 +1,4 @@
+import { Dots } from '@/components/icons'
 import { Button } from '@/components/ui'
 import { motion } from 'framer-motion'
 import { Dispatch, SetStateAction, useState } from 'react'
@@ -6,6 +7,7 @@ type Props = {
   direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
   children?: JSX.Element
   ignored?: boolean
+  controller?: JSX.Element
 } & Partial<React.ComponentProps<typeof Button>>
 
 const subMenuAnimate = {
@@ -47,7 +49,7 @@ const _BackArea = ({
   )
 }
 
-const DropDownLayout = ({ direction, children, ignored, ...buttonProps }: Props) => {
+const DropDownLayout = ({ direction, children, ignored, controller, ...buttonProps }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const directionClass = () => {
@@ -72,7 +74,15 @@ const DropDownLayout = ({ direction, children, ignored, ...buttonProps }: Props)
           ...(isOpen && { zIndex: 1 }),
         }}
       >
-        <Button {...buttonProps} text={''} onClick={() => setIsOpen((prev) => !prev)} />
+        {controller || (
+          <Button
+            outline
+            text={''}
+            onClick={() => setIsOpen((prev) => !prev)}
+            icon={{ position: 'after', src: <Dots direction='vertical' /> }}
+            square
+          />
+        )}
         {!ignored && (
           <motion.div
             onClick={() => setIsOpen(false)}
