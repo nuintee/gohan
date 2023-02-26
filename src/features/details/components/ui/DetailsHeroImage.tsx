@@ -1,4 +1,5 @@
 import SuspenseImage from '@/components/ui/SuspenseImage'
+import useMediaQuery from '@/hooks/mediaquery'
 import usePlacePhotos from '../../hooks/usePlacePhotos'
 
 type Props = {
@@ -12,6 +13,8 @@ const DetailsHeroImage = (props: Props) => {
     onClick = () => {},
   } = props
 
+  const isSmallQuery = useMediaQuery('sm')
+
   if (isLoading) {
     return (
       <div className='sm:h-60 sm:w-60 w-32 h-32 aspect-square relative bg-gh-l-gray rounded-md shadow-sm' />
@@ -23,7 +26,9 @@ const DetailsHeroImage = (props: Props) => {
       {...props}
       src={!isLoading && src}
       alt={!isLoading && 'Image'}
-      className='aspect-square object-cover sm:h-60 sm:w-60 w-32 h-32 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
+      className={`aspect-square object-cover  ${
+        !isSmallQuery ? 'h-60 w-60' : 'w-32 h-32'
+      } rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray`}
       onClick={onClick}
       disabled
     />
