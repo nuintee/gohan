@@ -10,5 +10,10 @@ export default {
 } as ComponentMeta<typeof Tooltip>
 
 const Template: ComponentStory<typeof Tooltip> = (args) => <Tooltip {...args} />
+const FixedSizeTemplate: ComponentStory<typeof DropDown> = (args) => (
+  <div className='relative flex justify-end py-[7.5rem]'>
+    <DropDown {...args} />
+  </div>
+)
 
 export const Default = Template.bind({})
