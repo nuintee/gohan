@@ -11,7 +11,7 @@ const CopyButton = ({
 }) => {
   return (
     <button onClick={() => copy(copyValue)}>
-      <Copy fill={copyColor} />
+      <Copy fill={copyColor} size={20} />
     </button>
   )
 }
