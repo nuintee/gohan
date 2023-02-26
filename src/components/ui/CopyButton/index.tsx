@@ -9,8 +9,13 @@ const CopyButton = ({
   copyValue?: string
   copyColor?: string
 }) => {
+  const handleClick = (e) => {
+    e.stopPropagation()
+    copy(copyValue)
+  }
+
   return (
-    <button onClick={() => copy(copyValue)}>
+    <button onClick={handleClick}>
       <Copy fill={copyColor} size={20} />
     </button>
   )

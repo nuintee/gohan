@@ -6,21 +6,31 @@ const DetailsSummary = ({
   summaryTitle,
   summaryValue,
   children,
-  copyValue,
-  copyColor,
+  allowCopy,
 }: {
   ignored?: boolean
   summaryTitle?: string
   summaryValue?: string
   children: JSX.Element
-} & React.ComponentProps<typeof CopyButton>) => {
+  allowCopy?: boolean
+}) => {
+  const handleDetailsClick = (e) => {
+    if (ignored) {
+      e.preventDefault()
+    }
+  }
+
   return (
-    <details className={`w-full group ${ignored && 'pointer-events-none'}`}>
-      <summary className='flex items-center justify-between gap-4  cursor-pointer'>
+    <details className={`w-full group`} onClick={handleDetailsClick}>
+      <summary
+        className={`flex items-center justify-between gap-4  ${
+          ignored ? 'cursor-default' : 'cursor-pointer'
+        }`}
+      >
         <div className='flex items-center gap-2'>
           {!ignored && <Chevron overrideClassName='rotate-90 group-open:-rotate-90 ml-1' />}
           <p>{summaryTitle}</p>
-          {copyValue && <CopyButton copyColor={copyColor} copyValue={summaryValue} />}
+          {allowCopy && <CopyButton copyValue={summaryValue} />}
         </div>
         <h2>{summaryValue}</h2>
       </summary>
