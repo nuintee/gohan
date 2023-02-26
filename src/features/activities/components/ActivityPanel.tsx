@@ -18,6 +18,7 @@ import ActivityDropDown from './ActivityDropDown'
 import SlideInLayout from '@/layouts/SlideInLayout'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import ActivityStatus from './ActivityStatus'
+import useMediaQuery from '@/hooks/mediaquery'
 
 type Props = {
   isOpen?: boolean
@@ -82,11 +83,20 @@ const ActivityPanel = () => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { data: session } = useSession()
 
+  // MediaQuery
+  const isSmall = useMediaQuery('sm')
+  const maxWitdh = isSmall ? '20rem' : '30rem'
+
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
   return (
-    <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} translucentBackground={false}>
+    <SlideInLayout
+      isOpen={isPanelOpen}
+      onClose={closePanel}
+      translucentBackground={false}
+      maxWidth={maxWitdh}
+    >
       <>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>
