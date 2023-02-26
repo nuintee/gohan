@@ -3,6 +3,9 @@ import Link from 'next/link'
 
 const LOGO_SIZE = 20
 
+// constants
+import { ROUTES } from '@/constants/routes'
+
 const Brand = ({
   margin = false,
   allowNavigation = true,
@@ -12,7 +15,7 @@ const Brand = ({
 }) => {
   return (
     <Link
-      href='/'
+      href={ROUTES.HOME.path}
       className={`flex gap-2 items-center ${margin && 'm-2'}`}
       style={{
         ...(!allowNavigation && { pointerEvents: 'none' }),
