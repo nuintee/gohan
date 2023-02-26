@@ -1,5 +1,5 @@
 import { ActivityResolved } from '@/features/activities/types'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import Button from '../Button'
 
 // lib
@@ -35,6 +35,26 @@ const subMenuAnimate = {
   },
 }
 
+const _BackArea = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean
+  setIsOpen: Dispatch<SetStateAction<boolean>>
+}) => {
+  if (!isOpen) return <></>
+
+  return (
+    <div
+      className='h-screen w-screen top-0 left-0 absolute'
+      onClick={() => setIsOpen(false)}
+      style={{
+        zIndex: 1,
+      }}
+    ></div>
+  )
+}
+
 const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -53,15 +73,7 @@ const DropDown = ({ menu, direction = 'bottom', ...buttonProps }: Props) => {
 
   return (
     <>
-      {isOpen && (
-        <div
-          className='h-screen w-screen top-0 left-0 absolute'
-          onClick={() => setIsOpen(false)}
-          style={{
-            zIndex: 1,
-          }}
-        ></div>
-      )}
+      <_BackArea isOpen={isOpen} setIsOpen={setIsOpen} />
       <div
         className='relative'
         style={{
