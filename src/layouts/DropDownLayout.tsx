@@ -8,7 +8,8 @@ type Props = {
   children?: JSX.Element
   ignored?: boolean
   controller?: JSX.Element
-} & Partial<React.ComponentProps<typeof Button>>
+  overrideStyle?: string
+}
 
 const subMenuAnimate = {
   enter: {
@@ -49,7 +50,7 @@ const _BackArea = ({
   )
 }
 
-const DropDownLayout = ({ direction, children, ignored, controller, ...buttonProps }: Props) => {
+const DropDownLayout = ({ direction, children, ignored, controller, overrideStyle }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const directionClass = () => {
@@ -64,6 +65,10 @@ const DropDownLayout = ({ direction, children, ignored, controller, ...buttonPro
         return 'right-0 mt-2'
     }
   }
+
+  // styles
+  const defaultStyle = `min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col`
+  const baseClassName = `peer absolute ${directionClass()} ${overrideStyle || defaultStyle}`
 
   const controllerUI = () => {
     if (controller) {
@@ -98,7 +103,7 @@ const DropDownLayout = ({ direction, children, ignored, controller, ...buttonPro
         {!ignored && (
           <motion.div
             onClick={() => setIsOpen(false)}
-            className={`peer absolute flex flex-col ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in`}
+            className={baseClassName}
             initial='exit'
             animate={isOpen ? 'enter' : 'exit'}
             variants={subMenuAnimate}
