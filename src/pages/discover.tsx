@@ -3,6 +3,9 @@ import { useEffect, useMemo, useRef } from 'react'
 
 import { motion } from 'framer-motion'
 
+// constants
+import { ROUTES } from '@/constants/routes'
+
 // framer-motion
 const variants = {
   hidden: { opacity: 1, x: 0, y: 0 },
@@ -27,7 +30,7 @@ const DiscoverPage = () => {
 
     if (!router.query.debug) {
       timeout = setTimeout(() => {
-        router.replace(`/details/${place_id}`)
+        router.replace(`${ROUTES.DETAILS.path}/${place_id}`)
       }, 2500)
     }
 
