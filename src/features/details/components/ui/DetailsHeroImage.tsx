@@ -1,5 +1,4 @@
 import SuspenseImage from '@/components/ui/SuspenseImage'
-import useMediaQuery from '@/hooks/mediaquery'
 import usePlacePhotos from '../../hooks/usePlacePhotos'
 
 type Props = {
@@ -12,8 +11,6 @@ const DetailsHeroImage = (props: Props) => {
     src = 'https://source.unsplash.com/random',
     onClick = () => {},
   } = props
-
-  const isSmallQuery = useMediaQuery('sm')
 
   if (isLoading) {
     return (
