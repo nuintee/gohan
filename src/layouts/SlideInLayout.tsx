@@ -15,9 +15,6 @@ const subMenuAnimate = {
     transition: {
       duration: 0.25,
     },
-    transitionEnd: {
-      display: 'none',
-    },
   },
 }
 
