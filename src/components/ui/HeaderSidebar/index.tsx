@@ -28,32 +28,16 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
           label='ホーム'
           href='/'
           borderDirection='left'
-          activeBackground={colors['gh-brown']}
+          activeBackgroundColor={colors['gh-brown']}
+          passiveTextColor={colors['gh-gray']}
         />
         <NavLink
           label='ライブラリ'
           href='/library'
           borderDirection='left'
-          activeBackground={colors['gh-brown']}
+          activeBackgroundColor={colors['gh-brown']}
+          passiveTextColor={colors['gh-gray']}
         />
-        {/* <Link
-          href='/'
-          className={`ml-auto p-4 items-center flex  border-l-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange ${
-            router.pathname === '/' ? 'border-gh-orange text-white bg-gh-brown' : 'text-gh-gray'
-          }`}
-        >
-          ホーム
-        </Link>
-        <Link
-          href='/library'
-          className={`ml-auto p-4 items-center flex  border-l-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange  ${
-            router.pathname === '/library'
-              ? 'border-gh-orange text-white bg-gh-brown'
-              : 'text-gh-gray'
-          }`}
-        >
-          ライブラリ
-        </Link> */}
       </section>
     </div>
   )

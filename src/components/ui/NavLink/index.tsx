@@ -7,13 +7,15 @@ const NavLink = ({
   isActive = false,
   label,
   borderDirection = 'bottom',
-  activeBackground = 'transparent',
+  activeBackgroundColor = 'transparent',
+  passiveTextColor = 'white',
 }: {
   href: string
   isActive?: boolean
   label?: string
   borderDirection?: 'left' | 'bottom' | 'right' | 'top'
-  activeBackground?: string
+  activeBackgroundColor?: string
+  passiveTextColor?: string
 }) => {
   const router = useRouter()
 
@@ -35,11 +37,12 @@ const NavLink = ({
   return (
     <Link
       href={href}
-      className={`ml-auto p-4 items-center flex ${borderDirectionClassName()} border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
+      className={`ml-auto p-4 items-center flex ${borderDirectionClassName()} border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange  ${
         isActiveState && 'border-gh-orange text-white'
       }`}
       style={{
-        ...(isActiveState && { background: activeBackground }),
+        ...(isActiveState && { background: activeBackgroundColor }),
+        ...(!isActiveState && { color: passiveTextColor }),
       }}
     >
       {label}
