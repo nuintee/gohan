@@ -65,24 +65,36 @@ const DropDownLayout = ({ direction, children, ignored, controller, ...buttonPro
     }
   }
 
+  const controllerUI = () => {
+    if (controller) {
+      return (
+        <button className='w-fit' onClick={() => setIsOpen((prev) => !prev)}>
+          {controller}
+        </button>
+      )
+    } else {
+      return (
+        <Button
+          outline
+          text={''}
+          onClick={() => setIsOpen((prev) => !prev)}
+          icon={{ position: 'after', src: <Dots direction='vertical' /> }}
+          square
+        />
+      )
+    }
+  }
+
   return (
     <>
       <_BackArea isOpen={isOpen} setIsOpen={setIsOpen} />
       <div
-        className='relative'
+        className='relative w-fit'
         style={{
           ...(isOpen && { zIndex: 1 }),
         }}
       >
-        {controller || (
-          <Button
-            outline
-            text={''}
-            onClick={() => setIsOpen((prev) => !prev)}
-            icon={{ position: 'after', src: <Dots direction='vertical' /> }}
-            square
-          />
-        )}
+        {controllerUI()}
         {!ignored && (
           <motion.div
             onClick={() => setIsOpen(false)}

@@ -2,7 +2,7 @@ import DropDownLayout from '@/layouts/DropDownLayout'
 
 const ToolTip = (props) => {
   return (
-    <DropDownLayout>
+    <DropDownLayout controller={<p>1</p>}>
       <p>1</p>
     </DropDownLayout>
   )
