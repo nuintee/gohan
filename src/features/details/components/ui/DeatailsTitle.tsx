@@ -15,10 +15,10 @@ const DetailsTitle = ({
   mainDecoration?: boolean
 } & Pick<React.ComponentProps<typeof Texts>, 'size' | 'gap' | 'textAlign'>) => {
   const { status } = useSession()
-  const isSmallQuery = useMediaQuery('sm')
+  const isOverSmall = useMediaQuery('sm')
 
   const activity_status = () => {
-    if (status === 'authenticated' && !isSmallQuery) {
+    if (status === 'authenticated' && isOverSmall) {
       return <ActivityStatus status={data?.reviewStatus} />
     } else {
       return <></>
