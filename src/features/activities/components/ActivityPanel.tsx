@@ -85,7 +85,7 @@ const ActivityPanel = () => {
 
   // MediaQuery
   const isSmall = useMediaQuery('sm')
-  const maxWitdh = isSmall ? '20rem' : '30rem'
+  const maxWidth = isSmall ? '20rem' : '30rem'
 
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
@@ -95,7 +95,7 @@ const ActivityPanel = () => {
       isOpen={isPanelOpen}
       onClose={closePanel}
       translucentBackground={false}
-      maxWidth={maxWitdh}
+      maxWidth={maxWidth}
     >
       <>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
