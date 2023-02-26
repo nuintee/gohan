@@ -31,7 +31,7 @@ const DetailsHero = (
     modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
   } & Pick<Awaited<ReturnType<typeof useGetActivity>>, 'data' | 'isFetching' | 'refetch'>,
 ) => {
-  const isSmall = useMediaQuery('sm')
+  const isOverSmall = useMediaQuery('sm')
 
   const smallClassName = {
     container: '',
@@ -45,7 +45,7 @@ const DetailsHero = (
     actionGroupContainer: 'flex-1 flex flex-col justify-between py-2 min-h-[14rem] overflow-x-clip',
   }
 
-  const theme = isSmall ? smallClassName : mediumClassName
+  const theme = !isOverSmall ? smallClassName : mediumClassName
 
   return (
     <>
@@ -58,7 +58,7 @@ const DetailsHero = (
             src={props.memorizedImgURL}
             onClick={() => props.modalSetter('IMAGE')}
           />
-          {isSmall && (
+          {!isOverSmall && (
             <DetailsTitle
               data={props.data}
               gap={false}
@@ -68,9 +68,9 @@ const DetailsHero = (
             />
           )}
         </div>
-        {isSmall && <ReviewBannerStatus reviewStatus={props.data.reviewStatus} />}
+        {!isOverSmall && <ReviewBannerStatus reviewStatus={props.data.reviewStatus} />}
         <div className={theme.actionGroupContainer}>
-          {!isSmall && <DetailsTitle data={props.data} />}
+          {isOverSmall && <DetailsTitle data={props.data} />}
           <DetailsActionGroup
             data={props.data}
             isLoading={props.isFetching}
