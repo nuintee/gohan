@@ -13,8 +13,6 @@ import { ROUTES } from '@/constants/routes'
 
 const Header = () => {
   const isSmall = useMediaQuery('sm')
-  const isMedium = useMediaQuery('md')
-  const isLarge = useMediaQuery('lg')
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
