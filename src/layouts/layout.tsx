@@ -1,3 +1,4 @@
+import { Copy } from '@/components/icons'
 import { GohanButton, PanelHeader } from '@/components/ui'
 import Header from '@/components/ui/Header'
 import SearchModal from '@/features/search/components/SearchModal'
