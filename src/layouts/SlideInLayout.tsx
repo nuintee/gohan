@@ -20,11 +20,12 @@ const SlideInLayout = ({
   const background = translucentBackground
     ? `absolute h-screen w-screen bg-gh-dark z-[1010] duration-700 ${opacity}`
     : ''
+  const content = `absolute top-0  right-0 h-screen w-screen  duration-700 ${slideIn}`
 
   return (
     <div className={background}>
       <section
-        className={`absolute top-0  right-0 h-screen w-screen  duration-700 ${slideIn}`}
+        className={content}
         style={{
           zIndex: '10000',
           backgroundColor: contentBackgroundColor,

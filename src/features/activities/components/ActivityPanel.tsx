@@ -15,6 +15,7 @@ import { Dots } from '@/components/icons'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
 import ActivityDropDown from './ActivityDropDown'
+import SlideInLayout from '@/layouts/SlideInLayout'
 
 type Props = {
   isOpen?: boolean
@@ -87,13 +88,20 @@ const ActivityPanel = (props: Props) => {
   const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
 
   return (
-    <div
-      className={`absolute top-0 right-0 h-screen overflow-hidden bg-white flex max-w-screen flex-col duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1000] shadow-md ${slideIn}`}
-    >
-      <PanelHeader title='ライブラリ' onClose={onClose} />
-      <hr></hr>
-      <ContentsRenderer userActivities={query} />
-    </div>
+    // <div
+    //   className={`absolute top-0 right-0 h-screen overflow-hidden bg-white flex max-w-screen flex-col duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1000] shadow-md ${slideIn}`}
+    // >
+    //   <PanelHeader title='ライブラリ' onClose={onClose} />
+    //   <hr></hr>
+    //   <ContentsRenderer userActivities={query} />
+    // </div>
+    <SlideInLayout isOpen={isOpen} onClose={onClose} translucentBackground={false}>
+      <>
+        <PanelHeader title='ライブラリ' onClose={onClose} />
+        <hr></hr>
+        <ContentsRenderer userActivities={query} />
+      </>
+    </SlideInLayout>
   )
 }
 
