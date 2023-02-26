@@ -24,8 +24,18 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
           onClose={onClose}
           background={colors['gh-dark']}
         />
-        <NavLink label='ホーム' href='/' borderDirection='left' />
-        <NavLink label='ライブラリ' href='/library' borderDirection='left' />
+        <NavLink
+          label='ホーム'
+          href='/'
+          borderDirection='left'
+          activeBackground={colors['gh-brown']}
+        />
+        <NavLink
+          label='ライブラリ'
+          href='/library'
+          borderDirection='left'
+          activeBackground={colors['gh-brown']}
+        />
         {/* <Link
           href='/'
           className={`ml-auto p-4 items-center flex  border-l-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange ${
