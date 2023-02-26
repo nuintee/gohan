@@ -57,9 +57,9 @@ const ContentsRenderer = ({
   }
 
   return (
-    <div className='flex flex-col gap-2 p-2 flex-1 h-full overflow-y-auto overflow-x-hidden'>
+    <div className='flex-1 flex flex-col  overflow-auto p-2 pb-20'>
       {userActivities.data?.map((activity, index, original) => (
-        <div className='flex gap-2 flex-1 items-center justify-between' key={activity.id}>
+        <div className='flex gap-2 items-center justify-between' key={activity.id}>
           <RestaurantBoard
             data={activity}
             onClick={() => onActivityClicked(activity)}
@@ -92,11 +92,16 @@ const ActivityPanel = () => {
 
   return (
     <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>
-      <div>
+      {/* <div className='flex flex-col'>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>
         <ContentsRenderer userActivities={getUserAll} />
-      </div>
+      </div> */}
+      {/* <div className='flex flex-col flex-1'> */}
+      <PanelHeader title='ライブラリ' onClose={closePanel} />
+      <hr></hr>
+      <ContentsRenderer userActivities={getUserAll} />
+      {/* </div> */}
     </SlideInLayout>
   )
 }
