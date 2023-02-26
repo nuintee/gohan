@@ -2,6 +2,7 @@ import { colors } from '@/config/colors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Brand from '../Brand'
+import NavLink from '../NavLink'
 import PanelHeader from '../PanelHeader'
 
 const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?: () => void }) => {
@@ -23,7 +24,9 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
           onClose={onClose}
           background={colors['gh-dark']}
         />
-        <Link
+        <NavLink label='ホーム' href='/' borderDirection='left' />
+        <NavLink label='ライブラリ' href='/library' borderDirection='left' />
+        {/* <Link
           href='/'
           className={`ml-auto p-4 items-center flex  border-l-2 border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange ${
             router.pathname === '/' ? 'border-gh-orange text-white bg-gh-brown' : 'text-gh-gray'
@@ -40,7 +43,7 @@ const HeaderSidebar = ({ isOpen = false, onClose }: { isOpen?: boolean; onClose?
           }`}
         >
           ライブラリ
-        </Link>
+        </Link> */}
       </section>
     </div>
   )

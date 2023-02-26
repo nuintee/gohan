@@ -30,7 +30,7 @@ const NavLink = ({
   return (
     <Link
       href={href}
-      className={`ml-auto p-2 items-center flex ${borderDirectionClassName()} border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
+      className={`ml-auto p-4 items-center flex ${borderDirectionClassName()} border-transparent sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
         (isActive || router.pathname === href) && 'border-gh-orange text-white'
       }`}
     >
