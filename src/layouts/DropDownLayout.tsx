@@ -11,6 +11,7 @@ type DropDownMenu = {
 type Props = {
   direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
   children?: JSX.Element
+  ignored?: boolean
 } & Partial<React.ComponentProps<typeof Button>>
 
 const subMenuAnimate = {
@@ -52,7 +53,7 @@ const _BackArea = ({
   )
 }
 
-const DropDownLayout = ({ direction, children, ...buttonProps }: Props) => {
+const DropDownLayout = ({ direction, children, ignored, ...buttonProps }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const directionClass = () => {
@@ -77,16 +78,18 @@ const DropDownLayout = ({ direction, children, ...buttonProps }: Props) => {
           ...(isOpen && { zIndex: 1 }),
         }}
       >
-        <Button {...buttonProps} onClick={() => setIsOpen((prev) => !prev)} />
-        <motion.div
-          onClick={() => setIsOpen(false)}
-          className={`peer absolute flex flex-col ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in`}
-          initial='exit'
-          animate={isOpen ? 'enter' : 'exit'}
-          variants={subMenuAnimate}
-        >
-          {children}
-        </motion.div>
+        <Button {...buttonProps} text={''} onClick={() => setIsOpen((prev) => !prev)} />
+        {!ignored && (
+          <motion.div
+            onClick={() => setIsOpen(false)}
+            className={`peer absolute flex flex-col ${directionClass()} min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col duration-200  ease-in`}
+            initial='exit'
+            animate={isOpen ? 'enter' : 'exit'}
+            variants={subMenuAnimate}
+          >
+            {children}
+          </motion.div>
+        )}
       </div>
     </>
   )
