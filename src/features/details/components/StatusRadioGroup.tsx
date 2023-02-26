@@ -49,7 +49,7 @@ const StatusRadioGroup = ({
           />
           <label
             htmlFor={v}
-            className={`h-20 w-20 cursor-pointer bg-gh-l-gray rounded-full flex items-center justify-center grayscale text-3xl ${
+            className={`sm:h-20 sm:w-20 h-16 w-16 cursor-pointer bg-gh-l-gray rounded-full flex items-center justify-center grayscale text-3xl ${
               statusTheme(v).color
             } flex`}
           >

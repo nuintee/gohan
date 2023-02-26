@@ -1,26 +1,37 @@
+import Hamburger from '@/components/icons/Hamburger'
 import User from '@/features/user/components/User'
+import useMediaQuery from '@/hooks/mediaquery'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Brand from '../Brand'
+import HeaderSidebar from '../HeaderSidebar'
+import NavLink from '../NavLink'
+
+// constans
+import { ROUTES } from '@/constants/routes'
 
 const Header = () => {
-  const router = useRouter()
+  const isSmall = useMediaQuery('sm')
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-    <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full'>
-      <Brand margin={true} />
-      <Link
-        href='/library'
-        className={`ml-auto p-2 items-center flex border-b-2 border-transparent hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange text-gh-white ${
-          router.pathname === '/library' && 'border-gh-orange text-white'
-        }`}
-      >
-        ライブラリ
-      </Link>
-      <div className='flex items-center'>
-        <User />
+    <>
+      <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full items-center sm:items-stretch'>
+        <Brand margin={true} />
+        {!isSmall && <NavLink href={ROUTES.LIBRARY.path} label={ROUTES.LIBRARY.label} />}
+        <div className={`flex items-center ${isSmall && 'ml-auto'}`}>
+          <User />
+        </div>
+        {isSmall && (
+          <button onClick={() => setIsModalOpen(true)}>
+            <Hamburger height={20} width={20} />
+          </button>
+        )}
       </div>
-    </div>
+      {isSmall && <HeaderSidebar isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+    </>
   )
 }
 

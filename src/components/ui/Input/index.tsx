@@ -33,7 +33,7 @@ const Input = forwardRef((props: Props, ref) => {
       <div className='w-full flex bg-gh-white rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-gh-l-gray'>
         <input
           {...rest}
-          className='flex-1 outline-none px-2 py-1 bg-transparent'
+          className='flex-1 outline-none px-2 py-1 bg-transparent sm:text-base text-sm'
           placeholder={placeholder}
           ref={ref}
           type={type}

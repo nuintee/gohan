@@ -13,7 +13,9 @@ const DetailsHeroImage = (props: Props) => {
   } = props
 
   if (isLoading) {
-    return <div className='h-60 w-60 relative bg-gh-l-gray rounded-md shadow-sm' />
+    return (
+      <div className='sm:h-60 sm:w-60 w-32 h-32 aspect-square relative bg-gh-l-gray rounded-md shadow-sm' />
+    )
   }
 
   return (
@@ -21,7 +23,7 @@ const DetailsHeroImage = (props: Props) => {
       {...props}
       src={!isLoading && src}
       alt={!isLoading && 'Image'}
-      className='aspect-square object-cover h-60 w-60 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
+      className='aspect-square object-cover sm:h-60 sm:w-60 w-32 h-32 rounded-md shadow-md cursor-pointer hover:scale-105 duration-300 ease-out bg-gh-l-gray'
       onClick={onClick}
       disabled
     />

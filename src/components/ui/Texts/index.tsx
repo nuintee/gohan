@@ -58,7 +58,7 @@ const Texts = (props: Props) => {
       <div className={`flex flex-col w-full ${gap && 'gap-2'}`}>
         <div className='flex gap-4 w-full'>
           <h1
-            className={`font-bold ${textSize.main}`}
+            className={`font-bold truncate ${textSize.main}`}
             style={{
               color: mainColor,
               textAlign,
@@ -71,7 +71,7 @@ const Texts = (props: Props) => {
         </div>
         <div className='flex gap-4'>
           <p
-            className={`${textSize.sub} truncate whitespace-normal`}
+            className={`${textSize.sub} truncate whitespace-nowrap`}
             style={{
               color: subColor,
               textAlign,

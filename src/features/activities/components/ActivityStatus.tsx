@@ -7,7 +7,7 @@ import { ReviewStatusType } from '../schemas/index.schema'
 const ActivityStatus = ({ status = 'NEW' }: { status?: ReviewStatusType }) => {
   return (
     <span
-      className='p-2 rounded-full w-fit text-white font-semibold text-sm select-none'
+      className='sm:p-2 py-1 px-2 rounded-full w-fit text-white font-semibold sm:text-sm text-xs select-none'
       style={{
         backgroundColor: useActivityStatus(status).color,
       }}

@@ -22,7 +22,7 @@ function useActivityStatus(status: ReviewStatusType) {
     }
     default: {
       return {
-        label: status === 'NEW' ? 'NEW ✨' : '評価済み',
+        label: 'NEW ✨',
         color: colors['gh-gray'],
       }
     }

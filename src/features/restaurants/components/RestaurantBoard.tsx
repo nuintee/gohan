@@ -19,40 +19,30 @@ import SuspenseImage from '@/components/ui/SuspenseImage'
 const RestaurantBoard = (props: RestaurantProps) => {
   const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
 
-  const compactStyle = {
-    container: `flex bg-white p-2 rounded-md justify-between items-center gap-4 h-28 w-full ${
-      isFocused && 'bg-gh-white'
-    } cursor-pointer hover:bg-gh-white active:bg-gh-white active:scale-95`,
-    img: 'max-h-full max-w-full h-auto w-auto aspect-square object-cover rounded-md',
-    closeButton: '',
-    contents: 'flex flex-1 gap-4 items-center justify-between',
-    infoContainer: 'flex flex-col gap-2',
-  }
-
-  const theme = compactStyle
-
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(data?.photos)
   }, [data?.photos])
 
   return (
-    <div className={theme.container} onClick={onClick}>
+    <div
+      className={`h-24 cursor-pointer flex-1 flex gap-2 overflow-x-hidden rounded-md p-2 hover:bg-gh-white active:bg-gh-white active:scale-95 ${
+        isFocused && 'bg-gh-white'
+      }`}
+      onClick={onClick}
+    >
       <SuspenseImage
         src={memorizedPhoto.url}
-        alt={cardConfig.imgAlt(data?.name)}
-        className={theme.img}
+        alt={data?.name}
+        className={'aspect-square object-cover h-full rounded-md'}
       />
-      <div className={theme.contents}>
-        <div className={theme.infoContainer}>
-          <Texts
-            main={cardConfig.textsMain(data?.name)}
-            sub={cardConfig.textsSub(data?.types?.join('・'))}
-            size={cardConfig.textSize}
-          />
-          <ActivityStatus status={data?.reviewStatus} />
-          {/* <Label text={cardConfig.labelDistance(distance)} icon={cardConfig.labelIcon} /> */}
-        </div>
+      <div className='flex-1 flex flex-col justify-between truncate'>
+        <Texts
+          main={cardConfig.textsMain(data?.name)}
+          sub={cardConfig.textsSub(data?.types?.join('・'))}
+          size={'small'}
+        />
+        <ActivityStatus status={data?.reviewStatus} />
       </div>
     </div>
   )

@@ -1,18 +1,31 @@
 import { Dots } from '@/components/icons'
 import { DropDown } from '@/components/ui'
+import useMediaQuery from '@/hooks/mediaquery'
 import { trpc } from '@/libs/trpc'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import { ActivityResolved } from '../types'
 
+// constants
+import { ROUTES } from '@/constants/routes'
+
 type ActivityDropDownProps = {
   activity: ActivityResolved
   onMutated: () => void
+  onBasicInfoAction?: () => void
+  onShareAction?: () => void
 } & Pick<React.ComponentProps<typeof DropDown>, 'direction'>
 
-const ActivityDropDown = ({ activity, onMutated, direction }: ActivityDropDownProps) => {
+const ActivityDropDown = ({
+  activity,
+  onMutated,
+  direction,
+  onBasicInfoAction,
+  onShareAction,
+}: ActivityDropDownProps) => {
   const router = useRouter()
+  const isLargeQuery = useMediaQuery('lg')
 
   const deleteActivity = useDeleteActivity()
 
@@ -26,11 +39,29 @@ const ActivityDropDown = ({ activity, onMutated, direction }: ActivityDropDownPr
       ignored: !activity.website,
     },
     {
-      label: '詳細を表示',
+      label: `${ROUTES.DETAILS.label}へ移動`,
       onDropDownItemClick: () => {
-        router.push(`/details/[place_id]`, `/details/${activity.place_id}`, { shallow: true })
+        router.push(
+          `${ROUTES.DETAILS.path}/[place_id]`,
+          `${ROUTES.DETAILS.path}/${activity.place_id}`,
+          { shallow: true },
+        )
       },
-      ignored: router.asPath === `/details/${activity.place_id}`,
+      ignored: router.asPath === `${ROUTES.DETAILS.path}/${activity.place_id}`,
+    },
+    {
+      label: '基本情報を表示',
+      onDropDownItemClick: () => {
+        onBasicInfoAction && onBasicInfoAction()
+      },
+      ignored: !onBasicInfoAction || !isLargeQuery,
+    },
+    {
+      label: '共有',
+      onDropDownItemClick: () => {
+        onShareAction && onShareAction()
+      },
+      ignored: !onShareAction || !isLargeQuery,
     },
     {
       label: 'ライブラリから削除',
@@ -63,7 +94,7 @@ const ActivityDropDown = ({ activity, onMutated, direction }: ActivityDropDownPr
       direction={direction}
       icon={{
         position: 'after',
-        src: <Dots />,
+        src: <Dots direction='vertical' />,
       }}
     />
   )

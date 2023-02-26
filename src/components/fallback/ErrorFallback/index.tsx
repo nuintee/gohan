@@ -3,6 +3,9 @@ import { TRPCClientErrorBase } from '@trpc/client'
 import { DefaultErrorShape } from '@trpc/server'
 import { useRouter } from 'next/router'
 
+// constants
+import { ROUTES } from '@/constants/routes'
+
 const ErrorFallBack = ({ error }: { error: TRPCClientErrorBase<DefaultErrorShape> | Error }) => {
   const router = useRouter()
 
@@ -11,7 +14,7 @@ const ErrorFallBack = ({ error }: { error: TRPCClientErrorBase<DefaultErrorShape
       <h1>エラー</h1>
       <p>{error.message}</p>
       <div>
-        <Button text='ホームへ戻る' onClick={() => router.push('/')} />
+        <Button text='ホームへ戻る' onClick={() => router.push(ROUTES.HOME.path)} />
       </div>
     </div>
   )

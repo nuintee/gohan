@@ -54,9 +54,9 @@ const BasicInfoModal = (props: Props) => {
 
   return (
     <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
-      <section>
+      <section className='w-[80vw] max-w-[30rem]'>
         <PanelHeader title='基本的な情報' onClose={onClose} />
-        <main className='min-w-[30rem] flex flex-col'>
+        <main className='flex flex-col'>
           {Object.keys(data)
             .filter((v) => BASIC_INFO_KEYS.includes(v))
             .map((j) => ui(j))}

@@ -25,8 +25,12 @@ import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGr
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
+import ActivityStatus from '@/features/activities/components/ActivityStatus'
+import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
+import useMediaQuery from '@/hooks/mediaquery'
+import DetailsHero from '@/features/details/components/ui/DetailsHero'
 
-const DetailsPage = memo(({ id }: { id: string }) => {
+const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
@@ -48,24 +52,13 @@ const DetailsPage = memo(({ id }: { id: string }) => {
   return (
     <>
       <div className='flex flex-1 flex-col relative overflow-auto'>
-        <Cover color={'black'} />
-        <div className='px-[10%] pt-16 pb-6 flex gap-8'>
-          <ImageChip
-            isLoading={false}
-            src={memorizedPhoto.url}
-            onClick={() => openLocalModal('IMAGE')}
-          />
-          {/* {memorizedImage} */}
-          <div className='flex-1 flex flex-col justify-between py-2 min-h-[14rem]'>
-            <DetailsTitle data={data} />
-            <DetailsActionGroup
-              data={data}
-              isLoading={isFetching}
-              modalSetter={openLocalModal}
-              refetch={refetch}
-            />
-          </div>
-        </div>
+        <DetailsHero
+          data={data}
+          isFetching={isFetching}
+          refetch={refetch}
+          memorizedImgURL={memorizedPhoto.url}
+          modalSetter={openLocalModal}
+        />
         <main className='px-[10%]'>
           <div className='flex-1 flex flex-col justify-between py-2'>
             {status === 'authenticated' && (
@@ -91,7 +84,7 @@ const DetailsPage = memo(({ id }: { id: string }) => {
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
     </>
   )
-})
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   console.log({ query })

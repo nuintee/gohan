@@ -19,9 +19,6 @@ type Props = {
 const GohanButton = (props: Props) => {
   const { isLoading = false, isNavigating = false, disabled = false, onClick, size = 40 } = props
 
-  const { gps, isGPSError, isGPSFetching, updateGeolocationStatus, updateSafeGeolocation } =
-    useGPS()
-
   const ui = () =>
     isLoading ? (
       <PulseLoader color={`white`} loading={true} size={5} speedMultiplier={0.5} />

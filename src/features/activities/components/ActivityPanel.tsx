@@ -10,11 +10,15 @@ import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 import useMapBox from '@/features/mapbox/hooks'
-import { DropDown, Texts } from '@/components/ui'
+import { DropDown, SuspenseImage, Texts } from '@/components/ui'
 import { Dots } from '@/components/icons'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
 import ActivityDropDown from './ActivityDropDown'
+import SlideInLayout from '@/layouts/SlideInLayout'
+import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
+import ActivityStatus from './ActivityStatus'
+import useMediaQuery from '@/hooks/mediaquery'
 
 type Props = {
   isOpen?: boolean
@@ -53,9 +57,9 @@ const ContentsRenderer = ({
   }
 
   return (
-    <div className='flex flex-col gap-2 p-2 pb-20 flex-1 overflow-auto'>
+    <div className='flex flex-col gap-2 p-2 flex-1 overflow-y-auto overflow-x-hidden'>
       {userActivities.data?.map((activity, index, original) => (
-        <div className='flex gap-2 items-center justify-between' key={activity.id}>
+        <div className='flex gap-2 flex-1 items-center justify-between' key={activity.id}>
           <RestaurantBoard
             data={activity}
             onClick={() => onActivityClicked(activity)}
@@ -75,25 +79,30 @@ const ContentsRenderer = ({
   )
 }
 
-const ActivityPanel = (props: Props) => {
+const ActivityPanel = () => {
   const { isPanelOpen, closePanel } = useActivityPanel()
   const { data: session } = useSession()
+
+  // MediaQuery
+  const isSmall = useMediaQuery('sm')
+  const maxWidth = isSmall ? '20rem' : '30rem'
 
   // Query
   const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
 
-  const { isOpen = isPanelOpen ?? true, onClose = closePanel, query = getUserAll } = props
-
-  const slideIn = isOpen ? '-transform-x-full' : 'translate-x-full'
-
   return (
-    <div
-      className={`absolute top-0 right-0 h-screen overflow-hidden bg-white flex flex-col min-w-[20rem] w-fit duration-700 ease-in-out rounded-tl-md rounded-bl-md z-[1000]  shadow-md ${slideIn}`}
+    <SlideInLayout
+      isOpen={isPanelOpen}
+      onClose={closePanel}
+      translucentBackground={false}
+      maxWidth={maxWidth}
     >
-      <PanelHeader title={'ライブラリ'} onClose={onClose} />
-      <hr></hr>
-      <ContentsRenderer userActivities={query} />
-    </div>
+      <>
+        <PanelHeader title='ライブラリ' onClose={closePanel} />
+        <hr></hr>
+        <ContentsRenderer userActivities={getUserAll} />
+      </>
+    </SlideInLayout>
   )
 }
 

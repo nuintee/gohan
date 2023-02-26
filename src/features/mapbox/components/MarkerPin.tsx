@@ -9,6 +9,9 @@ import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { Marker } from 'react-map-gl'
 
+// constants
+import { ROUTES } from '@/constants/routes'
+
 const Pin = ({
   latitude,
   longitude,
@@ -26,7 +29,9 @@ const Pin = ({
 
   const handleDetailsClick = (e) => {
     e.stopPropagation()
-    router.push(`/details/[place_id]`, `/details/${data?.place_id}`, { shallow: true })
+    router.push(`${ROUTES.DETAILS.path}/[place_id]`, `${ROUTES.DETAILS.path}/${data?.place_id}`, {
+      shallow: true,
+    })
   }
 
   const memorizedImage = useMemo(() => {
