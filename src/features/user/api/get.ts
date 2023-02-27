@@ -1,6 +1,5 @@
 import { isAuthedMiddleWare } from '@/server/middleware'
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
 import { z } from 'zod'
 
 export const getUser = procedure
@@ -10,7 +9,7 @@ export const getUser = procedure
       userId: z.string(),
     }),
   )
-  .query(async ({ input }) => {
-    const data = await prisma.user.findUnique({ where: { id: input.userId } })
+  .query(async ({ input, ctx }) => {
+    const data = await ctx.prisma.user.findUnique({ where: { id: input.userId } })
     return data
   })

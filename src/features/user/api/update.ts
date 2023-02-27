@@ -1,5 +1,4 @@
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
 import { z } from 'zod'
 import { isAuthedMiddleWare } from '@/server/middleware'
 
@@ -13,8 +12,8 @@ export const updateUser = procedure
       }),
     }),
   )
-  .mutation(async ({ input }) => {
-    const data = await prisma.user.update({
+  .mutation(async ({ input, ctx }) => {
+    const data = await ctx.prisma.user.update({
       where: {
         id: input.userId,
       },
