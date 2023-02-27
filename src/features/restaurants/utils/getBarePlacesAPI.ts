@@ -6,7 +6,7 @@ import { PlacesAPI } from '../types'
 
 async function getPlacesAPI<T extends Pick<GeolocationCoordinates, 'latitude' | 'longitude'>>(
   props: T,
-) {
+): Promise<PlacesAPI> {
   if (IS_PRODMODE) {
     const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
     url.searchParams.append('location', `${props.latitude},${props.longitude}`)
@@ -19,7 +19,11 @@ async function getPlacesAPI<T extends Pick<GeolocationCoordinates, 'latitude' | 
 
     return data
   } else {
-    return {}
+    return {
+      html_attributions: [],
+      results: [],
+      status: 'OK',
+    }
   }
 }
 
