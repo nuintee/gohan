@@ -17,4 +17,6 @@ const Template: ComponentStory<typeof Tooltip> = (args) => (
 
 export const Default = Template.bind({})
 
-Default.args = {}
+Default.args = {
+  text: '',
+}
