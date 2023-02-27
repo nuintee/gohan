@@ -11,10 +11,7 @@ async function getDetailsAPI<T extends ResultsEntity['place_id']>({ place_id }: 
 
   const { data } = await axios.get<DetailsAPI>(url.toString())
 
-  if (!['OK', 'ZERO_RESULTS', 'INVALID_REQUEST', 'OVER_QUERY_LIMIT'].includes(data.status))
-    throw new Error(data.status)
-
-  return data.result
+  return data
 }
 
 export default getDetailsAPI
