@@ -1,6 +1,6 @@
 import { IS_DEVMODE } from '@/config/env'
-import getDetailsAPI from '@/features/restaurants/utils/getDetailsAPI'
-import getPlacesAPI from '@/features/restaurants/utils/getPlacesAPI'
+import getDetailsAPI from '@/features/restaurants/utils/getBareDetailsAPI'
+import getPlacesAPI from '@/features/restaurants/utils/getBarePlacesAPI'
 import { MainLayout } from '@/layouts/layout'
 import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
