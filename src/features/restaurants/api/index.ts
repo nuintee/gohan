@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { getBarePlacesAPI } from '../utils/getBarePlacesAPI'
 import { TRPCClientError } from '@trpc/client'
+import { statusMapper } from '../utils/statusMapper'
 
 export const getRestaurants = procedure
   .input(
@@ -17,6 +18,6 @@ export const getRestaurants = procedure
     if (data.status === 'OK') {
       return data.results?.random() // returnRandomOne
     } else {
-      throw new TRPCClientError(data.status)
+      throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
     }
   })
