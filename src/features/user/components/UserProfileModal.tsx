@@ -30,7 +30,7 @@ const UserSettingsModal = () => {
             registerName='settings-username'
             required={false}
             placeholder='ex: john0906'
-            label='Username'
+            label='ユーザー名'
             value={session?.user.name}
             disabled
             action={{
@@ -51,17 +51,17 @@ const UserSettingsModal = () => {
           <Input
             registerName='settings-registered_date'
             required={false}
-            label='Registered at'
+            label='登録日'
             value={dayjs(session?.user?.registered_at).format('MMMM D, YYYY h:mm A')}
             disabled
           />
           <DetailsSummary summaryTitle='高度な設定'>
-            <Button text='Delete account' danger onClick={handleDeleteAccount} />
+            <Button text='退会' danger onClick={handleDeleteAccount} />
           </DetailsSummary>
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
-          <Button text='Signout' onClick={() => signOut()} />
+          <Button text='ログアウト' onClick={() => signOut()} />
         </footer>
       </section>
     </ModalLayout>
