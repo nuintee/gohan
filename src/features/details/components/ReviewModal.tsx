@@ -35,7 +35,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
   }>({
     defaultValues: {
       reviewMemo: data.memo,
-      reviewStatus: data.status,
+      reviewStatus: data.status || 'NEW',
     },
   })
 
@@ -44,8 +44,8 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
   const onSubmit = handleSubmit((submittedData) => {
     if (!isDirty) return !!onClose && onClose()
 
-    console.log(submittedData)
     const { reviewStatus, reviewMemo: memo } = submittedData
+    console.log(submittedData)
 
     updateActivity.mutate(
       {
