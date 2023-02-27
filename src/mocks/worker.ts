@@ -24,6 +24,7 @@ export const initMocks = async () => {
     const { worker } = await import('./browser')
     worker.start({
       onUnhandledRequest,
+      waitUntilReady: true,
     })
   } else {
     const { server } = await import('./server')
