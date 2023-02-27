@@ -8,7 +8,7 @@ export const getUserActivities = procedure.query(async ({ input, ctx }) => {
   const details = await Promise.all(
     data.map(async (activity) => {
       const query = await getBareDetailsAPI({ place_id: activity.place_id })
-      return { ...activity, ...query.result }
+      return { ...activity, ...query?.result }
     }),
   )
 

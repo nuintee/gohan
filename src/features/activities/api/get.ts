@@ -4,10 +4,6 @@ import { procedure } from '@/server/trpc'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { details as detailsData } from '@/data/details'
-import { USER_ID_SCHEMA } from '@/features/user/schema/index.schema'
-import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
-
 export const getActivity = procedure
   .input(
     z.object({
