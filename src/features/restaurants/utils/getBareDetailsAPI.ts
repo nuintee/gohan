@@ -21,10 +21,12 @@ export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
 
     return data
   } else {
+    const result = details.result(place_id)
+
     return {
       html_attributions: [],
-      result: details.result(place_id as string) || {},
-      status: 'OK',
+      result,
+      status: result ? 'OK' : 'ZERO_RESULTS',
     }
   }
 }

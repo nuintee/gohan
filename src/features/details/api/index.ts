@@ -14,7 +14,7 @@ export const getDetails = procedure
     const data = await getBareDetailsAPI({ place_id: input.place_id })
 
     if (data.status === 'OK') {
-      return data.result // returnRandomOne
+      return data.result
     } else {
       throw new TRPCClientError(data.status)
     }
