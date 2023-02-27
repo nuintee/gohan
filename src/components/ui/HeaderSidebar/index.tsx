@@ -8,6 +8,7 @@ import PanelHeader from '../PanelHeader'
 // consts
 import { ROUTES } from '@/constants/routes'
 import SlideInLayout from '@/layouts/SlideInLayout'
+import Promotion from '../Promotion'
 
 const HeaderSidebar = ({
   isOpen,
@@ -42,6 +43,9 @@ const HeaderSidebar = ({
           passiveTextColor={colors['gh-gray']}
         />
       </div>
+      <footer className='mt-auto p-4'>
+        <Promotion />
+      </footer>
     </SlideInLayout>
   )
 }
