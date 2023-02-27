@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Dispatch, HTMLAttributes, SetStateAction, useState } from 'react'
 
 type Props = {
-  direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
+  direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top' | 'top-right' | 'top-left'
   children?: JSX.Element
   ignored?: boolean
   controller?: JSX.Element
@@ -56,11 +56,16 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
   const directionClass = () => {
     switch (direction) {
       case 'left-top':
-        return 'right-full top-0 mr-2'
+        return 'left-0 -translate-x-full top-0'
       case 'left-bottom':
-        return 'right-full bottom-0 mr-2'
+        return 'left-0 -translate-x-full bottom-0'
       case 'top':
+        // return 'right-0 bottom-full mb-2'
         return 'right-0 bottom-full mb-2'
+      case 'top-left':
+        return 'left-0 top-0 -translate-y-full'
+      case 'top-right':
+        return 'right-0 top-0 -translate-y-full'
       default:
         return 'right-0 mt-2'
     }
@@ -110,6 +115,7 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
           >
             {children}
           </motion.div>
+          // <div className='absolute top-0 -translate-y-full'>2</div>
         )}
       </div>
     </>
