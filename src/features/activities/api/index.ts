@@ -13,26 +13,7 @@ import { sleep } from '@/utils/sleep'
 import { details as detailsData } from '@/data/details'
 import { isAuthedMiddleWare } from '@/server/middleware'
 import { getActivity } from './getActivity'
-
-export const deleteActivity = procedure
-  .use(isAuthedMiddleWare)
-  .input(
-    z.object({
-      activityId: z.optional(z.string()),
-      place_id: z.string(),
-    }),
-  )
-  .mutation(async ({ input, ctx }) => {
-    const data = await prisma.activity.delete({
-      where: {
-        userId_place_id: {
-          userId: ctx.session?.user.id,
-          place_id: input.place_id,
-        },
-      },
-    })
-    return data
-  })
+import { deleteActivity } from './deleteActivity'
 
 export const updateActivity = procedure
   .use(isAuthedMiddleWare)
@@ -119,4 +100,4 @@ export const getUserActivities = procedure
     }
   })
 
-export { getActivity }
+export { getActivity, deleteActivity }
