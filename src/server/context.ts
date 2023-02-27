@@ -3,6 +3,9 @@ import { CreateNextContextOptions } from '@trpc/server/adapters/next'
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
 
+// lib
+import prisma from '@/libs/prisma'
+
 export const getServerAuthSession = (ctx: {
   req: GetServerSidePropsContext['req']
   res: GetServerSidePropsContext['res']
@@ -14,5 +17,6 @@ export async function createContext(opts: CreateNextContextOptions) {
   const session = await getServerAuthSession(opts)
   return {
     session,
+    prisma,
   }
 }

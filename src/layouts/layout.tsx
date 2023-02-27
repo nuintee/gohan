@@ -1,15 +1,9 @@
-import { Copy } from '@/components/icons'
 import { GohanButton, PanelHeader } from '@/components/ui'
 import Header from '@/components/ui/Header'
 import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
-import { copy } from '@/utils/copy'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import ModalLayout from './ModalLayout'
 
 type LayoutProps = {
   readonly children: JSX.Element
