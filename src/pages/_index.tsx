@@ -36,7 +36,6 @@ Experiment.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
-  console.log({ IS_DEVMODE, IS_BROWSER })
   const data = await fetch('https://jsonplaceholder.typicode.com/todos/1')
   const json = await data.json()
   // const data = await getPlacesAPI({ latitude: 0, longitude: 0 })
