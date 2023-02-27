@@ -1,8 +1,5 @@
 import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
-import { PlacesDetailsStatus, DetailsAPI } from '@/features/restaurants/types'
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
-import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { details as detailsData } from '@/data/details'
@@ -14,9 +11,9 @@ export const getUserActivities = procedure
       userId: z.string(),
     }),
   )
-  .query(async ({ input }) => {
+  .query(async ({ input, ctx }) => {
     if (IS_DEVMODE) {
-      const data = await prisma.activity.findMany({ where: { userId: input.userId } })
+      const data = await ctx.prisma.activity.findMany({ where: { userId: input.userId } })
 
       // get details
       const details = await Promise.all(

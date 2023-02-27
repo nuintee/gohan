@@ -1,7 +1,5 @@
 import { isAuthedMiddleWare } from '@/server/middleware'
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
-import { z } from 'zod'
 import { AddActivitySchema, UpdateActivitySchema } from '../schemas/index.schema'
 import { randomUUID } from 'crypto'
 
@@ -17,7 +15,7 @@ export const addActivity = procedure
       reviewStatus = 'NEW',
     } = input
 
-    const data = await prisma.activity.upsert({
+    const data = await ctx.prisma.activity.upsert({
       where: {
         userId_place_id: {
           userId: ctx.session.user.id,

@@ -1,7 +1,5 @@
 import { isAuthedMiddleWare } from '@/server/middleware'
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
-import { z } from 'zod'
 import { UpdateActivitySchema } from '../schemas/index.schema'
 
 export const updateActivity = procedure
@@ -9,7 +7,7 @@ export const updateActivity = procedure
   .input(UpdateActivitySchema)
   .mutation(async ({ input, ctx }) => {
     const { payload } = input
-    const data = await prisma.activity.upsert({
+    const data = await ctx.prisma.activity.upsert({
       where: {
         userId_place_id: {
           userId: ctx.session?.user.id,

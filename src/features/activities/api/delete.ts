@@ -1,6 +1,5 @@
 import { isAuthedMiddleWare } from '@/server/middleware'
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
 import { z } from 'zod'
 
 export const deleteActivity = procedure
@@ -12,7 +11,7 @@ export const deleteActivity = procedure
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    const data = await prisma.activity.delete({
+    const data = await ctx.prisma.activity.delete({
       where: {
         userId_place_id: {
           userId: ctx.session?.user.id,

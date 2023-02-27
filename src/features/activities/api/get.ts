@@ -1,7 +1,6 @@
 import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
 import { PlacesDetailsStatus, DetailsAPI } from '@/features/restaurants/types'
 import { procedure } from '@/server/trpc'
-import prisma from '@/libs/prisma'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
@@ -14,14 +13,14 @@ export const getActivity = procedure
       place_id: z.string(),
     }),
   )
-  .query(async ({ input }) => {
+  .query(async ({ input, ctx }) => {
     if (IS_DEVMODE) {
       let data
 
       if (input.userId) {
         // Get activity when authed
 
-        data = await prisma.activity.findUnique({
+        data = await ctx.prisma.activity.findUnique({
           where: {
             userId_place_id: {
               userId: input.userId,
