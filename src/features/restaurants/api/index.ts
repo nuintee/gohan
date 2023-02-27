@@ -42,25 +42,19 @@ const anyValid = validInput.refine(
 )
 
 export const getRestaurants = procedure.input(anyValid).query(async ({ input }) => {
+  const { isPlaceId } = checkIsAnyValid(input)
   if (IS_DEVMODE) {
     await sleep(1000)
 
-    const { isPlaceId } = checkIsAnyValid(input)
-
     if (isPlaceId) {
-      // return details
-      const pickedOne = details.result(input?.place_id as string)
-      return pickedOne
+      return details.result(input?.place_id as string)
     } else {
-      // return random
       const openNow = restaurantsData.results.filter((v) => v.opening_hours.open_now)
       const randomOne = openNow[Math.floor(Math.random() * openNow.length)]
 
       return randomOne
     }
   } else if (IS_PRODMODE) {
-    const { isPlaceId } = checkIsAnyValid(input)
-
     if (isPlaceId) {
       // return details
 

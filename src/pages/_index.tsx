@@ -1,12 +1,12 @@
 import { IS_DEVMODE } from '@/config/env'
-import useDetailsAPI from '@/features/restaurants/hooks/useDetailsAPI'
+import getDetailsAPI from '@/features/restaurants/controllers/getDetailsAPI'
 import { MainLayout } from '@/layouts/layout'
 import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
 
 const Experiment = () => {
   const handleDetails = async () => {
-    const r = await useDetailsAPI({ place_id: '' })
+    const r = await getDetailsAPI({ place_id: '' })
     console.log(r)
   }
 

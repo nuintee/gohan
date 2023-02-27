@@ -3,7 +3,7 @@ import axios from '@/libs/axios'
 import { NEEDED_DETAIL_FIELDS } from '../constants'
 import { DetailsAPI, ResultsEntity } from '../types'
 
-async function useDetailsAPI<T extends ResultsEntity['place_id']>({ place_id }: { place_id: T }) {
+async function getDetailsAPI<T extends ResultsEntity['place_id']>({ place_id }: { place_id: T }) {
   const url = new URL('https://maps.googleapis.com/maps/api/place/details/json')
   url.searchParams.append('place_id', place_id)
   url.searchParams.append('key', GCP_API_KEY)
@@ -17,4 +17,4 @@ async function useDetailsAPI<T extends ResultsEntity['place_id']>({ place_id }: 
   return data.result
 }
 
-export default useDetailsAPI
+export default getDetailsAPI
