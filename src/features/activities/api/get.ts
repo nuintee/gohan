@@ -5,11 +5,12 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { details as detailsData } from '@/data/details'
+import { USER_ID_SCHEMA } from '@/features/user/schema/index.schema'
 
 export const getActivity = procedure
   .input(
     z.object({
-      userId: z.optional(z.string()),
+      userId: z.optional(USER_ID_SCHEMA),
       place_id: z.string(),
     }),
   )

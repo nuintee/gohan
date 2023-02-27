@@ -4,11 +4,12 @@ import { z } from 'zod'
 
 import { details as detailsData } from '@/data/details'
 import { sleep } from '@/utils/sleep'
+import { USER_ID_SCHEMA } from '@/features/user/schema/index.schema'
 
 export const getUserActivities = procedure
   .input(
     z.object({
-      userId: z.string(),
+      userId: USER_ID_SCHEMA,
     }),
   )
   .query(async ({ input, ctx }) => {
