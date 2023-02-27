@@ -6,6 +6,7 @@ import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
 
 import DEV_COORDS from '@/data/geolocation.json'
+import { IS_BROWSER } from '@/config/mode'
 
 const Experiment = () => {
   const handleDetails = async () => {
@@ -35,11 +36,15 @@ Experiment.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
-  // const q = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-  const q = await getPlacesAPI({ latitude: 0, longitude: 0 })
-  console.log(q)
+  console.log({ IS_DEVMODE, IS_BROWSER })
+  const data = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+  const json = await data.json()
+  // const data = await getPlacesAPI({ latitude: 0, longitude: 0 })
+  console.log(json)
   return {
-    props: {},
+    props: {
+      data: json,
+    },
   }
 }
 
