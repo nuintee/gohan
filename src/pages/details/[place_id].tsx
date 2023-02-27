@@ -38,7 +38,7 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
-  const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useDetails({
+  const { data, isFetching, isError, error, refetch, isFetched } = useDetails({
     place_id: id,
   })
 
@@ -47,7 +47,7 @@ const DetailsPage = ({ id }: { id: string }) => {
     return usePlacePhotos(data?.photos)
   }, [data?.photos])
 
-  if (isFetching && !isFetchedAfterMount) return <DetailsLoadingFallback />
+  if (isFetching && !isFetched) return <DetailsLoadingFallback />
 
   if (isError) return <ErrorFallBack error={error} />
 
