@@ -38,14 +38,16 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
-  const { data, isFetching, isError, error, refetch } = useDetails({ place_id: id })
+  const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useDetails({
+    place_id: id,
+  })
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(data?.photos)
   }, [data?.photos])
 
-  if (isFetching) return <DetailsLoadingFallback />
+  if (isFetching && !isFetchedAfterMount) return <DetailsLoadingFallback />
 
   if (isError) return <ErrorFallBack error={error} />
 
