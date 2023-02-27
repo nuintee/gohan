@@ -33,12 +33,6 @@ const UserSettingsModal = () => {
             label='ユーザー名'
             value={session?.user.name}
             disabled
-            action={{
-              label: 'Change',
-              onClick: () => {
-                return {}
-              },
-            }}
           />
           <Input
             registerName='settings-email'

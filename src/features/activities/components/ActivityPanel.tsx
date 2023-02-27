@@ -88,7 +88,7 @@ const ActivityPanel = () => {
   const maxWidth = !isOverSmall ? '20rem' : '30rem'
 
   // Query
-  const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
+  const getUserAll = useGetUserActivities()
 
   return (
     <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>

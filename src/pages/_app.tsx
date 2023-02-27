@@ -16,12 +16,11 @@ import { AnimatePresence } from 'framer-motion'
 // Override
 import '@/utils/__arrayOverride__'
 import { NextPage } from 'next'
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, use, useEffect } from 'react'
+import { IS_DEVMODE } from '@/config/env'
 
-if (process.env.NODE_ENV === 'development') {
-  import('@/mocks/worker').then((worker) => {
-    worker.initMocks()
-  })
+if (IS_DEVMODE) {
+  require('@/mocks/worker')
 }
 
 const queryClient = new QueryClient()

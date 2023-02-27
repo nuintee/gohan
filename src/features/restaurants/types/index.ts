@@ -1,7 +1,7 @@
 import { ActivityResolved } from '@/features/activities/types'
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
-import { neededDetailsFields } from '../constants'
+import { NEEDED_DETAIL_FIELDS } from '../constants'
 
 export const PLACES_RESPONSE_STATUS = {
   OK: 'OK',
@@ -128,7 +128,7 @@ export interface PlusCode {
 }
 
 // Data to pass UI Component
-export type RestaurantData = Activity & Pick<ResultsEntity, typeof neededDetailsFields[number]>
+export type RestaurantData = Activity & Pick<ResultsEntity, typeof NEEDED_DETAIL_FIELDS[number]>
 
 // Data to pass Renderer
 export type RestaurantProps = {

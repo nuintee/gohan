@@ -6,7 +6,7 @@ export const googleDetailsAPIHandlers = async (
   ctx: RestContext,
 ) => {
   try {
-    return res(ctx.status(200), ctx.json({ message: 2 }))
+    return res(ctx.status(200), ctx.json({ status: 'OK' }))
   } catch (error) {
     return res(
       ctx.status(500),

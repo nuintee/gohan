@@ -1,60 +1,46 @@
-// cancelable task
+import { IS_DEVMODE } from '@/config/env'
+import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
+import { getBarePlacesAPI } from '@/features/restaurants/utils/getBarePlacesAPI'
+import { MainLayout } from '@/layouts/layout'
+import { GetServerSideProps } from 'next'
+import { ReactElement } from 'react'
 
-import { trpc } from '@/libs/trpc'
-import { useQueryClient } from '@tanstack/react-query'
-import { getQueryKey } from '@trpc/react-query'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+import DEV_COORDS from '@/data/geolocation.json'
+import { IS_BROWSER } from '@/config/mode'
 
-const useAsyncTaks = ({ canceled = false }: { canceled?: boolean }) => {
-  return trpc.getExperiment.useQuery(null, {
-    retry: false,
-    trpc: {
-      abortOnUnmount: true,
-    },
-  })
-}
-
-const _INDEX = () => {
-  const [canceled, setCanceled] = useState(false)
-  const router = useRouter()
-  const client = useQueryClient()
-  const ctx = trpc.useContext()
-
-  const data = useAsyncTaks({ canceled })
-
-  //   const secData = useAsyncTaks({})
-
-  const handleFetch = async () => {
-    const pending = await ctx.getExperiment.fetch(null)
-    console.log(pending)
+const Experiment = () => {
+  const handleDetails = async () => {
+    const r = await getBareDetailsAPI({ place_id: '' })
+    console.log(r)
   }
 
-  const cancelQuery = async () => {
-    // await ctx.getExperiment.cancel()
-    await client.cancelQueries()
-  }
-
-  const ui = () => {
-    if (canceled) return <h1>CANCELED</h1>
-
-    if (data.isFetching) {
-      return <h1>{data.status}</h1>
-    } else if (data.isError) {
-      return <h1>{data.status}</h1>
-    } else {
-      return <h1>{data.status}</h1>
-    }
+  const handlePlaces = async () => {
+    const r = await getBarePlacesAPI({
+      latitude: DEV_COORDS.coords.latitude,
+      longitude: DEV_COORDS.coords.longitude,
+    })
+    console.log(r)
   }
 
   return (
-    <div className='flex flex-col gap-4'>
-      {/* {ui()} */}
-      <button onClick={cancelQuery}>Cancel</button>
-      <button onClick={handleFetch}>Fetch</button>
-      <button onClick={() => router.push('/')}>Navigate</button>
+    <div className='flex flex-col'>
+      <h1>1</h1>
+      <button onClick={handleDetails}>Fetch details</button>
+      <button onClick={handlePlaces}>Fetch Places</button>
     </div>
   )
 }
 
-export default _INDEX
+Experiment.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
+  const data = await getBarePlacesAPI({ latitude: 0, longitude: 0 })
+  console.log(data)
+  return {
+    props: {},
+  }
+}
+
+export default Experiment

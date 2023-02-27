@@ -56,7 +56,7 @@ const DetailsActionGroup = ({
           }}
         />
       )}
-      {isOverLarge && (
+      {(isOverLarge || status === 'unauthenticated') && (
         <>
           <Button text='基本情報を表示' outline onClick={handleBasicInfoClick} />
           <Button
@@ -70,7 +70,7 @@ const DetailsActionGroup = ({
           />
         </>
       )}
-      <ActivityDropDown {...dropDownArgs} />
+      {status === 'authenticated' && <ActivityDropDown {...dropDownArgs} />}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { MockedRequest, DefaultBodyType } from 'msw'
 
-const IS_BROWSER = typeof window !== 'undefined'
+import { IS_BROWSER } from '@/config/mode'
 
 type UnhandledRequestPrint = {
   warning: () => void
@@ -19,11 +19,12 @@ function onUnhandledRequest(req: MockedRequest<DefaultBodyType>, print: Unhandle
   print.warning()
 }
 
-export const initMocks = async () => {
+const initMocks = async () => {
   if (IS_BROWSER) {
     const { worker } = await import('./browser')
     worker.start({
       onUnhandledRequest,
+      waitUntilReady: true,
     })
   } else {
     const { server } = await import('./server')
@@ -32,3 +33,5 @@ export const initMocks = async () => {
     })
   }
 }
+
+initMocks()

@@ -7,19 +7,20 @@ import { ResultsEntity } from '../types'
 
 import useDiscoveredNavigation from './useDiscoveredNavigation'
 
-const useRestaurants = (
-  props: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
-    successCallback?: (data: ResultsEntity) => void
-    trigger?: boolean
-  },
-) => {
+const useRestaurants = ({
+  trigger = false,
+  ...rest
+}: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
+  successCallback?: (data: ResultsEntity) => void
+  trigger?: boolean
+}) => {
   const { status, data: session } = useSession()
   const addActivity = useAddActivity()
   const { isGPSFetching, isGPSError } = useGPS()
   const { navigate } = useDiscoveredNavigation()
 
-  return trpc.getRestaurants.useQuery(props, {
-    enabled: !!props.place_id || (props.trigger ?? false),
+  return trpc.getRestaurants.useQuery(rest, {
+    enabled: trigger,
     retry: isGPSError || isGPSFetching ? 0 : 3,
     onError: (error) => {
       console.error(error)
@@ -37,17 +38,14 @@ const useRestaurants = (
     onSuccess: async (data) => {
       console.log(data)
 
-      props?.successCallback && props?.successCallback(data)
+      rest?.successCallback && rest?.successCallback(data)
 
       navigate(data)
 
       if (status !== 'authenticated') return
 
-      if (!!props.place_id) return
-
-      // add if doesn't exists
       addActivity.mutate({
-        place_id: data?.place_id,
+        place_id: data.place_id,
         reviewStatus: 'NEW',
         memo: '',
         userId: session.user.id,

@@ -22,8 +22,7 @@ const MapBox = () => {
 
   const { mapbox, setMapBoxRef, onActivityClicked, clearActivityFocus } = useMapBox()
 
-  const { data: session } = useSession()
-  const getUserAll = useGetUserActivities({ userId: session?.user.id as string })
+  const getUserAll = useGetUserActivities()
 
   const handleLoad = () => {
     geoLocateRef?.current?.trigger()

@@ -4,8 +4,6 @@ import useSearch from '@/features/search/hooks/useSearch'
 import User from '@/features/user/components/User'
 
 const AuthFallback = () => {
-  const { isSearchModalOpen, manageSearchModal } = useSearch()
-
   return (
     <>
       <div className='flex-1 flex flex-col items-center justify-center gap-6'>
@@ -16,11 +14,7 @@ const AuthFallback = () => {
           size='large'
         />
         <User />
-        <section className='absolute bottom-8 right-8'>
-          <GohanButton onClick={() => manageSearchModal(true)} size={25} />
-        </section>
       </div>
-      <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />
     </>
   )
 }

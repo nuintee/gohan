@@ -28,6 +28,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isDirty },
   } = useForm<{
     reviewMemo?: string
@@ -35,7 +36,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
   }>({
     defaultValues: {
       reviewMemo: data.memo,
-      reviewStatus: data.status,
+      reviewStatus: data.status || 'NEW',
     },
   })
 
@@ -44,8 +45,8 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
   const onSubmit = handleSubmit((submittedData) => {
     if (!isDirty) return !!onClose && onClose()
 
-    console.log(submittedData)
     const { reviewStatus, reviewMemo: memo } = submittedData
+    console.log(submittedData, isDirty)
 
     updateActivity.mutate(
       {
@@ -58,6 +59,11 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
       },
       {
         onSuccess: () => {
+          reset({
+            reviewMemo: memo,
+            reviewStatus,
+          })
+
           if (!!onReviewSuccess) {
             onReviewSuccess()
           }

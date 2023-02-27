@@ -30,14 +30,15 @@ import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
 import DetailsHero from '@/features/details/components/ui/DetailsHero'
 import ToolTip from '@/components/ui/Tootltip'
 import { colors } from '@/config/colors'
+import Promotion from '@/components/ui/Promotion'
+import useDetails from '@/features/details/hooks/useDetails'
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
-  const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
-    userId: session?.user.id,
+  const { data, isFetching, isError, error, refetch, isFetched } = useDetails({
     place_id: id,
   })
 
@@ -46,7 +47,7 @@ const DetailsPage = ({ id }: { id: string }) => {
     return usePlacePhotos(data?.photos)
   }, [data?.photos])
 
-  if (isFetching) return <DetailsLoadingFallback />
+  if (isFetching && !isFetched) return <DetailsLoadingFallback />
 
   if (isError) return <ErrorFallBack error={error} />
 
@@ -61,16 +62,18 @@ const DetailsPage = ({ id }: { id: string }) => {
           modalSetter={openLocalModal}
         />
         <main className='px-[10%]'>
-          <div className='flex-1 flex flex-col justify-between py-2'>
-            {status === 'authenticated' && (
+          {status === 'authenticated' ? (
+            <div className='flex-1 flex flex-col justify-between py-2'>
               <Texts
                 main='この場所についてのメモ'
                 sub={data?.memo || 'メモはまだありません。'}
                 mainDecoration={<ToolTip text='評価からメモを追加可能です。' />}
                 subColor={data?.memo ? colors['gh-d-gray'] : colors['gh-gray']}
               />
-            )}
-          </div>
+            </div>
+          ) : (
+            <Promotion />
+          )}
           <DetailsDescriptiveGroup data={data} isLoading={false} />
           <DetailsSectionGroup data={data} isLoading={false} />
         </main>
