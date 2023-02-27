@@ -1,6 +1,6 @@
 import { IS_DEVMODE } from '@/config/env'
-import getDetailsAPI from '@/features/restaurants/utils/getBareDetailsAPI'
-import getPlacesAPI from '@/features/restaurants/utils/getBarePlacesAPI'
+import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
+import { getBarePlacesAPI } from '@/features/restaurants/utils/getBarePlacesAPI'
 import { MainLayout } from '@/layouts/layout'
 import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
@@ -10,12 +10,12 @@ import { IS_BROWSER } from '@/config/mode'
 
 const Experiment = () => {
   const handleDetails = async () => {
-    const r = await getDetailsAPI({ place_id: '' })
+    const r = await getBareDetailsAPI({ place_id: '' })
     console.log(r)
   }
 
   const handlePlaces = async () => {
-    const r = await getPlacesAPI({
+    const r = await getBarePlacesAPI({
       latitude: DEV_COORDS.coords.latitude,
       longitude: DEV_COORDS.coords.longitude,
     })
@@ -36,7 +36,7 @@ Experiment.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
-  const data = await getPlacesAPI({ latitude: 0, longitude: 0 })
+  const data = await getBarePlacesAPI({ latitude: 0, longitude: 0 })
   console.log(data)
   return {
     props: {},

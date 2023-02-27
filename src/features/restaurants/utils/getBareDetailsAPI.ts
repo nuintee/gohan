@@ -3,7 +3,7 @@ import axios from '@/libs/axios'
 import { NEEDED_DETAIL_FIELDS } from '../constants'
 import { DetailsAPI, ResultsEntity } from '../types'
 
-async function getDetailsAPI<T extends ResultsEntity['place_id']>({
+export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
   place_id,
 }: {
   place_id: T
@@ -25,5 +25,3 @@ async function getDetailsAPI<T extends ResultsEntity['place_id']>({
     }
   }
 }
-
-export default getDetailsAPI
