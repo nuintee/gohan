@@ -9,11 +9,13 @@ import PanelHeader from '../PanelHeader'
 import { ROUTES } from '@/constants/routes'
 import SlideInLayout from '@/layouts/SlideInLayout'
 import Promotion from '../Promotion'
+import { useSession } from 'next-auth/react'
 
 const HeaderSidebar = ({
   isOpen,
   onClose,
 }: Pick<React.ComponentProps<typeof SlideInLayout>, 'isOpen' | 'onClose'>) => {
+  const { status } = useSession()
   return (
     <SlideInLayout
       isOpen={isOpen}
@@ -43,9 +45,11 @@ const HeaderSidebar = ({
           passiveTextColor={colors['gh-gray']}
         />
       </div>
-      <footer className='mt-auto p-4'>
-        <Promotion />
-      </footer>
+      {status === 'unauthenticated' && (
+        <footer className='mt-auto p-4'>
+          <Promotion />
+        </footer>
+      )}
     </SlideInLayout>
   )
 }
