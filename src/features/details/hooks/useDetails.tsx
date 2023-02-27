@@ -11,6 +11,7 @@ const useDetails = ({
 }) => {
   return trpc.getDetails.useQuery(rest, {
     refetchOnWindowFocus: false,
+    retry: false,
     onError: (error) => {
       console.error(error)
 
