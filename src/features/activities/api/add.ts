@@ -7,13 +7,7 @@ export const addActivity = procedure
   .use(isAuthedMiddleWare)
   .input(AddActivitySchema)
   .mutation(async ({ input, ctx }) => {
-    const {
-      activityId = randomUUID(),
-      userId,
-      place_id = '',
-      memo = '',
-      reviewStatus = 'NEW',
-    } = input
+    const { activityId = randomUUID(), memo = '', reviewStatus = 'NEW', place_id } = input
 
     const data = await ctx.prisma.activity.upsert({
       where: {
@@ -28,7 +22,7 @@ export const addActivity = procedure
         place_id,
         memo,
         reviewStatus,
-        userId,
+        userId: ctx.session.user.id,
         discovered_at: new Date(),
       },
     })
