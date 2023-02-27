@@ -11,8 +11,7 @@ import axios from 'axios'
 import { GCP_API_KEY } from '@/config/env'
 
 // Schema
-import { neededDetailsFields } from '../constants'
-import { CoordinatesSchema } from '@/features/directions/schema/coordinates.schema'
+import { NEEDED_DETAIL_FIELDS } from '../constants'
 
 // Utils
 import { sleep } from '@/utils/sleep'
@@ -67,7 +66,7 @@ export const getRestaurants = procedure.input(anyValid).query(async ({ input }) 
       const url = new URL('https://maps.googleapis.com/maps/api/place/details/json')
       url.searchParams.append('place_id', input?.place_id as string)
       url.searchParams.append('key', GCP_API_KEY)
-      url.searchParams.append('fields', neededDetailsFields.join(',')) // Needed Fields
+      url.searchParams.append('fields', NEEDED_DETAIL_FIELDS.join(',')) // Needed Fields
 
       const { data } = await axios.get<DetailsAPI>(url.toString())
 

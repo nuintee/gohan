@@ -1,4 +1,4 @@
-export const neededDetailsFields = [
+export const NEEDED_DETAIL_FIELDS = [
   'name',
   'business_status',
   'geometry',
