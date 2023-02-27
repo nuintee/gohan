@@ -28,6 +28,8 @@ import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
 import DetailsHero from '@/features/details/components/ui/DetailsHero'
+import ToolTip from '@/components/ui/Tootltip'
+import { colors } from '@/config/colors'
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
@@ -61,7 +63,12 @@ const DetailsPage = ({ id }: { id: string }) => {
         <main className='px-[10%]'>
           <div className='flex-1 flex flex-col justify-between py-2'>
             {status === 'authenticated' && (
-              <Texts main='この場所についてのメモ' sub={data?.memo || 'メモ'} />
+              <Texts
+                main='この場所についてのメモ'
+                sub={data?.memo || 'メモはまだありません。'}
+                mainDecoration={<ToolTip text='評価からメモを追加可能です。' />}
+                subColor={data?.memo ? colors['gh-d-gray'] : colors['gh-gray']}
+              />
             )}
           </div>
           <DetailsDescriptiveGroup data={data} isLoading={false} />

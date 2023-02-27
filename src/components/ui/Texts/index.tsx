@@ -1,4 +1,7 @@
+import { Copy } from '@/components/icons'
 import { colors } from '@/config/colors'
+import { copy } from '@/utils/copy'
+import CopyButton from '../CopyButton'
 
 // constants
 const sizes = {
@@ -27,7 +30,8 @@ type Props = {
   gap?: boolean
   isLoading?: boolean
   textAlign?: 'center' | 'left' | 'right'
-}
+  allowCopy?: boolean
+} & React.ComponentProps<typeof CopyButton>
 
 const Texts = (props: Props) => {
   const {
@@ -41,6 +45,9 @@ const Texts = (props: Props) => {
     gap = false,
     isLoading = false,
     textAlign = 'left',
+    allowCopy = false,
+    copyValue,
+    copyColor,
   } = props
 
   const textSize = sizes[size || 'normal']
@@ -67,6 +74,9 @@ const Texts = (props: Props) => {
           >
             {main || 'Name'}
           </h1>
+
+          {allowCopy && <CopyButton copyColor={copyColor} copyValue={copyValue} />}
+
           {mainDecoration}
         </div>
         <div className='flex gap-4'>

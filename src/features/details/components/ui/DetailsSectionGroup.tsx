@@ -22,7 +22,14 @@ const DetailsSectionGroup = ({
   return (
     <>
       <KeyFeaturesSection data={data} isLoading={isLoading} />
-      <DetailsSection margin='5rem' main='ロケーション' sub={data?.vicinity} isLoading={isLoading}>
+      <DetailsSection
+        margin='5rem'
+        main='ロケーション'
+        sub={data?.vicinity}
+        isLoading={isLoading}
+        allowCopy
+        copyValue={data?.vicinity}
+      >
         <div className='flex-1 aspect-video w-full relative'>
           <MapBoxChip
             latitude={data?.geometry?.location.lat}

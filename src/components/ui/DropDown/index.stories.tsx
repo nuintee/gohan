@@ -4,9 +4,6 @@ import React from 'react'
 
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-// Icon
-import { Dots } from '@/components/icons'
-
 import DropDown from './index'
 
 // data
@@ -26,27 +23,14 @@ export default {
 } as ComponentMeta<typeof DropDown>
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof DropDown> = (args) => <DropDown {...args} />
-const FixedSizeTemplate: ComponentStory<typeof DropDown> = (args) => (
+const Template: ComponentStory<typeof DropDown> = (args) => (
   <div className='relative flex justify-end py-[7.5rem]'>
     <DropDown {...args} />
   </div>
 )
 
 export const Default = Template.bind({})
-export const Dotted = FixedSizeTemplate.bind({})
 
 Default.args = {
   menu: MENU,
-}
-
-Dotted.args = {
-  text: '',
-  menu: MENU,
-  square: true,
-  outline: true,
-  icon: {
-    position: 'after',
-    src: <Dots />,
-  },
 }

@@ -17,6 +17,9 @@ const BasicInfoModal = (props: Props) => {
     const isHours = modalKey === 'opening_hours'
     const hasNoHourDetails = !data.opening_hours?.periods?.length
 
+    const isString = typeof data[modalKey] === 'string'
+    const isNumber = typeof data[modalKey] === 'number'
+
     return (
       <div
         className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
@@ -26,6 +29,7 @@ const BasicInfoModal = (props: Props) => {
           summaryTitle={modalKey}
           summaryValue={isHours ? useOpenHours(data.opening_hours).title : data[modalKey]}
           ignored={!isHours || (isHours && hasNoHourDetails)}
+          allowCopy={isString || isNumber}
         >
           <div className='py-2 divide-y flex flex-col gap-1'>
             {data.opening_hours?.periods?.map((v, i, original) => (

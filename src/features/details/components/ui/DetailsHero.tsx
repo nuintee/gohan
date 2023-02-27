@@ -65,12 +65,14 @@ const DetailsHero = (
               size={'normal'}
               textAlign={'center'}
               mainDecoration={false}
+              allowCopy
+              copyValue={props.data?.name}
             />
           )}
         </div>
         {!isOverSmall && <ReviewBannerStatus reviewStatus={props.data.reviewStatus} />}
         <div className={theme.actionGroupContainer}>
-          {isOverSmall && <DetailsTitle data={props.data} />}
+          {isOverSmall && <DetailsTitle data={props.data} allowCopy copyValue={props.data?.name} />}
           <DetailsActionGroup
             data={props.data}
             isLoading={props.isFetching}
