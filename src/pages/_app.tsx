@@ -17,10 +17,11 @@ import { AnimatePresence } from 'framer-motion'
 import '@/utils/__arrayOverride__'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
+import { IS_DEVMODE } from '@/config/env'
 
-if (process.env.NODE_ENV === 'development') {
-  import('@/mocks/worker').then((worker) => {
-    worker.initMocks()
+if (IS_DEVMODE) {
+  import('@/mocks/worker').then(async (worker) => {
+    await worker.initMocks()
   })
 }
 

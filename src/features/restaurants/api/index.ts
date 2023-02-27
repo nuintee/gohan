@@ -1,6 +1,6 @@
 import { procedure } from '@/server/trpc'
 import { z } from 'zod'
-import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
+import { BASE_URL, IS_DEVMODE, IS_PRODMODE } from '@/config/env'
 
 // data
 import restaurantsData from '@/data/_places.json'
