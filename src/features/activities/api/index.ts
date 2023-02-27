@@ -112,21 +112,15 @@ export const deleteActivity = procedure
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    if (IS_DEVMODE) {
-      const data = await prisma.activity.delete({
-        where: {
-          userId_place_id: {
-            userId: ctx.session?.user.id,
-            place_id: input.place_id,
-          },
+    const data = await prisma.activity.delete({
+      where: {
+        userId_place_id: {
+          userId: ctx.session?.user.id,
+          place_id: input.place_id,
         },
-      })
-      return data
-    } else if (IS_PRODMODE) {
-      // Google API
-    } else {
-      // test
-    }
+      },
+    })
+    return data
   })
 
 export const updateActivity = procedure
@@ -134,32 +128,26 @@ export const updateActivity = procedure
   .input(UpdateActivitySchema)
   .mutation(async ({ input, ctx }) => {
     const { payload } = input
-    if (IS_DEVMODE) {
-      const data = await prisma.activity.upsert({
-        where: {
-          userId_place_id: {
-            userId: ctx.session?.user.id,
-            place_id: payload.place_id,
-          },
-        },
-        create: {
-          discovered_at: new Date(),
+    const data = await prisma.activity.upsert({
+      where: {
+        userId_place_id: {
           userId: ctx.session?.user.id,
           place_id: payload.place_id,
-          reviewStatus: payload.reviewStatus,
-          memo: payload.memo || '',
         },
-        update: {
-          memo: payload.memo,
-          reviewStatus: payload.reviewStatus,
-        },
-      })
-      return data
-    } else if (IS_PRODMODE) {
-      // Google API
-    } else {
-      // test
-    }
+      },
+      create: {
+        discovered_at: new Date(),
+        userId: ctx.session?.user.id,
+        place_id: payload.place_id,
+        reviewStatus: payload.reviewStatus,
+        memo: payload.memo || '',
+      },
+      update: {
+        memo: payload.memo,
+        reviewStatus: payload.reviewStatus,
+      },
+    })
+    return data
   })
 
 export const addActivity = procedure
@@ -174,28 +162,24 @@ export const addActivity = procedure
       reviewStatus = 'NEW',
     } = input
 
-    if (IS_DEVMODE) {
-      const data = await prisma.activity.upsert({
-        where: {
-          userId_place_id: {
-            userId: ctx.session.user.id,
-            place_id,
-          },
-        },
-        update: {},
-        create: {
-          id: activityId,
+    const data = await prisma.activity.upsert({
+      where: {
+        userId_place_id: {
+          userId: ctx.session.user.id,
           place_id,
-          memo,
-          reviewStatus,
-          userId,
-          discovered_at: new Date(),
         },
-      })
-      return data
-    } else if (IS_PRODMODE) {
-    } else {
-    }
+      },
+      update: {},
+      create: {
+        id: activityId,
+        place_id,
+        memo,
+        reviewStatus,
+        userId,
+        discovered_at: new Date(),
+      },
+    })
+    return data
   })
 
 export const getUserActivities = procedure
