@@ -30,6 +30,7 @@ import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
 import DetailsHero from '@/features/details/components/ui/DetailsHero'
 import ToolTip from '@/components/ui/Tootltip'
 import { colors } from '@/config/colors'
+import Promotion from '@/components/ui/Promotion'
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
@@ -61,7 +62,7 @@ const DetailsPage = ({ id }: { id: string }) => {
           modalSetter={openLocalModal}
         />
         <main className='px-[10%]'>
-          {status === 'authenticated' && (
+          {status === 'authenticated' ? (
             <div className='flex-1 flex flex-col justify-between py-2'>
               <Texts
                 main='この場所についてのメモ'
@@ -70,6 +71,8 @@ const DetailsPage = ({ id }: { id: string }) => {
                 subColor={data?.memo ? colors['gh-d-gray'] : colors['gh-gray']}
               />
             </div>
+          ) : (
+            <Promotion />
           )}
           <DetailsDescriptiveGroup data={data} isLoading={false} />
           <DetailsSectionGroup data={data} isLoading={false} />
