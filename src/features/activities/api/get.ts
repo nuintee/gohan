@@ -24,7 +24,5 @@ export const getActivity = procedure
       },
     })
 
-    const details = await getBareDetailsAPI({ place_id: input.place_id })
-
-    return { ...data, ...details.result }
+    return data
   })

@@ -31,16 +31,14 @@ import DetailsHero from '@/features/details/components/ui/DetailsHero'
 import ToolTip from '@/components/ui/Tootltip'
 import { colors } from '@/config/colors'
 import Promotion from '@/components/ui/Promotion'
+import useDetails from '@/features/details/hooks/useDetails'
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { data: session, status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
-  const { data, isFetching, isError, error, refetch, isFetchedAfterMount } = useGetActivity({
-    userId: session?.user.id,
-    place_id: id,
-  })
+  const { data, isFetching, isError, error, refetch } = useDetails({ place_id: id })
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
