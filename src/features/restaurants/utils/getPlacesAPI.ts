@@ -3,7 +3,9 @@ import axios from '@/libs/axios'
 import { NEEDED_DETAIL_FIELDS } from '../constants'
 import { DetailsAPI, PlacesAPI, ResultsEntity } from '../types'
 
-async function getPlacesAPI<T extends GeolocationCoordinates>(props: T) {
+async function getPlacesAPI<T extends Pick<GeolocationCoordinates, 'latitude' | 'longitude'>>(
+  props: T,
+) {
   const url = new URL('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
   url.searchParams.append('location', `${props.latitude},${props.longitude}`)
   url.searchParams.append('radius', '500')
