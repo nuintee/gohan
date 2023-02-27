@@ -36,9 +36,8 @@ Experiment.getLayout = function getLayout(page: ReactElement) {
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   // const q = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-  const q = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json')
-  const data = await q.json()
-  console.log(data)
+  const q = await getPlacesAPI({ latitude: 0, longitude: 0 })
+  console.log(q)
   return {
     props: {},
   }
