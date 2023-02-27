@@ -17,6 +17,7 @@ import { NEEDED_DETAIL_FIELDS } from '../constants'
 import { sleep } from '@/utils/sleep'
 import { trpc } from '@/libs/trpc'
 import { DetailsAPI, PlacesAPI } from '../types'
+import useDetailsAPI from '../hooks/useDetailsAPI'
 
 const validInput = z.object({
   place_id: z.optional(z.string()),
@@ -42,6 +43,8 @@ const anyValid = validInput.refine(
 
 export const getRestaurants = procedure.input(anyValid).query(async ({ input }) => {
   if (IS_DEVMODE) {
+    const sp = await useDetailsAPI({ place_id: input.place_id })
+    console.log(sp)
     await sleep(1000)
 
     const { isPlaceId } = checkIsAnyValid(input)

@@ -1,9 +1,9 @@
 import { GCP_API_KEY } from '@/config/env'
 import axios from '@/libs/axios'
 import { NEEDED_DETAIL_FIELDS } from '../constants'
-import { DetailsAPI } from '../types'
+import { DetailsAPI, ResultsEntity } from '../types'
 
-const useDetailsAPI = async ({ place_id }: { place_id: string }) => {
+async function useDetailsAPI<T extends ResultsEntity['place_id']>({ place_id }: { place_id: T }) {
   const url = new URL('https://maps.googleapis.com/maps/api/place/details/json')
   url.searchParams.append('place_id', place_id)
   url.searchParams.append('key', GCP_API_KEY)
