@@ -17,7 +17,6 @@ import { NEEDED_DETAIL_FIELDS } from '../constants'
 import { sleep } from '@/utils/sleep'
 import { trpc } from '@/libs/trpc'
 import { DetailsAPI, PlacesAPI } from '../types'
-import useDetailsAPI from '../hooks/useDetailsAPI'
 
 const validInput = z.object({
   place_id: z.optional(z.string()),

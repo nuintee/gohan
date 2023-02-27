@@ -1,5 +1,5 @@
 import { IS_DEVMODE } from '@/config/env'
-import getDetailsAPI from '@/features/restaurants/controllers/getDetailsAPI'
+import getDetailsAPI from '@/features/restaurants/utils/getDetailsAPI'
 import { MainLayout } from '@/layouts/layout'
 import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
