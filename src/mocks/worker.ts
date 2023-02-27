@@ -19,7 +19,7 @@ function onUnhandledRequest(req: MockedRequest<DefaultBodyType>, print: Unhandle
   print.warning()
 }
 
-export const initMocks = async () => {
+const initMocks = async () => {
   if (IS_BROWSER) {
     const { worker } = await import('./browser')
     worker.start({
@@ -33,3 +33,5 @@ export const initMocks = async () => {
     })
   }
 }
+
+initMocks()
