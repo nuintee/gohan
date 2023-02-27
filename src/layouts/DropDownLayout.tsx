@@ -63,9 +63,9 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
         // return 'right-0 bottom-full mb-2'
         return 'right-0 bottom-full mb-2'
       case 'top-left':
-        return 'left-0 top-0 -translate-y-full'
+        return 'left-0 top-0 m-5 -translate-y-full'
       case 'top-right':
-        return 'right-0 top-0 -translate-y-full'
+        return 'right-0 top-0 m-2 -translate-y-full'
       default:
         return 'right-0 mt-2'
     }
