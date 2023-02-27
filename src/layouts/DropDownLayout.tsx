@@ -56,23 +56,24 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
   const directionClass = () => {
     switch (direction) {
       case 'left-top':
-        return 'left-0 -translate-x-full top-0'
+        return 'right-4  -translate-x-1/2 top-0'
+      // return 'left-0 -translate-x-full top-0'
       case 'left-bottom':
-        return 'left-0 -translate-x-full bottom-0'
+        return 'right-4  -translate-x-1/2 bottom-0'
       case 'top':
-        // return 'right-0 bottom-full mb-2'
-        return 'right-0 bottom-full mb-2'
+        return 'right-0 top-0 -translate-y-full'
       case 'top-left':
-        return 'left-0 top-0 m-5 -translate-y-full'
+        return 'right-4  -translate-x-1/2 top-0'
       case 'top-right':
-        return 'right-0 top-0 m-2 -translate-y-full'
+        return 'right-0 top-0  -translate-y-full'
       default:
-        return 'right-0 mt-2'
+        return 'right-0 mt-2 asbolute'
     }
   }
 
   // styles
   const defaultStyle = `min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col`
+  // const baseClassName = `peer absolute ${directionClass()} ${overrideStyle || defaultStyle}`
   const baseClassName = `peer absolute ${directionClass()} ${overrideStyle || defaultStyle}`
 
   const controllerUI = () => {
