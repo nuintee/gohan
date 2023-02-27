@@ -4,7 +4,6 @@ import useMediaQuery from '@/hooks/mediaquery'
 import { trpc } from '@/libs/trpc'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
-import useGetUserActivities from '../hooks/useGetUserActivities'
 import { ActivityResolved } from '../types'
 
 // constants
