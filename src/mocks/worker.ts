@@ -1,6 +1,6 @@
 import { MockedRequest, DefaultBodyType } from 'msw'
 
-const IS_BROWSER = typeof window !== 'undefined'
+import { IS_BROWSER } from '@/config/mode'
 
 type UnhandledRequestPrint = {
   warning: () => void

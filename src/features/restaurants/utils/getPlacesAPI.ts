@@ -1,7 +1,6 @@
 import { GCP_API_KEY } from '@/config/env'
 import axios from '@/libs/axios'
-import { NEEDED_DETAIL_FIELDS } from '../constants'
-import { DetailsAPI, PlacesAPI, ResultsEntity } from '../types'
+import { PlacesAPI } from '../types'
 
 async function getPlacesAPI<T extends Pick<GeolocationCoordinates, 'latitude' | 'longitude'>>(
   props: T,
