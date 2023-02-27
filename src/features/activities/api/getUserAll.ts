@@ -2,9 +2,9 @@ import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
 import { procedure } from '@/server/trpc'
 import { z } from 'zod'
 
-import { details as detailsData } from '@/data/details'
 import { sleep } from '@/utils/sleep'
 import { USER_ID_SCHEMA } from '@/features/user/schema/index.schema'
+import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
 
 export const getUserActivities = procedure
   .input(
@@ -13,21 +13,14 @@ export const getUserActivities = procedure
     }),
   )
   .query(async ({ input, ctx }) => {
-    if (IS_DEVMODE) {
-      const data = await ctx.prisma.activity.findMany({ where: { userId: input.userId } })
+    const data = await ctx.prisma.activity.findMany({ where: { userId: input.userId } })
 
-      // get details
-      const details = await Promise.all(
-        data.map(async (activity) => {
-          await sleep(500)
-          return { ...activity, ...detailsData.result(activity.place_id) }
-        }),
-      )
+    const details = await Promise.all(
+      data.map(async (activity) => {
+        const query = await getBareDetailsAPI({ place_id: activity.place_id })
+        return { ...activity, ...query.result }
+      }),
+    )
 
-      return details
-    } else if (IS_PRODMODE) {
-      // Google API
-    } else {
-      // test
-    }
+    return details
   })

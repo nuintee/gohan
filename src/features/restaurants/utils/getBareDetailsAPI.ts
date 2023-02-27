@@ -24,7 +24,7 @@ export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
     return {
       html_attributions: [],
       result: details.result(place_id as string) || {},
-      status: 'INVALID_REQUEST',
+      status: 'OK',
     }
   }
 }
