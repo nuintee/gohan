@@ -9,12 +9,13 @@ async function useDetailsAPI<T extends ResultsEntity['place_id']>({ place_id }: 
   url.searchParams.append('key', GCP_API_KEY)
   url.searchParams.append('fields', NEEDED_DETAIL_FIELDS.join(',')) // Needed Fields
 
-  const { data } = await axios.get<DetailsAPI>(url.toString())
+  const d = await axios.get<DetailsAPI>(url.toString())
 
-  if (!['OK', 'ZERO_RESULTS', 'INVALID_REQUEST', 'OVER_QUERY_LIMIT'].includes(data.status))
-    throw new Error(data.status)
+  //   if (!['OK', 'ZERO_RESULTS', 'INVALID_REQUEST', 'OVER_QUERY_LIMIT'].includes(data.status))
+  //     throw new Error(data.status)
 
-  return data.result
+  //   return data.result
+  return d
 }
 
 export default useDetailsAPI
