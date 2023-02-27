@@ -5,6 +5,7 @@ import { DetailsAPI, ResultsEntity } from '../types'
 
 // data
 import { details } from '@/data/details'
+import { sleep } from '@/utils/sleep'
 
 export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
   place_id,
@@ -21,6 +22,7 @@ export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
 
     return data
   } else {
+    await sleep(1000)
     const result = details.result(place_id)
 
     return {

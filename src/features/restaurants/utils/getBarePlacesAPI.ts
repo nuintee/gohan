@@ -23,10 +23,11 @@ export async function getBarePlacesAPI<
     return data
   } else {
     await sleep(1000)
+    const results = restaurantsData.results
     return {
       html_attributions: [],
-      results: restaurantsData.results,
-      status: 'OK',
+      results,
+      status: results.length ? 'OK' : 'ZERO_RESULTS',
     }
   }
 }
