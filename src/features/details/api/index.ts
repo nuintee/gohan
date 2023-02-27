@@ -1,5 +1,6 @@
 import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
 import { getBarePlacesAPI } from '@/features/restaurants/utils/getBarePlacesAPI'
+import { statusMapper } from '@/features/restaurants/utils/statusMapper'
 import { procedure } from '@/server/trpc'
 import { TRPCClientError } from '@trpc/client'
 import { z } from 'zod'
@@ -28,6 +29,6 @@ export const getDetails = procedure
     if (data.status === 'OK') {
       return { ...data.result, ...activity }
     } else {
-      throw new TRPCClientError(data.status)
+      throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
     }
   })
