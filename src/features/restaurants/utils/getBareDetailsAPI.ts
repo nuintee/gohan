@@ -3,6 +3,9 @@ import axios from '@/libs/axios'
 import { NEEDED_DETAIL_FIELDS } from '../constants'
 import { DetailsAPI, ResultsEntity } from '../types'
 
+// data
+import { details } from '@/data/details'
+
 export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
   place_id,
 }: {
@@ -20,8 +23,8 @@ export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
   } else {
     return {
       html_attributions: [],
-      result: {},
-      status: 'ZERO_RESULTS',
+      result: details.result(place_id as string) || {},
+      status: 'INVALID_REQUEST',
     }
   }
 }

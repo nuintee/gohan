@@ -4,6 +4,9 @@ import axios from '@/libs/axios'
 import { sleep } from '@/utils/sleep'
 import { PlacesAPI } from '../types'
 
+// data
+import restaurantsData from '@/data/_places.json'
+
 export async function getBarePlacesAPI<
   T extends Pick<GeolocationCoordinates, 'latitude' | 'longitude'>,
 >(props: T): Promise<PlacesAPI> {
@@ -19,9 +22,10 @@ export async function getBarePlacesAPI<
 
     return data
   } else {
+    await sleep(1000)
     return {
       html_attributions: [],
-      results: [],
+      results: restaurantsData.results,
       status: 'OK',
     }
   }
