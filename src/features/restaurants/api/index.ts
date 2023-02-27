@@ -43,8 +43,6 @@ const anyValid = validInput.refine(
 
 export const getRestaurants = procedure.input(anyValid).query(async ({ input }) => {
   if (IS_DEVMODE) {
-    const sp = await useDetailsAPI({ place_id: input.place_id })
-    console.log(sp)
     await sleep(1000)
 
     const { isPlaceId } = checkIsAnyValid(input)
