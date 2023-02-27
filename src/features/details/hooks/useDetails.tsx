@@ -10,7 +10,7 @@ const useDetails = ({
   trigger?: boolean
 }) => {
   return trpc.getDetails.useQuery(rest, {
-    enabled: trigger,
+    refetchOnWindowFocus: false,
     onError: (error) => {
       console.error(error)
 
