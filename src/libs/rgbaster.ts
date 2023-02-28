@@ -15,7 +15,7 @@ async function getDominantColor(url: string) {
   const _racer = new Promise<string>((resolve, reject) => {
     setTimeout(() => {
       resolve(FALLBACK_COLOR)
-    }, 1000)
+    }, 2000)
   })
 
   const value = await Promise.race([task, _racer])

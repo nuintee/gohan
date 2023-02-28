@@ -21,7 +21,7 @@ export const getRestaurants = procedure
     const color = await getDominantColor(usePlacePhotos(res?.photos).url)
 
     if (data.status === 'OK') {
-      return { ...res, color } // returnRandomOne
+      return { ...res, color }
     } else {
       throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
     }
