@@ -14,7 +14,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <title>Gohan {process.env.NODE_ENV != 'production' && `| ${process.env.NODE_ENV}`}</title>
-          <link rel='icon' href='prod_favicon.svg' />
+          {/* <link rel='icon' href='prod_favicon.svg' /> */}
           <link rel='preconnect' href='https://fonts.googleapis.com' />
           <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='true' />
           <link

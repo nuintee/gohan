@@ -22,7 +22,7 @@ const DiscoverPage = () => {
   const color = router.query?.color as string
 
   const memo = useMemo(() => {
-    return { main, sub }
+    return { main, sub, color }
   }, [router.isReady])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const DiscoverPage = () => {
       timeout = setTimeout(() => {
         // router.replace(`${ROUTES.DETAILS.path}/${place_id}`)
         router.replace(
-          `${ROUTES.DETAILS.path}/[place_id]?color=${color}`,
+          `${ROUTES.DETAILS.path}/${place_id}?color=${memo.color}`,
           `${ROUTES.DETAILS.path}/${place_id}`,
         )
       }, 2500)
@@ -52,7 +52,7 @@ const DiscoverPage = () => {
       transition={{ type: 'linear' }}
       className={`h-screen w-screen flex flex-col gap-1 sm:items-center justify-center p-8`}
       style={{
-        background: color || 'dark',
+        background: memo.color || 'dark',
       }}
     >
       <h1 className='sm:text-4xl sm:font-normal font-bold text-white animate-fadeIn text-2xl text-start'>
