@@ -51,7 +51,10 @@ const DetailsPage = ({ id }: { id: string }) => {
     return usePlacePhotos(details.data?.photos)
   }, [details.data?.photos])
 
-  if ((activity.isFetching && !activity.isFetched) || (details.isFetching && !details.isFetched))
+  if (
+    (activity.isFetching && !activity.isFetchedAfterMount) ||
+    (details.isFetching && !details.isFetchedAfterMount)
+  )
     return <DetailsLoadingFallback />
 
   if (activity.isError || details.isError)
