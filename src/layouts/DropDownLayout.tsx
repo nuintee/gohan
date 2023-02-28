@@ -56,25 +56,23 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
   const directionClass = () => {
     switch (direction) {
       case 'left-top':
-        return 'right-4  -translate-x-1/2 top-0'
-      // return 'left-0 -translate-x-full top-0'
+        return { top: 0, right: 'calc(100% + 0.5rem)' }
       case 'left-bottom':
-        return 'right-4  -translate-x-1/2 bottom-0'
+        return { bottom: 0, right: 'calc(100% + 0.5rem)' }
       case 'top':
-        return 'right-0 top-0 -translate-y-full'
+        return { bottom: 'calc(100% + 0.5rem)', right: 0 }
       case 'top-left':
-        return 'right-4  -translate-x-1/2 top-0'
+        return { bottom: 'calc(100% + 0.5rem)', left: 0 }
       case 'top-right':
-        return 'right-0 top-0  -translate-y-full'
+        return { bottom: 'calc(100% + 0.5rem)', right: 0 }
       default:
-        return 'right-0 mt-2 asbolute'
+        return { top: 'calc(100% + 0.5rem)', right: 0 }
     }
   }
 
   // styles
   const defaultStyle = `min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col`
-  // const baseClassName = `peer absolute ${directionClass()} ${overrideStyle || defaultStyle}`
-  const baseClassName = `peer absolute ${directionClass()} ${overrideStyle || defaultStyle}`
+  const baseClassName = `z-10 ${overrideStyle || defaultStyle}`
 
   const controllerUI = () => {
     if (controller) {
@@ -110,13 +108,16 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
           <motion.div
             onClick={() => setIsOpen(false)}
             className={baseClassName}
+            style={{
+              position: 'absolute',
+              ...directionClass(),
+            }}
             initial='exit'
             animate={isOpen ? 'enter' : 'exit'}
             variants={subMenuAnimate}
           >
             {children}
           </motion.div>
-          // <div className='absolute top-0 -translate-y-full'>2</div>
         )}
       </div>
     </>
