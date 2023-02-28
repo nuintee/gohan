@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 // constants
+import { colors } from '@/config/colors'
 import { ROUTES } from '@/constants/routes'
 
 // framer-motion
@@ -16,10 +17,10 @@ const variants = {
 const DiscoverPage = () => {
   const router = useRouter()
 
-  const place_id = router.query?.place_id
-  const main = router.query?.main
-  const sub = router.query?.sub
-  const color = router.query?.color as string
+  const place_id = decodeURIComponent(router.query?.place_id as string)
+  const main = decodeURIComponent(router.query?.main as string)
+  const sub = decodeURIComponent(router.query?.sub as string)
+  const color = decodeURIComponent(router.query?.color as string) || colors['gh-dark']
 
   const memo = useMemo(() => {
     return { main, sub, color }
