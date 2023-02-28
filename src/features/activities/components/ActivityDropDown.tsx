@@ -78,7 +78,7 @@ const ActivityDropDown = ({
           },
         )
       },
-      ignored: !activity.reviewStatus,
+      ignored: !activity || !activity.reviewStatus,
     },
   ].filter((v) => !v.ignored)
 
