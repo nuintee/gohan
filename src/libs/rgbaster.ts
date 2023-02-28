@@ -7,7 +7,7 @@ const COLOR_RANGE = [
   colors['gh-l-green'],
   colors['gh-l-orange'],
 ]
-const FALLBACK_COLOR = COLOR_RANGE.random()
+const FALLBACK_COLOR = COLOR_RANGE[3]
 
 async function getDominantColor(url: string) {
   if (!url) return FALLBACK_COLOR

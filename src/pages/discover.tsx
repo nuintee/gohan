@@ -25,14 +25,17 @@ const DiscoverPage = () => {
     return { main, sub, color }
   }, [router.isReady])
 
+  console.log(memo.color)
+
   useEffect(() => {
     let timeout: NodeJS.Timeout
 
     if (!router.query.debug) {
+      console.log('BEFORE TIMEOUT')
+      console.log(memo.color)
       timeout = setTimeout(() => {
-        // router.replace(`${ROUTES.DETAILS.path}/${place_id}`)
         router.replace(
-          `${ROUTES.DETAILS.path}/${place_id}?color=${memo.color}`,
+          `${ROUTES.DETAILS.path}/[place_id]?color=${encodeURIComponent(memo.color)}`,
           `${ROUTES.DETAILS.path}/${place_id}`,
         )
       }, 2500)
@@ -41,7 +44,7 @@ const DiscoverPage = () => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [router])
+  }, [router.isReady])
 
   return (
     <motion.main
