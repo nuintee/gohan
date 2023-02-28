@@ -30,7 +30,11 @@ const DiscoverPage = () => {
 
     if (!router.query.debug) {
       timeout = setTimeout(() => {
-        router.replace(`${ROUTES.DETAILS.path}/${place_id}`)
+        // router.replace(`${ROUTES.DETAILS.path}/${place_id}`)
+        router.replace(
+          `${ROUTES.DETAILS.path}/[place_id]?color=${color}`,
+          `${ROUTES.DETAILS.path}/${place_id}`,
+        )
       }, 2500)
     }
 
