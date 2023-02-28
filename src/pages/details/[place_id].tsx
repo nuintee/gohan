@@ -33,27 +33,29 @@ import { colors } from '@/config/colors'
 import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 
-const DetailsPage = ({ id, details }: { id: string; details: any }) => {
+const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
+  const details = useDetails({ place_id: id })
   const activity = useGetActivity({ place_id: id })
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
-    return usePlacePhotos(details?.photos)
-  }, [details?.photos])
+    return usePlacePhotos(details.data?.photos)
+  }, [details.data?.photos])
 
   if (activity.isFetching && !activity.isFetched) return <DetailsLoadingFallback />
 
-  if (activity.isError) return <ErrorFallBack error={activity.error} />
+  if (activity.isError || details.isError)
+    return <ErrorFallBack error={activity.error || details.error} />
 
   return (
     <>
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
-          data={{ ...details, ...activity.data }}
+          data={{ ...details.data, ...activity.data }}
           isFetching={activity.isFetching}
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhoto.url}
@@ -72,11 +74,11 @@ const DetailsPage = ({ id, details }: { id: string; details: any }) => {
           ) : (
             <Promotion />
           )}
-          <DetailsDescriptiveGroup data={details} isLoading={false} />
-          <DetailsSectionGroup data={details} isLoading={false} />
+          <DetailsDescriptiveGroup data={details.data} isLoading={false} />
+          <DetailsSectionGroup data={details.data} isLoading={false} />
         </main>
       </div>
-      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details} onClose={clearLocalModal} />
+      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details.data} onClose={clearLocalModal} />
       <ReviewModal
         isOpen={checkIsOpen('REVIEW')}
         onClose={clearLocalModal}
@@ -85,7 +87,7 @@ const DetailsPage = ({ id, details }: { id: string; details: any }) => {
           memo: activity.data?.memo,
           status: activity.data?.reviewStatus,
           id: activity.data?.id,
-          place_id: details.place_id,
+          place_id: id,
         }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
@@ -103,13 +105,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   })
 
   await ssg.getActivity.prefetch({ place_id: query.place_id as string })
-  const details = await ssg.getDetails.fetch({ place_id: query.place_id as string })
+  await ssg.getDetails.prefetch({ place_id: query.place_id as string })
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
       id: query.place_id,
-      details,
     },
   }
 }
