@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Dispatch, HTMLAttributes, SetStateAction, useState } from 'react'
 
 type Props = {
-  direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top'
+  direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top' | 'top-right' | 'top-left'
   children?: JSX.Element
   ignored?: boolean
   controller?: JSX.Element
@@ -56,19 +56,23 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
   const directionClass = () => {
     switch (direction) {
       case 'left-top':
-        return 'right-full top-0 mr-2'
+        return { top: 0, right: 'calc(100% + 0.5rem)' }
       case 'left-bottom':
-        return 'right-full bottom-0 mr-2'
+        return { bottom: 0, right: 'calc(100% + 0.5rem)' }
       case 'top':
-        return 'right-0 bottom-full mb-2'
+        return { bottom: 'calc(100% + 0.5rem)', right: 0 }
+      case 'top-left':
+        return { bottom: 'calc(100% + 0.5rem)', left: 0 }
+      case 'top-right':
+        return { bottom: 'calc(100% + 0.5rem)', right: 0 }
       default:
-        return 'right-0 mt-2'
+        return { top: 'calc(100% + 0.5rem)', right: 0 }
     }
   }
 
   // styles
   const defaultStyle = `min-w-[10rem] bg-white shadow-sm border-[1px] border-gray-200 p-1 rounded-md flex flex-col`
-  const baseClassName = `peer absolute ${directionClass()} ${overrideStyle || defaultStyle}`
+  const baseClassName = `z-10 ${overrideStyle || defaultStyle}`
 
   const controllerUI = () => {
     if (controller) {
@@ -104,6 +108,10 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
           <motion.div
             onClick={() => setIsOpen(false)}
             className={baseClassName}
+            style={{
+              position: 'absolute',
+              ...directionClass(),
+            }}
             initial='exit'
             animate={isOpen ? 'enter' : 'exit'}
             variants={subMenuAnimate}
