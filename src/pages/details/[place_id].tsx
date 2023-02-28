@@ -33,7 +33,7 @@ import { colors } from '@/config/colors'
 import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 
-const DetailsPage = ({ id }: { id: string }) => {
+const DetailsPage = ({ id, details }: { id: string }) => {
   const { data: session, status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
@@ -41,6 +41,8 @@ const DetailsPage = ({ id }: { id: string }) => {
   const { data, isFetching, isError, error, refetch, isFetched } = useDetails({
     place_id: id,
   })
+
+  const activity = useGetActivity({ place_id: id })
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
@@ -84,10 +86,10 @@ const DetailsPage = ({ id }: { id: string }) => {
         onClose={clearLocalModal}
         onReviewSuccess={refetch}
         data={{
-          memo: data.memo,
-          status: data?.reviewStatus,
-          id: data?.id,
-          place_id: data?.place_id,
+          memo: activity.data.memo,
+          status: activity.data?.reviewStatus,
+          id: activity.data?.id,
+          place_id: activity.data?.place_id,
         }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
