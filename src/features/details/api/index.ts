@@ -14,18 +14,6 @@ export const getDetails = procedure
   .query(async ({ input, ctx }) => {
     const data = await getBareDetailsAPI({ place_id: input.place_id })
 
-    // let activity
-    // if (ctx.session?.user) {
-    //   activity = await ctx.prisma.activity.findUnique({
-    //     where: {
-    //       userId_place_id: {
-    //         userId: ctx.session.user.id,
-    //         place_id: input.place_id,
-    //       },
-    //     },
-    //   })
-    // }
-
     if (data.status === 'OK') {
       return data.result
     } else {
