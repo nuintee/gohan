@@ -33,8 +33,8 @@ import { colors } from '@/config/colors'
 import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 
-const DetailsPage = ({ id, details }: { id: string }) => {
-  const { data: session, status } = useSession()
+const DetailsPage = ({ id, details }: { id: string; details: any }) => {
+  const { status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
@@ -85,7 +85,7 @@ const DetailsPage = ({ id, details }: { id: string }) => {
           memo: activity.data?.memo,
           status: activity.data?.reviewStatus,
           id: activity.data?.id,
-          place_id: activity.data?.place_id,
+          place_id: details.place_id,
         }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
