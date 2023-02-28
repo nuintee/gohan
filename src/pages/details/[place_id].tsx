@@ -38,28 +38,24 @@ const DetailsPage = ({ id, details }: { id: string }) => {
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
-  const { data, isFetching, isError, error, refetch, isFetched } = useDetails({
-    place_id: id,
-  })
-
   const activity = useGetActivity({ place_id: id })
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
-    return usePlacePhotos(data?.photos)
-  }, [data?.photos])
+    return usePlacePhotos(details?.photos)
+  }, [details?.photos])
 
-  if (isFetching && !isFetched) return <DetailsLoadingFallback />
+  if (activity.isFetching && !activity.isFetched) return <DetailsLoadingFallback />
 
-  if (isError) return <ErrorFallBack error={error} />
+  if (activity.isError) return <ErrorFallBack error={activity.error} />
 
   return (
     <>
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
-          data={data}
-          isFetching={isFetching}
-          refetch={refetch}
+          data={{ ...details, ...activity.data }}
+          isFetching={activity.isFetching}
+          refetch={activity.refetch}
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
         />
@@ -68,25 +64,25 @@ const DetailsPage = ({ id, details }: { id: string }) => {
             <div className='flex-1 flex flex-col justify-between py-2'>
               <Texts
                 main='この場所についてのメモ'
-                sub={data?.memo || 'メモはまだありません。'}
+                sub={activity.data?.memo || 'メモはまだありません。'}
                 mainDecoration={<ToolTip text='評価からメモを追加可能です。' />}
-                subColor={data?.memo ? colors['gh-d-gray'] : colors['gh-gray']}
+                subColor={activity.data?.memo ? colors['gh-d-gray'] : colors['gh-gray']}
               />
             </div>
           ) : (
             <Promotion />
           )}
-          <DetailsDescriptiveGroup data={data} isLoading={false} />
-          <DetailsSectionGroup data={data} isLoading={false} />
+          <DetailsDescriptiveGroup data={details} isLoading={false} />
+          <DetailsSectionGroup data={details} isLoading={false} />
         </main>
       </div>
-      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={data} onClose={clearLocalModal} />
+      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details} onClose={clearLocalModal} />
       <ReviewModal
         isOpen={checkIsOpen('REVIEW')}
         onClose={clearLocalModal}
-        onReviewSuccess={refetch}
+        onReviewSuccess={activity.refetch}
         data={{
-          memo: activity.data.memo,
+          memo: activity.data?.memo,
           status: activity.data?.reviewStatus,
           id: activity.data?.id,
           place_id: activity.data?.place_id,
