@@ -1,15 +1,8 @@
 import { colors } from '@/config/colors'
 import analyze from 'rgbaster'
 
-const COLOR_RANGE = [
-  colors['gh-dark'],
-  colors['gh-l-blue'],
-  colors['gh-l-green'],
-  colors['gh-l-orange'],
-]
-
 async function getDominantColor(url: string) {
-  const FALLBACK_COLOR = COLOR_RANGE.random()
+  const FALLBACK_COLOR = colors['gh-dark']
 
   if (!url) return FALLBACK_COLOR
 
