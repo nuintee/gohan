@@ -57,7 +57,6 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
 
   return (
     <>
-      <p>color: {color}</p>
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
           data={{ ...details.data, ...activity.data }}
@@ -65,6 +64,7 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
+          color={color}
         />
         <main className='px-[10%]'>
           {status === 'authenticated' ? (
