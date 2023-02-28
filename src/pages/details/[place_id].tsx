@@ -104,12 +104,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
     transformer: superjson,
   })
 
-  await ssg.getActivity.prefetch({ userId: '', place_id: query.place_id as string })
+  await ssg.getActivity.prefetch({ place_id: query.place_id as string })
+  const details = await ssg.getDetails.fetch({ place_id: query.place_id as string })
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
       id: query.place_id,
+      details,
     },
   }
 }
