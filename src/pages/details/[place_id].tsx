@@ -117,7 +117,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res, 
     props: {
       trpcState: ssg.dehydrate(),
       id: query.place_id,
-      color: query.color || colors['gh-red'],
+      color: query.color || colors['gh-dark'],
     },
   }
 }
