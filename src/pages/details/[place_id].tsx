@@ -41,12 +41,18 @@ const DetailsPage = ({ id }: { id: string }) => {
   const details = useDetails({ place_id: id })
   const activity = useGetActivity({ place_id: id })
 
+  console.dir({
+    details: details.data,
+    activity: details.data,
+  })
+
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(details.data?.photos)
   }, [details.data?.photos])
 
-  if (activity.isFetching && !activity.isFetched) return <DetailsLoadingFallback />
+  if ((activity.isFetching && !activity.isFetched) || (details.isFetching && !details.isFetched))
+    return <DetailsLoadingFallback />
 
   if (activity.isError || details.isError)
     return <ErrorFallBack error={activity.error || details.error} />
@@ -104,12 +110,26 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
     transformer: superjson,
   })
 
-  await ssg.getActivity.prefetch({ place_id: query.place_id as string })
-  await ssg.getDetails.prefetch({ place_id: query.place_id as string })
+  // try {
+  //   await ssg.getActivity.prefetch({ place_id: query.place_id as string })
+  //   await ssg.getDetails.prefetch({ place_id: query.place_id as string })
 
+  //   return {
+  //     props: {
+  //       trpcState: ssg.dehydrate(),
+  //       id: query.place_id,
+  //     },
+  //   }
+  // } catch (error) {
+  //   console.er
+  //   return {
+  //     props: {
+  //       id: query.place_id,
+  //     },
+  //   }
+  // }
   return {
     props: {
-      trpcState: ssg.dehydrate(),
       id: query.place_id,
     },
   }
