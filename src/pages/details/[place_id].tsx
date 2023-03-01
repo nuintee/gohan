@@ -32,7 +32,7 @@ import ToolTip from '@/components/ui/Tootltip'
 import { colors } from '@/config/colors'
 import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
-import Head from 'next/head'
+import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 
 const DetailsPage = ({ id, color }: { id: string; color: string }) => {
@@ -59,9 +59,13 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
 
   return (
     <>
-      <Head>
-        <title>Gohan | {details.data?.name || ROUTES.DETAILS.label}</title>
-      </Head>
+      <Head
+        title={details.data?.name || ROUTES.DETAILS.label}
+        description={details.data?.editorial_summary?.overview}
+        keyword={details.data?.types?.join(',')}
+        image={memorizedPhoto.url}
+        url={ROUTES.DETAILS.path}
+      />
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
           data={{ ...details.data, ...activity.data }}

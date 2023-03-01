@@ -1,17 +1,17 @@
 import H from 'next/head'
 
 type Props = {
-  title: string
-  description: string
-  keyword: string
-  image: string
-  url: string
+  title?: string
+  description?: string
+  keyword?: string
+  image?: string
+  url?: string
 }
 
-const Head = ({ title, description, keyword, image, url }: Props) => {
+const Head = ({ title = '', description = '', keyword = '', image = '', url = '' }: Props) => {
   return (
     <H>
-      <title>{title}</title>
+      <title>Gohan | {title}</title>
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta name='keywords' content={keyword} />
@@ -26,3 +26,5 @@ const Head = ({ title, description, keyword, image, url }: Props) => {
     </H>
   )
 }
+
+export default Head
