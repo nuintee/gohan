@@ -48,6 +48,7 @@ const SearchLayout = ({
     latitude: gps.coords.latitude,
     longitude: gps.coords.longitude,
     trigger,
+    errorCallback: (e) => onClose && onClose(),
   })
 
   // Style

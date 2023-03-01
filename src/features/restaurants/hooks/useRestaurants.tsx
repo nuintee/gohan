@@ -12,6 +12,7 @@ const useRestaurants = ({
   ...rest
 }: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
   successCallback?: (data: ResultsEntity) => void
+  errorCallback?: (error: Error) => void
   trigger?: boolean
 }) => {
   const { status, data: session } = useSession()
@@ -33,6 +34,7 @@ const useRestaurants = ({
 
           useToast.error(message)
         }
+        rest.errorCallback && rest.errorCallback(error)
       }
     },
     onSuccess: async (data) => {
