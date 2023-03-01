@@ -1,6 +1,9 @@
 import { TRPCError } from '@trpc/server'
 import { middleware } from './trpc'
 
+// config
+import { API_RATE_LIMIT } from '@/config/env'
+
 // Limiting
 import LRU from 'lru-cache'
 
@@ -26,7 +29,6 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
 
 export const isAPIRateLimited = middleware(async ({ next, ctx }) => {
   const { req, res } = ctx
-  const LIMIT = 1
 
   const ip = req.socket.remoteAddress
 
@@ -35,7 +37,7 @@ export const isAPIRateLimited = middleware(async ({ next, ctx }) => {
   const currentUsage = tokenCount + 1
   tokenCache.set(ip, currentUsage)
 
-  const isRateLimited = currentUsage > LIMIT
+  const isRateLimited = currentUsage > Number(API_RATE_LIMIT)
 
   if (isRateLimited) {
     throw new TRPCError({

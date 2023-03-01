@@ -13,3 +13,4 @@ export const AUTH0_AUDIENCE = process.env.NEXT_PUBLIC_AUTH0_AUDIENCE as string
 export const GCP_CLIENT_ID = process.env.NEXT_PUBLIC_GCP_CLIENT_ID as string
 export const GCP_CLIENT_SECRET = process.env.NEXT_PUBLIC_GCP_CLIENT_SECRET as string
 export const NEXT_AUTH_SECRET = process.env.NEXT_PUBLIC_AUTH_SECRET
+export const API_RATE_LIMIT = process.env.NEXT_PUBLIC_API_RATE_LIMIT as string
