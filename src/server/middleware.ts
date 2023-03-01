@@ -37,7 +37,7 @@ export const isAPIRateLimited = middleware(async ({ next, ctx }) => {
   const currentUsage = tokenCount + 1
   tokenCache.set(ip, currentUsage)
 
-  const isRateLimited = currentUsage > Number(0)
+  const isRateLimited = currentUsage > Number(API_RATE_LIMIT || 10)
 
   if (isRateLimited) {
     throw new TRPCError({
