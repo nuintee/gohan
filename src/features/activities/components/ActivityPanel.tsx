@@ -51,7 +51,11 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     return <ErrorFallBack error={query.error} />
   }
 
-  if ((query.data && query.data?.length <= 0) || deletedContents.length > 0) {
+  console.log('QUERY', query.data?.length)
+  console.log('DELETED', deletedContents.length)
+
+  if ((query.data && query.data?.length <= 0) || deletedContents.length === query.data?.length) {
+    console.log({ deletedContents })
     return (
       <div className='flex-1 p-4 flex items-center justify-center'>
         <Texts
