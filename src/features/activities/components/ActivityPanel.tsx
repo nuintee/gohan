@@ -34,7 +34,7 @@ const ContentsRenderer = ({
 }) => {
   const { onActivityClicked, mapbox } = useMapBox()
 
-  if (userActivities.isFetching) {
+  if (userActivities.isFetching && !userActivities.isFetched) {
     const COUNT = 3
 
     return Array(COUNT)
