@@ -62,6 +62,7 @@ const User = (props: UserProps) => {
           alt='Profile Image'
           className='h-full w-full'
           disabled
+          referrerPolicy='no-referrer'
         />
       ) : isLoading ? (
         <PulseLoader color={colors['gh-l-gray']} loading={true} size={5} speedMultiplier={0.5} />
