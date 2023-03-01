@@ -56,10 +56,6 @@ export const MainLayout = ({
 
   return (
     <>
-      <Head>
-        {/* <title>Gohan {process.env.NODE_ENV != 'production' && `| ${process.env.NODE_ENV}`}</title> */}
-        <title>Gohan | {mapNavigationRoutes(router.pathname).label}</title>
-      </Head>
       <div className='flex flex-col h-full w-full relative'>
         <Header />
         <div className='flex-1 h-full w-full flex flex-col relative'>{children}</div>
