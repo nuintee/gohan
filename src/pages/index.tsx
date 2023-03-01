@@ -3,9 +3,16 @@ import type { NextPageContext } from 'next'
 import { MainLayout } from '@/layouts/layout'
 import SearchLayout from '@/features/search/components/SearchLayout'
 import { ReactElement } from 'react'
+import Head from '@/components/meta/Head'
+import { ROUTES } from '@/constants/routes'
 
 const Index = () => {
-  return <SearchLayout />
+  return (
+    <>
+      <Head title={ROUTES.HOME.label} />
+      <SearchLayout />
+    </>
+  )
 }
 
 Index.getLayout = function getLayout(page: ReactElement) {
