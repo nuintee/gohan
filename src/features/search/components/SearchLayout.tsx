@@ -84,14 +84,11 @@ const SearchLayout = ({
         disabled={restaurants.isFetching || gps.isFetching}
       />
       <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
-      {/* {restaurants.isFetching && (
+      {restaurants.isFetching && (
         <div className='absolute mt-4 bottom-8'>
           <Button text='キャンセル' onClick={handleCancel} outline />
         </div>
-      )} */}
-      <div className='absolute left-0 mt-4 bottom-8'>
-        <Button text='キャンセル' onClick={handleCancel} outline />
-      </div>
+      )}
     </div>
   )
 }

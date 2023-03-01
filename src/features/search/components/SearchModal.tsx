@@ -12,7 +12,7 @@ const SearchModal = ({
 }) => {
   return (
     <SlideInLayout isOpen={isOpen} direction={'y'} maxWidth={'100%'}>
-      <SearchLayout trigger={false} onClose={onClose} />
+      <SearchLayout trigger={trigger} onClose={onClose} />
     </SlideInLayout>
   )
 }
