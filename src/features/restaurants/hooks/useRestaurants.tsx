@@ -33,8 +33,8 @@ const useRestaurants = ({
           const message = isGPSError ? `Please allow user geolocaiton tracking` : error.message
 
           useToast.error(message)
+          rest.errorCallback && rest.errorCallback(error)
         }
-        rest.errorCallback && rest.errorCallback(error)
       }
     },
     onSuccess: async (data) => {
