@@ -20,6 +20,11 @@ class MyDocument extends Document {
             href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
             rel='stylesheet'
           />
+          <link rel='shortcut icon' href={'https://t-cr.jp/favicon.ico'} />
+          <link rel='apple-touch-icon' href={'https://t-cr.jp/logo.png'} />
+          <meta name='twitter:card' content='summary' />
+          <meta name='twitter:site' content='@tcr_jp' />
+          <meta property='og:type' content='blog' />
         </Head>
         <body>
           <Main />
