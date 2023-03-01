@@ -20,10 +20,12 @@ const DetailsSectionGroup = ({
   isLoading: boolean
 }) => {
   const { onActivityClicked, mapbox } = useMapBox()
-  const { gps, isGPSFetching } = useGPS()
+  const { gps, isGPSFetching, isGPSError } = useGPS()
 
   const distanceDecoration = () => {
     if (isGPSFetching) return '位置情報を取得中'
+
+    if (isGPSError) return ''
 
     const distance = haversineDistance(gps.coords, {
       lat: data?.geometry?.location.lat,
