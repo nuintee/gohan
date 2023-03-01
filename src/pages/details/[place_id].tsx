@@ -32,6 +32,7 @@ import ToolTip from '@/components/ui/Tootltip'
 import { colors } from '@/config/colors'
 import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
+import Head from 'next/head'
 
 const DetailsPage = ({ id, color }: { id: string; color: string }) => {
   const { status } = useSession()
@@ -57,6 +58,9 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
 
   return (
     <>
+      <Head>
+        <title>Gohan | {details.data?.name}</title>
+      </Head>
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
           data={{ ...details.data, ...activity.data }}
