@@ -33,7 +33,7 @@ import { colors } from '@/config/colors'
 import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 
-const DetailsPage = ({ id }: { id: string }) => {
+const DetailsPage = ({ id, color }: { id: string; color: string }) => {
   const { status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
@@ -64,6 +64,7 @@ const DetailsPage = ({ id }: { id: string }) => {
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
+          color={color}
         />
         <main className='px-[10%]'>
           {status === 'authenticated' ? (
@@ -99,8 +100,9 @@ const DetailsPage = ({ id }: { id: string }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, req, res, params }) => {
   console.log({ query })
+  console.log({ params })
 
   const ssg = createProxySSGHelpers({
     router: appRouter,
@@ -115,6 +117,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
     props: {
       trpcState: ssg.dehydrate(),
       id: query.place_id,
+      color: query.color || colors['gh-dark'],
     },
   }
 }

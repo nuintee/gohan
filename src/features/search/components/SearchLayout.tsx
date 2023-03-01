@@ -1,11 +1,24 @@
-import { GohanButton } from '@/components/ui'
+import { Button, GohanButton } from '@/components/ui'
 import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useGPS from '@/hooks/gps'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import LocationLoader from './LocationLoader'
 
-const SearchLayout = ({ trigger = false }: { trigger?: boolean }) => {
+const SearchLayout = ({
+  trigger = false,
+  onClose,
+}: {
+  trigger?: boolean
+  onClose?: () => void
+}) => {
+  const queryClient = useQueryClient()
   const { gps, updateGeolocationStatus, updateSafeGeolocation } = useGPS()
+
+  const handleCancel = () => {
+    queryClient.cancelQueries()
+    onClose && onClose()
+  }
 
   useEffect(() => {
     if (!gps.isFetching) return
@@ -71,6 +84,11 @@ const SearchLayout = ({ trigger = false }: { trigger?: boolean }) => {
         disabled={restaurants.isFetching || gps.isFetching}
       />
       <LocationLoader isLoading={gps.isFetching} isError={gps.isError} error={gps.error} />
+      {restaurants.isFetching && (
+        <div className='absolute mt-4 bottom-8'>
+          <Button text='キャンセル' onClick={handleCancel} outline />
+        </div>
+      )}
     </div>
   )
 }

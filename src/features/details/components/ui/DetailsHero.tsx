@@ -29,6 +29,7 @@ const DetailsHero = (
   props: {
     memorizedImgURL: string
     modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
+    color?: string
   } & Pick<Awaited<ReturnType<typeof useGetActivity>>, 'data' | 'isFetching' | 'refetch'>,
 ) => {
   const isOverSmall = useMediaQuery('sm')
@@ -50,7 +51,7 @@ const DetailsHero = (
   return (
     <>
       {/* {ui()} */}
-      <Cover color={'black'} />
+      <Cover color={props.color} />
       <div className={theme.container}>
         <div className={theme.subContainer}>
           <ImageChip
