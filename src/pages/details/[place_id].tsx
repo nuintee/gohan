@@ -66,7 +66,7 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
           modalSetter={openLocalModal}
           color={color}
         />
-        <main className='px-[10%]'>
+        <main className='sm:px-[10%] px-4'>
           {status === 'authenticated' ? (
             <div className='flex-1 flex flex-col justify-between py-2'>
               <Texts
