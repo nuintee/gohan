@@ -1,9 +1,12 @@
 import { GohanButton, PanelHeader } from '@/components/ui'
 import Header from '@/components/ui/Header'
+import { ROUTES } from '@/constants/routes'
 import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
+import { mapNavigationRoutes } from '@/utils/mapNavigationRoutes'
+import Head from 'next/head'
 
 type LayoutProps = {
   readonly children: JSX.Element
@@ -49,6 +52,10 @@ export const MainLayout = ({
 
   return (
     <>
+      <Head>
+        {/* <title>Gohan {process.env.NODE_ENV != 'production' && `| ${process.env.NODE_ENV}`}</title> */}
+        <title>Gohan | {mapNavigationRoutes('/').label}</title>
+      </Head>
       <div className='flex flex-col h-full w-full relative'>
         <Header />
         <div className='flex-1 h-full w-full flex flex-col relative'>{children}</div>
