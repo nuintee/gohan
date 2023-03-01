@@ -19,6 +19,7 @@ import SlideInLayout from '@/layouts/SlideInLayout'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import ActivityStatus from './ActivityStatus'
 import useMediaQuery from '@/hooks/mediaquery'
+import ErrorFallBack from '@/components/fallback/ErrorFallback'
 
 type Props = {
   isOpen?: boolean
@@ -41,6 +42,10 @@ const ContentsRenderer = ({
       .map((v) => (
         <div className='bg-gh-l-gray h-24 w-full animate-pulse rounded-md m-4 mb-0' key={v}></div>
       ))
+  }
+
+  if (userActivities.isError) {
+    return <ErrorFallBack error={userActivities.error} />
   }
 
   if (userActivities.data && userActivities.data?.length <= 0) {
