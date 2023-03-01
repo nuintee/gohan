@@ -39,7 +39,7 @@ const ContentsRenderer = ({
     return Array(COUNT)
       .fill(null)
       .map((v) => (
-        <div className='bg-gh-l-gray h-24 w-[20rem] animate-pulse rounded-md m-4 mb-0'></div>
+        <div className='bg-gh-l-gray h-24 w-full animate-pulse rounded-md m-4 mb-0' key={v}></div>
       ))
   }
 
