@@ -1,9 +1,16 @@
 import h from 'haversine-distance'
 
-type Point = Parameters<typeof h>[number]
+type Point = Parameters<typeof h>[0]
 
 const calculateDistance = (a: Point, b: Point, withUnit?: boolean) => {
-  if (!a || !b) return ''
+  if (!a || !b)
+    return {
+      meter: '',
+      mile: '',
+      killo: '',
+      yard: '',
+      auto: '',
+    }
 
   const meter = h(a, b)
   const mile = meter * 0.000621371 //

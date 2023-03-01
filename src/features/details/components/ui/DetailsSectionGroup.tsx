@@ -5,6 +5,8 @@ import { ActivityResolved } from '@/features/activities/types'
 import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
+import useGPS from '@/hooks/gps'
+import haversineDistance from '@/libs/haversine-distance'
 import { useRouter } from 'next/router'
 import DetailsSection from '../../layouts/DetailsSection'
 import KeyFeaturesSection from './KeyFeaturesSection'
@@ -18,6 +20,18 @@ const DetailsSectionGroup = ({
   isLoading: boolean
 }) => {
   const { onActivityClicked, mapbox } = useMapBox()
+  const { gps, isGPSFetching } = useGPS()
+
+  const distanceDecoration = () => {
+    if (isGPSFetching) return '位置情報を取得中'
+
+    const distance = haversineDistance(gps.coords, {
+      lat: data?.geometry?.location.lat,
+      lng: data?.geometry?.location.lng,
+    })
+
+    return distance.auto
+  }
 
   return (
     <>
@@ -29,7 +43,7 @@ const DetailsSectionGroup = ({
         isLoading={isLoading}
         allowCopy
         copyValue={data?.vicinity}
-        mainDecoration={<p>2KM先</p>}
+        mainDecoration={distanceDecoration() && <p>{distanceDecoration()}</p>}
       >
         <div className='flex-1 aspect-video w-full relative'>
           <MapBoxChip
