@@ -32,13 +32,16 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   const [deletedContents, setDeletedContents] = useState([])
 
   if (query.isFetching && !query.isFetched) {
-    const COUNT = 3
-
-    return Array(COUNT)
-      .fill(null)
-      .map((v) => (
-        <div className='bg-gh-l-gray h-24 w-full animate-pulse rounded-md m-4 mb-0' key={v}></div>
-      ))
+    return (
+      <div className='flex flex-col flex-1'>
+        {...[Array(3).keys()].map((v, i) => (
+          <div
+            className='bg-gh-l-gray max-h-24 flex-1 animate-pulse rounded-md m-4 mb-0'
+            key={i}
+          ></div>
+        ))}
+      </div>
+    )
   }
 
   if (query.isError) {
