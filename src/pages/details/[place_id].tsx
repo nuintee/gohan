@@ -110,8 +110,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res, 
     transformer: superjson,
   })
 
-  await ssg.getActivity.prefetch({ place_id: query.place_id as string })
-  await ssg.getDetails.prefetch({ place_id: query.place_id as string })
+  const tasks = [ssg.getActivity, ssg.getDetails]
+
+  await Promise.all(
+    tasks.map(async (v) => await v.prefetch({ place_id: query.place_id as string })),
+  )
 
   return {
     props: {
