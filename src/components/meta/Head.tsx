@@ -11,7 +11,7 @@ type Props = {
 const Head = ({ title = '', description = '', keyword = '', image = '', url = '' }: Props) => {
   return (
     <H>
-      <title>Gohan | {title}</title>
+      <title>Gohan {title && `| ${title}`}</title>
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta name='keywords' content={keyword} />
