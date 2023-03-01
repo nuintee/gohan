@@ -51,9 +51,6 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     return <ErrorFallBack error={query.error} />
   }
 
-  console.log('QUERY', query.data?.length)
-  console.log('DELETED', deletedContents.length)
-
   if ((query.data && query.data?.length <= 0) || deletedContents.length === query.data?.length) {
     console.log({ deletedContents })
     return (
