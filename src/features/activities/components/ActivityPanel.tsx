@@ -32,9 +32,14 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   const [deletedContents, setDeletedContents] = useState([])
 
   if (query.isFetching && !query.isFetched) {
+    const COUNT = 3
+    const DUMMIES = [...Array(COUNT).keys()]
+
+    console.log(DUMMIES)
+
     return (
       <div className='flex flex-col flex-1'>
-        {...[Array(3).keys()].map((v, i) => (
+        {DUMMIES.map((v, i) => (
           <div
             className='bg-gh-l-gray max-h-24 flex-1 animate-pulse rounded-md m-4 mb-0'
             key={i}
