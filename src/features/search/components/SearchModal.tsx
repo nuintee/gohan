@@ -18,7 +18,7 @@ const SearchModal = ({
         ...(isOpen && { zIndex: '1000', top: '0' }),
       }}
     >
-      <SearchLayout trigger={trigger} />
+      <SearchLayout trigger={trigger} onClose={onClose} />
     </div>
   )
 }

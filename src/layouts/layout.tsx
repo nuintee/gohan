@@ -66,7 +66,13 @@ export const MainLayout = ({
       </div>
       <UserProfileModal />
       <UserDeletionModal />
-      {!disableSearch && <SearchModal isOpen={isSearchModalOpen} trigger={isSearchModalOpen} />}
+      {!disableSearch && (
+        <SearchModal
+          isOpen={isSearchModalOpen}
+          onClose={() => manageSearchModal(false)}
+          trigger={isSearchModalOpen}
+        />
+      )}
     </>
   )
 }
