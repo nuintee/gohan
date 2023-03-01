@@ -27,14 +27,11 @@ type Props = {
   query?: ReturnType<typeof useGetUserActivities>
 }
 
-const ContentsRenderer = ({
-  userActivities,
-}: {
-  userActivities: ReturnType<typeof useGetUserActivities>
-}) => {
+const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
+  const [deletedContents, setDeletedContents] = useState([])
 
-  if (userActivities.isFetching && !userActivities.isFetched) {
+  if (query.isFetching && !query.isFetched) {
     const COUNT = 3
 
     return Array(COUNT)
@@ -44,11 +41,11 @@ const ContentsRenderer = ({
       ))
   }
 
-  if (userActivities.isError) {
-    return <ErrorFallBack error={userActivities.error} />
+  if (query.isError) {
+    return <ErrorFallBack error={query.error} />
   }
 
-  if (userActivities.data && userActivities.data?.length <= 0) {
+  if ((query.data && query.data?.length <= 0) || deletedContents.length > 0) {
     return (
       <div className='flex-1 p-4 flex items-center justify-center'>
         <Texts
@@ -63,23 +60,27 @@ const ContentsRenderer = ({
 
   return (
     <div className='flex-1 flex flex-col  overflow-auto p-2 pb-20'>
-      {userActivities.data?.map((activity, index, original) => (
-        <div className='flex gap-2 items-center justify-between' key={activity.id}>
-          <RestaurantBoard
-            data={activity}
-            onClick={() => onActivityClicked(activity)}
-            isFocused={mapbox.focusedPlaceId === activity.place_id}
-            isLocked={false}
-          />
-          <ActivityDropDown
-            activity={activity}
-            onMutated={() => userActivities.refetch()}
-            direction={
-              original.length > 1 && index === original.length - 1 ? 'left-bottom' : 'bottom'
-            }
-          />
-        </div>
-      ))}
+      {query.data
+        ?.filter((v) => !deletedContents.includes(v.id))
+        .map((activity, index, original) => (
+          <div className='flex gap-2 items-center justify-between' key={activity.id}>
+            <RestaurantBoard
+              data={activity}
+              onClick={() => onActivityClicked(activity)}
+              isFocused={mapbox.focusedPlaceId === activity.place_id}
+              isLocked={false}
+            />
+            <ActivityDropDown
+              activity={activity}
+              onMutated={() => {
+                setDeletedContents((prev) => [...prev, activity.id])
+              }}
+              direction={
+                original.length > 1 && index === original.length - 1 ? 'left-bottom' : 'bottom'
+              }
+            />
+          </div>
+        ))}
     </div>
   )
 }
@@ -93,14 +94,14 @@ const ActivityPanel = () => {
   const maxWidth = !isOverSmall ? '20rem' : '30rem'
 
   // Query
-  const getUserAll = useGetUserActivities()
+  const query = useGetUserActivities()
 
   return (
     <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>
       <>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>
-        <ContentsRenderer userActivities={getUserAll} />
+        <ContentsRenderer query={query} />
       </>
     </SlideInLayout>
   )
