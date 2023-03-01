@@ -458,7 +458,8 @@
       "types": ["post_office", "finance", "point_of_interest", "establishment"],
       "user_ratings_total": 31,
       "vicinity": "ж.к. Дружба 304Б, 304-Б, Sofia",
-      "price_level": 3
+      "price_level": 3,
+      "delivery": true
     },
     {
       "business_status": "OPERATIONAL",
