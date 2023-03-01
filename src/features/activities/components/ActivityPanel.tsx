@@ -35,8 +35,6 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     const COUNT = 3
     const DUMMIES = [...Array(COUNT).keys()]
 
-    console.log(DUMMIES)
-
     return (
       <div className='flex flex-col flex-1'>
         {DUMMIES.map((v, i) => (
