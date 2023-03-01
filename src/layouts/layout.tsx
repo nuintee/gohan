@@ -6,7 +6,6 @@ import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
-import { mapNavigationRoutes } from '@/utils/mapNavigationRoutes'
 import { useRouter } from 'next/router'
 
 type LayoutProps = {
