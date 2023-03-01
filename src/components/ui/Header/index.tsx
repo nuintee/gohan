@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <>
-      <div className='flex gap-4 bg-gh-brown justify-between px-[10%] w-full items-center sm:items-stretch'>
+      <div className='flex gap-4 bg-gh-brown justify-between sm:px-[10%] px-4 w-full items-center sm:items-stretch'>
         <Brand margin={true} />
         {isOverSmall && <NavLink href={ROUTES.LIBRARY.path} label={ROUTES.LIBRARY.label} />}
         <div className={`flex items-center ${!isOverSmall && 'ml-auto'}`}>
