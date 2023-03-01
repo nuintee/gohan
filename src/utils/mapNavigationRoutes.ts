@@ -14,6 +14,6 @@ export const mapNavigationRoutes = (key: RouteKey | RoutePath) => {
         return key.includes(ROUTES[v as RouteKey].path)
       }
     })
-    return ROUTES[foundKey as RouteKey]
+    return ROUTES[foundKey as RouteKey] || { label: key }
   }
 }
