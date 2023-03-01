@@ -7,7 +7,9 @@ import { IS_TESTMODE } from '@/config/env'
 // data
 import { user } from './user'
 
-export const _testActivity: Required<Omit<AddActivityProps, 'activityId'> & { id: string }> = {
+export const _testActivity: Required<
+  Omit<AddActivityProps, 'activityId'> & { id: string; userId: string }
+> = {
   id: 'd30b89de-6743-4d51-b6f0-b7865926b8d6', // random generated uuid
   userId: user.id,
   memo: 'Good',
