@@ -13,6 +13,8 @@ import MapBox from '@/features/mapbox/components/MapBox'
 import { useQueryClient } from '@tanstack/react-query'
 import { Router, useRouter } from 'next/router'
 import useMapBox from '@/features/mapbox/hooks'
+import Head from '@/components/meta/Head'
+import { ROUTES } from '@/constants/routes'
 
 Router.events.on('routeChangeStart', (e) => {
   console.time('start')
@@ -29,6 +31,7 @@ const LibraryPage = () => {
 
   return (
     <>
+      <Head title={ROUTES.LIBRARY.label} url={ROUTES.DETAILS.label} />
       <main className='relative flex-1 bg-gh-l-gray'>
         <section className='absolute top-4 right-4 z-[1]'>
           <AcitvityButton />
