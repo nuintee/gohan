@@ -47,4 +47,15 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
   })
 })
 
-export const isAPIRateLimited = middleware(rateLimit({ windowMs: 60 * 1000, max: 1 }))
+export const isAPIRateLimited = middleware(({ next, ctx }) => {
+  try {
+    rateLimit({ windowMs: 60 * 1000, max: 2 })
+    return next()
+  } catch (error) {
+    console.error(error)
+    throw new TRPCError({
+      code: 'TOO_MANY_REQUESTS',
+      message: error.message,
+    })
+  }
+})

@@ -18,5 +18,7 @@ export async function createContext(opts: CreateNextContextOptions) {
   return {
     session,
     prisma,
+    req: opts.req,
+    res: opts.res,
   }
 }
