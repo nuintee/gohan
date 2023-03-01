@@ -29,6 +29,7 @@ const DetailsSectionGroup = ({
         isLoading={isLoading}
         allowCopy
         copyValue={data?.vicinity}
+        mainDecoration={<p>1</p>}
       >
         <div className='flex-1 aspect-video w-full relative'>
           <MapBoxChip

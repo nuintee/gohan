@@ -75,9 +75,8 @@ const Texts = (props: Props) => {
             {main || 'Name'}
           </h1>
 
-          {allowCopy && <CopyButton copyColor={copyColor} copyValue={copyValue} />}
-
           {mainDecoration}
+          {allowCopy && <CopyButton copyColor={copyColor} copyValue={copyValue} />}
         </div>
         <div className='flex gap-4'>
           <p
