@@ -45,7 +45,9 @@ const DetailsSectionGroup = ({
         isLoading={isLoading}
         allowCopy
         copyValue={data?.vicinity}
-        mainDecoration={distanceDecoration() && <p>{distanceDecoration()}</p>}
+        mainDecoration={
+          distanceDecoration() && <p className='text-gh-gray'>{distanceDecoration()}</p>
+        }
       >
         <div className='flex-1 aspect-video w-full relative'>
           <MapBoxChip
