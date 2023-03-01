@@ -35,6 +35,7 @@ const DetailsSectionGroup = ({
             latitude={data?.geometry?.location.lat}
             longitude={data?.geometry?.location.lng}
             dragPan={true}
+            scrollZoom={true}
           >
             <Pin
               latitude={data?.geometry?.location.lat}
