@@ -7,6 +7,7 @@ import UserDeletionModal from '@/features/user/components/UserDeletionModal'
 import UserProfileModal from '@/features/user/components/UserProfileModal'
 import { mapNavigationRoutes } from '@/utils/mapNavigationRoutes'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 type LayoutProps = {
   readonly children: JSX.Element
@@ -38,6 +39,9 @@ export const MainLayout = ({
   searchButtonPosition = 'bottom-right',
 }: LayoutProps) => {
   const { isSearchModalOpen, manageSearchModal } = useSearch()
+  const router = useRouter()
+
+  console.log(router)
 
   const buttonPosition = () => {
     switch (searchButtonPosition) {
@@ -54,7 +58,7 @@ export const MainLayout = ({
     <>
       <Head>
         {/* <title>Gohan {process.env.NODE_ENV != 'production' && `| ${process.env.NODE_ENV}`}</title> */}
-        <title>Gohan | {mapNavigationRoutes('/').label}</title>
+        <title>Gohan | {mapNavigationRoutes(router.pathname).label}</title>
       </Head>
       <div className='flex flex-col h-full w-full relative'>
         <Header />

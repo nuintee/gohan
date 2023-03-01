@@ -8,8 +8,12 @@ export const mapNavigationRoutes = (key: RouteKey | RoutePath) => {
     // obj key
     return ROUTES[key as RouteKey]
   } else {
-    // path
-    const foundKey = Object.keys(ROUTES).find((v) => ROUTES[v]['path'] === key)
-    return ROUTES[(foundKey as RouteKey) || 'HOME']
+    if (key === '/') return ROUTES.HOME
+    const foundKey = Object.keys(ROUTES).find((v) => {
+      if (ROUTES[v as RouteKey].path !== '/') {
+        return key.includes(ROUTES[v as RouteKey].path)
+      }
+    })
+    return ROUTES[foundKey as RouteKey]
   }
 }
