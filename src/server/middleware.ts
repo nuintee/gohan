@@ -28,23 +28,23 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
 })
 
 export const isAPIRateLimited = middleware(async ({ next, ctx }) => {
-  const { req, res } = ctx
+  // const { req, res } = ctx
 
-  const ip = req.socket.remoteAddress
+  // const ip = req.socket.remoteAddress
 
-  const tokenCount = tokenCache.get(ip) || 0
+  // const tokenCount = tokenCache.get(ip) || 0
 
-  const currentUsage = tokenCount + 1
-  tokenCache.set(ip, currentUsage)
+  // const currentUsage = tokenCount + 1
+  // tokenCache.set(ip, currentUsage)
 
-  const isRateLimited = currentUsage > Number(API_RATE_LIMIT || 10)
+  // const isRateLimited = currentUsage > Number(API_RATE_LIMIT || 10)
 
-  if (isRateLimited) {
-    throw new TRPCError({
-      code: 'TOO_MANY_REQUESTS',
-      message: 'API通信回数制限を超えました。',
-    })
-  }
+  // if (isRateLimited) {
+  //   throw new TRPCError({
+  //     code: 'TOO_MANY_REQUESTS',
+  //     message: 'API通信回数制限を超えました。',
+  //   })
+  // }
 
   return next()
 })
