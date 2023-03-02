@@ -41,6 +41,7 @@
     "@trpc/react-query": "^10.10.0",
     "@trpc/server": "^10.10.0",
     "axios": "^1.2.3",
+    "buffer": "^6.0.3",
     "dayjs": "^1.11.7",
     "framer-motion": "^9.0.4",
     "haversine-distance": "^1.2.1",

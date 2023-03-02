@@ -2,6 +2,8 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { IS_STAGING } from './config/env'
 
+import { Buffer } from 'buffer'
+
 const BASIC_AUTH_USER = 'USER'
 const BASIC_AUTH_PASSWORD = 'PSSWRD'
 
