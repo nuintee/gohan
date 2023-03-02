@@ -12,6 +12,7 @@ const useDiscoveredNavigation = () => {
   const router = useRouter()
 
   const navigate = async (data) => {
+    console.log('data in navigate', data)
     if (data) {
       const url = new URL(`${BASE_URL}/${ROUTES.DISCOVER.path}`)
       url.searchParams.append('place_id', encodeURIComponent(data.place_id))
@@ -21,7 +22,7 @@ const useDiscoveredNavigation = () => {
         'sub',
         encodeURIComponent(data?.editorial_summary?.overview || (data.types?.join('・') as string)),
       )
-      router.push(url.toString(), `${ROUTES.DETAILS.path}/${data.place_id}`)
+      router.push(url.toString())
     }
   }
 
