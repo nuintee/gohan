@@ -26,7 +26,7 @@ class MyDocument extends Document {
           <meta name='twitter:card' content='summary' />
           <meta name='twitter:site' content='@tcr_jp' />
           <meta property='og:type' content='blog' />
-          {IS_STAGING && <meta name='robots' content='noindex' />}
+          {IS_STAGING === 'true' && <meta name='robots' content='noindex' />}
         </Head>
         <body>
           <Main />
