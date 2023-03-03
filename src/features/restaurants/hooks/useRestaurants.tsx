@@ -3,7 +3,6 @@ import useGPS from '@/hooks/gps'
 import useToast from '@/libs/react-toastify'
 import { trpc } from '@/libs/trpc'
 import { useSession } from 'next-auth/react'
-import { ResultsEntity } from '../types'
 
 import useDiscoveredNavigation from './useDiscoveredNavigation'
 
@@ -11,7 +10,7 @@ const useRestaurants = ({
   trigger = false,
   ...rest
 }: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
-  successCallback?: (data: ResultsEntity) => void
+  successCallback?: <T extends {}>(data: T) => void
   errorCallback?: (error: Error) => void
   trigger?: boolean
 }) => {

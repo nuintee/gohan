@@ -14,7 +14,7 @@ import { useMemo } from 'react'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 
 const RestaurantBoard = (props: RestaurantProps) => {
-  const { data, isLocked, distance, isLoading, onLike, onClick, onNavigate, isFocused } = props
+  const { data, onClick, isFocused } = props
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
