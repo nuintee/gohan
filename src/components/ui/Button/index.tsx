@@ -92,21 +92,41 @@ const Button = (props: Props) => {
     }
   }
 
+  const backgroundColor = () => {
+    if (disabled) {
+      return colors['gh-gray']
+    } else if (outline) {
+      return 'transparent'
+    } else if (danger) {
+      return outline ? 'transparent' : colors['gh-red']
+    }
+  }
+
+  const outlineColor = () => {
+    if (!outline || disabled) return ''
+
+    if (danger) {
+      return colors['gh-red']
+    } else {
+      return colors['gh-white']
+    }
+  }
+
   return (
     <button
       onClick={onClick}
-      className={` text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border ${
+      className={` text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border duration-700 ${
         outline
-          ? 'active:bg-gh-white hover:bg-gh-white bg-transparent'
+          ? 'active:bg-gh-white border-[1px] border-gh-white hover:bg-gh-white bg-transparent text-gh-gray'
           : ' active:bg-opacity-90 bg-gh-dark hover:bg-opacity-90'
-      }`}
+      } ${disabled && 'bg-gh-d-gray hover:bg-gh-d-gray active:bg-gh-d-gray text-gh-gray'}`}
       disabled={props.disabled || loading}
       style={{
         ...(square && { aspectRatio: '1/1', padding: '0' }),
-        ...(outline && {
-          color: colors['gh-gray'],
-          border: `1px solid ${colors['gh-white']}`,
-        }),
+        // ...(outline && {
+        //   color: outlineColor(),
+        //   border: `1px solid ${outlineColor()}`,
+        // }),
       }}
     >
       {icon?.position === 'before' && !loading && icon.src}
