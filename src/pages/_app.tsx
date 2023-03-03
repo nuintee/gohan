@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { trpc } from '@/libs/trpc'
 import { ToastCatcher } from '@/components/ui'
-
 import { AnimatePresence } from 'framer-motion'
 
 // Override
