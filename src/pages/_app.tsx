@@ -20,7 +20,7 @@ import { ReactElement, ReactNode, use, useEffect } from 'react'
 import { IS_DEVMODE } from '@/config/env'
 
 if (IS_DEVMODE) {
-  // require('@/mocks/worker')
+  require('@/mocks/worker')
 }
 
 const queryClient = new QueryClient()
