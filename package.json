@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev:exposed": "NODE_OPTIONS='--inspect' next dev -H 192.168.31.207",
     "build": "next build",
     "start": "next start",
     "lint": "next lint  --dir src",
@@ -54,6 +55,7 @@
     "next-auth": "^4.19.0",
     "next-pwa": "^5.6.0",
     "npm": "^9.5.0",
+    "postcss-100vh-fix": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
