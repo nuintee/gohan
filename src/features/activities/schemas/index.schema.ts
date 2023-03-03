@@ -24,4 +24,3 @@ export const UpdateActivitySchema = z.object({
 })
 
 export type AddActivityProps = z.infer<typeof AddActivitySchema>
-export type UpdateActivityProps = z.infer<typeof UpdateActivitySchema>

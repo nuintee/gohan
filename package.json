@@ -22,7 +22,7 @@
     "prisma:gen": "npx prisma generate",
     "prisma:studio": "npx prisma studio",
     "prisma:all": "npm run prisma:push && npm run prisma:gen && npm run prisma:studio",
-    "deadcode": "ts-prune --ignore 'stories.tsx?' -e",
+    "deadcode": "ts-prune --ignore '(default|Default|getServerSideProps|middleware|getServerSideProps)' -e",
     "deadcode:count": "ts-prune | wc -l"
   },
   "lint-staged": {
