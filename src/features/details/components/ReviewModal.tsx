@@ -96,7 +96,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
               registerName={'reviewMemo'}
               required={false}
             />
-            <Button text={'保存'} disabled={!isDirty} />
+            <Button text={'保存'} disabled={!isDirty} loading={updateActivity.isLoading} />
           </footer>
         </form>
       </section>
