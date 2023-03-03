@@ -4,7 +4,6 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 import ErrorBoundary from '@/components/fallback/ErrorBoundary'
-import { Session } from 'next-auth'
 import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -16,7 +15,7 @@ import { AnimatePresence } from 'framer-motion'
 // Override
 import '@/utils/__arrayOverride__'
 import { NextPage } from 'next'
-import { ReactElement, ReactNode, use, useEffect } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { IS_DEVMODE } from '@/config/env'
 
 if (IS_DEVMODE) {

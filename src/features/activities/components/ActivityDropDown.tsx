@@ -1,7 +1,6 @@
 import { Dots } from '@/components/icons'
 import { DropDown } from '@/components/ui'
 import useMediaQuery from '@/hooks/mediaquery'
-import { trpc } from '@/libs/trpc'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
 import { ActivityResolved } from '../types'

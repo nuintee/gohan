@@ -1,16 +1,7 @@
-import { Chevron, Share, Dots, Clock, Star } from '@/components/icons'
-import Price from '@/components/icons/Price'
-import { Cover, ImageChip, Texts, Button } from '@/components/ui'
-import Header from '@/components/ui/Header'
-import colors from '@/config/colors'
-import ActivityStatus from '@/features/activities/components/ActivityStatus'
-import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
+import { Cover, ImageChip, Texts } from '@/components/ui'
 import useMediaQuery from '@/hooks/mediaquery'
-import { share } from '@trpc/server/observable'
 import DetailsSection from '../layouts/DetailsSection'
-import DetailsTitle from './ui/DeatailsTitle'
 import DescriptiveChip from './ui/DescriptiveChip'
-import DetailsActionGroup from './ui/DetailsActionGroup'
 
 const DetailsLoadingFallback = () => {
   const isOverSmall = useMediaQuery('sm')

@@ -1,5 +1,3 @@
-import { colors } from '@/config/colors'
-
 import { motion } from 'framer-motion'
 
 const animationInit = (direction: 'x' | 'y') => {

@@ -1,4 +1,3 @@
-import { BASE_URL } from '@/config/env'
 import useToast from '@/libs/react-toastify'
 import { trpc } from '@/libs/trpc'
 

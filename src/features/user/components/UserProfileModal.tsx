@@ -5,10 +5,7 @@ import ModalLayout from '@/layouts/ModalLayout'
 // lib
 import dayjs from 'dayjs'
 
-import { User } from 'next-auth'
 import { signOut, useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import useDeleteUser from '../hooks/useDeleteUser'
 
 const UserSettingsModal = () => {
   const { data: session } = useSession()

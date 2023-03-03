@@ -10,10 +10,8 @@ import { useRef } from 'react'
 
 // hooks
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
-import { useSession } from 'next-auth/react'
 import MarkerPin from './MarkerPin'
 import useGPS from '@/hooks/gps'
-import MapBoxCore from './MapBoxChip'
 
 const MapBox = () => {
   const geoLocateRef = useRef<GeolocateControlRef>(null)

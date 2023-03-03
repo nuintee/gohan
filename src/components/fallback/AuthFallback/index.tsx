@@ -1,6 +1,4 @@
-import { GohanButton, Texts } from '@/components/ui'
-import SearchModal from '@/features/search/components/SearchModal'
-import useSearch from '@/features/search/hooks/useSearch'
+import { Texts } from '@/components/ui'
 import User from '@/features/user/components/User'
 
 const AuthFallback = () => {

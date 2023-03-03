@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 
 import { ErrorBoundary as Boundary } from 'react-error-boundary'
 import ErrorFallBack from '../ErrorFallback'

@@ -1,7 +1,6 @@
 import { ActivityResolved } from '@/features/activities/types'
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
-import { NEEDED_DETAIL_FIELDS } from '../constants'
 
 export const PLACES_RESPONSE_STATUS = {
   OK: 'OK',

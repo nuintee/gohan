@@ -2,8 +2,8 @@
 import { colors } from '@/config/colors'
 
 // Icons
-import { User as UserIcon, PulseLoader } from '@/components/icons'
-import { SessionContextValue, signIn, signOut, useSession } from 'next-auth/react'
+import { PulseLoader } from '@/components/icons'
+import { SessionContextValue, signIn, useSession } from 'next-auth/react'
 import { MouseEventHandler, useState } from 'react'
 import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'

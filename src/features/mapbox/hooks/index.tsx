@@ -1,6 +1,4 @@
 import { ActivityResolved } from '@/features/activities/types'
-import { useRef } from 'react'
-import { MapRef, ViewState } from 'react-map-gl'
 import { useRecoilState } from 'recoil'
 
 // types

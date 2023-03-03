@@ -2,7 +2,6 @@ import { TRPCError } from '@trpc/server'
 import { middleware } from './trpc'
 
 // config
-import { API_RATE_LIMIT } from '@/config/env'
 
 // Limiting
 // import LRU from 'lru-cache'

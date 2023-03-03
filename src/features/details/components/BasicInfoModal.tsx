@@ -1,4 +1,4 @@
-import { Button, PanelHeader, DetailsSummary } from '@/components/ui'
+import { PanelHeader, DetailsSummary } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
 import { BASIC_INFO_KEYS } from '../constants'

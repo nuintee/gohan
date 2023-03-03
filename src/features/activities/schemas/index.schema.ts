@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 // prisma
-import { Activity } from '@prisma/client'
 
 import { ReviewStatus } from '@prisma/client'
 

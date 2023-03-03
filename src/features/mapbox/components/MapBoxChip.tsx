@@ -1,8 +1,7 @@
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { forwardRef, ReactElement } from 'react'
-import { GeolocateControl, Map, Marker, ViewState } from 'react-map-gl'
+import { GeolocateControl, Map, ViewState } from 'react-map-gl'
 import useMapBox from '../hooks'
-import Pin from './MarkerPin'
 
 const MapBoxCore = forwardRef(
   ({

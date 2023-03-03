@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { ComponentProps, RefAttributes } from 'react'
+import { ComponentProps } from 'react'
 
 import { toast } from 'react-toastify'
 import ToastCatcher from './index'

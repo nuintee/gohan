@@ -1,5 +1,4 @@
 import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
-import { getBarePlacesAPI } from '@/features/restaurants/utils/getBarePlacesAPI'
 import { statusMapper } from '@/features/restaurants/utils/statusMapper'
 import { procedure } from '@/server/trpc'
 import { TRPCClientError } from '@trpc/client'

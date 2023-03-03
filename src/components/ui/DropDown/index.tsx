@@ -1,5 +1,3 @@
-import Button from '../Button'
-
 import DropDownLayout from '@/layouts/DropDownLayout'
 
 type DropDownMenu = {

@@ -1,9 +1,6 @@
-import { MouseEventHandler } from 'react'
-
 // Icons
 import { Logo, Close } from '@/components/icons'
 import { PulseLoader } from '@/components/icons'
-import useGPS from '@/hooks/gps'
 
 // Hooks
 // import useDirections from '@/features/directions/hooks'

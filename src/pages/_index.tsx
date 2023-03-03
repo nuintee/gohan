@@ -1,4 +1,3 @@
-import { IS_DEVMODE } from '@/config/env'
 import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
 import { getBarePlacesAPI } from '@/features/restaurants/utils/getBarePlacesAPI'
 import { MainLayout } from '@/layouts/layout'
@@ -6,7 +5,6 @@ import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
 
 import DEV_COORDS from '@/data/geolocation.json'
-import { IS_BROWSER } from '@/config/mode'
 
 const Experiment = () => {
   const handleDetails = async () => {

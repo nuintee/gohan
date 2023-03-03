@@ -1,5 +1,4 @@
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
-import { ActivityResolved } from '@/features/activities/types'
 
 // consts
 import { KEY_FEATURES } from '../constants'

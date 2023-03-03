@@ -1,7 +1,4 @@
-import { IS_DEVMODE, IS_PRODMODE } from '@/config/env'
-import { PlacesDetailsStatus, DetailsAPI } from '@/features/restaurants/types'
 import { procedure } from '@/server/trpc'
-import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 export const getActivity = procedure

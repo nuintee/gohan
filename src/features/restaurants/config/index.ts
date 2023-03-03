@@ -1,9 +1,7 @@
 import { Like, RouteArrow } from '@/components/icons'
 import { colors } from '@/config/colors'
-import { RestaurantData } from '../types'
 
 // config
-import { GCP_API_KEY } from '@/config/env'
 
 export const likeButtonConfig = {
   icon: ({ isLiked, isLocked }: { isLiked: boolean; isLocked: boolean }) => {

@@ -1,4 +1,4 @@
-import { IS_PRODMODE, IS_STAGING } from '@/config/env'
+import { IS_STAGING } from '@/config/env'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 class MyDocument extends Document {

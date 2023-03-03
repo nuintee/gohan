@@ -1,6 +1,4 @@
-import { Copy } from '@/components/icons'
 import { colors } from '@/config/colors'
-import { copy } from '@/utils/copy'
 import CopyButton from '../CopyButton'
 
 // constants

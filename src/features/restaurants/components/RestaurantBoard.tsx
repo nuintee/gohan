@@ -1,9 +1,7 @@
 // components
-import { Button, Texts, Label, DropDown } from '@/components/ui'
-import LikeButton from './LikeButton'
+import { Texts } from '@/components/ui'
 
 // icons
-import { Close, Dots, PulseLoader } from '@/components/icons'
 
 // Types
 import { RestaurantProps } from '../types'
@@ -12,8 +10,7 @@ import { RestaurantProps } from '../types'
 import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
-import { useMemo, useState } from 'react'
-import useToast from '@/libs/react-toastify'
+import { useMemo } from 'react'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 
 const RestaurantBoard = (props: RestaurantProps) => {
