@@ -14,8 +14,8 @@ const BasicInfoModal = (props: Props) => {
   const { isOpen, onClose, data } = props
 
   const ui = (modalKey: any) => {
-    const isHours = modalKey === 'opening_hours'
-    const hasNoHourDetails = !data.opening_hours?.periods?.length
+    const isHours = modalKey === 'current_opening_hours'
+    const hasNoHourDetails = !data.current_opening_hours?.periods?.length
 
     const isString = typeof data[modalKey] === 'string'
     const isNumber = typeof data[modalKey] === 'number'
@@ -27,25 +27,11 @@ const BasicInfoModal = (props: Props) => {
       >
         <DetailsSummary
           summaryTitle={modalKey}
-          summaryValue={isHours ? useOpenHours(data.opening_hours).title : data[modalKey]}
+          summaryValue={isHours ? useOpenHours(data.current_opening_hours).title : data[modalKey]}
           ignored={!isHours || (isHours && hasNoHourDetails)}
           allowCopy={isString || isNumber}
         >
           <div className='py-2 divide-y flex flex-col gap-1'>
-            {/* {data.opening_hours?.periods?.map((v, i, original) => (
-              <>
-                <div className='flex items-center justify-between w-full'>
-                  <p>
-                    {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
-                      weekday: 'long',
-                    })}
-                  </p>
-                  <p>
-                    {v?.open?.time} - {v?.close?.time}
-                  </p>
-                </div>
-              </>
-            ))} */}
             {data.current_opening_hours?.periods?.map((v, i, original) => (
               <>
                 <div className='flex items-center justify-between w-full'>
