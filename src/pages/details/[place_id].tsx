@@ -43,6 +43,9 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
   const details = useDetails({ place_id: id })
   const activity = useGetActivity({ place_id: id })
 
+  console.dir(details)
+  console.dir(activity)
+
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(details.data?.photos)
