@@ -31,15 +31,20 @@ export interface DetailsAPI {
 
 export interface ResultsEntity {
   address_components?: AddressComponent
-  business_status: string
+  adr_address?: string
+  business_status?: 'OPERATIONAL' | 'CLOSED_TEMPORARILY' | 'CLOSED_PERMANENTLY'
+  formatted_phone_number?: string
+  dine_in?: boolean
+  delivery?: boolean
+  curbside_pickup?: boolean
   geometry: Geometry
   icon: string
-  icon_background_color: string
-  icon_mask_base_uri: string
-  name: string
+  icon_background_color: string | null
+  icon_mask_base_uri: string | null
+  name: string | null
   opening_hours?: OpeningHours | null
   current_opening_hours?: OpeningHours | null
-  photos?: PhotosEntity[] | null
+  photos: PhotosEntity[] | null
   place_id: string
   plus_code: PlusCode
   price_level?: 0 | 1 | 2 | 3 | 4 | null
@@ -53,7 +58,19 @@ export interface ResultsEntity {
   website: string | null
   editorial_summary: PlaceEditorialSummary | null
   formatted_address: string | null
-  url: string | null // Applications must link to or embed this page on any screen that shows detailed results about the place to the user.
+  utc_offset: number | null
+  secondary_opening_hours: OpeningHours[] | null
+  reservable: boolean | null
+  serves_beer: boolean | null
+  serves_breakfast: boolean | null
+  serves_brunch: boolean | null
+  serves_dinner: boolean | null
+  serves_lunch: boolean | null
+  serves_vegetarian_food: boolean | null
+  serves_wine: boolean | null
+  takeout: boolean | null
+  wheelchair_accessible_entrance: boolean | null
+  url: string | null
 }
 
 export interface AddressComponent {
