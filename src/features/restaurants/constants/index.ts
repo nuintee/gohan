@@ -1,9 +1,13 @@
+import { BASIC_INFO_KEYS, KEY_FEATURES } from '@/features/details/constants'
+
 export const NEEDED_DETAIL_FIELDS = [
-  'name',
+  ...BASIC_INFO_KEYS,
   'business_status',
   'geometry',
   'photos',
   'opening_hours',
-  'website',
+  'user_ratings_total',
+  'reviews',
   'place_id',
+  ...KEY_FEATURES,
 ] as const
