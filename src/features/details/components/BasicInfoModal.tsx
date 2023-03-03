@@ -2,6 +2,7 @@ import { Button, PanelHeader, DetailsSummary } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
 import { BASIC_INFO_KEYS } from '../constants'
+import mapBasicInfoKeys from '../hooks/mapBasicInfoKeys'
 import useOpenHours from '../hooks/useOpenHours'
 
 type Props = {
@@ -26,7 +27,7 @@ const BasicInfoModal = (props: Props) => {
         key={modalKey}
       >
         <DetailsSummary
-          summaryTitle={modalKey}
+          summaryTitle={mapBasicInfoKeys(modalKey)}
           summaryValue={isHours ? useOpenHours(data.current_opening_hours).title : data[modalKey]}
           ignored={!isHours || (isHours && hasNoHourDetails)}
           allowCopy={isString || isNumber}
