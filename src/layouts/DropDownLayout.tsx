@@ -8,6 +8,7 @@ type Props = {
   children?: JSX.Element
   ignored?: boolean
   controller?: JSX.Element
+  isLoading?: boolean
   overrideStyle?: React.ComponentProps<'div'>['className']
   isLoading?: boolean
 }
@@ -57,7 +58,11 @@ const DropDownLayout = ({
   ignored,
   controller,
   overrideStyle,
+<<<<<<< HEAD
   isLoading = false,
+=======
+  isLoading,
+>>>>>>> 58f595926daca784f59c5c33444e72c87894b903
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 

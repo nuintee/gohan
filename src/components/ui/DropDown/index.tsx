@@ -13,7 +13,7 @@ type Props = {
   direction?: React.ComponentProps<typeof DropDownLayout>['direction']
 } & React.ComponentProps<typeof DropDownLayout>
 
-const DropDown = ({ menu, direction = 'bottom', isLoading }: Props) => {
+const DropDown = ({ menu, direction = 'bottom', isLoading = false }: Props) => {
   return (
     <DropDownLayout
       direction={direction}

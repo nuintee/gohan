@@ -14,6 +14,7 @@ type ActivityDropDownProps = {
   onMutated: () => void
   onBasicInfoAction?: () => void
   onShareAction?: () => void
+  isLoading?: boolean
 } & Pick<React.ComponentProps<typeof DropDown>, 'direction'>
 
 const ActivityDropDown = ({
@@ -22,6 +23,7 @@ const ActivityDropDown = ({
   direction,
   onBasicInfoAction,
   onShareAction,
+  isLoading,
 }: ActivityDropDownProps) => {
   const router = useRouter()
   const isOverLarge = useMediaQuery('lg')
