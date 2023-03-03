@@ -2,6 +2,7 @@ import { Button, PanelHeader, DetailsSummary } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
 import { BASIC_INFO_KEYS } from '../constants'
+import formatTimeString from '../hooks/formatTimeString'
 import mapBasicInfoKeys from '../hooks/mapBasicInfoKeys'
 import useOpenHours from '../hooks/useOpenHours'
 
@@ -42,7 +43,7 @@ const BasicInfoModal = (props: Props) => {
                     })}
                   </p>
                   <p>
-                    {v?.open?.time} - {v?.close?.time}
+                    {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
                   </p>
                 </div>
               </>
