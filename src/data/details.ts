@@ -9,10 +9,7 @@ export const details = {
       ...res,
       current_opening_hours: {
         ...res?.opening_hours,
-        periods: res?.opening_hours.periods?.map((p, i) => ({
-          open: { ...p.open, date: PERIODS[i].open?.date },
-          close: { ...p.close, date: PERIODS[i].close?.date },
-        })),
+        periods: PERIODS,
       },
     }
   },
