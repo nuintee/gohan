@@ -9,6 +9,7 @@ type Props = {
   ignored?: boolean
   controller?: JSX.Element
   overrideStyle?: React.ComponentProps<'div'>['className']
+  isLoading?: boolean
 }
 
 const subMenuAnimate = {
@@ -50,7 +51,14 @@ const _BackArea = ({
   )
 }
 
-const DropDownLayout = ({ direction, children, ignored, controller, overrideStyle }: Props) => {
+const DropDownLayout = ({
+  direction,
+  children,
+  ignored,
+  controller,
+  overrideStyle,
+  isLoading = false,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const directionClass = () => {
@@ -89,6 +97,7 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
           onClick={() => setIsOpen((prev) => !prev)}
           icon={{ position: 'after', src: <Dots direction='vertical' /> }}
           square
+          loading={isLoading}
         />
       )
     }
