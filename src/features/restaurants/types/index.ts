@@ -37,40 +37,40 @@ export interface ResultsEntity {
   dine_in?: boolean
   delivery?: boolean
   curbside_pickup?: boolean
-  geometry: Geometry
-  icon: string
-  icon_background_color: string | null
-  icon_mask_base_uri: string | null
-  name: string | null
-  opening_hours?: OpeningHours | null
-  current_opening_hours?: OpeningHours | null
-  photos: PhotosEntity[] | null
-  place_id: string
-  plus_code: PlusCode
-  price_level?: 0 | 1 | 2 | 3 | 4 | null
-  reviews: PlaceReview[] | null
-  rating: number
-  reference: string
-  scope: string
-  types: string[] | null
-  user_ratings_total: number
-  vicinity: string
-  website: string | null
-  editorial_summary: PlaceEditorialSummary | null
-  formatted_address: string | null
-  utc_offset: number | null
-  secondary_opening_hours: OpeningHours[] | null
-  reservable: boolean | null
-  serves_beer: boolean | null
-  serves_breakfast: boolean | null
-  serves_brunch: boolean | null
-  serves_dinner: boolean | null
-  serves_lunch: boolean | null
-  serves_vegetarian_food: boolean | null
-  serves_wine: boolean | null
-  takeout: boolean | null
-  wheelchair_accessible_entrance: boolean | null
-  url: string | null
+  geometry?: Geometry
+  icon?: string
+  icon_background_color?: string
+  icon_mask_base_uri?: string
+  name?: string
+  opening_hours?: OpeningHours
+  current_opening_hours?: OpeningHours
+  photos?: PhotosEntity[]
+  place_id?: string
+  plus_code?: PlusCode
+  price_level?: 0 | 1 | 2 | 3 | 4
+  reviews?: PlaceReview[]
+  rating?: number
+  reference?: string
+  scope?: string
+  types?: string[]
+  user_ratings_total?: number
+  vicinity?: string
+  website?: string
+  editorial_summary?: PlaceEditorialSummary
+  formatted_address?: string
+  utc_offset?: number
+  secondary_opening_hours?: OpeningHours[]
+  reservable?: boolean
+  serves_beer?: boolean
+  serves_breakfast?: boolean
+  serves_brunch?: boolean
+  serves_dinner?: boolean
+  serves_lunch?: boolean
+  serves_vegetarian_food?: boolean
+  serves_wine?: boolean
+  takeout?: boolean
+  wheelchair_accessible_entrance?: boolean
+  url?: string
 }
 
 export interface AddressComponent {
