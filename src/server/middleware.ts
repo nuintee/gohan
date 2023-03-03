@@ -5,12 +5,12 @@ import { middleware } from './trpc'
 import { API_RATE_LIMIT } from '@/config/env'
 
 // Limiting
-import LRU from 'lru-cache'
+// import LRU from 'lru-cache'
 
-const tokenCache = new LRU<string, number>({
-  max: 500, // Max 500 users per interval
-  maxAge: 1000 * 60 * 5, // 5分,
-})
+// const tokenCache = new LRU<string, number>({
+//   max: 500, // Max 500 users per interval
+//   maxAge: 1000 * 60 * 5, // 5分,
+// })
 
 export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
   if (!ctx.session?.user?.email) {
