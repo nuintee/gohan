@@ -32,7 +32,7 @@ const Button = (props: Props) => {
 
   const style = {
     container: () => {
-      const defaultClass = `min-h-[2.5rem] duration-500 ease-in-out ${
+      const defaultClass = `py-2 px-y min-h-[2.5rem] duration-500 ease-in-out ${
         square && 'min-w-[2.5rem] aspect-square px-0 py-0'
       } rounded-md flex gap-2 items-center justify-center active:bg-opacity-90 w-full whitespace-nowrap ${
         disabled && 'bg-gh-gray text-gh-l-gray'
