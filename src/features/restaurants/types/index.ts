@@ -129,7 +129,7 @@ export interface PlusCode {
 }
 
 // Data to pass UI Component
-export type RestaurantData = Activity & Pick<ResultsEntity, typeof NEEDED_DETAIL_FIELDS[number]>
+export type RestaurantData = Activity & ResultsEntity
 
 // Data to pass Renderer
 export type RestaurantProps = {
