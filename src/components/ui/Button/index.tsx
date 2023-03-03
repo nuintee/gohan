@@ -92,41 +92,25 @@ const Button = (props: Props) => {
     }
   }
 
-  const backgroundColor = () => {
+  const theme = () => {
     if (disabled) {
-      return colors['gh-gray']
-    } else if (outline) {
-      return 'transparent'
+      return 'bg-gh-d-gray hover:bg-gh-d-gray active:bg-gh-d-gray text-gh-gray'
     } else if (danger) {
-      return outline ? 'transparent' : colors['gh-red']
-    }
-  }
-
-  const outlineColor = () => {
-    if (!outline || disabled) return ''
-
-    if (danger) {
-      return colors['gh-red']
+      return 'bg-transparent hover:bg-gh-red hover:text-white active:text-white active:bg-gh-red border-[1px] border-gh-red text-gh-red'
+    } else if (outline) {
+      return 'active:bg-gh-white border-[1px] border-gh-white hover:bg-gh-white bg-transparent text-gh-gray'
     } else {
-      return colors['gh-white']
+      return 'active:bg-opacity-90 bg-gh-dark hover:bg-opacity-90'
     }
   }
 
   return (
     <button
       onClick={onClick}
-      className={` text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border duration-700 ${
-        outline
-          ? 'active:bg-gh-white border-[1px] border-gh-white hover:bg-gh-white bg-transparent text-gh-gray'
-          : ' active:bg-opacity-90 bg-gh-dark hover:bg-opacity-90'
-      } ${disabled && 'bg-gh-d-gray hover:bg-gh-d-gray active:bg-gh-d-gray text-gh-gray'}`}
+      className={`text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border duration-700 ${theme()} `}
       disabled={props.disabled || loading}
       style={{
         ...(square && { aspectRatio: '1/1', padding: '0' }),
-        // ...(outline && {
-        //   color: outlineColor(),
-        //   border: `1px solid ${outlineColor()}`,
-        // }),
       }}
     >
       {icon?.position === 'before' && !loading && icon.src}
