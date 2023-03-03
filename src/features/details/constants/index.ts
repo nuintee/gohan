@@ -16,7 +16,7 @@ export const BASIC_INFO_KEYS = [
   'vicinity',
   'website',
   'international_phone_number',
-  'opening_hours',
+  'current_opening_hours',
 ] as const
 
 export const DETAILS_MODAL_KEYS = ['BASIC', 'REVIEW', 'IMAGE'] as const

@@ -38,6 +38,7 @@ export interface ResultsEntity {
   icon_mask_base_uri: string
   name: string
   opening_hours?: OpeningHours | null
+  current_opening_hours?: OpeningHours | null
   photos?: PhotosEntity[] | null
   place_id: string
   plus_code: PlusCode

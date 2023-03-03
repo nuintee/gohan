@@ -19,10 +19,12 @@ export const getRestaurants = procedure
   .query(async ({ input }) => {
     const data = await getBarePlacesAPI({ latitude: input.latitude, longitude: input.longitude })
 
-    const res = data.results?.random()
-    const color = await getDominantColor(usePlacePhotos(res?.photos).url)
-
     if (data.status === 'OK') {
+      if (!data.results?.length) {
+        throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
+      }
+      const res = data.results?.random()
+      const color = await getDominantColor(usePlacePhotos(res?.photos).url)
       return { ...res, color }
     } else {
       throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
