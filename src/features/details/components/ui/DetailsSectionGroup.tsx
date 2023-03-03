@@ -16,7 +16,7 @@ const DetailsSectionGroup = ({
   data: ReturnType<typeof useGetActivity>['data']
   isLoading: boolean
 }) => {
-  const { onActivityClicked, mapbox } = useMapBox()
+  const { onActivityClicked } = useMapBox()
   const { gps, isGPSFetching, isGPSError } = useGPS()
 
   const distanceDecoration = () => {

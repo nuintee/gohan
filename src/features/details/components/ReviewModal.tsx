@@ -25,9 +25,8 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
-    formState: { errors, isDirty },
+    formState: { isDirty },
   } = useForm<{
     reviewMemo?: string
     reviewStatus: ReviewStatus

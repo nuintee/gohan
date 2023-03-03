@@ -10,7 +10,7 @@ export const getDetails = procedure
       place_id: z.string(),
     }),
   )
-  .query(async ({ input, ctx }) => {
+  .query(async ({ input }) => {
     const data = await getBareDetailsAPI({ place_id: input.place_id })
 
     if (data.status === 'OK') {

@@ -5,11 +5,11 @@ const useActivityPanel = () => {
   const [activities, setActivitties] = useRecoilState(activityPanelState)
 
   const openPanel = () => {
-    setActivitties((prev) => ({ isOpen: true }))
+    setActivitties(() => ({ isOpen: true }))
   }
 
   const closePanel = () => {
-    setActivitties((prev) => ({ isOpen: false }))
+    setActivitties(() => ({ isOpen: false }))
   }
 
   const isPanelOpen = activities.isOpen
