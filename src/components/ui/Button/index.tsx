@@ -96,7 +96,9 @@ const Button = (props: Props) => {
     <button
       onClick={onClick}
       className={` text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border ${
-        outline ? 'active:bg-gh-white bg-transparent' : ' active:bg-opacity-90 bg-gh-dark'
+        outline
+          ? 'active:bg-gh-white hover:bg-gh-white bg-transparent'
+          : ' active:bg-opacity-90 bg-gh-dark hover:bg-opacity-90'
       }`}
       disabled={props.disabled || loading}
       style={{
