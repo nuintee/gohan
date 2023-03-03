@@ -20,8 +20,6 @@ const BasicInfoModal = (props: Props) => {
     const isString = typeof data[modalKey] === 'string'
     const isNumber = typeof data[modalKey] === 'number'
 
-    console.dir(data)
-
     return (
       <div
         className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
