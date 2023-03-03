@@ -7,10 +7,6 @@
     "react/display-name": "off",
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "react-hooks/rules-of-hooks": "off",
-    "react/jsx-key": "off",
-    "@next/next/no-img-element": "off",
-    "jsx-a11y/alt-text": "off"
+    "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   }
 }
