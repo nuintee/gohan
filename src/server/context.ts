@@ -6,7 +6,7 @@ import { getServerSession } from 'next-auth'
 // lib
 import prisma from '@/libs/prisma'
 
-export const getServerAuthSession = (ctx: {
+const getServerAuthSession = (ctx: {
   req: GetServerSidePropsContext['req']
   res: GetServerSidePropsContext['res']
 }) => {

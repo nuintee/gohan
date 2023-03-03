@@ -4,7 +4,7 @@ import { colors } from '@/config/colors'
 // Lib
 import { PulseLoader } from '@/components/icons'
 
-export type Props = {
+type Props = {
   text: string
   icon?: {
     position: 'before' | 'after'
