@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-// prisma
-
 import { ReviewStatus } from '@prisma/client'
 
 const REVIEW_STATUS_ENUM = z.nativeEnum(ReviewStatus)
