@@ -13,8 +13,8 @@ import { Marker } from 'react-map-gl'
 import { ROUTES } from '@/constants/routes'
 
 const Pin = ({
-  latitude,
-  longitude,
+  latitude = 0,
+  longitude = 0,
   focused = false,
   onClick,
   data,
@@ -40,8 +40,8 @@ const Pin = ({
 
   return (
     <Marker
-      latitude={latitude}
-      longitude={longitude}
+      latitude={latitude || 0}
+      longitude={longitude || 0}
       onClick={(e) => {
         e.originalEvent.stopPropagation()
         onClick && onClick()

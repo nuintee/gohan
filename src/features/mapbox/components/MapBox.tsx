@@ -75,6 +75,7 @@ const MapBox = () => {
           <MarkerPin
             latitude={activity?.geometry?.location?.lat}
             longitude={activity?.geometry?.location?.lng}
+            longitude={NaN}
             focused={mapbox.focusedPlaceId === activity.place_id}
             onClick={() => onActivityClicked(activity)}
             data={activity}
