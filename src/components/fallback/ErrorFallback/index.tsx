@@ -11,7 +11,7 @@ const ErrorFallBack = ({
   resetErrorBoundary,
 }: {
   error: TRPCClientErrorBase<DefaultErrorShape> | Error
-  resetErrorBoundary?: (args: unknown) => void
+  resetErrorBoundary?: (_args: unknown) => void
 }) => {
   const router = useRouter()
 

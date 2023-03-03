@@ -2,7 +2,7 @@ import { Button, Texts } from '@/components/ui'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
 import useToast from '@/libs/react-toastify'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import useDeleteUser from '../hooks/useDeleteUser'
 
 const UserDeletionModal = () => {

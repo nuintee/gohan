@@ -1,8 +1,6 @@
 import Hamburger from '@/components/icons/Hamburger'
 import User from '@/features/user/components/User'
 import useMediaQuery from '@/hooks/mediaquery'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Brand from '../Brand'
 import HeaderSidebar from '../HeaderSidebar'

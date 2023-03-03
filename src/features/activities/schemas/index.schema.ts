@@ -1,8 +1,5 @@
 import { z } from 'zod'
 
-// prisma
-import { Activity } from '@prisma/client'
-
 import { ReviewStatus } from '@prisma/client'
 
 const REVIEW_STATUS_ENUM = z.nativeEnum(ReviewStatus)
@@ -25,4 +22,3 @@ export const UpdateActivitySchema = z.object({
 })
 
 export type AddActivityProps = z.infer<typeof AddActivitySchema>
-export type UpdateActivityProps = z.infer<typeof UpdateActivitySchema>

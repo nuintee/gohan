@@ -1,9 +1,7 @@
 import { BASE_URL } from '@/config/env'
-import { getDominantColor } from '@/libs/rgbaster'
 import { useRouter } from 'next/router'
 
 // data
-import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 
 // constants
 import { ROUTES } from '@/constants/routes'

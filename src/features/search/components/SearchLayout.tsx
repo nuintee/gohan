@@ -31,7 +31,7 @@ const SearchLayout = ({
           isFetching: false,
         })
       },
-      (error) => {
+      () => {
         updateGeolocationStatus({ isError: true, isFetching: false })
       },
       {
@@ -48,7 +48,7 @@ const SearchLayout = ({
     latitude: gps.coords.latitude,
     longitude: gps.coords.longitude,
     trigger,
-    errorCallback: (e) => onClose && onClose(),
+    errorCallback: () => onClose && onClose(),
   })
 
   // Style

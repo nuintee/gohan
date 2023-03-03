@@ -1,4 +1,4 @@
-import { Button, PanelHeader, DetailsSummary } from '@/components/ui'
+import { PanelHeader, DetailsSummary } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
 import { BASIC_INFO_KEYS } from '../constants'
@@ -34,7 +34,7 @@ const BasicInfoModal = (props: Props) => {
           allowCopy={isString || isNumber}
         >
           <div className='py-2 divide-y flex flex-col gap-1'>
-            {data.current_opening_hours?.periods?.map((v, i, original) => (
+            {data.current_opening_hours?.periods?.map((v) => (
               <>
                 <div className='flex items-center justify-between w-full'>
                   <p>

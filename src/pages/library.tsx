@@ -1,26 +1,21 @@
-import { GohanButton } from '@/components/ui'
 import AcitvityButton from '@/features/activities/components/ActivityButton'
 import ActivityPanel from '@/features/activities/components/ActivityPanel'
 
 // data
-import SearchModal from '@/features/search/components/SearchModal'
-import { ReactElement, useEffect, useState } from 'react'
-import useSearch from '@/features/search/hooks/useSearch'
+import { ReactElement } from 'react'
 import { MainLayout } from '@/layouts/layout'
 import { useSession } from 'next-auth/react'
 import AuthFallback from '@/components/fallback/AuthFallback'
 import MapBox from '@/features/mapbox/components/MapBox'
-import { useQueryClient } from '@tanstack/react-query'
-import { Router, useRouter } from 'next/router'
-import useMapBox from '@/features/mapbox/hooks'
+import { Router } from 'next/router'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 
-Router.events.on('routeChangeStart', (e) => {
+Router.events.on('routeChangeStart', () => {
   console.time('start')
 })
 
-Router.events.on('routeChangeComplete', (e) => {
+Router.events.on('routeChangeComplete', () => {
   console.timeEnd('start')
 })
 

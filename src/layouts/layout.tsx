@@ -1,7 +1,6 @@
 import Head from '@/components/meta/Head'
-import { GohanButton, PanelHeader } from '@/components/ui'
+import { GohanButton } from '@/components/ui'
 import Header from '@/components/ui/Header'
-import { ROUTES } from '@/constants/routes'
 import SearchModal from '@/features/search/components/SearchModal'
 import useSearch from '@/features/search/hooks/useSearch'
 import UserDeletionModal from '@/features/user/components/UserDeletionModal'

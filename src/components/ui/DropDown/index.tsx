@@ -1,5 +1,3 @@
-import Button from '../Button'
-
 import DropDownLayout from '@/layouts/DropDownLayout'
 
 type DropDownMenu = {
@@ -25,6 +23,7 @@ const DropDown = ({ menu, direction = 'bottom', isLoading = false }: Props) => {
           <button
             className='text-left whitespace-nowrap p-2 rounded-md hover:bg-gray-200  hover:text-gh-dark text-gh-gray text-sm'
             onClick={() => v.onDropDownItemClick()}
+            key={v.label}
           >
             {v.label}
           </button>

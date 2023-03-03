@@ -1,7 +1,6 @@
 import { colors } from '@/config/colors'
-import analyze from 'rgbaster'
 
-async function getDominantColor(url: string) {
+async function getDominantColor() {
   const FALLBACK_COLOR = colors['gh-dark']
 
   // if (!url) return FALLBACK_COLOR

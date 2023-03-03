@@ -1,5 +1,4 @@
 import SuspenseImage from '@/components/ui/SuspenseImage'
-import usePlacePhotos from '../../hooks/usePlacePhotos'
 
 type Props = {
   isLoading?: boolean

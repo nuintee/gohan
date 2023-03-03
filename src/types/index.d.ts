@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth'
+import { getServerSession } from 'next-auth'
 
 declare module 'next-auth' {
   /**

@@ -1,7 +1,6 @@
 import { Dots } from '@/components/icons'
 import { DropDown } from '@/components/ui'
 import useMediaQuery from '@/hooks/mediaquery'
-import { trpc } from '@/libs/trpc'
 import { useRouter } from 'next/router'
 import useDeleteActivity from '../hooks/useDeleteActivity'
 import { ActivityResolved } from '../types'
@@ -23,7 +22,6 @@ const ActivityDropDown = ({
   direction,
   onBasicInfoAction,
   onShareAction,
-  isLoading,
 }: ActivityDropDownProps) => {
   const router = useRouter()
   const isOverLarge = useMediaQuery('lg')
@@ -74,7 +72,7 @@ const ActivityDropDown = ({
             place_id: activity.place_id,
           },
           {
-            onSuccess: (data) => {
+            onSuccess: () => {
               onMutated()
             },
           },

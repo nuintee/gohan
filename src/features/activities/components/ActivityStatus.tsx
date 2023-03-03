@@ -1,4 +1,3 @@
-import { colors } from '@/config/colors'
 import useActivityStatus from '../hooks/useActivityStatus'
 
 // Schema

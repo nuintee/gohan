@@ -1,31 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 // Function
-import calculateDistance from '@/libs/haversine-distance'
 
 // Components
 import PanelHeader from '@/components/ui/PanelHeader'
-import { useSession } from 'next-auth/react'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 import useMapBox from '@/features/mapbox/hooks'
-import { DropDown, SuspenseImage, Texts } from '@/components/ui'
-import { Dots } from '@/components/icons'
-import { useRouter } from 'next/router'
-import useDeleteActivity from '../hooks/useDeleteActivity'
+import { Texts } from '@/components/ui'
 import ActivityDropDown from './ActivityDropDown'
 import SlideInLayout from '@/layouts/SlideInLayout'
-import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
-import ActivityStatus from './ActivityStatus'
 import useMediaQuery from '@/hooks/mediaquery'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
-
-type Props = {
-  isOpen?: boolean
-  onClose?: React.MouseEventHandler<HTMLButtonElement>
-  query?: ReturnType<typeof useGetUserActivities>
-}
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -94,7 +81,6 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
 
 const ActivityPanel = () => {
   const { isPanelOpen, closePanel } = useActivityPanel()
-  const { data: session } = useSession()
 
   // MediaQuery
   const isOverSmall = useMediaQuery('sm')

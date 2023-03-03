@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react'
+import React from 'react'
 
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
@@ -18,6 +18,8 @@ const Template: ComponentStory<typeof User> = (args) => {
 
 export const Guest = Template.bind({})
 export const Authed = Template.bind({})
+
+Guest.args = {}
 
 Authed.args = {
   session: {

@@ -1,13 +1,10 @@
-import { Check } from '@/components/icons'
 import { Button } from '@/components/ui'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
-import { ActivityResolved } from '@/features/activities/types'
 import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
 import useGPS from '@/hooks/gps'
 import haversineDistance from '@/libs/haversine-distance'
-import { useRouter } from 'next/router'
 import DetailsSection from '../../layouts/DetailsSection'
 import KeyFeaturesSection from './KeyFeaturesSection'
 import ReviewsSection from './ReviewsSection'
@@ -19,7 +16,7 @@ const DetailsSectionGroup = ({
   data: ReturnType<typeof useGetActivity>['data']
   isLoading: boolean
 }) => {
-  const { onActivityClicked, mapbox } = useMapBox()
+  const { onActivityClicked } = useMapBox()
   const { gps, isGPSFetching, isGPSError } = useGPS()
 
   const distanceDecoration = () => {

@@ -1,5 +1,4 @@
-import { GCP_API_KEY, IS_DEVMODE, IS_PRODMODE } from '@/config/env'
-import { IS_BROWSER } from '@/config/mode'
+import { GCP_API_KEY, IS_PRODMODE } from '@/config/env'
 import axios from '@/libs/axios'
 import { sleep } from '@/utils/sleep'
 import { PlacesAPI } from '../types'

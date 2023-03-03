@@ -1,15 +1,13 @@
 import { Button, Input, PanelHeader } from '@/components/ui'
-import { colors } from '@/config/colors'
 import usePatchActivity from '@/features/activities/hooks/usePatchActivity'
 import ModalLayout from '@/layouts/ModalLayout'
 import useToast from '@/libs/react-toastify'
 import { ReviewStatus } from '@prisma/client'
-import { useCallback, useMemo } from 'react'
 
 import StatusRadioGroup from './StatusRadioGroup'
 
 // lib
-import { FieldValues, useForm, UseFormRegister } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 type Props = {
   isOpen: boolean
@@ -27,9 +25,8 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
-    formState: { errors, isDirty },
+    formState: { isDirty },
   } = useForm<{
     reviewMemo?: string
     reviewStatus: ReviewStatus

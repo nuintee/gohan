@@ -1,6 +1,4 @@
 import { colors } from '@/config/colors'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import Brand from '../Brand'
 import NavLink from '../NavLink'
 import PanelHeader from '../PanelHeader'

@@ -1,6 +1,6 @@
-import { memo, ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useMemo } from 'react'
 
-import { Button, Input, Cover, ImageChip, Texts, DropDown, GohanButton } from '@/components/ui'
+import { Texts } from '@/components/ui'
 
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
@@ -15,18 +15,11 @@ import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { GetServerSideProps } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
-import useSearch from '@/features/search/hooks/useSearch'
-import SearchModal from '@/features/search/components/SearchModal'
 import { MainLayout } from '@/layouts/layout'
-import DetailsTitle from '@/features/details/components/ui/DeatailsTitle'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
-import DetailsActionGroup from '@/features/details/components/ui/DetailsActionGroup'
 import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
-import { useRouter } from 'next/router'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
-import ActivityStatus from '@/features/activities/components/ActivityStatus'
-import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
 import DetailsHero from '@/features/details/components/ui/DetailsHero'
 import ToolTip from '@/components/ui/Tootltip'
 import { colors } from '@/config/colors'
@@ -112,7 +105,7 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query, req, res, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, params }) => {
   console.log({ query })
   console.log({ params })
 

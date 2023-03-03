@@ -1,4 +1,3 @@
-import { IS_DEVMODE } from '@/config/env'
 import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
 import { getBarePlacesAPI } from '@/features/restaurants/utils/getBarePlacesAPI'
 import { MainLayout } from '@/layouts/layout'
@@ -6,7 +5,6 @@ import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
 
 import DEV_COORDS from '@/data/geolocation.json'
-import { IS_BROWSER } from '@/config/mode'
 
 const Experiment = () => {
   const handleDetails = async () => {
@@ -35,7 +33,7 @@ Experiment.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({}) => {
   const data = await getBarePlacesAPI({ latitude: 0, longitude: 0 })
   console.log(data)
   return {

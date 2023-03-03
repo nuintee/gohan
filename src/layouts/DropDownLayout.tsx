@@ -1,7 +1,7 @@
 import { Dots } from '@/components/icons'
 import { Button } from '@/components/ui'
 import { motion } from 'framer-motion'
-import { Dispatch, HTMLAttributes, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 type Props = {
   direction?: 'bottom' | 'left-top' | 'left-bottom' | 'top' | 'top-right' | 'top-left'

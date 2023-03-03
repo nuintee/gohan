@@ -1,4 +1,4 @@
-import Axios, { AxiosResponse } from 'axios'
+import Axios from 'axios'
 
 // env
 import { BASE_URL, AXIOS_FETCH_TIMEOUT } from '@/config/env'

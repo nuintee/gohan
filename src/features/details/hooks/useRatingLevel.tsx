@@ -1,5 +1,4 @@
 import { colors } from '@/config/colors'
-import { ActivityResolved } from '@/features/activities/types'
 
 function useRatingLevel<T>(rating: T) {
   // rating is between 1.0 to 5.0

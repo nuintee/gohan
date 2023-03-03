@@ -1,6 +1,6 @@
 import { isAuthedMiddleWare } from '@/server/middleware'
 import { procedure } from '@/server/trpc'
-import { AddActivitySchema, UpdateActivitySchema } from '../schemas/index.schema'
+import { AddActivitySchema } from '../schemas/index.schema'
 import { randomUUID } from 'crypto'
 
 export const addActivity = procedure

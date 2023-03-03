@@ -1,5 +1,3 @@
-import { colors } from '@/config/colors'
-
 import { motion } from 'framer-motion'
 
 const animationInit = (direction: 'x' | 'y') => {
@@ -22,7 +20,6 @@ const animationInit = (direction: 'x' | 'y') => {
 
 const SlideInLayout = ({
   isOpen = false,
-  onClose,
   children,
   contentBackgroundColor = 'white',
   maxWidth = '30rem',
@@ -30,7 +27,6 @@ const SlideInLayout = ({
   direction = 'x',
 }: {
   isOpen?: boolean
-  onClose?: () => void
   children: JSX.Element
   contentBackgroundColor?: string
   maxWidth?: string

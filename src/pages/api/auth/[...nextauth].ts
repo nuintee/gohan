@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token }) {
       return token
     },
     async redirect({ url, baseUrl }) {
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
         return url
       }
     },
-    async session({ session, user, token }) {
+    async session({ session, user }) {
       session.user = user
       return session
     },

@@ -1,8 +1,6 @@
 import { Clock, Star, Price } from '@/components/icons'
 
 import DescriptiveChip from './DescriptiveChip/index'
-import { colors } from '@/config/colors'
-import { ActivityResolved } from '@/features/activities/types'
 import useRatingLevel from '../../hooks/useRatingLevel'
 import useOpenHours from '../../hooks/useOpenHours'
 import usePriceLevel from '../../hooks/usePriceLevel'

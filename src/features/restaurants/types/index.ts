@@ -1,7 +1,6 @@
 import { ActivityResolved } from '@/features/activities/types'
 import { Activity } from '@prisma/client'
 import { MouseEventHandler } from 'react'
-import { NEEDED_DETAIL_FIELDS } from '../constants'
 
 export const PLACES_RESPONSE_STATUS = {
   OK: 'OK',
@@ -157,5 +156,5 @@ export type RestaurantProps = {
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
-  onNavigate?: (activity: ActivityResolved) => void
+  onNavigate?: (_activity: ActivityResolved) => void
 }

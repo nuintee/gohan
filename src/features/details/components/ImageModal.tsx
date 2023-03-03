@@ -1,10 +1,6 @@
 import { PulseLoader } from '@/components/icons'
 import SuspenseImage from '@/components/ui/SuspenseImage'
-import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
-import useToast from '@/libs/react-toastify'
-import Image from 'next/image'
-import { useState } from 'react'
 import usePlacePhotos from '../hooks/usePlacePhotos'
 
 type Props = {

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { motion } from 'framer-motion'
 

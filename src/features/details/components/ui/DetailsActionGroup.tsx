@@ -5,7 +5,6 @@ import { ActivityResolved } from '@/features/activities/types'
 import useMediaQuery from '@/hooks/mediaquery'
 import { share } from '@/utils/share'
 import { useSession } from 'next-auth/react'
-import { Dispatch, SetStateAction } from 'react'
 import useDetailsModal from '../../hooks/useDetailsModal'
 
 const DetailsActionGroup = ({
