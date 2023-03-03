@@ -48,14 +48,14 @@ const Button = (props: Props) => {
     } else if (outline) {
       return 'active:bg-gh-white border-[1px] border-gh-white hover:bg-gh-white bg-transparent text-gh-gray'
     } else {
-      return 'active:bg-opacity-90 bg-gh-dark hover:bg-opacity-90'
+      return 'active:bg-opacity-90 bg-gh-dark hover:bg-opacity-90 text-white '
     }
   }
 
   return (
     <button
       onClick={onClick}
-      className={`text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border duration-700 w-full ${theme()} `}
+      className={`px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border duration-700 w-full ${theme()} `}
       disabled={props.disabled || loading}
       style={{
         ...(square && { aspectRatio: '1/1', padding: '0' }),
