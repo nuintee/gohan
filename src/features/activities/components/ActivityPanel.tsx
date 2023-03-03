@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 
 // Components
 import PanelHeader from '@/components/ui/PanelHeader'
-import { useSession } from 'next-auth/react'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
@@ -14,12 +13,6 @@ import ActivityDropDown from './ActivityDropDown'
 import SlideInLayout from '@/layouts/SlideInLayout'
 import useMediaQuery from '@/hooks/mediaquery'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
-
-type Props = {
-  isOpen?: boolean
-  onClose?: React.MouseEventHandler<HTMLButtonElement>
-  query?: ReturnType<typeof useGetUserActivities>
-}
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -88,7 +81,6 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
 
 const ActivityPanel = () => {
   const { isPanelOpen, closePanel } = useActivityPanel()
-  const { data: session } = useSession()
 
   // MediaQuery
   const isOverSmall = useMediaQuery('sm')

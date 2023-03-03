@@ -22,7 +22,6 @@ const ActivityDropDown = ({
   direction,
   onBasicInfoAction,
   onShareAction,
-  isLoading,
 }: ActivityDropDownProps) => {
   const router = useRouter()
   const isOverLarge = useMediaQuery('lg')
@@ -73,7 +72,7 @@ const ActivityDropDown = ({
             place_id: activity.place_id,
           },
           {
-            onSuccess: (data) => {
+            onSuccess: () => {
               onMutated()
             },
           },

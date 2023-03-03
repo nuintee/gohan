@@ -12,7 +12,7 @@ export default {
 } as ComponentMeta<typeof Brand>
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof Brand> = (args) => <Brand />
+const Template: ComponentStory<typeof Brand> = () => <Brand />
 
 export const Default = Template.bind({})
 
