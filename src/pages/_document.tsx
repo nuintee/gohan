@@ -26,6 +26,10 @@ class MyDocument extends Document {
           <meta name='twitter:card' content='summary' />
           <meta name='twitter:site' content='@tcr_jp' />
           <meta property='og:type' content='blog' />
+          <meta
+            name='viewport'
+            content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
+          />
           {IS_STAGING === 'true' && <meta name='robots' content='noindex' />}
         </Head>
         <body>
