@@ -14,7 +14,7 @@ type Props = {
   isLoading?: boolean
 }
 
-const DropDown = ({ menu, direction = 'bottom', isLoading }: Props) => {
+const DropDown = ({ menu, direction = 'bottom', isLoading = false }: Props) => {
   return (
     <DropDownLayout
       direction={direction}
