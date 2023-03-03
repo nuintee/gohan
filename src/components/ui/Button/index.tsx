@@ -95,14 +95,13 @@ const Button = (props: Props) => {
   return (
     <button
       onClick={onClick}
-      className={
-        'bg-gh-dark text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border'
-      }
+      className={` text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border ${
+        outline ? 'active:bg-gh-white bg-transparent' : ' active:bg-opacity-90 bg-gh-dark'
+      }`}
       disabled={props.disabled || loading}
       style={{
         ...(square && { aspectRatio: '1/1', padding: '0' }),
         ...(outline && {
-          background: 'transparent',
           color: colors['gh-gray'],
           border: `1px solid ${colors['gh-white']}`,
         }),
