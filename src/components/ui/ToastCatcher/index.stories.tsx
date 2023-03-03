@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import ToastCatcher from './index'
 
 type ExtendedToast = (
-  args: ComponentProps<typeof ToastCatcher> & {
+  _args: ComponentProps<typeof ToastCatcher> & {
     _activate: boolean
     _innerText: string
     _types: string

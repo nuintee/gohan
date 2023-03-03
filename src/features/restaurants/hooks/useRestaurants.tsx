@@ -10,8 +10,8 @@ const useRestaurants = ({
   trigger = false,
   ...rest
 }: Parameters<typeof trpc.getRestaurants.useQuery>[0] & {
-  successCallback?: <T extends {}>(data: T) => void
-  errorCallback?: (error: Error) => void
+  successCallback?: <T extends {}>(_data: T) => void
+  errorCallback?: (_error: Error) => void
   trigger?: boolean
 }) => {
   const { status, data: session } = useSession()

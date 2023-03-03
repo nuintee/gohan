@@ -156,5 +156,5 @@ export type RestaurantProps = {
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
-  onNavigate?: (activity: ActivityResolved) => void
+  onNavigate?: (_activity: ActivityResolved) => void
 }

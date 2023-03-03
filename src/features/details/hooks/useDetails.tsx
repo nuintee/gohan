@@ -5,7 +5,7 @@ const useDetails = ({
   successCallback,
   ...rest
 }: Parameters<typeof trpc.getDetails.useQuery>[0] & {
-  successCallback?: (data: ReturnType<typeof trpc.getDetails.useQuery>) => void
+  successCallback?: <T extends {}>(_data: T) => void
 }) => {
   return trpc.getDetails.useQuery(rest, {
     refetchOnWindowFocus: false,

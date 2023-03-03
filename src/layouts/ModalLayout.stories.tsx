@@ -20,7 +20,7 @@ const childrenMapper: any = {
 
 type ArgProps = { children: string } & Omit<ComponentProps<typeof Modal>, 'children'>
 
-type ExtendedModalLayout = (args: ArgProps) => JSX.Element
+type ExtendedModalLayout = (_args: ArgProps) => JSX.Element
 
 export default {
   title: 'Layouts/Modal',

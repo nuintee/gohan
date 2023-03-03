@@ -24,7 +24,7 @@ if (IS_DEVMODE) {
 const queryClient = new QueryClient()
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
+  getLayout?: (_page: ReactElement) => ReactNode
 }
 
 type AppPropsWithLayout = AppProps & {
