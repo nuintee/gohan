@@ -107,7 +107,7 @@ const Button = (props: Props) => {
   return (
     <button
       onClick={onClick}
-      className={`text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border duration-700 ${theme()} `}
+      className={`text-white px-4 py-2 rounded-md whitespace-nowrap flex gap-2 min-h-[2.5rem] items-center justify-center box-border duration-700 w-full ${theme()} `}
       disabled={props.disabled || loading}
       style={{
         ...(square && { aspectRatio: '1/1', padding: '0' }),
