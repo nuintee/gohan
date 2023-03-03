@@ -18,14 +18,14 @@ export type PlacesSearchStatus = keyof typeof PLACES_RESPONSE_STATUS
 export type PlacesDetailsStatus = keyof Omit<typeof PLACES_RESPONSE_STATUS, 'NOT_FOUND'>
 
 export interface PlacesAPI {
-  html_attributions?: null[] | null
-  results?: ResultsEntity[] | null
+  html_attributions: string[]
+  results: ResultsEntity[]
   status: PlacesSearchStatus
 }
 
 export interface DetailsAPI {
-  html_attributions?: null[] | null
-  result?: ResultsEntity | null
+  html_attributions: string[]
+  result: ResultsEntity
   status: PlacesDetailsStatus
 }
 
@@ -84,12 +84,12 @@ export interface PlaceReview {
   rating: number
   relative_time_description: string
   time: number
-  author_url: string | null
-  language: string | null
-  original_language: string | null
-  profile_photo_url: string | null
-  text: string | null
-  translated: boolean | null
+  author_url?: string
+  language?: string
+  original_language?: string
+  profile_photo_url?: string
+  text?: string
+  translated?: boolean
 }
 
 export interface PlaceEditorialSummary {
@@ -98,45 +98,45 @@ export interface PlaceEditorialSummary {
 }
 
 export interface Geometry {
-  location: NortheastOrSouthwestOrLocation
+  location: LatLngLiteral
   viewport: Viewport
 }
-export interface NortheastOrSouthwestOrLocation {
+export interface LatLngLiteral {
   lat: number
   lng: number
 }
 export interface Viewport {
-  northeast: NortheastOrSouthwestOrLocation
-  southwest: NortheastOrSouthwestOrLocation
+  northeast: LatLngLiteral
+  southwest: LatLngLiteral
 }
 export interface OpeningHours {
-  open_now: boolean | null
-  periods: PlaceOpeningHoursPeriod[] | null
-  special_days: PlaceSpecialDay[] | null
-  type: string | null
-  weekday_text: [] | null
+  open_now?: boolean
+  periods?: PlaceOpeningHoursPeriod[]
+  special_days?: PlaceSpecialDay[]
+  type?: string
+  weekday_text?: []
 }
 
 export interface PlaceOpeningHoursPeriod {
   open: PlaceOpeningHoursPeriodDetail
-  close: PlaceOpeningHoursPeriodDetail | null
+  close?: PlaceOpeningHoursPeriodDetail
 }
 
 export interface PlaceOpeningHoursPeriodDetail {
   day: number
   time: string
-  date: string | null
-  truncated: boolean | null
+  date?: string
+  truncated?: boolean
 }
 
 export interface PlaceSpecialDay {
-  date: string | null
-  exceptional_hours: boolean | null
+  date?: string
+  exceptional_hours?: boolean
 }
 
 export interface PhotosEntity {
   height: number
-  html_attributions?: string[] | null
+  html_attributions: string[]
   photo_reference: string
   width: number
 }
