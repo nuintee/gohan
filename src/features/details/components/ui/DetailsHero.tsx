@@ -13,7 +13,7 @@ const ReviewBannerStatus = ({
   reviewStatus: Parameters<typeof useActivityStatus>[0]
 }) => {
   const { status } = useSession()
-  if (status === 'unauthenticated') return <></>
+  if (status === 'unauthenticated') return <div className='px-2 py-2'></div>
 
   return (
     <div
