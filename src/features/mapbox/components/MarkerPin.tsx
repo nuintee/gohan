@@ -40,8 +40,8 @@ const Pin = ({
 
   return (
     <Marker
-      latitude={latitude || 0}
-      longitude={longitude || 0}
+      latitude={latitude}
+      longitude={longitude}
       onClick={(e) => {
         e.originalEvent.stopPropagation()
         onClick && onClick()
