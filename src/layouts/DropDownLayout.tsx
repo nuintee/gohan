@@ -8,6 +8,7 @@ type Props = {
   children?: JSX.Element
   ignored?: boolean
   controller?: JSX.Element
+  isLoading?: boolean
   overrideStyle?: React.ComponentProps<'div'>['className']
 }
 
@@ -50,7 +51,14 @@ const _BackArea = ({
   )
 }
 
-const DropDownLayout = ({ direction, children, ignored, controller, overrideStyle }: Props) => {
+const DropDownLayout = ({
+  direction,
+  children,
+  ignored,
+  controller,
+  overrideStyle,
+  isLoading,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const directionClass = () => {
@@ -89,6 +97,7 @@ const DropDownLayout = ({ direction, children, ignored, controller, overrideStyl
           onClick={() => setIsOpen((prev) => !prev)}
           icon={{ position: 'after', src: <Dots direction='vertical' /> }}
           square
+          loading={isLoading}
         />
       )
     }

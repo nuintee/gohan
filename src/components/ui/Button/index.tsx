@@ -60,13 +60,13 @@ const Button = (props: Props) => {
 
   return (
     <button onClick={onClick} className={style.container()} disabled={props.disabled || loading}>
-      {icon?.position === 'before' && icon.src}
+      {icon?.position === 'before' && !loading && icon.src}
       {loading ? (
         <PulseLoader color={style.icon()} loading={true} size={5} speedMultiplier={0.5} />
       ) : (
         text
       )}
-      {icon?.position === 'after' && icon.src}
+      {icon?.position === 'after' && !loading && icon.src}
     </button>
   )
 }
