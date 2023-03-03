@@ -11,11 +11,15 @@ type DropDownMenu = {
 type Props = {
   menu: DropDownMenu
   direction?: React.ComponentProps<typeof DropDownLayout>['direction']
-}
+} & React.ComponentProps<typeof DropDownLayout>
 
-const DropDown = ({ menu, direction = 'bottom' }: Props) => {
+const DropDown = ({ menu, direction = 'bottom', isLoading }: Props) => {
   return (
-    <DropDownLayout direction={direction} ignored={!Boolean(menu?.length > 0)}>
+    <DropDownLayout
+      direction={direction}
+      ignored={!Boolean(menu?.length > 0)}
+      isLoading={isLoading}
+    >
       <>
         {menu.map((v) => (
           <button
