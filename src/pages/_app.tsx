@@ -21,10 +21,6 @@ if (IS_DEVMODE) {
   require('@/mocks/worker')
 }
 
-const ab = () => {
-  return 1 + 2
-}
-
 const queryClient = new QueryClient()
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
