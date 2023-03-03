@@ -29,7 +29,7 @@ const DetailsSummary = ({
       >
         <div className='flex items-center gap-2'>
           {!ignored && <Chevron overrideClassName='rotate-90 group-open:-rotate-90 ml-1' />}
-          <p>{summaryTitle}</p>
+          <p className='whitespace-nowrap text-gh-d-gray'>{summaryTitle}</p>
           {allowCopy && <CopyButton copyValue={summaryValue} />}
         </div>
         <h2>{summaryValue}</h2>

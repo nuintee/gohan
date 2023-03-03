@@ -920,6 +920,411 @@
       "user_ratings_total": 8,
       "vicinity": "Комплекс Цариградски, Sofia",
       "price_level": 2
+    },
+    {
+      "address_components": [
+        {
+          "long_name": "Fesleğen Sokak",
+          "short_name": "Fesleğen Sk.",
+          "types": ["route"]
+        },
+        {
+          "long_name": "Merkez Efendi",
+          "short_name": "Merkez Efendi",
+          "types": ["administrative_area_level_4", "political"]
+        },
+        {
+          "long_name": "Pamukkale",
+          "short_name": "Pamukkale",
+          "types": ["administrative_area_level_2", "political"]
+        },
+        {
+          "long_name": "Denizli",
+          "short_name": "Denizli",
+          "types": ["administrative_area_level_1", "political"]
+        },
+        {
+          "long_name": "Türkiye",
+          "short_name": "TR",
+          "types": ["country", "political"]
+        },
+        {
+          "long_name": "20020",
+          "short_name": "20020",
+          "types": ["postal_code"]
+        }
+      ],
+      "adr_address": "<span class=\"street-address\">Merkez Efendi, Fesleğen Sk.</span>, <span class=\"postal-code\">20020</span> <span class=\"locality\">Pamukkale</span>/<span class=\"region\">Denizli</span>, <span class=\"country-name\">Türkiye</span>",
+      "business_status": "OPERATIONAL",
+      "curbside_pickup": true,
+      "current_opening_hours": {
+        "open_now": true,
+        "periods": [
+          {
+            "close": {
+              "date": "2023-03-05",
+              "day": 0,
+              "time": "2230"
+            },
+            "open": {
+              "date": "2023-03-05",
+              "day": 0,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "date": "2023-03-06",
+              "day": 1,
+              "time": "2230"
+            },
+            "open": {
+              "date": "2023-03-06",
+              "day": 1,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "date": "2023-03-07",
+              "day": 2,
+              "time": "2230"
+            },
+            "open": {
+              "date": "2023-03-07",
+              "day": 2,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "date": "2023-03-08",
+              "day": 3,
+              "time": "2230"
+            },
+            "open": {
+              "date": "2023-03-08",
+              "day": 3,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "date": "2023-03-09",
+              "day": 4,
+              "time": "2230"
+            },
+            "open": {
+              "date": "2023-03-09",
+              "day": 4,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "date": "2023-03-03",
+              "day": 5,
+              "time": "2230"
+            },
+            "open": {
+              "date": "2023-03-03",
+              "day": 5,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "date": "2023-03-04",
+              "day": 6,
+              "time": "2230"
+            },
+            "open": {
+              "date": "2023-03-04",
+              "day": 6,
+              "time": "0530"
+            }
+          }
+        ],
+        "weekday_text": [
+          "Monday: 5:30\u202fAM – 10:30\u202fPM",
+          "Tuesday: 5:30\u202fAM – 10:30\u202fPM",
+          "Wednesday: 5:30\u202fAM – 10:30\u202fPM",
+          "Thursday: 5:30\u202fAM – 10:30\u202fPM",
+          "Friday: 5:30\u202fAM – 10:30\u202fPM",
+          "Saturday: 5:30\u202fAM – 10:30\u202fPM",
+          "Sunday: 5:30\u202fAM – 10:30\u202fPM"
+        ]
+      },
+      "delivery": true,
+      "dine_in": true,
+      "formatted_address": "Merkez Efendi, Fesleğen Sk., 20020 Pamukkale/Denizli, Türkiye",
+      "formatted_phone_number": "(0258) 241 79 37",
+      "geometry": {
+        "location": {
+          "lat": 37.767959,
+          "lng": 29.0943821
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 37.7693782802915,
+            "lng": 29.0958365302915
+          },
+          "southwest": {
+            "lat": 37.7666803197085,
+            "lng": 29.0931385697085
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+      "icon_background_color": "#FF9E67",
+      "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+      "international_phone_number": "+90 258 241 79 37",
+      "name": "Hemsin Karadeniz Unlu Mamulleri",
+      "opening_hours": {
+        "open_now": true,
+        "periods": [
+          {
+            "close": {
+              "day": 0,
+              "time": "2230"
+            },
+            "open": {
+              "day": 0,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "day": 1,
+              "time": "2230"
+            },
+            "open": {
+              "day": 1,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "day": 2,
+              "time": "2230"
+            },
+            "open": {
+              "day": 2,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "day": 3,
+              "time": "2230"
+            },
+            "open": {
+              "day": 3,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "day": 4,
+              "time": "2230"
+            },
+            "open": {
+              "day": 4,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "day": 5,
+              "time": "2230"
+            },
+            "open": {
+              "day": 5,
+              "time": "0530"
+            }
+          },
+          {
+            "close": {
+              "day": 6,
+              "time": "2230"
+            },
+            "open": {
+              "day": 6,
+              "time": "0530"
+            }
+          }
+        ],
+        "weekday_text": [
+          "Monday: 5:30\u202fAM – 10:30\u202fPM",
+          "Tuesday: 5:30\u202fAM – 10:30\u202fPM",
+          "Wednesday: 5:30\u202fAM – 10:30\u202fPM",
+          "Thursday: 5:30\u202fAM – 10:30\u202fPM",
+          "Friday: 5:30\u202fAM – 10:30\u202fPM",
+          "Saturday: 5:30\u202fAM – 10:30\u202fPM",
+          "Sunday: 5:30\u202fAM – 10:30\u202fPM"
+        ]
+      },
+      "photos": [
+        {
+          "height": 3096,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111256875599000454973\">pamukkale Denizli</a>"
+          ],
+          "photo_reference": "AfLeUgMUH9h7jfg62AXaq5l-BoIuezfDsSZGL2IeYzrekF0g-oPs6gOqqAB_7DC-DzfxzdRhTHAX_CNV06MfTr6vo_Ueh2GwFDivViqvo64SAw7Za9Qp6WnfiW1e40l1dXEXUC1ba35V-p8r_LW8Gj9KuwGsSiUxlIz-JuXgZjwLSZlpD3AM",
+          "width": 4128
+        },
+        {
+          "height": 4128,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/109444320349392660262\">Salihcan Önder</a>"
+          ],
+          "photo_reference": "AfLeUgMU6ealMJg3KoexPeZT00wRiXVolFQPRpChTwRqW8ANsLX7fk7_77pLKjj_7yuUFOURmjUroWrYLGgI6Lr4DtudeZ1lEUtZpag8SFYu-mS3hsgrplJzrYZrdnGvb9MMwhgYgwiyIUh1nEkavbo1k2BAJ_kyyLimrIGZsP5W5GasCkNd",
+          "width": 2322
+        },
+        {
+          "height": 4128,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111256875599000454973\">pamukkale Denizli</a>"
+          ],
+          "photo_reference": "AfLeUgP0YEKQrXwb-asGf2nNasZ8ObR5wVgrA9iuRt_wqNSOvsjIEA73tLBmlLreyrzLtIeswKeAKbuDrW_hjm-2ZRvqXzMctTZWPl6qzpVEIUcUOAU6VGj7naS3qL9iI0bZ6f5hsgAvhONZ9It7LuN-pbd16GGixueGWJtI0Y4m9y_3BPIk",
+          "width": 3096
+        },
+        {
+          "height": 4128,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/109444320349392660262\">Salihcan Önder</a>"
+          ],
+          "photo_reference": "AfLeUgP5BFrWLtR0LE2zGBQ9bJd70ZJP_sVnXXkGYqQrrS7Ccv40e9bukMS9pQ1XuatELpetOLWdaHB3vg8oLeoUSjpjxfsUGvtvSPz7oV8Yfpyn3cmxSc0rYX-VYo72GjYlzdB2u3tFYPDwAZbOWc85OnVs6yDyYCIwKduc1qyz8Eqb6cwi",
+          "width": 3096
+        },
+        {
+          "height": 4128,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111256875599000454973\">pamukkale Denizli</a>"
+          ],
+          "photo_reference": "AfLeUgPKOJnFLHVE5lHydPGJPaK_dnQ9SUPeaxmbyHccqlfG8uVNVqzvg6CPWSEMiF2v_wyMBCRLAV7Si1Fae3Vlv8PhTV5TJ7nMye9Z2uPEAc0HYycBPifg4ek7a4au_CS-XER5GxXPF5McWXM1u9Aov-K_XWGleXqm9C8tVxObCzWFWuq8",
+          "width": 3096
+        },
+        {
+          "height": 4128,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111256875599000454973\">pamukkale Denizli</a>"
+          ],
+          "photo_reference": "AfLeUgMP13iYiRFQUJiGqkkTej9duZsk737iZashQ7zWQYzLIiC3-idnTSsoKGI3K1VAuh_E0hCnfAsQ8W_nDDwlZD_KXzFhEAzVWbkS20CLiUDn-wv8frH3aABu6l1rFMSTuUiGZao0LFrrae-F0JglUnLFqz0__fF00_wxKIWK54W9Gtiq",
+          "width": 3096
+        },
+        {
+          "height": 4128,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111256875599000454973\">pamukkale Denizli</a>"
+          ],
+          "photo_reference": "AfLeUgM9VYWLq1MuSDslPhpchYSXF8zJQOjchtONrxk4TCf1fT1s641tDhthuuixPXi0psw1I8sifIuR0eIkTsBkKdgys55PZz_mtP3pIO5hMsvimyeGn3D2xbQ48KeWsTwqGbVVgvpENgGYTPVmyguTXe_XuKbOkx6IUdkRjl-FyUdOatD5",
+          "width": 3096
+        },
+        {
+          "height": 4000,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/109132986116170056152\">Hasan Karakösem</a>"
+          ],
+          "photo_reference": "AfLeUgMmxWLsRmdc_eLReeCVpPZc6DxAoAvo4NM8vvlGuPUoaSCMEjUvwMMhpUox1obULaQ7MMqTuSUkyegZljSrli-ZxIjO0KpgEHhXrnzBlNkk8qwMXQ9qR9gOmOwMhyVCqEMX0JCWAf7o9GgMxnRF8fdrp8kRYywqq5YdDtlK1cbq0nJX",
+          "width": 1840
+        },
+        {
+          "height": 3096,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/111256875599000454973\">pamukkale Denizli</a>"
+          ],
+          "photo_reference": "AfLeUgPhYsyBVXW_trrTAy06GPwl68gVcxp6HHuYX8wdGvy0MUy1_9LNn2_AbvJ5rZJCauHAvUzOB_g6E1I3kLxLlwtOgX7qp0PVyGWT9PyyJda5N44d7j3S8UlCcpibBzfve1RFbUfdWRtCsJHbtJywW6Fa279ebLBYcqhlb_3xe-X73mc5",
+          "width": 4128
+        },
+        {
+          "height": 4128,
+          "html_attributions": [
+            "<a href=\"https://maps.google.com/maps/contrib/109444320349392660262\">Salihcan Önder</a>"
+          ],
+          "photo_reference": "AfLeUgNafRg-QrYPvKmVgBnE5nkLIPXZsnDcov-wKCtTOzFBXnl5eGjNCwyQgSwQgbZ8wv3MjfKEVa5Rax2NDyImsUDNf9oJc5gAc-PeHyziKUTYkA5dRqHq1XTG7qjWHe-dW5k3zrpRe66cfHl6MqpKbAKdKM1yc5NJ2G8PG2D3z8y2EKJ6",
+          "width": 2322
+        }
+      ],
+      "place_id": "ChIJyfjNbFU-xxQR80zJBtL_kko",
+      "plus_code": {
+        "compound_code": "Q39V+5Q Pamukkale/Denizli, Türkiye",
+        "global_code": "8G9FQ39V+5Q"
+      },
+      "rating": 4.3,
+      "reference": "ChIJyfjNbFU-xxQR80zJBtL_kko",
+      "reservable": false,
+      "reviews": [
+        {
+          "author_name": "ilyas isin",
+          "author_url": "https://www.google.com/maps/contrib/112787635451173934028/reviews",
+          "language": "en-US",
+          "original_language": "tr",
+          "profile_photo_url": "https://lh3.googleusercontent.com/a/AGNmyxb-P_NHx6jyGIfuwSFUXQhuVdTrIPCjoNl641gx=s128-c0x00000000-cc-rp-mo",
+          "rating": 1,
+          "relative_time_description": "4 months ago",
+          "text": "Miscalculations are made, you can be distracted by the human condition, but I was sad to see it in the previous comments, I paid 30 TL for 4 pieces of sesame crackers and 3 breads from 3,5 TL. If the bread is 5.33, the calculation is correct, I am wrong.",
+          "time": 1665510233,
+          "translated": true
+        },
+        {
+          "author_name": "Serdar ÖZTÜRK",
+          "author_url": "https://www.google.com/maps/contrib/111910038514589703413/reviews",
+          "language": "en-US",
+          "original_language": "tr",
+          "profile_photo_url": "https://lh3.googleusercontent.com/a-/ACB-R5QLxgz1OKF-UQe18BqDTDX21WzmqccW4WwvYS6cNQ=s128-c0x00000000-cc-rp-mo-ba4",
+          "rating": 1,
+          "relative_time_description": "4 months ago",
+          "text": "I bought a product called pistachio paste, but it doesn't taste like pistachio. They're stuffed with coconut, it's a shame, sell it as candy, sell it as sweet, but be honest",
+          "time": 1667304832,
+          "translated": true
+        },
+        {
+          "author_name": "Pars Karabay",
+          "author_url": "https://www.google.com/maps/contrib/109550937266415248023/reviews",
+          "language": "en-US",
+          "original_language": "tr",
+          "profile_photo_url": "https://lh3.googleusercontent.com/a/AGNmyxZxuWsk0A63kIzyPsEPqfR2RN9fQ8RIVBqbKlBU=s128-c0x00000000-cc-rp-mo",
+          "rating": 1,
+          "relative_time_description": "2 months ago",
+          "text": "I asked a question to an old man with a belly, as if I was a beggar or as if I had cursed him, he tried to send me off. And I've seen this twice. I would never recommend.",
+          "time": 1670481962,
+          "translated": true
+        },
+        {
+          "author_name": "Osman Ekiz",
+          "author_url": "https://www.google.com/maps/contrib/117530995452961396410/reviews",
+          "language": "en-US",
+          "original_language": "tr",
+          "profile_photo_url": "https://lh3.googleusercontent.com/a/AGNmyxYLowrE_M4F3p3CXGdWXgviqhiANxMKlIODko-D=s128-c0x00000000-cc-rp-mo-ba3",
+          "rating": 3,
+          "relative_time_description": "a month ago",
+          "text": "I've been shopping here for years. Neither the taste of the old bagel nor the tahini is left anymore. Tahini used to be crunchy and full, now it's very fluffy and hollow.",
+          "time": 1673188114,
+          "translated": true
+        },
+        {
+          "author_name": "Başak Çiçek /RüzgaR",
+          "author_url": "https://www.google.com/maps/contrib/108844577608337344043/reviews",
+          "language": "en-US",
+          "original_language": "tr",
+          "profile_photo_url": "https://lh3.googleusercontent.com/a-/ACB-R5SrZ2FY6suWl6QPFd3LpZE9fvoYTMDacNTMByDm7Y8=s128-c0x00000000-cc-rp-mo-ba3",
+          "rating": 5,
+          "relative_time_description": "4 months ago",
+          "text": "Trilices, fresh cakes and bagels are indispensable, no matter where I am, I do not look for another place for cake.",
+          "time": 1667076114,
+          "translated": true
+        }
+      ],
+      "serves_beer": false,
+      "serves_lunch": false,
+      "serves_wine": false,
+      "takeout": true,
+      "types": ["restaurant", "food", "point_of_interest", "establishment"],
+      "url": "https://maps.google.com/?cid=5373638582928493811",
+      "user_ratings_total": 100,
+      "utc_offset": 180,
+      "vicinity": "Merkez Efendi, Fesleğen Sokak"
     }
   ],
   "status": "OK"

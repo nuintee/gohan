@@ -20,8 +20,10 @@ const useRestaurants = ({
   const { isGPSFetching, isGPSError } = useGPS()
   const { navigate } = useDiscoveredNavigation()
 
+  const isGPSAvailable = !isGPSFetching && !isGPSError
+
   return trpc.getRestaurants.useQuery(rest, {
-    enabled: trigger,
+    enabled: trigger && isGPSAvailable,
     retry: isGPSError || isGPSFetching ? 0 : 3,
     onError: (error) => {
       console.error(error)
