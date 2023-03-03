@@ -57,7 +57,7 @@ const useModals = () => {
   }
 
   const closeAll = () => {
-    setModals((prev) => [])
+    setModals(() => [])
   }
 
   return { open, close, toggle, closeAll, isOpen, getPayload }

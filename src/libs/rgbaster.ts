@@ -1,6 +1,6 @@
 import { colors } from '@/config/colors'
 
-async function getDominantColor(url: string) {
+async function getDominantColor() {
   const FALLBACK_COLOR = colors['gh-dark']
 
   // if (!url) return FALLBACK_COLOR

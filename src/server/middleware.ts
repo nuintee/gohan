@@ -26,7 +26,7 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
   })
 })
 
-export const isAPIRateLimited = middleware(async ({ next, ctx }) => {
+export const isAPIRateLimited = middleware(async ({ next }) => {
   // const { req, res } = ctx
 
   // const ip = req.socket.remoteAddress

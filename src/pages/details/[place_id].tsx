@@ -105,7 +105,7 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query, req, res, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, params }) => {
   console.log({ query })
   console.log({ params })
 

@@ -33,7 +33,7 @@ Experiment.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({}) => {
   const data = await getBarePlacesAPI({ latitude: 0, longitude: 0 })
   console.log(data)
   return {

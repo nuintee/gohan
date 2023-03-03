@@ -11,11 +11,11 @@ import { Router } from 'next/router'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 
-Router.events.on('routeChangeStart', (e) => {
+Router.events.on('routeChangeStart', () => {
   console.time('start')
 })
 
-Router.events.on('routeChangeComplete', (e) => {
+Router.events.on('routeChangeComplete', () => {
   console.timeEnd('start')
 })
 

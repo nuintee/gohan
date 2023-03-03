@@ -7,7 +7,7 @@ import { createContext } from '@/server/context'
 export default trpcNext.createNextApiHandler({
   router: appRouter,
   createContext,
-  onError({ error, type, path, input, ctx, req }) {
+  onError({ error }) {
     console.error('Error:', error)
     if (error.code === 'INTERNAL_SERVER_ERROR') {
       // send to bug reporting
