@@ -36,9 +36,10 @@ const BasicInfoModal = (props: Props) => {
               <>
                 <div className='flex items-center justify-between w-full'>
                   <p>
-                    {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
+                    {/* {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
                       weekday: 'long',
-                    })}
+                    })} */}
+                    {JSON.stringify(v)}
                   </p>
                   <p>
                     {v?.open?.time} - {v?.close?.time}
