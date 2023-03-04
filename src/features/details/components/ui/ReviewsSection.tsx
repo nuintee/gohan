@@ -27,10 +27,20 @@ const ReviewsSection = ({
                     alt={`${review.author_name}'s image`}
                   />
                   <Texts main={review.author_name} sub={review.time.toString()} />
-                  <span
+                  {/* <span
                     className='p-2 rounded-md text-white flex whitespace-nowrap'
                     style={{
                       background: useRatingLevel(review.rating).color,
+                    }}
+                  >
+                    評価: {review.rating}
+                  </span> */}
+                  <span
+                    className='p-1 rounded-md text-white flex whitespace-nowrap'
+                    style={{
+                      // background: useRatingLevel(review.rating).color,
+                      outline: `1px solid ${useRatingLevel(review.rating).color}`,
+                      color: useRatingLevel(review.rating).color,
                     }}
                   >
                     評価: {review.rating}
