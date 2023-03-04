@@ -47,7 +47,7 @@ const MapBox = () => {
           zoom: 16,
         }}
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
-        mapStyle={mapStyles.MONOCHROME}
+        mapStyle={mapStyles.PALE_BLUE}
         renderWorldCopies={false}
         pitchWithRotate={false}
         onClick={() => clearActivityFocus()}
