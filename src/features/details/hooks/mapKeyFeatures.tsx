@@ -20,5 +20,7 @@ export function mapKeyFeatures(key: typeof KEY_FEATURES[number]) {
       return 'ベジタリアン対応'
     case 'wheelchair_accessible_entrance':
       return '車椅子対応'
+    default:
+      return key
   }
 }
