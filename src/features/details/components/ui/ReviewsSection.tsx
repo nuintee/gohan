@@ -15,7 +15,7 @@ const ReviewsSection = ({
       return (
         <>
           <hr className='border-gh-pale'></hr>
-          <div className='flex flex-col gap-8 h-[30rem] overflow-auto pt-4 '>
+          <div className='flex flex-col gap-4 h-[30rem] overflow-auto pt-4 '>
             {data?.reviews?.map((review) => (
               <div className='flex flex-col gap-2 hover:bg-gh-white rounded-md p-2'>
                 <div className='flex gap-4 items-center justify-start w-fit'>
@@ -26,7 +26,7 @@ const ReviewsSection = ({
                     className={'w-12 h-12 aspect-square rounded-full'}
                     alt={`${review.author_name}'s image`}
                   />
-                  <Texts main={review.author_name} sub={review.time.toString()} />
+                  <Texts main={review.author_name} sub={review.time.toString()} size='small' />
                   <span
                     className='p-1 rounded-md flex whitespace-nowrap'
                     style={{
