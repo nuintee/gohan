@@ -3,4 +3,7 @@
 @tailwind utilities;
 
 @supports (-webkit-touch-callout: none) {
+  .h-screen {
+    height: 100svh;
+  }
 }
