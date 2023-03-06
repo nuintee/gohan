@@ -28,7 +28,7 @@ class MyDocument extends Document {
           <meta property='og:type' content='blog' />
           <meta
             name='viewport'
-            content='initial-scale=1, width=device-width, user-scalable=no, viewport-fit=cover'
+            content='initial-scale=1, maximum-scale=1, width=device-width, user-scalable=no, viewport-fit=cover'
           />
           {IS_STAGING === 'true' && <meta name='robots' content='noindex' />}
         </Head>
