@@ -5,26 +5,26 @@ import { GetServerSideProps } from 'next'
 import { ReactElement } from 'react'
 
 import DEV_COORDS from '@/data/geolocation.json'
+import { trpc } from '@/libs/trpc'
 
 const Experiment = () => {
-  const handleDetails = async () => {
-    const r = await getBareDetailsAPI({ place_id: '' })
-    console.log(r)
-  }
-
-  const handlePlaces = async () => {
-    const r = await getBarePlacesAPI({
-      latitude: DEV_COORDS.coords.latitude,
-      longitude: DEV_COORDS.coords.longitude,
-    })
-    console.log(r)
-  }
+  const handleImage = trpc.getImage.useQuery(
+    {
+      photo_reference:
+        'CnRvAAAAwMpdHeWlXl-lH0vp7lez4znKPIWSWvgvZFISdKx45AwJVP1Qp37YOrH7sqHMJ8C-vBDC546decipPHchJhHZL94RcTUfPa1jWzo-rSHaTlbNtjh-N68RkcToUCuY9v2HNpo5mziqkir37WU8FJEqVBIQ4k938TI3e7bf8xq-uwDZcxoUbO_ZJzPxremiQurAYzCTwRhE_V0',
+    },
+    {
+      enabled: true,
+      cacheTime: Infinity,
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
+    },
+  )
 
   return (
     <div className='flex flex-col'>
-      <h1>1</h1>
-      <button onClick={handleDetails}>Fetch details</button>
-      <button onClick={handlePlaces}>Fetch Places</button>
+      <img src={handleImage.data} />
+      <button onClick={() => handleImage.refetch()}>Fetch Image</button>
     </div>
   )
 }
