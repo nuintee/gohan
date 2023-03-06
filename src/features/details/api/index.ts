@@ -3,6 +3,7 @@ import { statusMapper } from '@/features/restaurants/utils/statusMapper'
 import { procedure } from '@/server/trpc'
 import { TRPCClientError } from '@trpc/client'
 import { z } from 'zod'
+import { getBareImageAPI } from '../hooks/getBareImageAPI'
 
 export const getDetails = procedure
   .input(
@@ -18,4 +19,14 @@ export const getDetails = procedure
     } else {
       throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
     }
+  })
+
+export const getImage = procedure
+  .input(
+    z.object({
+      photo_reference: z.string(),
+    }),
+  )
+  .query(async ({ input }) => {
+    return getBareImageAPI(input.photo_reference)
   })
