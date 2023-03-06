@@ -34,6 +34,7 @@ const HeaderSidebar = ({
           borderDirection='left'
           activeBackgroundColor={colors['gh-brown']}
           passiveTextColor={colors['gh-gray']}
+          onClick={() => onClose()}
         />
         <NavLink
           label={ROUTES.LIBRARY.label}
@@ -41,6 +42,7 @@ const HeaderSidebar = ({
           borderDirection='left'
           activeBackgroundColor={colors['gh-brown']}
           passiveTextColor={colors['gh-gray']}
+          onClick={() => onClose()}
         />
       </div>
       {status === 'unauthenticated' && (
