@@ -39,8 +39,8 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
-    return usePlacePhotos(details?.photos)
-  }, [details?.photos])
+    return usePlacePhotos(details.data?.photos)
+  }, [details.data?.photos])
 
   if (
     (activity.isFetching && !activity.isFetchedAfterMount) ||
