@@ -29,12 +29,14 @@ import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 import { ActivityResolved } from '@/features/activities/types'
 
-const DetailsPage = ({ id, details }: { id: string; details: ActivityResolved }) => {
+const DetailsPage = ({ id, details, serverError }: { id: string; details: ActivityResolved }) => {
   const { status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
   const activity = useGetActivity({ place_id: id })
+
+  if (serverError) return <h1>{JSON.stringify(serverError)}</h1>
 
   console.dir(details)
   console.dir(activity)
@@ -114,12 +116,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     transformer: superjson,
   })
 
-  const details = await ssg.getDetails.fetch({ place_id: params?.place_id as string })
+  try {
+    const details = await ssg.getDetails.fetch({ place_id: params?.place_id as string })
+    console.log({ details })
 
-  return {
-    props: {
-      details,
-    },
+    return {
+      props: {
+        details,
+      },
+    }
+  } catch (error) {
+    console.error(error)
+    return {
+      props: {
+        serverError: error,
+      },
+    }
   }
 }
 
