@@ -27,13 +27,13 @@ import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
+import { ActivityResolved } from '@/features/activities/types'
 
-const DetailsPage = ({ id, color }: { id: string; color: string }) => {
+const DetailsPage = ({ id, details }: { id: string; details: ActivityResolved }) => {
   const { status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
-  const details = useDetails({ place_id: id })
   const activity = useGetActivity({ place_id: id })
 
   console.dir(details)
@@ -41,35 +41,30 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
-    return usePlacePhotos(details.data?.photos)
-  }, [details.data?.photos])
+    return usePlacePhotos(details?.photos)
+  }, [details?.photos])
 
-  if (
-    (activity.isFetching && !activity.isFetchedAfterMount) ||
-    (details.isFetching && !details.isFetchedAfterMount)
-  )
-    return <DetailsLoadingFallback />
+  if (activity.isFetching && !activity.isFetchedAfterMount) return <DetailsLoadingFallback />
 
-  if (activity.isError || details.isError)
-    return <ErrorFallBack error={activity.error || details.error} />
+  if (activity.isError) return <ErrorFallBack error={activity.error} />
 
   return (
     <>
       <Head
-        title={details.data?.name || ROUTES.DETAILS.label}
-        description={details.data?.editorial_summary?.overview}
-        keyword={details.data?.types?.join(',')}
+        title={details?.name || ROUTES.DETAILS.label}
+        description={details?.editorial_summary?.overview}
+        keyword={details?.types?.join(',')}
         image={memorizedPhoto.url}
         url={ROUTES.DETAILS.path}
       />
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
-          data={{ ...details.data, ...activity.data }}
+          data={{ ...details, ...activity.data }}
           isFetching={activity.isFetching}
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
-          color={color}
+          color={colors['gh-dark']}
         />
         <main className='sm:px-[10%] px-4'>
           {status === 'authenticated' ? (
@@ -84,11 +79,11 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
           ) : (
             <Promotion />
           )}
-          <DetailsDescriptiveGroup data={details.data} isLoading={false} />
-          <DetailsSectionGroup data={details.data} isLoading={false} />
+          <DetailsDescriptiveGroup data={details} isLoading={false} />
+          <DetailsSectionGroup data={details} isLoading={false} />
         </main>
       </div>
-      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details.data} onClose={clearLocalModal} />
+      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details} onClose={clearLocalModal} />
       <ReviewModal
         isOpen={checkIsOpen('REVIEW')}
         onClose={clearLocalModal}
