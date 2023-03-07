@@ -6,7 +6,7 @@ export const details = {
   result: (place_id: string) => {
     const res = _places.results.find((place) => place.place_id === place_id)
 
-    const current_opening_hours = res && {
+    const currentOpeningHours = res && {
       current_opening_hours: {
         ...res?.opening_hours,
         periods: PERIODS,
@@ -15,7 +15,7 @@ export const details = {
 
     return {
       ...res,
-      ...current_opening_hours,
+      ...currentOpeningHours,
     }
   },
   status: 'OK',
