@@ -29,39 +29,40 @@ import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 import { ActivityResolved } from '@/features/activities/types'
 
-const DetailsPage = ({ id, details, serverError }: { id: string; details: ActivityResolved }) => {
+const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
   const activity = useGetActivity({ place_id: id })
-
-  if (serverError) return <h1>{JSON.stringify(serverError)}</h1>
-
-  console.dir(details)
-  console.dir(activity)
+  const details = useDetails({ place_id: id })
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(details?.photos)
   }, [details?.photos])
 
-  if (activity.isFetching && !activity.isFetchedAfterMount) return <DetailsLoadingFallback />
+  if (
+    (activity.isFetching && !activity.isFetchedAfterMount) ||
+    (details.isFetching && !details.isFetchedAfterMount)
+  )
+    return <DetailsLoadingFallback />
 
-  if (activity.isError) return <ErrorFallBack error={activity.error} />
+  if (activity.isError || details.isError)
+    return <ErrorFallBack error={activity.error || details.error} />
 
   return (
     <>
       <Head
-        title={details?.name || ROUTES.DETAILS.label}
-        description={details?.editorial_summary?.overview}
-        keyword={details?.types?.join(',')}
+        title={details.data?.name || ROUTES.DETAILS.label}
+        description={details.data?.editorial_summary?.overview}
+        keyword={details.data?.types?.join(',')}
         image={memorizedPhoto.url}
         url={ROUTES.DETAILS.path}
       />
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
-          data={{ ...details, ...activity.data }}
+          data={{ ...details.data, ...activity.data }}
           isFetching={activity.isFetching}
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhoto.url}
@@ -81,11 +82,11 @@ const DetailsPage = ({ id, details, serverError }: { id: string; details: Activi
           ) : (
             <Promotion />
           )}
-          <DetailsDescriptiveGroup data={details} isLoading={false} />
-          <DetailsSectionGroup data={details} isLoading={false} />
+          <DetailsDescriptiveGroup data={details.data} isLoading={false} />
+          <DetailsSectionGroup data={details.data} isLoading={false} />
         </main>
       </div>
-      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details} onClose={clearLocalModal} />
+      <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details.data} onClose={clearLocalModal} />
       <ReviewModal
         isOpen={checkIsOpen('REVIEW')}
         onClose={clearLocalModal}
@@ -116,49 +117,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     transformer: superjson,
   })
 
-  try {
-    const details = await ssg.getDetails.fetch({ place_id: params?.place_id as string })
-    console.log({ details })
+  const id = params?.place_id as string
+  await ssg.getDetails.prefetch({ place_id: id })
 
-    return {
-      props: {
-        details,
-      },
-    }
-  } catch (error) {
-    console.error(error)
-    return {
-      props: {
-        serverError: error,
-      },
-    }
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      id,
+    },
   }
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({ query, params }) => {
-//   console.log({ query })
-//   console.log({ params })
-
-//   const ssg = createProxySSGHelpers({
-//     router: appRouter,
-//     ctx: {},
-//     transformer: superjson,
-//   })
-
-//   const tasks = [ssg.getActivity, ssg.getDetails]
-
-//   await Promise.all(
-//     tasks.map(async (v) => await v.prefetch({ place_id: query.place_id as string })),
-//   )
-
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       id: query.place_id,
-//       color: query.color || colors['gh-dark'],
-//     },
-//   }
-// }
 
 DetailsPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>
