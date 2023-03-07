@@ -1,4 +1,3 @@
-import { GCP_API_KEY } from '@/config/env'
 import { ResultsEntity } from '@/features/restaurants/types'
 import { getBareImageAPI } from './getBareImageAPI'
 

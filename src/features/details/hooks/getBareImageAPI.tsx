@@ -1,4 +1,4 @@
-import { BASE_URL, GCP_API_KEY, IS_PRODMODE } from '@/config/env'
+import { BASE_URL, IS_PRODMODE } from '@/config/env'
 
 function _generatePastelColor() {
   let R = Math.floor(Math.random() * 127 + 127)
