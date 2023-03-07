@@ -1,4 +1,4 @@
-import { GCP_API_KEY, IS_PRODMODE } from '@/config/env'
+import { BASE_URL, GCP_API_KEY, IS_PRODMODE } from '@/config/env'
 
 function _generatePastelColor() {
   let R = Math.floor(Math.random() * 127 + 127)
@@ -11,10 +11,7 @@ function _generatePastelColor() {
 
 export function getBareImageAPI(photo_reference: string) {
   if (IS_PRODMODE) {
-    const url = new URL('https://maps.googleapis.com/maps/api/place/photo')
-    url.searchParams.append('photo_reference', photo_reference)
-    url.searchParams.append('key', GCP_API_KEY)
-    url.searchParams.append('maxwidth', '400')
+    const url = new URL(`${BASE_URL}/api/image/${photo_reference}`)
 
     return url.toString()
   } else {
