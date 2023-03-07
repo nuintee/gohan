@@ -6,25 +6,16 @@ import { ReactElement } from 'react'
 
 import DEV_COORDS from '@/data/geolocation.json'
 import { trpc } from '@/libs/trpc'
+import useDetails from '@/features/details/hooks/useDetails'
+import Image from 'next/image'
 
 const Experiment = () => {
-  const handleImage = trpc.getImage.useQuery(
-    {
-      photo_reference:
-        'CnRvAAAAwMpdHeWlXl-lH0vp7lez4znKPIWSWvgvZFISdKx45AwJVP1Qp37YOrH7sqHMJ8C-vBDC546decipPHchJhHZL94RcTUfPa1jWzo-rSHaTlbNtjh-N68RkcToUCuY9v2HNpo5mziqkir37WU8FJEqVBIQ4k938TI3e7bf8xq-uwDZcxoUbO_ZJzPxremiQurAYzCTwRhE_V0',
-    },
-    {
-      enabled: true,
-      cacheTime: Infinity,
-      staleTime: Infinity,
-      refetchOnWindowFocus: false,
-    },
-  )
+  const getImage = trpc.getImage.useQuery({ photo_reference: '' })
 
   return (
     <div className='flex flex-col'>
-      <img src={handleImage.data} />
-      <button onClick={() => handleImage.refetch()}>Fetch Image</button>
+      {/* <Image width={400} src={'https://maps.googleapis.com/maps/api/place/photo'} alt='' /> */}
+      <img width={400} height={400} src={getImage.data} alt='' />
     </div>
   )
 }

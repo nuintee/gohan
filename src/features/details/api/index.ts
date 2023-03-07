@@ -27,6 +27,13 @@ export const getImage = procedure
       photo_reference: z.string(),
     }),
   )
-  .query(async ({ input }) => {
-    return getBareImageAPI(input.photo_reference)
+  .query(async ({ input, ctx }) => {
+    // const image = getBareImageAPI(input.photo_reference)
+    ctx.res.setHeader('Content-Type', 'image/png')
+    const res = await fetch('http://localhost:3000/icon-512x512.png')
+    const image = await res.arrayBuffer()
+
+    if (!res.ok) ctx.res.status(500).send(res.status)
+
+    return ctx.res.status(200).send(image)
   })
