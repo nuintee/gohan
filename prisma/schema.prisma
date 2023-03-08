@@ -45,6 +45,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   activity      Activity[]
+  reports       Report[]
 }
 
 model VerificationToken {
@@ -65,6 +66,19 @@ model Activity {
   discovered_at DateTime @default(now())
 
   @@unique([userId, place_id])
+}
+
+model Report {
+  id String @id @default(uuid())
+  request_type ReportType
+  userId  String?
+  user  User?  @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  body  String
+}
+
+enum ReportType {
+  REVALIDATE
+  ERROR
 }
 
 enum ReviewStatus {
