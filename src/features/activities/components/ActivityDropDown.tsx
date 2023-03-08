@@ -107,7 +107,7 @@ const ActivityDropDown = ({
         position: 'after',
         src: <Dots direction='vertical' />,
       }}
-      isLoading={deleteActivity.isLoading}
+      isLoading={deleteActivity.isLoading || sendReport.isLoading}
     />
   )
 }
