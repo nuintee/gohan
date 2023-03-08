@@ -35,18 +35,16 @@ const BasicInfoModal = (props: Props) => {
         >
           <div className='py-2 divide-y flex flex-col gap-1'>
             {data.current_opening_hours?.periods?.map((v) => (
-              <>
-                <div className='flex items-center justify-between w-full'>
-                  <p>
-                    {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
-                      weekday: 'long',
-                    })}
-                  </p>
-                  <p>
-                    {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
-                  </p>
-                </div>
-              </>
+              <div className='flex items-center justify-between w-full' key={v.open.day}>
+                <p>
+                  {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
+                    weekday: 'long',
+                  })}
+                </p>
+                <p>
+                  {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
+                </p>
+              </div>
             ))}
           </div>
         </DetailsSummary>
