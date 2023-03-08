@@ -11,7 +11,7 @@ const DetailsSummary = ({
   ignored?: boolean
   summaryTitle?: string
   summaryValue?: string
-  children: JSX.Element
+  children?: JSX.Element
   allowCopy?: boolean
 }) => {
   const handleDetailsClick = (e) => {

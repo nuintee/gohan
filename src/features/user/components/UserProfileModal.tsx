@@ -16,39 +16,41 @@ const UserSettingsModal = () => {
     open('deactivation')
   }
 
+  const profile = [
+    {
+      label: 'ユーザー名',
+      value: session?.user.name,
+    },
+    {
+      label: 'Email',
+      value: session?.user.email,
+    },
+    {
+      label: '登録日',
+      value: dayjs(session?.user?.registered_at).format('MMMM D, YYYY h:mm A'),
+    },
+  ]
+
   if (!session?.user) return <></>
 
   return (
-    <ModalLayout isOpen={isOpen('usersettings')}>
-      <section className='min-w-[20rem] bg-white'>
-        <PanelHeader title='プロフィール' onClose={() => close('usersettings')} />
-        <main className='p-4 flex flex-col gap-4'>
-          <Input
-            registerName='settings-username'
-            required={false}
-            placeholder='ex: john0906'
-            label='ユーザー名'
-            value={session?.user.name}
-            disabled
-          />
-          <Input
-            registerName='settings-email'
-            required={false}
-            placeholder='ex: john@example.com'
-            label='Email'
-            value={session?.user.email}
-            disabled
-          />
-          <Input
-            registerName='settings-registered_date'
-            required={false}
-            label='登録日'
-            value={dayjs(session?.user?.registered_at).format('MMMM D, YYYY h:mm A')}
-            disabled
-          />
-          <DetailsSummary summaryTitle='高度な設定'>
-            <Button text='退会' danger onClick={handleDeleteAccount} />
-          </DetailsSummary>
+    <ModalLayout isOpen={isOpen('usersettings')} onRequestClose={() => close('usersettings')}>
+      <section className='w-[80vw] max-w-[30rem] bg-white'>
+        <PanelHeader title='ユーザー情報' onClose={() => close('usersettings')} />
+        <main className='flex flex-col'>
+          {profile.map((v) => (
+            <div
+              className='even:bg-gh-pale bg-white p-4 flex flex-col gap-2 items-start justify-between'
+              key={v.label}
+            >
+              <DetailsSummary summaryTitle={v.label} summaryValue={v.value} allowCopy ignored />
+            </div>
+          ))}
+          <div className='w-full p-4 border-t-[1px]'>
+            <DetailsSummary summaryTitle='高度な設定'>
+              <Button text='退会' danger onClick={handleDeleteAccount} />
+            </DetailsSummary>
+          </div>
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
