@@ -29,13 +29,24 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
 export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInput }) => {
   const count = await ctx.prisma.report.count({
     where: {
+      request_type: 'REVALIDATE',
       body: {
         equals: rawInput.body,
       },
     },
   })
 
-  console.log('COUNT', count)
+  if (count + 1 >= 5) {
+    await ctx.prisma.report.deleteMany({
+      where: {
+        body: {
+          equals: rawInput.body,
+        },
+      },
+    })
+
+    await ctx.res.revalidate(`/details/${rawInput.body}`)
+  }
 
   return next()
 })
