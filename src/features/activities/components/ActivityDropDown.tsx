@@ -33,7 +33,7 @@ const ActivityDropDown = ({
   const sendReport = useSendReports()
 
   const withAuthed = (condition: boolean) => {
-    return status === 'authenticated' && condition
+    return status === 'authenticated' ? condition : true
   }
 
   console.log('ROUTER', router)
