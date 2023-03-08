@@ -3,5 +3,5 @@ Array.prototype.random = function () {
 
   if (length <= 0) return ''
 
-  return this[Math.floor(Math.random() * length - 1)]
+  return this[Math.floor(Math.random() * (length - 1))]
 }
