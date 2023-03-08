@@ -33,10 +33,13 @@ const BasicInfoModal = (props: Props) => {
           ignored={!isHours || (isHours && hasNoHourDetails)}
           allowCopy={isString || isNumber}
         >
-          <div className='py-2 divide-y flex flex-col gap-1'>
+          <div className='py-2 flex flex-col gap-1'>
             {data.current_opening_hours?.periods?.map((v) => (
-              <div className='flex items-center justify-between w-full' key={v.open.day}>
-                <p>
+              <div
+                className='flex items-center justify-between w-full bg-white p-1 text-sm px-2 rounded-full'
+                key={v.open.day}
+              >
+                <p className='text-gh-gray'>
                   {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
                     weekday: 'long',
                   })}
