@@ -30,6 +30,8 @@ const ActivityDropDown = ({
   const deleteActivity = useDeleteActivity()
   const sendReport = useSendReports()
 
+  console.log('ROUTER', router)
+
   const menu = [
     {
       label: '公式ホームページを表示',
@@ -65,7 +67,7 @@ const ActivityDropDown = ({
           body: activity.place_id,
         })
       },
-      ignored: false,
+      ignored: router.pathname !== `${ROUTES.DETAILS.path}/[place_id]`,
     },
     {
       label: '共有',
