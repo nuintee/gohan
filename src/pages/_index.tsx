@@ -1,44 +1,29 @@
-import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
-import { getBarePlacesAPI } from '@/features/restaurants/utils/getBarePlacesAPI'
-import { MainLayout } from '@/layouts/layout'
-import { GetServerSideProps } from 'next'
-import { ReactElement } from 'react'
-
-import DEV_COORDS from '@/data/geolocation.json'
+import { useSendReports } from '@/features/report/hooks/useSendReports'
+import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 
 const Experiment = () => {
-  const handleDetails = async () => {
-    const r = await getBareDetailsAPI({ place_id: '' })
-    console.log(r)
-  }
+  const sendReport = useSendReports()
 
-  const handlePlaces = async () => {
-    const r = await getBarePlacesAPI({
-      latitude: DEV_COORDS.coords.latitude,
-      longitude: DEV_COORDS.coords.longitude,
-    })
-    console.log(r)
-  }
+  const getRestaurants = useRestaurants({ trigger: true, latitude: 90, longitude: 89 })
 
   return (
-    <div className='flex flex-col'>
-      <h1>1</h1>
-      <button onClick={handleDetails}>Fetch details</button>
-      <button onClick={handlePlaces}>Fetch Places</button>
+    <div>
+      <h1>Report</h1>
+      <p>{JSON.stringify(sendReport.data)}</p>
+      <p>{JSON.stringify(getRestaurants.data)}</p>
+      <button onClick={() => getRestaurants.refetch()}>REFETCH</button>
+      <button
+        onClick={() =>
+          sendReport.mutate({
+            request_type: 'REVALIDATE',
+            body: 'PLACE_ID',
+          })
+        }
+      >
+        Send
+      </button>
     </div>
   )
-}
-
-Experiment.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>
-}
-
-export const getServerSideProps: GetServerSideProps = async ({}) => {
-  const data = await getBarePlacesAPI({ latitude: 0, longitude: 0 })
-  console.log(data)
-  return {
-    props: {},
-  }
 }
 
 export default Experiment

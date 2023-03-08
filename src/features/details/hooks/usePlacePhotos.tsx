@@ -1,5 +1,5 @@
-import { GCP_API_KEY } from '@/config/env'
 import { ResultsEntity } from '@/features/restaurants/types'
+import { getBareImageAPI } from './getBareImageAPI'
 
 function _generatePastelColor() {
   let R = Math.floor(Math.random() * 127 + 127)
@@ -19,10 +19,7 @@ const usePlacePhotos = (photos: ResultsEntity['photos']) => {
       html_attributions: [],
     }
 
-  const url = new URL('https://maps.googleapis.com/maps/api/place/photo')
-  url.searchParams.append('photo_reference', photos[0]?.photo_reference)
-  url.searchParams.append('key', GCP_API_KEY)
-  url.searchParams.append('maxwidth', '400')
+  const url = getBareImageAPI(photos[0].photo_reference)
 
   return { ...photos[0], url: url.toString() }
 }

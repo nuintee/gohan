@@ -22,7 +22,7 @@ const KeyFeaturesSection = ({
               key={v.feature}
             >
               <Check />
-              {v.feature}
+              {v.label}
             </span>
           ))}
         </div>

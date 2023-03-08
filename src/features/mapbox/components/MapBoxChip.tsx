@@ -1,6 +1,7 @@
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
 import { forwardRef, ReactElement } from 'react'
 import { GeolocateControl, Map, ViewState } from 'react-map-gl'
+import { mapStyles } from '../config'
 import useMapBox from '../hooks'
 
 const MapBoxCore = forwardRef(
@@ -45,7 +46,7 @@ const MapBoxCore = forwardRef(
         dragPan={dragPan}
         scrollZoom={scrollZoom}
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
-        mapStyle='mapbox://styles/nuinteedev/cldaz8llv002c01mgt375yl40'
+        mapStyle={mapStyles.PALE_BLUE}
       >
         <GeolocateControl
           showAccuracyCircle

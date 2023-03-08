@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
 
 const NavLink = ({
@@ -8,14 +8,14 @@ const NavLink = ({
   borderDirection = 'bottom',
   activeBackgroundColor = 'transparent',
   passiveTextColor = 'white',
+  ...linkProps
 }: {
-  href: string
   isActive?: boolean
   label?: string
   borderDirection?: 'left' | 'bottom' | 'right' | 'top'
   activeBackgroundColor?: string
   passiveTextColor?: string
-}) => {
+} & LinkProps) => {
   const router = useRouter()
 
   const isActiveState = isActive || router.pathname === href
@@ -35,6 +35,7 @@ const NavLink = ({
 
   return (
     <Link
+      {...linkProps}
       href={href}
       className={`ml-auto p-4 items-center flex ${borderDirectionClassName()} sm:text-base text-sm hover:text-white active:text-white active:border-gh-orange hover:border-gh-orange  ${
         isActiveState ? 'border-gh-orange text-white' : 'border-transparent'

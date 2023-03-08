@@ -13,7 +13,7 @@ import { appRouter } from '@/server/routers/_app'
 import superjson from 'superjson'
 import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
-import { GetServerSideProps } from 'next/types'
+import { GetServerSideProps, GetStaticProps } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
 import { MainLayout } from '@/layouts/layout'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
@@ -27,28 +27,24 @@ import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
+import { ActivityResolved } from '@/features/activities/types'
 
-const DetailsPage = ({ id, color }: { id: string; color: string }) => {
+const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
 
   const { checkIsOpen, clearLocalModal, openLocalModal } = useDetailsModal()
 
-  const details = useDetails({ place_id: id })
   const activity = useGetActivity({ place_id: id })
-
-  console.dir(details)
-  console.dir(activity)
+  const details = useDetails({ place_id: id })
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(details.data?.photos)
   }, [details.data?.photos])
 
-  if (
-    (activity.isFetching && !activity.isFetchedAfterMount) ||
-    (details.isFetching && !details.isFetchedAfterMount)
-  )
+  if (activity.isLoading || details.isLoading) {
     return <DetailsLoadingFallback />
+  }
 
   if (activity.isError || details.isError)
     return <ErrorFallBack error={activity.error || details.error} />
@@ -69,7 +65,7 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
-          color={color}
+          color={colors['gh-dark']}
         />
         <main className='sm:px-[10%] px-4'>
           {status === 'authenticated' ? (
@@ -105,28 +101,29 @@ const DetailsPage = ({ id, color }: { id: string; color: string }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query, params }) => {
-  console.log({ query })
-  console.log({ params })
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
 
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: {},
     transformer: superjson,
   })
 
-  const tasks = [ssg.getActivity, ssg.getDetails]
-
-  await Promise.all(
-    tasks.map(async (v) => await v.prefetch({ place_id: query.place_id as string })),
-  )
+  const id = params?.place_id as string
+  await ssg.getDetails.prefetch({ place_id: id })
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
-      id: query.place_id,
-      color: query.color || colors['gh-dark'],
+      id,
     },
+    revalidate: 60 * 60 * 24 * 7, // 1 week
   }
 }
 

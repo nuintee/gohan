@@ -69,7 +69,7 @@ const DetailsActionGroup = ({
           />
         </>
       )}
-      {status === 'authenticated' && <ActivityDropDown {...dropDownArgs} />}
+      <ActivityDropDown {...dropDownArgs} />
     </div>
   )
 }
