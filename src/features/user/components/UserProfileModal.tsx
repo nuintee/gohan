@@ -1,3 +1,4 @@
+import { Check } from '@/components/icons'
 import { Button, PanelHeader, Input, DetailsSummary } from '@/components/ui'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
@@ -6,6 +7,15 @@ import ModalLayout from '@/layouts/ModalLayout'
 import dayjs from 'dayjs'
 
 import { signOut, useSession } from 'next-auth/react'
+
+const CurrentProvider = () => {
+  return (
+    <span className='p-2 mx-4 bg-gh-white text-gh-d-gray rounded-full flex items-center justify-center gap-1 text-sm'>
+      <Check />
+      Googleでログイン済み。
+    </span>
+  )
+}
 
 const UserSettingsModal = () => {
   const { data: session } = useSession()
@@ -37,6 +47,7 @@ const UserSettingsModal = () => {
     <ModalLayout isOpen={isOpen('usersettings')} onRequestClose={() => close('usersettings')}>
       <section className='w-[80vw] max-w-[30rem] bg-white'>
         <PanelHeader title='ユーザー情報' onClose={() => close('usersettings')} />
+        <CurrentProvider />
         <main className='flex flex-col'>
           {profile.map((v) => (
             <div
