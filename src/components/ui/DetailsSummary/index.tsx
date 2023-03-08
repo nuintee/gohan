@@ -21,7 +21,7 @@ const DetailsSummary = ({
   }
 
   return (
-    <details className={`w-full group`} onClick={handleDetailsClick}>
+    <details className={`w-full group appearance-none`} onClick={handleDetailsClick}>
       <summary
         className={`flex items-center justify-between gap-4  ${
           ignored ? 'cursor-default' : 'cursor-pointer'
