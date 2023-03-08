@@ -1,9 +1,7 @@
 import { procedure } from '@/server/trpc'
-import { TRPCClientError } from '@trpc/client'
 import { z } from 'zod'
 
 import { ReportType } from '@prisma/client'
-import { randomUUID } from 'crypto'
 
 export const addReport = procedure
   .input(
@@ -12,10 +10,11 @@ export const addReport = procedure
       request_type: z.nativeEnum(ReportType),
     }),
   )
-  .query(async ({ input, ctx }) => {
+  .mutation(async ({ input, ctx }) => {
     await ctx.prisma.report.create({
       data: {
         ...input,
+        userId: ctx.session?.user.id,
       },
     })
 
