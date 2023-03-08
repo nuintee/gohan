@@ -21,10 +21,11 @@ export const getRestaurants = procedure
     if (data.status === 'OK') {
       if (!data.results?.length) {
         throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
+      } else {
+        const res = data.results.random()
+        const color = await getDominantColor()
+        return { ...res, color }
       }
-      const res = data.results?.random()
-      const color = await getDominantColor()
-      return { ...res, color }
     } else {
       throw new TRPCClientError(statusMapper(data.status), { cause: new Error(data.status) })
     }
