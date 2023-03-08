@@ -37,14 +37,16 @@ const DetailsPage = ({ id }: { id: string }) => {
   const activity = useGetActivity({ place_id: id })
   const details = useDetails({ place_id: id })
 
+  function withAuth(condition: boolean) {
+    return status === 'authenticated' && condition
+  }
+
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(details.data?.photos)
   }, [details.data?.photos])
 
-  if (activity.isLoading || details.isLoading) {
-    return <DetailsLoadingFallback />
-  }
+  if (withAuth(activity.isLoading) || details.isLoading) return <DetailsLoadingFallback />
 
   if (activity.isError || details.isError)
     return <ErrorFallBack error={activity.error || details.error} />
