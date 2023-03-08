@@ -7,6 +7,7 @@ import { ActivityResolved } from '../types'
 
 // constants
 import { ROUTES } from '@/constants/routes'
+import { useSendReports } from '@/features/report/hooks/useSendReports'
 
 type ActivityDropDownProps = {
   activity: ActivityResolved
@@ -27,6 +28,7 @@ const ActivityDropDown = ({
   const isOverLarge = useMediaQuery('lg')
 
   const deleteActivity = useDeleteActivity()
+  const sendReport = useSendReports()
 
   const menu = [
     {
@@ -54,6 +56,16 @@ const ActivityDropDown = ({
         onBasicInfoAction && onBasicInfoAction()
       },
       ignored: !onBasicInfoAction || isOverLarge,
+    },
+    {
+      label: '掲載情報が古い場合',
+      onDropDownItemClick: () => {
+        sendReport.mutateAsync({
+          request_type: 'REVALIDATE',
+          body: activity.place_id,
+        })
+      },
+      ignored: false,
     },
     {
       label: '共有',
