@@ -1,4 +1,4 @@
-import { Button, PanelHeader, Input, DetailsSummary } from '@/components/ui'
+import { Button, PanelHeader, DetailsSummary } from '@/components/ui'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
 
