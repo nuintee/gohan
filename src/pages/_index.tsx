@@ -1,16 +1,7 @@
-import useToast from '@/libs/react-toastify'
-import { trpc } from '@/libs/trpc'
+import { useSendReports } from '@/features/report/hooks/useSendReports'
 
 const Experiment = () => {
-  const sendReport = trpc.addReport.useMutation({
-    onSuccess: () => {
-      useToast.success('レポートを送信しました。')
-    },
-    onError: (error) => {
-      console.error(error)
-      useToast.error(error.message)
-    },
-  })
+  const sendReport = useSendReports()
 
   return (
     <div>
