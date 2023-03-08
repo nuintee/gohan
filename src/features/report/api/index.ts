@@ -2,8 +2,10 @@ import { procedure } from '@/server/trpc'
 import { z } from 'zod'
 
 import { ReportType } from '@prisma/client'
+import { shouldRevalidateMiddleWare } from '@/server/middleware'
 
 export const addReport = procedure
+  .use(shouldRevalidateMiddleWare)
   .input(
     z.object({
       body: z.string(),

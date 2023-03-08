@@ -26,6 +26,20 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
   })
 })
 
+export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx }) => {
+  const count = await ctx.prisma.report.count({
+    where: {
+      body: {
+        equals: 'PLACE_ID',
+      },
+    },
+  })
+
+  console.log('COUNT', count)
+
+  return next()
+})
+
 export const isAPIRateLimited = middleware(async ({ next }) => {
   // const { req, res } = ctx
 
