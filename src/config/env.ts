@@ -13,4 +13,5 @@ export const GCP_CLIENT_SECRET = process.env.GCP_CLIENT_SECRET as string
 export const APP_SECRET = process.env.APP_SECRET
 export const IS_STAGING = process.env.IS_STAGING
 
-export const REVALIDATION_THRESHOLD = process.env.REVALIDATION_REQUESTS_THRESHOLD
+export const REVALIDATION_THRESHOLD =
+  parseInt(process.env.REVALIDATION_REQUESTS_THRESHOLD as string) || 5

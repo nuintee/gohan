@@ -1,3 +1,4 @@
+import { REVALIDATION_THRESHOLD } from '@/config/env'
 import { TRPCError } from '@trpc/server'
 import { middleware } from './trpc'
 
@@ -36,7 +37,7 @@ export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInpu
     },
   })
 
-  if (count + 1 >= 5) {
+  if (count + 1 >= REVALIDATION_THRESHOLD) {
     await ctx.prisma.report.deleteMany({
       where: {
         body: {
