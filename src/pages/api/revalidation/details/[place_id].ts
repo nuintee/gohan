@@ -1,4 +1,4 @@
-import { APP_SECRET, GCP_API_KEY } from '@/config/env'
+import { APP_SECRET } from '@/config/env'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
