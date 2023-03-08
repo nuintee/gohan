@@ -14,6 +14,8 @@ export const getDetails = procedure
   .query(async ({ input }) => {
     const data = await getBareDetailsAPI({ place_id: input.place_id })
 
+    console.log('APIフェッチ', data)
+
     if (data.status === 'OK') {
       return data.result
     } else {

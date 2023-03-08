@@ -1,3 +1,4 @@
+import { REVALIDATION_THRESHOLD } from '@/config/env'
 import { TRPCError } from '@trpc/server'
 import { middleware } from './trpc'
 
@@ -24,6 +25,31 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
       session: ctx.session,
     },
   })
+})
+
+export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInput }) => {
+  const count = await ctx.prisma.report.count({
+    where: {
+      request_type: 'REVALIDATE',
+      body: {
+        equals: rawInput.body,
+      },
+    },
+  })
+
+  if (count + 1 >= REVALIDATION_THRESHOLD) {
+    await ctx.prisma.report.deleteMany({
+      where: {
+        body: {
+          equals: rawInput.body,
+        },
+      },
+    })
+
+    await ctx.res.revalidate(`/details/${rawInput.body}`)
+  }
+
+  return next()
 })
 
 export const isAPIRateLimited = middleware(async ({ next }) => {

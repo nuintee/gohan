@@ -4,13 +4,13 @@ import type { NextAuthOptions } from 'next-auth'
 import prisma from '@/libs/prisma'
 
 // env
-import { IS_DEVMODE, GCP_CLIENT_ID, GCP_CLIENT_SECRET, NEXT_AUTH_SECRET } from '@/config/env'
+import { IS_DEVMODE, GCP_CLIENT_ID, GCP_CLIENT_SECRET, APP_SECRET } from '@/config/env'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 export const authOptions: NextAuthOptions = {
   debug: IS_DEVMODE,
-  secret: NEXT_AUTH_SECRET,
+  secret: APP_SECRET,
   providers: [
     GoogleProvider({
       clientId: GCP_CLIENT_ID,

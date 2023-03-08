@@ -7,6 +7,8 @@ import { ActivityResolved } from '../types'
 
 // constants
 import { ROUTES } from '@/constants/routes'
+import { useSendReports } from '@/features/report/hooks/useSendReports'
+import { useSession } from 'next-auth/react'
 
 type ActivityDropDownProps = {
   activity: ActivityResolved
@@ -24,9 +26,17 @@ const ActivityDropDown = ({
   onShareAction,
 }: ActivityDropDownProps) => {
   const router = useRouter()
+  const { status } = useSession()
   const isOverLarge = useMediaQuery('lg')
 
   const deleteActivity = useDeleteActivity()
+  const sendReport = useSendReports()
+
+  const withAuthed = (condition: boolean) => {
+    return status === 'authenticated' ? condition : true
+  }
+
+  console.log('ROUTER', router)
 
   const menu = [
     {
@@ -53,14 +63,24 @@ const ActivityDropDown = ({
       onDropDownItemClick: () => {
         onBasicInfoAction && onBasicInfoAction()
       },
-      ignored: !onBasicInfoAction || isOverLarge,
+      ignored: withAuthed(!onBasicInfoAction || isOverLarge),
+    },
+    {
+      label: '掲載情報が古い場合',
+      onDropDownItemClick: () => {
+        sendReport.mutateAsync({
+          request_type: 'REVALIDATE',
+          body: activity.place_id,
+        })
+      },
+      ignored: router.pathname !== `${ROUTES.DETAILS.path}/[place_id]`,
     },
     {
       label: '共有',
       onDropDownItemClick: () => {
         onShareAction && onShareAction()
       },
-      ignored: !onShareAction || isOverLarge,
+      ignored: withAuthed(!onShareAction || isOverLarge),
     },
     {
       label: 'ライブラリから削除',
@@ -78,7 +98,7 @@ const ActivityDropDown = ({
           },
         )
       },
-      ignored: !activity || !activity.reviewStatus,
+      ignored: withAuthed(!activity || !activity.reviewStatus),
     },
   ].filter((v) => !v.ignored)
 
@@ -95,7 +115,7 @@ const ActivityDropDown = ({
         position: 'after',
         src: <Dots direction='vertical' />,
       }}
-      isLoading={deleteActivity.isLoading}
+      isLoading={deleteActivity.isLoading || sendReport.isLoading}
     />
   )
 }

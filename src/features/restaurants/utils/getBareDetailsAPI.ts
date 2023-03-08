@@ -24,7 +24,7 @@ export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
   } else {
     await sleep(1000)
     const result = details.result(place_id)
-    const status = result ? 'OK' : 'ZERO_RESULTS'
+    const status = Object.keys(result).length ? 'OK' : 'ZERO_RESULTS'
 
     return {
       html_attributions: [],

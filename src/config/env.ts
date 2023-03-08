@@ -10,5 +10,8 @@ export const GCP_API_KEY = process.env.GCP_API_KEY as string
 export const GCP_CLIENT_ID = process.env.GCP_CLIENT_ID as string
 export const GCP_CLIENT_SECRET = process.env.GCP_CLIENT_SECRET as string
 
-export const NEXT_AUTH_SECRET = process.env.NEXT_AUTH_SECRET
+export const APP_SECRET = process.env.APP_SECRET
 export const IS_STAGING = process.env.IS_STAGING
+
+export const REVALIDATION_THRESHOLD =
+  parseInt(process.env.REVALIDATION_REQUESTS_THRESHOLD as string) || 5
