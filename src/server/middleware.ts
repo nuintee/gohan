@@ -26,11 +26,11 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
   })
 })
 
-export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx }) => {
+export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInput }) => {
   const count = await ctx.prisma.report.count({
     where: {
       body: {
-        equals: 'PLACE_ID',
+        equals: rawInput.body,
       },
     },
   })
