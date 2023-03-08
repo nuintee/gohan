@@ -13,7 +13,7 @@ import { appRouter } from '@/server/routers/_app'
 import superjson from 'superjson'
 import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
-import { GetServerSideProps, GetStaticProps } from 'next/types'
+import { GetStaticProps } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
 import { MainLayout } from '@/layouts/layout'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
@@ -27,7 +27,6 @@ import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
-import { ActivityResolved } from '@/features/activities/types'
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
