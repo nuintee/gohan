@@ -63,7 +63,7 @@ const ActivityDropDown = ({
       onDropDownItemClick: () => {
         onBasicInfoAction && onBasicInfoAction()
       },
-      ignored: !onBasicInfoAction || isOverLarge,
+      ignored: withAuthed(!onBasicInfoAction || isOverLarge),
     },
     {
       label: '掲載情報が古い場合',
@@ -80,7 +80,7 @@ const ActivityDropDown = ({
       onDropDownItemClick: () => {
         onShareAction && onShareAction()
       },
-      ignored: !onShareAction || isOverLarge,
+      ignored: withAuthed(!onShareAction || isOverLarge),
     },
     {
       label: 'ライブラリから削除',
