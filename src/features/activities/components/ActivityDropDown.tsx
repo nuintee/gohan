@@ -8,6 +8,7 @@ import { ActivityResolved } from '../types'
 // constants
 import { ROUTES } from '@/constants/routes'
 import { useSendReports } from '@/features/report/hooks/useSendReports'
+import { useSession } from 'next-auth/react'
 
 type ActivityDropDownProps = {
   activity: ActivityResolved
@@ -25,10 +26,15 @@ const ActivityDropDown = ({
   onShareAction,
 }: ActivityDropDownProps) => {
   const router = useRouter()
+  const { status } = useSession()
   const isOverLarge = useMediaQuery('lg')
 
   const deleteActivity = useDeleteActivity()
   const sendReport = useSendReports()
+
+  const withAuthed = (condition: boolean) => {
+    return status === 'authenticated' && condition
+  }
 
   console.log('ROUTER', router)
 
@@ -92,7 +98,7 @@ const ActivityDropDown = ({
           },
         )
       },
-      ignored: !activity || !activity.reviewStatus,
+      ignored: withAuthed(!activity || !activity.reviewStatus),
     },
   ].filter((v) => !v.ignored)
 
