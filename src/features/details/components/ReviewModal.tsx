@@ -22,6 +22,8 @@ type Props = {
 }
 
 const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
+  console.log('DATA', data)
+
   const {
     register,
     handleSubmit,
@@ -34,6 +36,10 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
     defaultValues: {
       reviewMemo: data.memo,
       reviewStatus: data.status || 'NEW',
+    },
+    values: {
+      reviewStatus: data.status || 'NEW',
+      reviewMemo: data.memo,
     },
   })
 
