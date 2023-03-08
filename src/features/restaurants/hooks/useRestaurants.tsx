@@ -24,7 +24,7 @@ const useRestaurants = ({
   return trpc.getRestaurants.useQuery(rest, {
     enabled: trigger && isGPSAvailable,
     retry: isGPSError || isGPSFetching ? 0 : 3,
-    cacheTime: 60 * 60 * 24 * 7, // 1 week
+    cacheTime: 1000 * 60 * 60 * 24 * 7, // 1 week
     onError: (error) => {
       console.error(error)
 
