@@ -59,19 +59,22 @@ const DetailsSectionGroup = ({
         }
       >
         <div className='flex-1 aspect-video w-full relative' onClick={handleMapBoxClick}>
-          <MapBoxChip
-            latitude={data?.geometry?.location.lat}
-            longitude={data?.geometry?.location.lng}
-            dragPan={isOverMedium}
-            scrollZoom={false}
-          >
-            <Pin
+          {!Boolean(showFullMap && !isOverMedium) && (
+            <MapBoxChip
               latitude={data?.geometry?.location.lat}
               longitude={data?.geometry?.location.lng}
-              data={data}
-              focused={false}
-            />
-          </MapBoxChip>
+              dragPan={isOverMedium}
+              scrollZoom={false}
+              trackUserLocation={isOverMedium}
+            >
+              <Pin
+                latitude={data?.geometry?.location.lat}
+                longitude={data?.geometry?.location.lng}
+                data={data}
+                focused={false}
+              />
+            </MapBoxChip>
+          )}
           {isOverMedium && (
             <div className={`absolute right-4 top-4 text-xs flex flex-col gap-2`}>
               <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />

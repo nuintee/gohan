@@ -52,19 +52,21 @@ const MapBoxCore = forwardRef(
         mapStyle={mapStyles.PALE_BLUE}
         style={style}
       >
-        <GeolocateControl
-          showAccuracyCircle
-          trackUserLocation={trackUserLocation}
-          showUserLocation
-          showUserHeading
-          position='bottom-right'
-          onError={onError}
-          onGeolocate={onGeolocate}
-          style={{
-            padding: '0.5rem',
-            borderRadius: '100%',
-          }}
-        />
+        {trackUserLocation && (
+          <GeolocateControl
+            showAccuracyCircle
+            trackUserLocation={trackUserLocation}
+            showUserLocation
+            showUserHeading
+            position='bottom-right'
+            onError={onError}
+            onGeolocate={onGeolocate}
+            style={{
+              padding: '0.5rem',
+              borderRadius: '100%',
+            }}
+          />
+        )}
         {children}
       </Map>
     )
