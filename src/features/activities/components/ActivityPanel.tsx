@@ -17,6 +17,8 @@ import { ActivityResolved } from '../types'
 import { useSort } from '@/hooks/sort'
 import { useFilter } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
+import { Chevron } from '@/components/icons'
+import { colors } from '@/config/colors'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -76,19 +78,39 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
 
   return (
     <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
-      <DropDown
-        menu={SORT_MENU.map((v) => ({ label: v, onDropDownItemClick: () => setSortMethod(v) }))}
-        controller={<Button text='ソート' outline />}
-        ignored={false}
-      />
-      <DropDown
-        menu={Object.keys(ReviewStatus).map((v) => ({
-          label: v,
-          onDropDownItemClick: () => setFilterStatus(v),
-        }))}
-        controller={<Button text='フィルター' outline />}
-        ignored={false}
-      />
+      <header className='flex gap-2'>
+        <DropDown
+          menu={SORT_MENU.map((v) => ({ label: v, onDropDownItemClick: () => setSortMethod(v) }))}
+          controller={
+            <Button
+              text={sortMethod}
+              outline
+              icon={{
+                position: 'before',
+                src: <Chevron direction='bottom' stroke={colors['gh-l-gray']} />,
+              }}
+            />
+          }
+          ignored={false}
+        />
+        <DropDown
+          menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
+            label: v,
+            onDropDownItemClick: () => setFilterStatus(v),
+          }))}
+          controller={
+            <Button
+              text={filterStatus}
+              outline
+              icon={{
+                position: 'before',
+                src: <Chevron direction='bottom' stroke={colors['gh-l-gray']} />,
+              }}
+            />
+          }
+          ignored={false}
+        />
+      </header>
       {filteredArray
         ?.filter((v) => !deletedContents.includes(v.id))
         .map((activity, index, original) => (
