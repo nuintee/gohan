@@ -27,7 +27,7 @@ const ReviewBannerStatus = ({
 
 const DetailsHero = (
   props: {
-    memorizedImgURL: string
+    memorizedImgURL?: string
     onImageClick?: () => void
     modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
     color?: string
