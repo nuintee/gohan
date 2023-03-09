@@ -8,7 +8,7 @@ import useGetUserActivities from '../hooks/useGetUserActivities'
 import useActivityPanel from '../hooks/useActivityPanel'
 import RestaurantBoard from '@/features/restaurants/components/RestaurantBoard'
 import useMapBox from '@/features/mapbox/hooks'
-import { Texts } from '@/components/ui'
+import { Button, DropDown, Texts } from '@/components/ui'
 import ActivityDropDown from './ActivityDropDown'
 import SlideInLayout from '@/layouts/SlideInLayout'
 import useMediaQuery from '@/hooks/mediaquery'
@@ -22,7 +22,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   const { onActivityClicked, mapbox } = useMapBox()
   const [deletedContents, setDeletedContents] = useState([])
 
-  const [sortMethod, setSortMethod] = useState('DESC')
+  const [sortMethod, setSortMethod] = useState<'DESC' | 'ASC'>('DESC')
   const [filterStatus, setFilterStatus] = useState<'ALL' | ReviewStatus>('ALL')
 
   const sortedArray = useSort({
@@ -31,6 +31,8 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     sortKey: 'name',
     disabled: false,
   })
+
+  const SORT_MENU = ['DESC', 'ASC']
 
   const filteredArray = useFilter({
     array: sortedArray,
@@ -74,10 +76,19 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
 
   return (
     <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
-      <button onClick={() => setSortMethod('ASC')}>ASC</button>
-      <button onClick={() => setSortMethod('DESC')}>DESC</button>
-      <button onClick={() => setFilterStatus('GOOD')}>FILTER</button>
-      <button onClick={() => setFilterStatus('ALL')}>CLEAR FILTER</button>
+      <DropDown
+        menu={SORT_MENU.map((v) => ({ label: v, onDropDownItemClick: () => setSortMethod(v) }))}
+        controller={<Button text='ソート' outline />}
+        ignored={false}
+      />
+      <DropDown
+        menu={Object.keys(ReviewStatus).map((v) => ({
+          label: v,
+          onDropDownItemClick: () => setFilterStatus(v),
+        }))}
+        controller={<Button text='フィルター' outline />}
+        ignored={false}
+      />
       {filteredArray
         ?.filter((v) => !deletedContents.includes(v.id))
         .map((activity, index, original) => (
