@@ -15,6 +15,6 @@ export function getBareImageAPI(photo_reference: string) {
 
     return url.toString()
   } else {
-    return `https://via.placeholder.com/600x400/${_generatePastelColor()}/FFF.png?text=NO_IMAGE`
+    return '/images/fallback_image.svg'
   }
 }
