@@ -1,5 +1,5 @@
 import { MAPBOX_PUBLIC_TOKEN } from '@/config/env'
-import { forwardRef, ReactElement } from 'react'
+import { CSSProperties, forwardRef, ReactElement } from 'react'
 import { GeolocateControl, Map, ViewState } from 'react-map-gl'
 import { mapStyles } from '../config'
 import useMapBox from '../hooks'
@@ -17,6 +17,7 @@ const MapBoxCore = forwardRef(
     trackUserLocation = true,
     onError,
     onGeolocate,
+    style,
     ...rest
   }: Partial<ViewState> & {
     children?: ReactElement[] | ReactElement
@@ -28,6 +29,7 @@ const MapBoxCore = forwardRef(
     onLoad?: () => void
     onError?: React.ComponentProps<typeof GeolocateControl>['onError']
     onGeolocate?: React.ComponentProps<typeof GeolocateControl>['onGeolocate']
+    style: CSSProperties
   }) => {
     const { setMapBoxRef } = useMapBox()
 
@@ -47,6 +49,7 @@ const MapBoxCore = forwardRef(
         scrollZoom={scrollZoom}
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         mapStyle={mapStyles.PALE_BLUE}
+        style={style}
       >
         <GeolocateControl
           showAccuracyCircle
