@@ -54,6 +54,9 @@ const DetailsPage = ({ id }: { id: string }) => {
     return status === 'authenticated' && condition
   }
 
+  // image modal
+  const [imageIndex, setImageIndex] = useState(0)
+
   // Memorized
   const memorizedPhoto = useMemo(() => {
     return usePlacePhotos(details.data?.photos)
@@ -108,7 +111,7 @@ const DetailsPage = ({ id }: { id: string }) => {
             </>
             {details.data.photos?.length ? (
               <div className='h-full overflow-y-auto gap-2 sm:columns-2 md:columns-3 columns-1 py-4'>
-                {details.data.photos?.map((v) => (
+                {details.data.photos?.map((v, i) => (
                   <SuspenseImage
                     src={getBareImageAPI(v.photo_reference)}
                     height={v.height}
@@ -117,6 +120,10 @@ const DetailsPage = ({ id }: { id: string }) => {
                       'w-fit h-fit object-scale-down mb-4 hover:scale-105 duration-300 cursor-pointer'
                     }
                     key={v.photo_reference}
+                    onClick={() => {
+                      setImageIndex(i)
+                      openLocalModal('IMAGE')
+                    }}
                   />
                 ))}
               </div>
@@ -140,7 +147,7 @@ const DetailsPage = ({ id }: { id: string }) => {
       />
       <ImageModal
         isOpen={checkIsOpen('IMAGE')}
-        data={memorizedPhotos?.at(0)}
+        data={memorizedPhotos?.at(imageIndex)}
         onClose={clearLocalModal}
       />
     </>
