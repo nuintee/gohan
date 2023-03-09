@@ -5,5 +5,5 @@ export function useFilter({
   array: unknown[]
   filterFn: (_v: unknown) => unknown[]
 }) {
-  return array.filter(filterFn)
+  return array?.filter(filterFn)
 }

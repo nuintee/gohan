@@ -12,7 +12,7 @@ import { useFilter } from '@/hooks/filter'
 const Experiment = () => {
   const allActivities = useGetUserActivities()
 
-  const [method, setMethod] = useState<'ASC' | 'DEC'>('ASC')
+  const [method, setMethod] = useState<'ASC' | 'DESC'>('ASC')
   const [filterKey, setFilterkey] = useState('')
 
   const sortedArray = useSort({
@@ -36,7 +36,7 @@ const Experiment = () => {
           </div>
         ))}
         <button onClick={() => setMethod('ASC')}>ASC</button>
-        <button onClick={() => setMethod('DEC')}>DEC</button>
+        <button onClick={() => setMethod('DESC')}>DEC</button>
         <button onClick={() => setFilterkey('NEW')}>FILTER</button>
         <button onClick={() => setFilterkey('')}>CLEAR FILTER</button>
       </div>
