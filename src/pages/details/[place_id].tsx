@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, useMemo, useState } from 'react'
 
 import { Texts } from '@/components/ui'
 
@@ -35,6 +35,18 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   const activity = useGetActivity({ place_id: id })
   const details = useDetails({ place_id: id })
+
+  // TAB
+  const [tabIndex, setTabIndex] = useState(0)
+
+  const TAB_ITEMS = [
+    {
+      label: '詳細',
+    },
+    {
+      label: '写真',
+    },
+  ]
 
   function withAuth(condition: boolean) {
     return status === 'authenticated' && condition
@@ -81,6 +93,23 @@ const DetailsPage = ({ id }: { id: string }) => {
           ) : (
             <Promotion />
           )}
+
+          <div className='mt-8'>
+            {TAB_ITEMS.map((v, i) => (
+              <button
+                onClick={() => setTabIndex(i)}
+                className={`px-8 py-4 bg-white flex-1 border-b-2 ${
+                  tabIndex === i
+                    ? 'border-gh-orange font-semibold'
+                    : 'border-gh-pale text-gh-d-gray'
+                }`}
+                key={v.label}
+              >
+                {v.label}
+              </button>
+            ))}
+          </div>
+
           <DetailsDescriptiveGroup data={details.data} isLoading={false} />
           <DetailsSectionGroup data={details.data} isLoading={false} />
         </main>
