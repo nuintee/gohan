@@ -21,11 +21,16 @@ const DetailsSectionGroup = ({
 }) => {
   const { onActivityClicked, mapBoxRef } = useMapBox()
   const { gps, isGPSFetching, isGPSError } = useGPS()
-  const isOverSmall = useMediaQuery('sm')
   const isOverMedium = useMediaQuery('md')
 
   // local　states
   const [showMap, setShowMap] = useState(false)
+
+  function handleMapBoxClick() {
+    if (isOverMedium) return
+
+    setShowMap(true)
+  }
 
   const distanceDecoration = () => {
     if (isGPSFetching || isGPSError) return ''
@@ -58,6 +63,7 @@ const DetailsSectionGroup = ({
             longitude={data?.geometry?.location.lng}
             dragPan={isOverMedium}
             scrollZoom={false}
+            onClick={handleMapBoxClick}
           >
             <Pin
               latitude={data?.geometry?.location.lat}
