@@ -4,6 +4,7 @@ import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
 import useGPS from '@/hooks/gps'
+import useMediaQuery from '@/hooks/mediaquery'
 import ModalLayout from '@/layouts/ModalLayout'
 import haversineDistance from '@/libs/haversine-distance'
 import { useState } from 'react'
@@ -18,10 +19,12 @@ const DetailsSectionGroup = ({
   data: ReturnType<typeof useGetActivity>['data']
   isLoading: boolean
 }) => {
-  const { onActivityClicked } = useMapBox()
+  const { onActivityClicked, mapBoxRef } = useMapBox()
   const { gps, isGPSFetching, isGPSError } = useGPS()
+  const isOverSmall = useMediaQuery('sm')
+  const isOverMedium = useMediaQuery('md')
 
-  // localstates
+  // local　states
   const [showMap, setShowMap] = useState(false)
 
   const distanceDecoration = () => {
@@ -73,32 +76,22 @@ const DetailsSectionGroup = ({
               focused={false}
             />
           </MapBoxChip>
-          <div className='absolute right-4 top-4 text-xs'>
-            <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
-          </div>
+          {isOverMedium && (
+            <div className='absolute right-4 top-4 text-xs flex flex-col gap-2'>
+              <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
+              <Button
+                text='+ ズームイン'
+                onClick={() => mapBoxRef?.zoomTo(mapBoxRef.getZoom() + 1)}
+              />
+              <Button
+                text='+ ズームアウト'
+                onClick={() => mapBoxRef?.zoomTo(mapBoxRef.getZoom() - 1)}
+              />
+            </div>
+          )}
         </div>
       </DetailsSection>
       <ReviewsSection data={data} isLoading={isLoading} />
-      <ModalLayout isOpen={showMap} onRequestClose={() => setShowMap(false)}>
-        <div className='h-screen w-screen'>
-          <MapBoxChip
-            latitude={data?.geometry?.location.lat}
-            longitude={data?.geometry?.location.lng}
-            dragPan={true}
-            scrollZoom={true}
-          >
-            <Pin
-              latitude={data?.geometry?.location.lat}
-              longitude={data?.geometry?.location.lng}
-              data={data}
-              focused={false}
-            />
-          </MapBoxChip>
-          <div className='absolute right-4 top-4 text-xs'>
-            <Button text='閉じる' onClick={() => setShowMap(false)} />
-          </div>
-        </div>
-      </ModalLayout>
     </>
   )
 }
