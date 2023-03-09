@@ -110,6 +110,7 @@ const DetailsPage = ({ id }: { id: string }) => {
                     height={v.height}
                     width={v.width}
                     className={'w-fit h-fit object-scale-down mb-4'}
+                    key={v.photo_reference}
                   />
                 ))}
               </div>
