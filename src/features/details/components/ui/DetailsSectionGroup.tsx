@@ -7,7 +7,7 @@ import useGPS from '@/hooks/gps'
 import useMediaQuery from '@/hooks/mediaquery'
 import ModalLayout from '@/layouts/ModalLayout'
 import haversineDistance from '@/libs/haversine-distance'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import DetailsSection from '../../layouts/DetailsSection'
 import KeyFeaturesSection from './KeyFeaturesSection'
 import ReviewsSection from './ReviewsSection'
@@ -23,13 +23,9 @@ const DetailsSectionGroup = ({
   const { gps, isGPSFetching, isGPSError } = useGPS()
   const isOverMedium = useMediaQuery('md')
 
-  // local　states
-  const [showMap, setShowMap] = useState(false)
-
   function handleMapBoxClick() {
-    if (isOverMedium) return
-
-    setShowMap(true)
+    if (!isOverMedium) {
+    }
   }
 
   const distanceDecoration = () => {
@@ -57,13 +53,13 @@ const DetailsSectionGroup = ({
           distanceDecoration() && <p className='text-gh-gray'>{distanceDecoration()}</p>
         }
       >
-        <div className='flex-1 aspect-video w-full relative'>
+        <div className='flex-1 aspect-video w-full relative' onClick={handleMapBoxClick}>
           <MapBoxChip
             latitude={data?.geometry?.location.lat}
             longitude={data?.geometry?.location.lng}
             dragPan={isOverMedium}
             scrollZoom={false}
-            onClick={handleMapBoxClick}
+            trackUserLocation={false}
           >
             <Pin
               latitude={data?.geometry?.location.lat}
@@ -73,7 +69,7 @@ const DetailsSectionGroup = ({
             />
           </MapBoxChip>
           {isOverMedium && (
-            <div className='absolute right-4 top-4 text-xs flex flex-col gap-2'>
+            <div className={`absolute right-4 top-4 text-xs flex flex-col gap-2`}>
               <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
               <Button
                 text='+ ズームイン'
@@ -88,30 +84,16 @@ const DetailsSectionGroup = ({
         </div>
       </DetailsSection>
       <ReviewsSection data={data} isLoading={isLoading} />
-      <div>
-        <ModalLayout isOpen={showMap && !isOverMedium}>
+      <div className='flex-1'>
+        <div className='fixed top-0 left-0 w-screen h-screen z-[100]'>
           <MapBoxChip
             latitude={data?.geometry?.location.lat}
             longitude={data?.geometry?.location.lng}
-            dragPan={true}
-            scrollZoom={true}
-            style={{
-              height: '100svh',
-              width: '100svw',
-            }}
-          >
-            <Pin
-              latitude={data?.geometry?.location.lat}
-              longitude={data?.geometry?.location.lng}
-              data={data}
-              focused={false}
-            />
-          </MapBoxChip>
-          <div className='absolute right-4 top-4 text-xs flex flex-col gap-2'>
-            <Button text='閉じる' onClick={() => setShowMap(false)} />
-            <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
-          </div>
-        </ModalLayout>
+            dragPan={isOverMedium}
+            scrollZoom={false}
+            trackUserLocation={false}
+          />
+        </div>
       </div>
     </>
   )
