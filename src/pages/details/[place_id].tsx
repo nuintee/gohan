@@ -1,4 +1,4 @@
-import { Children, ReactElement, useMemo, useState } from 'react'
+import { ReactElement, useMemo, useState } from 'react'
 
 import { SuspenseImage, Texts } from '@/components/ui'
 
