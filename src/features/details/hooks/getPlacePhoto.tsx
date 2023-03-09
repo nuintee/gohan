@@ -2,7 +2,7 @@ import { FALLBACK_IMAGE } from '@/config/env'
 import { PhotosEntity } from '@/features/restaurants/types'
 import { getBareImageAPI } from './getBareImageAPI'
 
-export function getPlacePhoto(photo: PhotosEntity) {
+export function getPlacePhoto(photo?: PhotosEntity) {
   if (!photo)
     return {
       url: FALLBACK_IMAGE,

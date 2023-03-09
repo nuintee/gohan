@@ -9,16 +9,16 @@ import { RestaurantProps } from '../types'
 // Constants
 import { cardConfig } from '../config'
 import ActivityStatus from '@/features/activities/components/ActivityStatus'
-import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useMemo } from 'react'
 import SuspenseImage from '@/components/ui/SuspenseImage'
+import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
 
 const RestaurantBoard = (props: RestaurantProps) => {
   const { data, onClick, isFocused } = props
 
   // Memorized
   const memorizedPhoto = useMemo(() => {
-    return usePlacePhotos(data?.photos)
+    return getPlacePhoto(data?.photos?.at(0))
   }, [data?.photos])
 
   return (
