@@ -77,13 +77,13 @@ const DetailsSectionGroup = ({
           )}
           {isOverMedium && (
             <div className={`absolute right-4 top-4 text-xs flex flex-col gap-2`}>
-              <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
+              <Button text='地点をフォーカス' onClick={() => onActivityClicked(data)} />
               <Button
                 text='+ ズームイン'
                 onClick={() => mapBoxRef?.zoomTo(mapBoxRef.getZoom() + 1)}
               />
               <Button
-                text='+ ズームアウト'
+                text='- ズームアウト'
                 onClick={() => mapBoxRef?.zoomTo(mapBoxRef.getZoom() - 1)}
               />
             </div>
@@ -109,7 +109,7 @@ const DetailsSectionGroup = ({
             </MapBoxChip>
             <div className={`absolute right-4 top-4 text-xs flex flex-col gap-2`}>
               <Button text='閉じる' onClick={() => setShowFullMap(false)} />
-              <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
+              <Button text='地点をフォーカス' onClick={() => onActivityClicked(data)} />
             </div>
           </div>
         </div>
