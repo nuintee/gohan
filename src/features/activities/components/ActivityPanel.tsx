@@ -14,10 +14,29 @@ import SlideInLayout from '@/layouts/SlideInLayout'
 import useMediaQuery from '@/hooks/mediaquery'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { ActivityResolved } from '../types'
+import { useSort } from '@/hooks/sort'
+import { useFilter } from '@/hooks/filter'
+import { ReviewStatus } from '@prisma/client'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
   const [deletedContents, setDeletedContents] = useState([])
+
+  const [sortMethod, setSortMethod] = useState('DESC')
+  const [filterStatus, setFilterStatus] = useState<'ALL' | ReviewStatus>('ALL')
+
+  const sortedArray = useSort({
+    array: query.data,
+    sortMethod,
+    sortKey: 'name',
+    disabled: false,
+  })
+
+  const filteredArray = useFilter({
+    array: sortedArray,
+    filterFn: (v) => v.reviewStatus === filterStatus,
+    disabled: filterStatus === 'ALL',
+  })
 
   if (query.isFetching && !query.isFetched) {
     const COUNT = 3
@@ -55,7 +74,11 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
 
   return (
     <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
-      {query.data
+      <button onClick={() => setSortMethod('ASC')}>ASC</button>
+      <button onClick={() => setSortMethod('DESC')}>DESC</button>
+      <button onClick={() => setFilterStatus('GOOD')}>FILTER</button>
+      <button onClick={() => setFilterStatus('ALL')}>CLEAR FILTER</button>
+      {filteredArray
         ?.filter((v) => !deletedContents.includes(v.id))
         .map((activity, index, original) => (
           <div className='flex gap-2 items-center justify-between' key={activity.id}>

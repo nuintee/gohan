@@ -1,29 +1,27 @@
-import { DetailsSummary } from '@/components/ui'
 import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
-import { ActivityResolved } from '@/features/activities/types'
-import { useSendReports } from '@/features/report/hooks/useSendReports'
-import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
-import DropDownLayout from '@/layouts/DropDownLayout'
 import { useState } from 'react'
 
 import { useSort } from '@/hooks/sort'
 import { useFilter } from '@/hooks/filter'
+import { ReviewStatus } from '@prisma/client'
 
 const Experiment = () => {
   const allActivities = useGetUserActivities()
 
   const [method, setMethod] = useState<'ASC' | 'DESC'>('ASC')
-  const [filterKey, setFilterkey] = useState('')
+  const [filterKey, setFilterkey] = useState<boolean | ReviewStatus>(true)
 
   const sortedArray = useSort({
     array: allActivities.data,
     sortMethod: method,
     sortKey: 'name',
+    disabled: false,
   })
 
   const filteredArray = useFilter({
     array: sortedArray,
-    filterFn: (v) => v.reviewStatus !== filterKey,
+    filterFn: (v) => true,
+    disabled: true,
   })
 
   return (
@@ -38,7 +36,7 @@ const Experiment = () => {
         <button onClick={() => setMethod('ASC')}>ASC</button>
         <button onClick={() => setMethod('DESC')}>DEC</button>
         <button onClick={() => setFilterkey('NEW')}>FILTER</button>
-        <button onClick={() => setFilterkey('')}>CLEAR FILTER</button>
+        <button onClick={() => setFilterkey(true)}>CLEAR FILTER</button>
       </div>
     </div>
   )
