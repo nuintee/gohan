@@ -21,8 +21,8 @@ const ErrorFallBack = ({
       <SuspenseImage
         src='/images/error_image.svg'
         disabled
-        height={300}
-        width={300}
+        height={250}
+        width={250}
         draggable={false}
       />
       <div>
