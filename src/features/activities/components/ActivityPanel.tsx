@@ -19,6 +19,7 @@ import { useFilter } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
 import { Chevron } from '@/components/icons'
 import { colors } from '@/config/colors'
+import { SORT_ENUM } from '@/constants/sort'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -80,7 +81,10 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
       <header className='flex gap-2'>
         <DropDown
-          menu={SORT_MENU.map((v) => ({ label: v, onDropDownItemClick: () => setSortMethod(v) }))}
+          menu={Object.keys(SORT_ENUM).map((v) => ({
+            label: SORT_ENUM[v].label,
+            onDropDownItemClick: () => setSortMethod(v),
+          }))}
           controller={
             <Button
               text={sortMethod}
