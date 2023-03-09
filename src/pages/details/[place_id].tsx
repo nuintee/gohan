@@ -29,6 +29,7 @@ import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 import { getBareImageAPI } from '@/features/details/hooks/getBareImageAPI'
 import Tab from '@/components/ui/Tab'
+import { useTab } from '@/hooks/tab'
 
 const TAB_ITEMS = [
   {
@@ -47,8 +48,7 @@ const DetailsPage = ({ id }: { id: string }) => {
   const activity = useGetActivity({ place_id: id })
   const details = useDetails({ place_id: id })
 
-  // TAB
-  const [tabIndex, setTabIndex] = useState(0)
+  const tab = useTab({ disabled: !Boolean(details.data?.photos?.length) })
 
   function withAuth(condition: boolean) {
     return status === 'authenticated' && condition
@@ -96,13 +96,8 @@ const DetailsPage = ({ id }: { id: string }) => {
             <Promotion />
           )}
 
-          <Tab.Navigation
-            tabIndex={tabIndex}
-            onSelect={(i) => setTabIndex(i)}
-            tabItems={TAB_ITEMS}
-            hidden={!Boolean(details.data.photos?.length)}
-          />
-          <Tab.Page tabIndex={tabIndex} disabled={!Boolean(details.data.photos?.length)}>
+          <Tab.Navigation {...tab} tabItems={TAB_ITEMS} />
+          <Tab.Page tabIndex={tab.tabIndex} disabled={tab.disabled}>
             <>
               <DetailsDescriptiveGroup data={details.data} isLoading={false} />
               <DetailsSectionGroup data={details.data} isLoading={false} />

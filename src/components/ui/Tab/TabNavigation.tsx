@@ -2,14 +2,14 @@ const TabNavigation = ({
   tabIndex,
   tabItems,
   onSelect,
-  hidden = false,
+  disabled = false,
 }: {
   tabIndex: number
   tabItems: Record<'label', string>[]
   onSelect: (_index: number) => void
-  hidden?: boolean
+  disabled?: boolean
 }) => {
-  if (hidden) return <></>
+  if (disabled) return <></>
 
   return (
     <div className='mt-8'>
