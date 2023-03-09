@@ -21,7 +21,7 @@ import { Chevron } from '@/components/icons'
 import { colors } from '@/config/colors'
 import { SORT_ENUM } from '@/constants/sort'
 import useActivityStatus from '../hooks/useActivityStatus'
-import Filter from '@/components/icons/Filter'
+import { Sort, Filter } from '@/components/icons'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -91,7 +91,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
               outline
               icon={{
                 position: 'before',
-                src: <Chevron direction='bottom' stroke={colors['gh-l-gray']} />,
+                src: <Sort />,
               }}
             />
           }

@@ -14,6 +14,8 @@ import Share from './Share'
 import Dots from './Dots'
 import Chevron from './Chevron'
 import Price from './Price'
+import Filter from './Filter'
+import Sort from './Sort'
 
 export {
   Check,
@@ -32,4 +34,6 @@ export {
   Dots,
   Chevron,
   Price,
+  Filter,
+  Sort,
 }
