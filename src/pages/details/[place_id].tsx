@@ -54,6 +54,11 @@ const DetailsPage = ({ id }: { id: string }) => {
     return status === 'authenticated' && condition
   }
 
+  function openImageModal(i: number) {
+    setImageIndex(i)
+    openLocalModal('IMAGE')
+  }
+
   // image modal
   const [imageIndex, setImageIndex] = useState(0)
 
@@ -88,6 +93,7 @@ const DetailsPage = ({ id }: { id: string }) => {
           memorizedImgURL={memorizedPhoto.url}
           modalSetter={openLocalModal}
           color={colors['gh-dark']}
+          onImageClick={() => openImageModal(0)}
         />
         <main className='sm:px-[10%] px-4'>
           {status === 'authenticated' ? (
@@ -120,10 +126,7 @@ const DetailsPage = ({ id }: { id: string }) => {
                       'w-fit h-fit object-scale-down mb-4 hover:scale-105 duration-300 cursor-pointer'
                     }
                     key={v.photo_reference}
-                    onClick={() => {
-                      setImageIndex(i)
-                      openLocalModal('IMAGE')
-                    }}
+                    onClick={() => openImageModal(i)}
                   />
                 ))}
               </div>
