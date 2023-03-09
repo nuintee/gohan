@@ -26,11 +26,9 @@ import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
-import { getBareImageAPI } from '@/features/details/hooks/getBareImageAPI'
 import Tab from '@/components/ui/Tab'
 import { useTab } from '@/hooks/tab'
-import { PhotosEntity } from '@/features/restaurants/types'
-import { FALLBACK_IMAGE } from '@/config/env'
+import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
 
 const TAB_ITEMS = [
   {
@@ -40,20 +38,6 @@ const TAB_ITEMS = [
     label: '写真',
   },
 ]
-
-const usePlacePhoto = (photo: PhotosEntity) => {
-  if (!photo)
-    return {
-      url: FALLBACK_IMAGE,
-      width: 400,
-      height: 400,
-      html_attributions: [],
-    }
-
-  const url = getBareImageAPI(photo.photo_reference)
-
-  return { ...photo, url: url.toString() }
-}
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
@@ -76,7 +60,7 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   // memorized
   const memorizedPhotos = useMemo(() => {
-    return details.data?.photos?.map((v) => usePlacePhoto(v))
+    return details.data?.photos?.map((v) => getPlacePhoto(v))
   }, [details.data?.photos])
 
   const [imageModalData, setImageModalData] = useState(memorizedPhotos?.at(0))
