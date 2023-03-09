@@ -42,6 +42,7 @@ const MapBoxCore = forwardRef(
           ...rest,
         }}
         onClick={onClick}
+        onDblClick={(e) => e.preventDefault()}
         ref={setMapBoxRef}
         renderWorldCopies={false}
         pitchWithRotate={pitchWithRotate}

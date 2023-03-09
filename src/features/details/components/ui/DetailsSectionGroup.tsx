@@ -53,20 +53,10 @@ const DetailsSectionGroup = ({
         }
       >
         <div className='flex-1 aspect-video w-full relative'>
-          {!showMap && (
-            <div
-              className='absolute top-0 left-0 w-full h-full z-10 bg-white bg-opacity-20 backdrop-blur-sm flex items-center justify-center cursor-pointer'
-              onClick={() => setShowMap(true)}
-            >
-              <div className='w-fit h-fit bg-white rounded-md'>
-                <Button text='マップを見る' outline />
-              </div>
-            </div>
-          )}
           <MapBoxChip
             latitude={data?.geometry?.location.lat}
             longitude={data?.geometry?.location.lng}
-            dragPan={true}
+            dragPan={isOverMedium}
             scrollZoom={false}
           >
             <Pin
@@ -92,6 +82,31 @@ const DetailsSectionGroup = ({
         </div>
       </DetailsSection>
       <ReviewsSection data={data} isLoading={isLoading} />
+      <div>
+        <ModalLayout isOpen={showMap && !isOverMedium}>
+          <MapBoxChip
+            latitude={data?.geometry?.location.lat}
+            longitude={data?.geometry?.location.lng}
+            dragPan={true}
+            scrollZoom={true}
+            style={{
+              height: '100svh',
+              width: '100svw',
+            }}
+          >
+            <Pin
+              latitude={data?.geometry?.location.lat}
+              longitude={data?.geometry?.location.lng}
+              data={data}
+              focused={false}
+            />
+          </MapBoxChip>
+          <div className='absolute right-4 top-4 text-xs flex flex-col gap-2'>
+            <Button text='閉じる' onClick={() => setShowMap(false)} />
+            <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
+          </div>
+        </ModalLayout>
+      </div>
     </>
   )
 }
