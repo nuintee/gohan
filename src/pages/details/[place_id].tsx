@@ -18,7 +18,6 @@ import DetailsLoadingFallback from '@/features/details/components/DetailsLoading
 import { MainLayout } from '@/layouts/layout'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
-import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 import DetailsHero from '@/features/details/components/ui/DetailsHero'
 import ToolTip from '@/components/ui/Tootltip'
