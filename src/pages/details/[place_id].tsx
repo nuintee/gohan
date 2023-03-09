@@ -41,14 +41,13 @@ const TAB_ITEMS = [
 const TabPage = ({
   tabIndex = 0,
   children,
-  hidden = false,
+  disabled = false,
 }: {
   tabIndex: number
-  children: JSX.Element | JSX.Element[]
-  disabled: boolean
-  hidden?: boolean
+  children?: JSX.Element | JSX.Element[]
+  disabled?: boolean
 }) => {
-  if (hidden) return children
+  if (disabled) return children
 
   const childrenArray = Children.toArray(children)
 
@@ -146,23 +145,14 @@ const DetailsPage = ({ id }: { id: string }) => {
             tabIndex={tabIndex}
             onSelect={(i) => setTabIndex(i)}
             tabItems={TAB_ITEMS}
+            hidden={!Boolean(details.data.photos?.length)}
           />
-          <TabPage tabIndex={tabIndex}>
+          <TabPage tabIndex={tabIndex} disabled={!Boolean(details.data.photos?.length)}>
             <>
               <DetailsDescriptiveGroup data={details.data} isLoading={false} />
               <DetailsSectionGroup data={details.data} isLoading={false} />
             </>
-            {/* <div className='gap-2 columns-3 py-2 h-full flex flex-wrap'>
-              <SuspenseImage src='https://picsum.photos/500/300' />
-              <SuspenseImage src='https://picsum.photos/500/300' />
-              <SuspenseImage src='https://picsum.photos/500/300' />
-              <SuspenseImage src='https://picsum.photos/500/300' />
-              <SuspenseImage src='https://picsum.photos/500/300' />
-              <SuspenseImage src='https://picsum.photos/500/300' />
-              <SuspenseImage src='https://picsum.photos/500/300' />
-              <SuspenseImage src='https://picsum.photos/500/300' />
-            </div> */}
-            {details.data.photos?.length && (
+            {details.data.photos?.length ? (
               <div className='gap-2 columns-3 py-2 h-full flex flex-wrap overflow-y-auto'>
                 {details.data.photos?.map((v) => (
                   <SuspenseImage
@@ -174,6 +164,8 @@ const DetailsPage = ({ id }: { id: string }) => {
                   />
                 ))}
               </div>
+            ) : (
+              <></>
             )}
           </TabPage>
         </main>
