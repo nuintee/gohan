@@ -13,6 +13,7 @@ import ActivityDropDown from './ActivityDropDown'
 import SlideInLayout from '@/layouts/SlideInLayout'
 import useMediaQuery from '@/hooks/mediaquery'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
+import { ActivityResolved } from '../types'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -53,7 +54,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   }
 
   return (
-    <div className='flex-1 flex flex-col  overflow-auto p-2 pb-20'>
+    <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
       {query.data
         ?.filter((v) => !deletedContents.includes(v.id))
         .map((activity, index, original) => (
