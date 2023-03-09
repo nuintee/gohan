@@ -103,7 +103,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
           }))}
           controller={
             <Button
-              text={filterStatus}
+              text={filterStatus === 'ALL' ? '全て' : useActivityStatus(filterStatus).label}
               outline
               icon={{
                 position: 'before',
