@@ -1,6 +1,7 @@
+import { colors } from '@/config/colors'
 import { Props } from '../index.types'
 
-const Filter = ({ width = 17, height = 17, fill = 'white' }: Props) => {
+const Filter = ({ width = 17, height = 17, fill = colors['gh-l-gray'] }: Props) => {
   return (
     <svg
       width={width}
