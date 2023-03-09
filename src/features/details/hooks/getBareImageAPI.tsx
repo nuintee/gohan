@@ -1,4 +1,4 @@
-import { BASE_URL, FALLBACK_IMAGE, IS_PRODMODE } from '@/config/env'
+import { BASE_URL, IS_PRODMODE } from '@/config/env'
 
 export function getBareImageAPI(photo_reference: string) {
   if (IS_PRODMODE) {
@@ -6,6 +6,6 @@ export function getBareImageAPI(photo_reference: string) {
 
     return url.toString()
   } else {
-    return FALLBACK_IMAGE
+    return 'https://via.placeholder.com/600x400?text=DEV'
   }
 }

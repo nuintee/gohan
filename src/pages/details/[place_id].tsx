@@ -1,6 +1,6 @@
 import { Children, ReactElement, useMemo, useState } from 'react'
 
-import { Texts } from '@/components/ui'
+import { SuspenseImage, Texts } from '@/components/ui'
 
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
@@ -27,6 +27,7 @@ import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
+import { getBareImageAPI } from '@/features/details/hooks/getBareImageAPI'
 
 const TAB_ITEMS = [
   {
@@ -142,7 +143,28 @@ const DetailsPage = ({ id }: { id: string }) => {
               <DetailsDescriptiveGroup data={details.data} isLoading={false} />
               <DetailsSectionGroup data={details.data} isLoading={false} />
             </>
-            <div>Photo</div>
+            {/* <div className='gap-2 columns-3 py-2 h-full flex flex-wrap'>
+              <SuspenseImage src='https://picsum.photos/500/300' />
+              <SuspenseImage src='https://picsum.photos/500/300' />
+              <SuspenseImage src='https://picsum.photos/500/300' />
+              <SuspenseImage src='https://picsum.photos/500/300' />
+              <SuspenseImage src='https://picsum.photos/500/300' />
+              <SuspenseImage src='https://picsum.photos/500/300' />
+              <SuspenseImage src='https://picsum.photos/500/300' />
+              <SuspenseImage src='https://picsum.photos/500/300' />
+            </div> */}
+            {details.data.photos?.length && (
+              <div className='gap-2 columns-3 py-2 h-full flex flex-wrap'>
+                {details.data.photos?.map((v) => (
+                  <SuspenseImage
+                    src={getBareImageAPI(v.photo_reference)}
+                    key={v.photo_reference}
+                    height={v.height}
+                    width={v.width}
+                  />
+                ))}
+              </div>
+            )}
           </TabPage>
         </main>
       </div>
