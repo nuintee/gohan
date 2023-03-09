@@ -59,6 +59,10 @@ const DetailsPage = ({ id }: { id: string }) => {
     return usePlacePhotos(details.data?.photos)
   }, [details.data?.photos])
 
+  const memorizedPhotos = useMemo(() => {
+    return details.data?.photos?.map((v) => ({ ...v, url: getBareImageAPI(v.photo_reference) }))
+  }, [details.data?.photos])
+
   if (withAuth(activity.isLoading) || details.isLoading) return <DetailsLoadingFallback />
 
   if (activity.isError || details.isError)
@@ -132,7 +136,11 @@ const DetailsPage = ({ id }: { id: string }) => {
           place_id: id,
         }}
       />
-      <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
+      <ImageModal
+        isOpen={checkIsOpen('IMAGE')}
+        data={memorizedPhotos?.at(0)}
+        onClose={clearLocalModal}
+      />
     </>
   )
 }
