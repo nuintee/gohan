@@ -113,7 +113,9 @@ const DetailsPage = ({ id }: { id: string }) => {
                     src={getBareImageAPI(v.photo_reference)}
                     height={v.height}
                     width={v.width}
-                    className={'w-fit h-fit object-scale-down mb-4'}
+                    className={
+                      'w-fit h-fit object-scale-down mb-4 hover:scale-105 duration-300 cursor-pointer'
+                    }
                     key={v.photo_reference}
                   />
                 ))}
