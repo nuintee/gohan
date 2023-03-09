@@ -30,6 +30,8 @@ import { ROUTES } from '@/constants/routes'
 import { getBareImageAPI } from '@/features/details/hooks/getBareImageAPI'
 import Tab from '@/components/ui/Tab'
 import { useTab } from '@/hooks/tab'
+import { PhotosEntity } from '@/features/restaurants/types'
+import { FALLBACK_IMAGE } from '@/config/env'
 
 const TAB_ITEMS = [
   {
@@ -39,6 +41,20 @@ const TAB_ITEMS = [
     label: '写真',
   },
 ]
+
+const usePlacePhoto = (photo: PhotosEntity) => {
+  if (!photo)
+    return {
+      url: FALLBACK_IMAGE,
+      width: 400,
+      height: 400,
+      html_attributions: [],
+    }
+
+  const url = getBareImageAPI(photo.photo_reference)
+
+  return { ...photo, url: url.toString() }
+}
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
@@ -54,22 +70,17 @@ const DetailsPage = ({ id }: { id: string }) => {
     return status === 'authenticated' && condition
   }
 
-  function openImageModal(i: number) {
-    setImageIndex(i)
+  function openImageModal(photos) {
+    setImageModalData(photos)
     openLocalModal('IMAGE')
   }
 
-  // image modal
-  const [imageIndex, setImageIndex] = useState(0)
-
-  // Memorized
-  const memorizedPhoto = useMemo(() => {
-    return usePlacePhotos(details.data?.photos)
-  }, [details.data?.photos])
-
+  // memorized
   const memorizedPhotos = useMemo(() => {
-    return details.data?.photos?.map((v) => ({ ...v, url: getBareImageAPI(v.photo_reference) }))
+    return details.data?.photos?.map((v) => usePlacePhoto(v))
   }, [details.data?.photos])
+
+  const [imageModalData, setImageModalData] = useState(memorizedPhotos?.at(0))
 
   if (withAuth(activity.isLoading) || details.isLoading) return <DetailsLoadingFallback />
 
@@ -82,7 +93,7 @@ const DetailsPage = ({ id }: { id: string }) => {
         title={details.data?.name || ROUTES.DETAILS.label}
         description={details.data?.editorial_summary?.overview}
         keyword={details.data?.types?.join(',')}
-        image={memorizedPhoto.url}
+        image={memorizedPhotos?.at(0)?.url}
         url={ROUTES.DETAILS.path}
       />
       <div className='flex flex-1 flex-col relative overflow-auto'>
@@ -90,10 +101,10 @@ const DetailsPage = ({ id }: { id: string }) => {
           data={{ ...details.data, ...activity.data }}
           isFetching={activity.isFetching}
           refetch={activity.refetch}
-          memorizedImgURL={memorizedPhoto.url}
+          memorizedImgURL={memorizedPhotos?.at(0)?.url}
           modalSetter={openLocalModal}
           color={colors['gh-dark']}
-          onImageClick={() => openImageModal(0)}
+          onImageClick={() => openImageModal(memorizedPhotos?.at(0))}
         />
         <main className='sm:px-[10%] px-4'>
           {status === 'authenticated' ? (
@@ -117,16 +128,16 @@ const DetailsPage = ({ id }: { id: string }) => {
             </>
             {details.data.photos?.length ? (
               <div className='h-full overflow-y-auto gap-2 sm:columns-2 md:columns-3 columns-1 py-4'>
-                {details.data.photos?.map((v, i) => (
+                {memorizedPhotos?.map((v) => (
                   <SuspenseImage
-                    src={getBareImageAPI(v.photo_reference)}
+                    src={v.url}
                     height={v.height}
                     width={v.width}
                     className={
                       'w-fit h-fit object-scale-down mb-4 hover:scale-105 duration-300 cursor-pointer'
                     }
-                    key={v.photo_reference}
-                    onClick={() => openImageModal(i)}
+                    key={v.url}
+                    onClick={() => openImageModal(v)}
                   />
                 ))}
               </div>
@@ -148,11 +159,7 @@ const DetailsPage = ({ id }: { id: string }) => {
           place_id: id,
         }}
       />
-      <ImageModal
-        isOpen={checkIsOpen('IMAGE')}
-        data={memorizedPhotos?.at(imageIndex)}
-        onClose={clearLocalModal}
-      />
+      <ImageModal isOpen={checkIsOpen('IMAGE')} data={imageModalData} onClose={clearLocalModal} />
     </>
   )
 }
