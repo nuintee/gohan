@@ -1,13 +1,4 @@
-import { BASE_URL, IS_PRODMODE } from '@/config/env'
-
-function _generatePastelColor() {
-  let R = Math.floor(Math.random() * 127 + 127)
-  let G = Math.floor(Math.random() * 127 + 127)
-  let B = Math.floor(Math.random() * 127 + 127)
-
-  let rgb = (R << 16) + (G << 8) + B
-  return `${rgb.toString(16)}`
-}
+import { BASE_URL, FALLBACK_IMAGE, IS_PRODMODE } from '@/config/env'
 
 export function getBareImageAPI(photo_reference: string) {
   if (IS_PRODMODE) {
@@ -15,6 +6,6 @@ export function getBareImageAPI(photo_reference: string) {
 
     return url.toString()
   } else {
-    return '/images/fallback_image.svg'
+    return FALLBACK_IMAGE
   }
 }

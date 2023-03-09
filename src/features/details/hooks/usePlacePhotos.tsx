@@ -1,10 +1,11 @@
+import { FALLBACK_IMAGE } from '@/config/env'
 import { ResultsEntity } from '@/features/restaurants/types'
 import { getBareImageAPI } from './getBareImageAPI'
 
 const usePlacePhotos = (photos: ResultsEntity['photos']) => {
   if (!photos)
     return {
-      url: '/images/fallback_image.svg',
+      url: FALLBACK_IMAGE,
       width: 400,
       height: 400,
       html_attributions: [],
