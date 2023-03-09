@@ -9,6 +9,7 @@ import { Marker } from 'react-map-gl'
 
 // constants
 import { ROUTES } from '@/constants/routes'
+import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
 
 const Pin = ({
   latitude = 0,
@@ -33,7 +34,7 @@ const Pin = ({
   }
 
   const memorizedImage = useMemo(() => {
-    return usePlacePhotos(data?.photos)
+    return getPlacePhoto(data?.photos?.at(0))
   }, [data?.photos])
 
   return (
