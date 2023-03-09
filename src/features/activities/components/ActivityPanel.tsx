@@ -20,6 +20,7 @@ import { ReviewStatus } from '@prisma/client'
 import { Chevron } from '@/components/icons'
 import { colors } from '@/config/colors'
 import { SORT_ENUM } from '@/constants/sort'
+import useActivityStatus from '../hooks/useActivityStatus'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -34,8 +35,6 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     sortKey: 'name',
     disabled: false,
   })
-
-  const SORT_MENU = ['DESC', 'ASC']
 
   const filteredArray = useFilter({
     array: sortedArray,
@@ -99,7 +98,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
         <DropDown
           menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
-            label: v,
+            label: v === 'ALL' ? '全て' : useActivityStatus(v).label,
             onDropDownItemClick: () => setFilterStatus(v),
           }))}
           controller={
