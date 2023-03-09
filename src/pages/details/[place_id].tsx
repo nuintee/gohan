@@ -41,10 +41,15 @@ const TAB_ITEMS = [
 const TabPage = ({
   tabIndex = 0,
   children,
+  hidden = false,
 }: {
   tabIndex: number
   children: JSX.Element | JSX.Element[]
+  disabled: boolean
+  hidden?: boolean
 }) => {
+  if (hidden) return children
+
   const childrenArray = Children.toArray(children)
 
   return childrenArray.at(tabIndex)
@@ -54,11 +59,15 @@ const TabNavigation = ({
   tabIndex,
   tabItems,
   onSelect,
+  hidden = false,
 }: {
   tabIndex: number
   tabItems: Record<'label', string>[]
   onSelect: (_index: number) => void
+  hidden?: boolean
 }) => {
+  if (hidden) return <></>
+
   return (
     <div className='mt-8'>
       {tabItems?.map((v, i) => (
@@ -154,13 +163,14 @@ const DetailsPage = ({ id }: { id: string }) => {
               <SuspenseImage src='https://picsum.photos/500/300' />
             </div> */}
             {details.data.photos?.length && (
-              <div className='gap-2 columns-3 py-2 h-full flex flex-wrap'>
+              <div className='gap-2 columns-3 py-2 h-full flex flex-wrap overflow-y-auto'>
                 {details.data.photos?.map((v) => (
                   <SuspenseImage
                     src={getBareImageAPI(v.photo_reference)}
                     key={v.photo_reference}
                     height={v.height}
                     width={v.width}
+                    className='w-full'
                   />
                 ))}
               </div>
