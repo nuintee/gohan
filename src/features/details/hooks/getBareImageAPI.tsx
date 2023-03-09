@@ -6,6 +6,8 @@ export function getBareImageAPI(photo_reference: string) {
 
     return url.toString()
   } else {
-    return 'https://via.placeholder.com/600x400?text=DEV'
+    const TEXT = photo_reference?.slice(0, 10) || 'DEV'
+
+    return `https://via.placeholder.com/600x400?text=${TEXT}`
   }
 }
