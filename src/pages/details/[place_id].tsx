@@ -37,10 +37,42 @@ const TAB_ITEMS = [
   },
 ]
 
-const TabPage = ({ tabIndex = 0, children }: { tabIndex: number; children: JSX.Element }) => {
+const TabPage = ({
+  tabIndex = 0,
+  children,
+}: {
+  tabIndex: number
+  children: JSX.Element | JSX.Element[]
+}) => {
   const childrenArray = Children.toArray(children)
 
   return childrenArray.at(tabIndex)
+}
+
+const TabNavigation = ({
+  tabIndex,
+  tabItems,
+  onSelect,
+}: {
+  tabIndex: number
+  tabItems: Record<'label', string>[]
+  onSelect: (_index: number) => void
+}) => {
+  return (
+    <div className='mt-8'>
+      {tabItems?.map((v, i) => (
+        <button
+          onClick={() => onSelect(i)}
+          className={`px-8 py-4 bg-white flex-1 border-b-2 outline-none ${
+            tabIndex === i ? 'border-gh-orange font-semibold' : 'border-gh-pale text-gh-d-gray'
+          }`}
+          key={v.label}
+        >
+          {v.label}
+        </button>
+      ))}
+    </div>
+  )
 }
 
 const DetailsPage = ({ id }: { id: string }) => {
@@ -100,21 +132,11 @@ const DetailsPage = ({ id }: { id: string }) => {
             <Promotion />
           )}
 
-          <div className='mt-8'>
-            {TAB_ITEMS.map((v, i) => (
-              <button
-                onClick={() => setTabIndex(i)}
-                className={`px-8 py-4 bg-white flex-1 border-b-2 outline-none ${
-                  tabIndex === i
-                    ? 'border-gh-orange font-semibold'
-                    : 'border-gh-pale text-gh-d-gray'
-                }`}
-                key={v.label}
-              >
-                {v.label}
-              </button>
-            ))}
-          </div>
+          <TabNavigation
+            tabIndex={tabIndex}
+            onSelect={(i) => setTabIndex(i)}
+            tabItems={TAB_ITEMS}
+          />
           <TabPage tabIndex={tabIndex}>
             <>
               <DetailsDescriptiveGroup data={details.data} isLoading={false} />
