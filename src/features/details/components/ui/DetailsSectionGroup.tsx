@@ -21,10 +21,15 @@ const DetailsSectionGroup = ({
 }) => {
   const { onActivityClicked, mapBoxRef } = useMapBox()
   const { gps, isGPSFetching, isGPSError } = useGPS()
+  const isOverSmall = useMediaQuery('sm')
   const isOverMedium = useMediaQuery('md')
+
+  // local state
+  const [showFullMap, setShowFullMap] = useState(false)
 
   function handleMapBoxClick() {
     if (!isOverMedium) {
+      setShowFullMap(true)
     }
   }
 
@@ -59,7 +64,6 @@ const DetailsSectionGroup = ({
             longitude={data?.geometry?.location.lng}
             dragPan={isOverMedium}
             scrollZoom={false}
-            trackUserLocation={false}
           >
             <Pin
               latitude={data?.geometry?.location.lat}
@@ -84,17 +88,29 @@ const DetailsSectionGroup = ({
         </div>
       </DetailsSection>
       <ReviewsSection data={data} isLoading={isLoading} />
-      <div className='flex-1'>
-        <div className='fixed top-0 left-0 w-screen h-screen z-[100]'>
-          <MapBoxChip
-            latitude={data?.geometry?.location.lat}
-            longitude={data?.geometry?.location.lng}
-            dragPan={isOverMedium}
-            scrollZoom={false}
-            trackUserLocation={false}
-          />
+      {showFullMap && !isOverMedium && (
+        <div className='flex-1 relative'>
+          <div className='fixed top-0 left-0 w-screen h-screen z-[100]'>
+            <MapBoxChip
+              latitude={data?.geometry?.location.lat}
+              longitude={data?.geometry?.location.lng}
+              dragPan={true}
+              scrollZoom={true}
+            >
+              <Pin
+                latitude={data?.geometry?.location.lat}
+                longitude={data?.geometry?.location.lng}
+                data={data}
+                focused={false}
+              />
+            </MapBoxChip>
+            <div className={`absolute right-4 top-4 text-xs flex flex-col gap-2`}>
+              <Button text='閉じる' onClick={() => setShowFullMap(false)} />
+              <Button text='マップ上で表示' onClick={() => onActivityClicked(data)} />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
