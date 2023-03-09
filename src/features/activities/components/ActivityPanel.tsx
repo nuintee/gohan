@@ -86,7 +86,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
           }))}
           controller={
             <Button
-              text={sortMethod}
+              text={`名前: ${SORT_ENUM[sortMethod].label}`}
               outline
               icon={{
                 position: 'before',
