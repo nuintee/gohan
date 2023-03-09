@@ -1,4 +1,4 @@
-import { ReactElement, useMemo, useState } from 'react'
+import { Children, ReactElement, useMemo, useState } from 'react'
 
 import { Texts } from '@/components/ui'
 
@@ -28,6 +28,21 @@ import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 
+const TAB_ITEMS = [
+  {
+    label: '詳細',
+  },
+  {
+    label: '写真',
+  },
+]
+
+const TabPage = ({ tabIndex = 0, children }: { tabIndex: number; children: JSX.Element }) => {
+  const childrenArray = Children.toArray(children)
+
+  return childrenArray.at(tabIndex)
+}
+
 const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
 
@@ -38,15 +53,6 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   // TAB
   const [tabIndex, setTabIndex] = useState(0)
-
-  const TAB_ITEMS = [
-    {
-      label: '詳細',
-    },
-    {
-      label: '写真',
-    },
-  ]
 
   function withAuth(condition: boolean) {
     return status === 'authenticated' && condition
@@ -98,7 +104,7 @@ const DetailsPage = ({ id }: { id: string }) => {
             {TAB_ITEMS.map((v, i) => (
               <button
                 onClick={() => setTabIndex(i)}
-                className={`px-8 py-4 bg-white flex-1 border-b-2 ${
+                className={`px-8 py-4 bg-white flex-1 border-b-2 outline-none ${
                   tabIndex === i
                     ? 'border-gh-orange font-semibold'
                     : 'border-gh-pale text-gh-d-gray'
@@ -109,9 +115,13 @@ const DetailsPage = ({ id }: { id: string }) => {
               </button>
             ))}
           </div>
-
-          <DetailsDescriptiveGroup data={details.data} isLoading={false} />
-          <DetailsSectionGroup data={details.data} isLoading={false} />
+          <TabPage tabIndex={tabIndex}>
+            <>
+              <DetailsDescriptiveGroup data={details.data} isLoading={false} />
+              <DetailsSectionGroup data={details.data} isLoading={false} />
+            </>
+            <div>Photo</div>
+          </TabPage>
         </main>
       </div>
       <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details.data} onClose={clearLocalModal} />
