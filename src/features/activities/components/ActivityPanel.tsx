@@ -34,6 +34,15 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     disabled: false,
   })
 
+  function sortValueMapper(status: 'ALL' | ReviewStatus) {
+    switch (status) {
+      case 'ALL':
+        return '全て'
+      default:
+        return useActivityStatus(status).label
+    }
+  }
+
   const filteredArray = useFilter({
     array: sortedArray,
     filterFn: (v) => v.reviewStatus === filterStatus,
@@ -96,12 +105,12 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
         <DropDown
           menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
-            label: v === 'ALL' ? '全て' : useActivityStatus(v).label,
+            label: sortValueMapper(v as 'ALL' | ReviewStatus),
             onDropDownItemClick: () => setFilterStatus(v),
           }))}
           controller={
             <Button
-              text={filterStatus === 'ALL' ? '全て' : useActivityStatus(filterStatus).label}
+              text={sortValueMapper(filterStatus)}
               outline
               icon={{
                 position: 'before',
