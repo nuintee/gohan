@@ -28,6 +28,7 @@ import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 import { getBareImageAPI } from '@/features/details/hooks/getBareImageAPI'
+import Tab from '@/components/ui/Tab'
 
 const TAB_ITEMS = [
   {
@@ -37,52 +38,6 @@ const TAB_ITEMS = [
     label: '写真',
   },
 ]
-
-const TabPage = ({
-  tabIndex = 0,
-  children,
-  disabled = false,
-}: {
-  tabIndex: number
-  children?: JSX.Element | JSX.Element[]
-  disabled?: boolean
-}) => {
-  if (disabled) return children
-
-  const childrenArray = Children.toArray(children)
-
-  return childrenArray.at(tabIndex)
-}
-
-const TabNavigation = ({
-  tabIndex,
-  tabItems,
-  onSelect,
-  hidden = false,
-}: {
-  tabIndex: number
-  tabItems: Record<'label', string>[]
-  onSelect: (_index: number) => void
-  hidden?: boolean
-}) => {
-  if (hidden) return <></>
-
-  return (
-    <div className='mt-8'>
-      {tabItems?.map((v, i) => (
-        <button
-          onClick={() => onSelect(i)}
-          className={`px-8 py-4 bg-white flex-1 border-b-2 outline-none ${
-            tabIndex === i ? 'border-gh-orange font-semibold' : 'border-gh-pale text-gh-d-gray'
-          }`}
-          key={v.label}
-        >
-          {v.label}
-        </button>
-      ))}
-    </div>
-  )
-}
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
@@ -141,13 +96,13 @@ const DetailsPage = ({ id }: { id: string }) => {
             <Promotion />
           )}
 
-          <TabNavigation
+          <Tab.Navigation
             tabIndex={tabIndex}
             onSelect={(i) => setTabIndex(i)}
             tabItems={TAB_ITEMS}
             hidden={!Boolean(details.data.photos?.length)}
           />
-          <TabPage tabIndex={tabIndex} disabled={!Boolean(details.data.photos?.length)}>
+          <Tab.Page tabIndex={tabIndex} disabled={!Boolean(details.data.photos?.length)}>
             <>
               <DetailsDescriptiveGroup data={details.data} isLoading={false} />
               <DetailsSectionGroup data={details.data} isLoading={false} />
@@ -167,7 +122,7 @@ const DetailsPage = ({ id }: { id: string }) => {
             ) : (
               <></>
             )}
-          </TabPage>
+          </Tab.Page>
         </main>
       </div>
       <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details.data} onClose={clearLocalModal} />
