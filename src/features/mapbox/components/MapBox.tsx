@@ -29,8 +29,7 @@ const MapBox = () => {
   const handleError = (error) => {
     console.dir(error)
 
-    // 3 is CODE for TIMEOUT
-    if (error instanceof GeolocationPositionError && error.code === 3) return
+    if (error?.TIMEOUT === 3 && error?.code === 3) return
 
     useToast.error(error.message)
   }
