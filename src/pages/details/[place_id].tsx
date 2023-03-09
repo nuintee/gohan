@@ -1,6 +1,6 @@
-import { ReactElement, useMemo } from 'react'
+import { Children, ReactElement, useMemo, useState } from 'react'
 
-import { Texts } from '@/components/ui'
+import { SuspenseImage, Texts } from '@/components/ui'
 
 import BasicInfoModal from '@/features/details/components/BasicInfoModal'
 import ReviewModal from '@/features/details/components/ReviewModal'
@@ -18,7 +18,6 @@ import DetailsLoadingFallback from '@/features/details/components/DetailsLoading
 import { MainLayout } from '@/layouts/layout'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
 import DetailsSectionGroup from '@/features/details/components/ui/DetailsSectionGroup'
-import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import useDetailsModal from '@/features/details/hooks/useDetailsModal'
 import DetailsHero from '@/features/details/components/ui/DetailsHero'
 import ToolTip from '@/components/ui/Tootltip'
@@ -27,6 +26,18 @@ import Promotion from '@/components/ui/Promotion'
 import useDetails from '@/features/details/hooks/useDetails'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
+import Tab from '@/components/ui/Tab'
+import { useTab } from '@/hooks/tab'
+import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
+
+const TAB_ITEMS = [
+  {
+    label: '詳細',
+  },
+  {
+    label: '写真',
+  },
+]
 
 const DetailsPage = ({ id }: { id: string }) => {
   const { status } = useSession()
@@ -36,14 +47,23 @@ const DetailsPage = ({ id }: { id: string }) => {
   const activity = useGetActivity({ place_id: id })
   const details = useDetails({ place_id: id })
 
+  const tab = useTab({ disabled: !Boolean(details.data?.photos?.length) })
+
   function withAuth(condition: boolean) {
     return status === 'authenticated' && condition
   }
 
-  // Memorized
-  const memorizedPhoto = useMemo(() => {
-    return usePlacePhotos(details.data?.photos)
+  function openImageModal(photos) {
+    setImageModalData(photos)
+    openLocalModal('IMAGE')
+  }
+
+  // memorized
+  const memorizedPhotos = useMemo(() => {
+    return details.data?.photos?.map((v) => getPlacePhoto(v))
   }, [details.data?.photos])
+
+  const [imageModalData, setImageModalData] = useState(memorizedPhotos?.at(0))
 
   if (withAuth(activity.isLoading) || details.isLoading) return <DetailsLoadingFallback />
 
@@ -56,7 +76,7 @@ const DetailsPage = ({ id }: { id: string }) => {
         title={details.data?.name || ROUTES.DETAILS.label}
         description={details.data?.editorial_summary?.overview}
         keyword={details.data?.types?.join(',')}
-        image={memorizedPhoto.url}
+        image={memorizedPhotos?.at(0)?.url}
         url={ROUTES.DETAILS.path}
       />
       <div className='flex flex-1 flex-col relative overflow-auto'>
@@ -64,9 +84,10 @@ const DetailsPage = ({ id }: { id: string }) => {
           data={{ ...details.data, ...activity.data }}
           isFetching={activity.isFetching}
           refetch={activity.refetch}
-          memorizedImgURL={memorizedPhoto.url}
+          memorizedImgURL={memorizedPhotos?.at(0)?.url}
           modalSetter={openLocalModal}
           color={colors['gh-dark']}
+          onImageClick={() => openImageModal(memorizedPhotos?.at(0))}
         />
         <main className='sm:px-[10%] px-4'>
           {status === 'authenticated' ? (
@@ -81,8 +102,32 @@ const DetailsPage = ({ id }: { id: string }) => {
           ) : (
             <Promotion />
           )}
-          <DetailsDescriptiveGroup data={details.data} isLoading={false} />
-          <DetailsSectionGroup data={details.data} isLoading={false} />
+
+          <Tab.Navigation {...tab} tabItems={TAB_ITEMS} />
+          <Tab.Page tabIndex={tab.tabIndex} disabled={tab.disabled}>
+            <>
+              <DetailsDescriptiveGroup data={details.data} isLoading={false} />
+              <DetailsSectionGroup data={details.data} isLoading={false} />
+            </>
+            {details.data.photos?.length ? (
+              <div className='h-full overflow-y-auto gap-2 sm:columns-2 md:columns-3 columns-1 py-4'>
+                {memorizedPhotos?.map((v) => (
+                  <SuspenseImage
+                    src={v.url}
+                    height={v.height}
+                    width={v.width}
+                    className={
+                      'w-fit h-fit object-scale-down mb-4 hover:scale-105 duration-300 cursor-pointer'
+                    }
+                    key={v.url}
+                    onClick={() => openImageModal(v)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <></>
+            )}
+          </Tab.Page>
         </main>
       </div>
       <BasicInfoModal isOpen={checkIsOpen('BASIC')} data={details.data} onClose={clearLocalModal} />
@@ -97,7 +142,7 @@ const DetailsPage = ({ id }: { id: string }) => {
           place_id: id,
         }}
       />
-      <ImageModal isOpen={checkIsOpen('IMAGE')} data={memorizedPhoto} onClose={clearLocalModal} />
+      <ImageModal isOpen={checkIsOpen('IMAGE')} data={imageModalData} onClose={clearLocalModal} />
     </>
   )
 }

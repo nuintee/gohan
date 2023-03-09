@@ -2,13 +2,13 @@ import { Chevron } from '@/components/icons'
 import { Texts } from '@/components/ui'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
-import usePlacePhotos from '@/features/details/hooks/usePlacePhotos'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { Marker } from 'react-map-gl'
 
 // constants
 import { ROUTES } from '@/constants/routes'
+import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
 
 const Pin = ({
   latitude = 0,
@@ -33,7 +33,7 @@ const Pin = ({
   }
 
   const memorizedImage = useMemo(() => {
-    return usePlacePhotos(data?.photos)
+    return getPlacePhoto(data?.photos?.at(0))
   }, [data?.photos])
 
   return (

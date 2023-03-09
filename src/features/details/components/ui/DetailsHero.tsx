@@ -27,7 +27,8 @@ const ReviewBannerStatus = ({
 
 const DetailsHero = (
   props: {
-    memorizedImgURL: string
+    memorizedImgURL?: string
+    onImageClick?: () => void
     modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
     color?: string
   } & Pick<Awaited<ReturnType<typeof useGetActivity>>, 'data' | 'isFetching' | 'refetch'>,
@@ -54,11 +55,7 @@ const DetailsHero = (
       <Cover color={props.color} />
       <div className={theme.container}>
         <div className={theme.subContainer}>
-          <ImageChip
-            isLoading={false}
-            src={props.memorizedImgURL}
-            onClick={() => props.modalSetter('IMAGE')}
-          />
+          <ImageChip isLoading={false} src={props.memorizedImgURL} onClick={props?.onImageClick} />
           {!isOverSmall && (
             <DetailsTitle
               data={props.data}
