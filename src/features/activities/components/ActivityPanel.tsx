@@ -24,7 +24,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   const { onActivityClicked, mapbox } = useMapBox()
   const [deletedContents, setDeletedContents] = useState([])
 
-  const [sortMethod, setSortMethod] = useState<'DESC' | 'ASC'>('DESC')
+  const [sortMethod, setSortMethod] = useState<keyof typeof SORT_ENUM>('DESC')
   const [filterStatus, setFilterStatus] = useState<'ALL' | ReviewStatus>('ALL')
 
   const sortedArray = useSort({
