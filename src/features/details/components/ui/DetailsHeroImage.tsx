@@ -5,11 +5,7 @@ type Props = {
 } & React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
 
 const DetailsHeroImage = (props: Props) => {
-  const {
-    isLoading = false,
-    src = 'https://source.unsplash.com/random',
-    onClick = () => {},
-  } = props
+  const { isLoading = false, src, onClick = () => {} } = props
 
   if (isLoading) {
     return (

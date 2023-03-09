@@ -60,7 +60,7 @@ const DetailsPage = ({ id }: { id: string }) => {
 
   // memorized
   const memorizedPhotos = useMemo(() => {
-    return details.data?.photos?.map((v) => getPlacePhoto(v))
+    return details.data?.photos?.map((v) => getPlacePhoto(v)) || [getPlacePhoto()]
   }, [details.data?.photos])
 
   const [imageModalData, setImageModalData] = useState(memorizedPhotos?.at(0))
