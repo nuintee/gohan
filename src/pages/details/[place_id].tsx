@@ -103,14 +103,13 @@ const DetailsPage = ({ id }: { id: string }) => {
               <DetailsSectionGroup data={details.data} isLoading={false} />
             </>
             {details.data.photos?.length ? (
-              <div className='gap-2 columns-3 py-2 h-full flex flex-wrap overflow-y-auto'>
+              <div className='h-full overflow-y-auto gap-2 sm:columns-2 md:columns-3 columns-1 py-4'>
                 {details.data.photos?.map((v) => (
                   <SuspenseImage
                     src={getBareImageAPI(v.photo_reference)}
-                    key={v.photo_reference}
                     height={v.height}
                     width={v.width}
-                    className='w-full'
+                    className={'w-fit h-fit object-scale-down mb-4'}
                   />
                 ))}
               </div>
