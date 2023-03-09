@@ -1,12 +1,12 @@
 import { PulseLoader } from '@/components/icons'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 import ModalLayout from '@/layouts/ModalLayout'
-import usePlacePhotos from '../hooks/usePlacePhotos'
+import { getPlacePhoto } from '../hooks/getPlacePhoto'
 
 type Props = {
   isOpen: boolean
   onClose?: () => void
-  data: ReturnType<typeof usePlacePhotos>
+  data: ReturnType<typeof getPlacePhoto>
 }
 
 const ImageModal = ({ isOpen, onClose, data }: Props) => {
