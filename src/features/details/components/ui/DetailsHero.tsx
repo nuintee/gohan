@@ -1,6 +1,7 @@
 import { Cover, ImageChip } from '@/components/ui'
 import mapActivityStatus from '@/features/activities/hooks/mapActivityStatus'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
+import { ActivityResolved } from '@/features/activities/types'
 import useMediaQuery from '@/hooks/mediaquery'
 import { ReviewStatus } from '@prisma/client'
 import { useSession } from 'next-auth/react'
@@ -28,7 +29,8 @@ const DetailsHero = (
     onImageClick?: () => void
     modalSetter: ReturnType<typeof useDetailsModal>['openLocalModal']
     color?: string
-  } & Pick<Awaited<ReturnType<typeof useGetActivity>>, 'data' | 'isFetching' | 'refetch'>,
+    data: ActivityResolved
+  } & Pick<Awaited<ReturnType<typeof useGetActivity>>, 'isFetching' | 'refetch'>,
 ) => {
   const isOverSmall = useMediaQuery('sm')
 
@@ -59,7 +61,6 @@ const DetailsHero = (
               gap={false}
               size={'normal'}
               textAlign={'center'}
-              mainDecoration={false}
               allowCopy
               copyValue={props.data?.name}
             />
