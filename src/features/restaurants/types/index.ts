@@ -156,6 +156,6 @@ export type RestaurantProps = {
   data?: ActivityResolved // includes status
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
-  onClick?: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLDivElement>
   onNavigate?: (_activity: ActivityResolved) => void
 }
