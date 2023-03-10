@@ -4,9 +4,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import User from './User'
 
-// Data
-import { user } from '@/data/user'
-
 export default {
   title: 'Features/Users/User',
   component: User,
@@ -16,17 +13,6 @@ const Template: ComponentStory<typeof User> = (args) => {
   return <User {...args} />
 }
 
-export const Guest = Template.bind({})
-export const Authed = Template.bind({})
+export const Default = Template.bind({})
 
-Guest.args = {}
-
-Authed.args = {
-  session: {
-    status: 'authenticated',
-    data: {
-      user,
-      expires: '',
-    },
-  },
-}
+Default.args = {}
