@@ -6,6 +6,7 @@ import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
 import { AppRouter } from '@/server/routers/_app'
 import { BASE_URL } from '../env'
 import superjson from 'superjson'
+import { Story } from '@storybook/react'
 
 const queryClient = new QueryClient()
 
@@ -22,7 +23,7 @@ const trpcClient = mockedTrpc.createClient({
 })
 
 export const decorators = [
-  (Story) => (
+  (Story: Story) => (
     <RecoilRoot>
       <mockedTrpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
