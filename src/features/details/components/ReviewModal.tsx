@@ -8,17 +8,13 @@ import StatusRadioGroup from './StatusRadioGroup'
 
 // lib
 import { useForm } from 'react-hook-form'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 
 type Props = {
   isOpen: boolean
   onClose?: () => void
   onReviewSuccess?: () => void
-  data: {
-    memo: string
-    status: ReviewStatus
-    id: string
-    place_id: string
-  }
+  data: ReturnType<typeof useGetActivity>['data']
 }
 
 const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
@@ -34,12 +30,12 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
     reviewStatus: ReviewStatus
   }>({
     defaultValues: {
-      reviewMemo: data.memo,
-      reviewStatus: data.status || 'NEW',
+      reviewMemo: data?.memo,
+      reviewStatus: data?.reviewStatus || 'NEW',
     },
     values: {
-      reviewStatus: data.status || 'NEW',
-      reviewMemo: data.memo,
+      reviewStatus: data?.reviewStatus || 'NEW',
+      reviewMemo: data?.memo,
     },
   })
 
@@ -53,7 +49,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
 
     updateActivity.mutate(
       {
-        activityId: data.id,
+        activityId: data?.id,
         payload: {
           reviewStatus,
           memo,

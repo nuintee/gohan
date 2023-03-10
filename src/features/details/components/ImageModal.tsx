@@ -6,7 +6,7 @@ import { ResolvedPlacePhoto } from '../types/index.types'
 type Props = {
   isOpen: boolean
   onClose?: () => void
-  data: ResolvedPlacePhoto
+  data: ResolvedPlacePhoto | undefined
 }
 
 const ImageModal = ({ isOpen, onClose, data }: Props) => {
