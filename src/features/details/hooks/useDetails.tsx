@@ -14,7 +14,7 @@ const useDetails = ({
       console.error(error)
 
       if (error instanceof Error) {
-        useToast.error(error)
+        useToast.error(error.message)
       }
     },
     onSuccess: (data) => {
