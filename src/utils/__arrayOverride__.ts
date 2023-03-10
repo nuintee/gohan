@@ -5,3 +5,5 @@ Array.prototype.random = function () {
 
   return this[Math.floor(Math.random() * (length - 1))]
 }
+
+export {}
