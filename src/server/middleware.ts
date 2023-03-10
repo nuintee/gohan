@@ -27,6 +27,13 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
   })
 })
 
+type Email = {
+  from: string
+  to: string
+  title: string
+  subject: string
+}
+
 export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInput }) => {
   const count = await ctx.prisma.report.count({
     where: {
@@ -48,28 +55,6 @@ export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInpu
 
     await ctx.res.revalidate(`/details/${rawInput.body}`)
   }
-
-  return next()
-})
-
-export const isAPIRateLimited = middleware(async ({ next }) => {
-  // const { req, res } = ctx
-
-  // const ip = req.socket.remoteAddress
-
-  // const tokenCount = tokenCache.get(ip) || 0
-
-  // const currentUsage = tokenCount + 1
-  // tokenCache.set(ip, currentUsage)
-
-  // const isRateLimited = currentUsage > Number(API_RATE_LIMIT || 10)
-
-  // if (isRateLimited) {
-  //   throw new TRPCError({
-  //     code: 'TOO_MANY_REQUESTS',
-  //     message: 'API通信回数制限を超えました。',
-  //   })
-  // }
 
   return next()
 })
