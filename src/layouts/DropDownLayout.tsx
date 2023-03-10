@@ -8,7 +8,6 @@ type Props = {
   children?: JSX.Element
   ignored?: boolean
   controller?: JSX.Element
-  isLoading?: boolean
   overrideStyle?: React.ComponentProps<'div'>['className']
   isLoading?: boolean
 }
