@@ -31,6 +31,7 @@ import { useTab } from '@/hooks/tab'
 import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
 import { ActivityResolved } from '@/features/activities/types'
 import { ResolvedPlacePhoto } from '@/features/details/types/index.types'
+import { ReviewStatus } from '@prisma/client'
 
 const TAB_ITEMS = [
   {
@@ -139,7 +140,14 @@ const DetailsPage = ({ id }: { id: string }) => {
         isOpen={checkIsOpen('REVIEW')}
         onClose={clearLocalModal}
         onReviewSuccess={activity.refetch}
-        data={{ ...activity.data, place_id: id }}
+        data={{
+          discovered_at: activity.data?.discovered_at as Date,
+          id: activity.data?.id as string,
+          memo: activity.data?.memo as string,
+          place_id: id,
+          userId: activity.data?.userId as string,
+          reviewStatus: activity.data?.reviewStatus as ReviewStatus,
+        }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={imageModalData} onClose={clearLocalModal} />
     </>
