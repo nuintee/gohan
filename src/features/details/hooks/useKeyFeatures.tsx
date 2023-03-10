@@ -4,10 +4,12 @@ import { ResultsEntity } from '@/features/restaurants/types'
 import { KEY_FEATURES } from '../constants'
 import { mapKeyFeatures } from './mapKeyFeatures'
 
+type PickedKeys = keyof Pick<ResultsEntity, typeof KEY_FEATURES[number]>
+
 function useKeyFeatures<T extends ResultsEntity>(data: T) {
   const FEATURES = Object.keys(data)
-    .filter((v) => KEY_FEATURES.includes(v))
-    .map((v) => ({ feature: v, label: mapKeyFeatures(v) }))
+    .filter((v) => KEY_FEATURES.includes(v as PickedKeys))
+    .map((v) => ({ feature: v, label: mapKeyFeatures(v as PickedKeys) }))
 
   return FEATURES
 }
