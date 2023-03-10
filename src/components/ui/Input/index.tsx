@@ -1,5 +1,4 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
-
 import { UseFormRegister, FieldValues } from 'react-hook-form'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
