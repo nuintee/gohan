@@ -4,7 +4,7 @@ import ModalLayout from '@/layouts/ModalLayout'
 import { BASIC_INFO_KEYS } from '../constants'
 import formatTimeString from '../hooks/formatTimeString'
 import mapBasicInfoKeys from '../hooks/mapBasicInfoKeys'
-import useOpenHours from '../hooks/useOpenHours'
+import parseOpenHours from '../hooks/parseOpenHours'
 
 type Props = {
   isOpen: boolean
@@ -29,7 +29,7 @@ const BasicInfoModal = (props: Props) => {
       >
         <DetailsSummary
           summaryTitle={mapBasicInfoKeys(modalKey)}
-          summaryValue={isHours ? useOpenHours(data.current_opening_hours).title : data[modalKey]}
+          summaryValue={isHours ? parseOpenHours(data.current_opening_hours).title : data[modalKey]}
           ignored={!isHours || (isHours && hasNoHourDetails)}
           allowCopy={isString || isNumber}
         >

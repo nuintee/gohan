@@ -1,7 +1,7 @@
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
 
-function useOpenHours<T extends ActivityResolved['opening_hours']>(opening_hours: T) {
+function parseOpenHours<T extends ActivityResolved['opening_hours']>(opening_hours: T) {
   if (!opening_hours)
     return {
       title: '',
@@ -35,4 +35,4 @@ function useOpenHours<T extends ActivityResolved['opening_hours']>(opening_hours
   }
 }
 
-export default useOpenHours
+export default parseOpenHours
