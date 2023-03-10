@@ -1,7 +1,9 @@
+import { isAuthedMiddleWare } from '@/server/middleware'
 import { procedure } from '@/server/trpc'
 import { z } from 'zod'
 
 export const getActivity = procedure
+  .use(isAuthedMiddleWare)
   .input(
     z.object({
       place_id: z.string(),
