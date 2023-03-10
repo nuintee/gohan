@@ -30,7 +30,7 @@ import Tab from '@/components/ui/Tab'
 import { useTab } from '@/hooks/tab'
 import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
 import { ActivityResolved } from '@/features/activities/types'
-import { PhotosEntity } from '@/features/restaurants/types'
+import { ResolvedPlacePhoto } from '@/features/details/types/index.types'
 
 const TAB_ITEMS = [
   {
@@ -55,7 +55,7 @@ const DetailsPage = ({ id }: { id: string }) => {
     return status === 'authenticated' && condition
   }
 
-  function openImageModal(photo: PhotosEntity | undefined) {
+  function openImageModal(photo: ResolvedPlacePhoto | undefined) {
     setImageModalData(photo)
     openLocalModal('IMAGE')
   }
@@ -65,7 +65,7 @@ const DetailsPage = ({ id }: { id: string }) => {
     return details.data?.photos?.map((v) => getPlacePhoto(v)) || [getPlacePhoto()]
   }, [details.data?.photos])
 
-  const [imageModalData, setImageModalData] = useState<PhotosEntity | undefined>(
+  const [imageModalData, setImageModalData] = useState<ResolvedPlacePhoto | undefined>(
     memorizedPhotos?.at(0),
   )
 
