@@ -70,6 +70,7 @@ export interface ResultsEntity {
   takeout?: boolean
   wheelchair_accessible_entrance?: boolean
   url?: string
+  international_phone_number?: string
 }
 
 export interface AddressComponent {
