@@ -1,4 +1,4 @@
-import useActivityStatus from '../hooks/useActivityStatus'
+import mapActivityStatus from '../hooks/mapActivityStatus'
 
 // Schema
 import { ReviewStatusType } from '../schemas/index.schema'
@@ -8,10 +8,10 @@ const ActivityStatus = ({ status = 'NEW' }: { status?: ReviewStatusType }) => {
     <span
       className='py-1 px-2 rounded-full w-fit text-white font-semibold sm:text-sm text-xs select-none'
       style={{
-        backgroundColor: useActivityStatus(status).color,
+        backgroundColor: mapActivityStatus(status).color,
       }}
     >
-      {useActivityStatus(status).label}
+      {mapActivityStatus(status).label}
     </span>
   )
 }

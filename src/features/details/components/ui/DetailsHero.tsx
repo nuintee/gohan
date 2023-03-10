@@ -1,26 +1,23 @@
 import { Cover, ImageChip } from '@/components/ui'
-import useActivityStatus from '@/features/activities/hooks/useActivityStatus'
+import mapActivityStatus from '@/features/activities/hooks/mapActivityStatus'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import useMediaQuery from '@/hooks/mediaquery'
+import { ReviewStatus } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import useDetailsModal from '../../hooks/useDetailsModal'
 import DetailsTitle from './DeatailsTitle'
 import DetailsActionGroup from './DetailsActionGroup'
 
-const ReviewBannerStatus = ({
-  reviewStatus,
-}: {
-  reviewStatus: Parameters<typeof useActivityStatus>[0]
-}) => {
+const ReviewBannerStatus = ({ reviewStatus }: { reviewStatus: ReviewStatus }) => {
   const { status } = useSession()
   if (status === 'unauthenticated') return <div className='px-2 py-2'></div>
 
   return (
     <div
       className={'flex items-center justify-center px-2 py-1 font-semibold'}
-      style={{ background: useActivityStatus(reviewStatus).color }}
+      style={{ background: mapActivityStatus(reviewStatus).color }}
     >
-      <p className='text-white'>{useActivityStatus(reviewStatus).label}</p>
+      <p className='text-white'>{mapActivityStatus(reviewStatus).label}</p>
     </div>
   )
 }

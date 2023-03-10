@@ -17,7 +17,7 @@ import { useSort } from '@/hooks/sort'
 import { useFilter } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
 import { SORT_ENUM } from '@/constants/sort'
-import useActivityStatus from '../hooks/useActivityStatus'
+import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
@@ -39,7 +39,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
       case 'ALL':
         return '全て'
       default:
-        return useActivityStatus(status).label
+        return mapActivityStatus(status).label
     }
   }
 
