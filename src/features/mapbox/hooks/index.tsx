@@ -19,13 +19,15 @@ const useMapBox = () => {
   const onActivityClicked = (activity: ActivityResolved) => {
     updateSafeMapBox({ focusedPlaceId: activity.place_id })
 
-    mapBoxRef?.flyTo({
-      center: {
-        lat: activity.geometry?.location?.lat,
-        lng: activity.geometry?.location?.lng,
-      },
-      zoom: 17.5,
-    })
+    if (activity.geometry?.location?.lat && activity.geometry?.location?.lng) {
+      mapBoxRef?.flyTo({
+        center: {
+          lat: activity.geometry?.location?.lat,
+          lng: activity.geometry?.location?.lng,
+        },
+        zoom: 17.5,
+      })
+    }
   }
 
   return {
