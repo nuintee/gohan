@@ -1,4 +1,4 @@
-export function isObject<T = {}>(value: unknown): value is T {
+export function isObject<T extends Object>(value: unknown): value is T {
   if (typeof value !== 'object' || value === null) {
     return false
   }
