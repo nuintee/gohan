@@ -29,6 +29,8 @@ import { ROUTES } from '@/constants/routes'
 import Tab from '@/components/ui/Tab'
 import { useTab } from '@/hooks/tab'
 import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
+import { ActivityResolved } from '@/features/activities/types'
+import { PhotosEntity } from '@/features/restaurants/types'
 
 const TAB_ITEMS = [
   {
@@ -53,8 +55,8 @@ const DetailsPage = ({ id }: { id: string }) => {
     return status === 'authenticated' && condition
   }
 
-  function openImageModal(photos) {
-    setImageModalData(photos)
+  function openImageModal(photo: PhotosEntity | undefined) {
+    setImageModalData(photo)
     openLocalModal('IMAGE')
   }
 
@@ -63,7 +65,9 @@ const DetailsPage = ({ id }: { id: string }) => {
     return details.data?.photos?.map((v) => getPlacePhoto(v)) || [getPlacePhoto()]
   }, [details.data?.photos])
 
-  const [imageModalData, setImageModalData] = useState(memorizedPhotos?.at(0))
+  const [imageModalData, setImageModalData] = useState<PhotosEntity | undefined>(
+    memorizedPhotos?.at(0),
+  )
 
   if (withAuth(activity.isLoading) || details.isLoading) return <DetailsLoadingFallback />
 
@@ -81,7 +85,7 @@ const DetailsPage = ({ id }: { id: string }) => {
       />
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
-          data={{ ...details.data, ...activity.data }}
+          data={{ ...details.data, ...activity.data } as ActivityResolved}
           isFetching={activity.isFetching}
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhotos?.at(0)?.url}

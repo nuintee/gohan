@@ -6,9 +6,10 @@ export function getPlacePhoto(photo?: PhotosEntity) {
   if (!photo)
     return {
       url: FALLBACK_IMAGE,
+      photo_reference: '',
       width: 400,
       height: 400,
-      html_attributions: [],
+      html_attributions: [''],
     }
 
   const url = getBareImageAPI(photo.photo_reference)
