@@ -139,7 +139,7 @@ const DetailsPage = ({ id }: { id: string }) => {
         isOpen={checkIsOpen('REVIEW')}
         onClose={clearLocalModal}
         onReviewSuccess={activity.refetch}
-        data={{ ...activity, place_id: id }}
+        data={{ ...activity.data, place_id: id }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={imageModalData} onClose={clearLocalModal} />
     </>
