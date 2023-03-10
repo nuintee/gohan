@@ -1,4 +1,5 @@
 import { REVALIDATION_THRESHOLD } from '@/config/env'
+import { isObject } from '@/utils/typeguards'
 import { TRPCError } from '@trpc/server'
 import { middleware } from './trpc'
 
@@ -16,13 +17,6 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
     },
   })
 })
-
-type Email = {
-  from: string
-  to: string
-  title: string
-  subject: string
-}
 
 export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInput }) => {
   const count = await ctx.prisma.report.count({
