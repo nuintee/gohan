@@ -4,14 +4,14 @@ import DescriptiveChip from './DescriptiveChip/index'
 import useRatingLevel from '../../hooks/useRatingLevel'
 import useOpenHours from '../../hooks/useOpenHours'
 import usePriceLevel from '../../hooks/usePriceLevel'
-import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import { useMemo } from 'react'
+import { DetailsAPI } from '@/features/restaurants/types'
 
 const DetailsDescriptiveGroup = ({
   data,
   isLoading = false,
 }: {
-  data: ReturnType<typeof useGetActivity>['data']
+  data: DetailsAPI['result']
   isLoading: boolean
 }) => {
   // memorized
