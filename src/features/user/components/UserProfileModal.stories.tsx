@@ -12,8 +12,8 @@ export default {
   component: UserSettingsModal,
 } as ComponentMeta<typeof UserSettingsModal>
 
-const Template: ComponentStory<typeof UserSettingsModal> = (args) => {
-  return <UserSettingsModal {...args} />
+const Template: ComponentStory<typeof UserSettingsModal> = () => {
+  return <UserSettingsModal />
 }
 
 export const Default = Template.bind({})
