@@ -13,7 +13,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
 }
 
-const Input = forwardRef((props: Props, ref) => {
+const Input = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
   const {
     label,
     type,
