@@ -23,6 +23,7 @@ Landscape.args = {
     width: 1600,
     height: 90,
     html_attributions: [],
+    photo_reference: '',
   },
 }
 Portrait.args = {
@@ -32,5 +33,6 @@ Portrait.args = {
     width: 900,
     height: 1600,
     html_attributions: [],
+    photo_reference: '',
   },
 }
