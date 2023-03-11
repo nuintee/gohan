@@ -68,7 +68,11 @@ const BasicInfoModal = (props: Props) => {
         <PanelHeader title='基本的な情報' onClose={onClose} />
         <main className='flex flex-col'>
           {Object.keys(data)
-            .filter((v) => BASIC_INFO_KEYS.includes(v))
+            .filter((v) =>
+              BASIC_INFO_KEYS.includes(
+                v as keyof Pick<typeof data, typeof BASIC_INFO_KEYS[number]>,
+              ),
+            )
             .map((j) => ui(j))}
         </main>
       </section>
