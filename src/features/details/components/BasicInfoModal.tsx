@@ -1,6 +1,7 @@
 import { PanelHeader, DetailsSummary } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
+import { isNumber, isString } from '@/utils/typeguards'
 import { BASIC_INFO_KEYS } from '../constants'
 import formatTimeString from '../hooks/formatTimeString'
 import mapBasicInfoKeys from '../hooks/mapBasicInfoKeys'
@@ -19,8 +20,8 @@ const BasicInfoModal = (props: Props) => {
     const isHours = modalKey === 'current_opening_hours'
     const hasNoHourDetails = !data.current_opening_hours?.periods?.length
 
-    const isString = typeof data[modalKey] === 'string'
-    const isNumber = typeof data[modalKey] === 'number'
+    const currentData = data[modalKey as keyof typeof data]
+    const allowCopy = isString(currentData) || isNumber(currentData)
 
     return (
       <div
@@ -29,9 +30,9 @@ const BasicInfoModal = (props: Props) => {
       >
         <DetailsSummary
           summaryTitle={mapBasicInfoKeys(modalKey)}
-          summaryValue={isHours ? parseOpenHours(data.current_opening_hours).title : data[modalKey]}
+          summaryValue={isHours ? parseOpenHours(data.current_opening_hours).title : currentData}
           ignored={!isHours || (isHours && hasNoHourDetails)}
-          allowCopy={isString || isNumber}
+          allowCopy={allowCopy}
         >
           <div className='py-2 flex flex-col gap-1'>
             {data.current_opening_hours?.periods?.map((v) => (
