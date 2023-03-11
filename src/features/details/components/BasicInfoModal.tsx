@@ -30,26 +30,32 @@ const BasicInfoModal = (props: Props) => {
       >
         <DetailsSummary
           summaryTitle={mapBasicInfoKeys(modalKey)}
-          summaryValue={isHours ? parseOpenHours(data.current_opening_hours).title : currentData}
+          summaryValue={
+            isHours ? parseOpenHours(data.current_opening_hours).title : String(currentData)
+          }
           ignored={!isHours || (isHours && hasNoHourDetails)}
           allowCopy={allowCopy}
         >
           <div className='py-2 flex flex-col gap-1'>
-            {data.current_opening_hours?.periods?.map((v) => (
-              <div
-                className='flex items-center justify-between w-full bg-white p-1 text-sm px-2 rounded-full'
-                key={v.open.day}
-              >
-                <p className='text-gh-gray'>
-                  {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
-                    weekday: 'long',
-                  })}
-                </p>
-                <p>
-                  {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
-                </p>
-              </div>
-            ))}
+            {data.current_opening_hours?.periods?.map((v) => {
+              if (!v.open?.date) return <></>
+
+              return (
+                <div
+                  className='flex items-center justify-between w-full bg-white p-1 text-sm px-2 rounded-full'
+                  key={v.open.day}
+                >
+                  <p className='text-gh-gray'>
+                    {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
+                      weekday: 'long',
+                    })}
+                  </p>
+                  <p>
+                    {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
+                  </p>
+                </div>
+              )
+            })}
           </div>
         </DetailsSummary>
       </div>
