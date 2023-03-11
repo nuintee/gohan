@@ -42,11 +42,11 @@ const SearchLayout = ({
     return () => {
       navigator.geolocation.clearWatch(watchId)
     }
-  }, [])
+  }, [gps.isFetching, updateGeolocationStatus, updateSafeGeolocation])
 
   const restaurants = useRestaurants({
-    latitude: gps.coords.latitude,
-    longitude: gps.coords.longitude,
+    latitude: gps.coords.latitude as number,
+    longitude: gps.coords.longitude as number,
     trigger,
     errorCallback: () => onClose && onClose(),
   })
