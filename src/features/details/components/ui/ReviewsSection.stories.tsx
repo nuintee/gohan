@@ -7,9 +7,10 @@ import ReviewsSection from './ReviewsSection'
 // data
 import { details } from '@/data/details'
 import { REVIEWS } from '@/data/_reviews'
+import { ResultsEntity } from '@/features/restaurants/types'
 
 const DATA = {
-  ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
+  ...details.result('ChIJyfjNbFU-xxQR80zJBtL_kko'),
   reviews: REVIEWS,
 }
 
@@ -24,5 +25,5 @@ const Template: ComponentStory<typeof ReviewsSection> = (args) => <ReviewsSectio
 export const Default = Template.bind({})
 
 Default.args = {
-  data: DATA,
+  data: DATA as ResultsEntity,
 }
