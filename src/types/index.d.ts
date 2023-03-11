@@ -11,7 +11,7 @@ declare module 'next-auth' {
       email: string
       image?: string
       registered_at?: Date
-    }
+    } & DefaultSession['user']
   }
 }
 
