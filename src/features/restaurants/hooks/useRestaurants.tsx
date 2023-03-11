@@ -14,7 +14,7 @@ const useRestaurants = ({
   errorCallback?: (_error: Error) => void
   trigger?: boolean
 }) => {
-  const { status, data: session } = useSession()
+  const { status } = useSession()
   const addActivity = useAddActivity()
   const { isGPSFetching, isGPSError } = useGPS()
   const { navigate } = useDiscoveredNavigation()
@@ -48,12 +48,13 @@ const useRestaurants = ({
 
       if (status !== 'authenticated') return
 
-      addActivity.mutate({
-        place_id: data.place_id,
-        reviewStatus: 'NEW',
-        memo: '',
-        userId: session.user.id,
-      })
+      if (data.place_id) {
+        addActivity.mutate({
+          place_id: data.place_id,
+          reviewStatus: 'NEW',
+          memo: '',
+        })
+      }
     },
   })
 }
