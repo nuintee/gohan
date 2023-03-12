@@ -1,14 +1,14 @@
 import { Chevron } from '@/components/icons'
 import { Texts } from '@/components/ui'
 import SuspenseImage from '@/components/ui/SuspenseImage'
-import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import { MouseEventHandler, useMemo } from 'react'
 import { Marker } from 'react-map-gl'
 
 // constants
 import { ROUTES } from '@/constants/routes'
 import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
+import useDetails from '@/features/details/hooks/useDetails'
 
 const Pin = ({
   latitude = 0,
@@ -21,11 +21,11 @@ const Pin = ({
   longitude?: number
   focused?: boolean
   onClick?: () => void
-  data: ReturnType<typeof useGetActivity>['data']
+  data: ReturnType<typeof useDetails>['data']
 }) => {
   const router = useRouter()
 
-  const handleDetailsClick = (e) => {
+  const handleDetailsClick: MouseEventHandler<HTMLDivElement> | undefined = (e) => {
     e.stopPropagation()
     router.push(`${ROUTES.DETAILS.path}/[place_id]`, `${ROUTES.DETAILS.path}/${data?.place_id}`, {
       shallow: true,
@@ -68,7 +68,6 @@ const Pin = ({
             className='aspect-square rounded-full object-cover z-10'
             disabled
           />
-          {/* <span className='h-3 w-3 bg-white rotate-45 absolute bottom-0 translate-y-1/2 my-[2px] left-1/2 -translate-x-1/2  shadow-sm'></span> */}
         </div>
       </section>
     </Marker>
