@@ -50,12 +50,11 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   })
 
   if (query.isFetching && !query.isFetched) {
-    const COUNT = 3
-    const DUMMIES = [...Array(COUNT).keys()]
+    const DUMMIES = [1, 2, 3]
 
     return (
       <div className='flex flex-col flex-1'>
-        {DUMMIES.map((v, i) => (
+        {DUMMIES.map((_v, i) => (
           <div
             className='bg-gh-l-gray max-h-24 flex-1 animate-pulse rounded-md m-4 mb-0'
             key={i}
