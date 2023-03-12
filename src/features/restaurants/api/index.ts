@@ -5,10 +5,8 @@ import { getBarePlacesAPI } from '../utils/getBarePlacesAPI'
 import { TRPCClientError } from '@trpc/client'
 import { statusMapper } from '../utils/statusMapper'
 import { getDominantColor } from '@/libs/rgbaster'
-import { isAPIRateLimited } from '@/server/middleware'
 
 export const getRestaurants = procedure
-  .use(isAPIRateLimited)
   .input(
     z.object({
       latitude: z.number(),

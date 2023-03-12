@@ -1,7 +1,7 @@
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
 
-function usePriceLevel<T extends ActivityResolved['price_level']>(price_level: T) {
+function mapPriceLevel<T extends ActivityResolved['price_level']>(price_level: T) {
   switch (price_level) {
     case 0:
       return {
@@ -36,4 +36,4 @@ function usePriceLevel<T extends ActivityResolved['price_level']>(price_level: T
   }
 }
 
-export default usePriceLevel
+export default mapPriceLevel

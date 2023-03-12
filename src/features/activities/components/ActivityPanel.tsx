@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-// Function
-
 // Components
 import PanelHeader from '@/components/ui/PanelHeader'
 import useGetUserActivities from '../hooks/useGetUserActivities'
@@ -14,18 +12,18 @@ import SlideInLayout from '@/layouts/SlideInLayout'
 import useMediaQuery from '@/hooks/mediaquery'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { useSort } from '@/hooks/sort'
-import { useFilter } from '@/hooks/filter'
+import { ConditionsWithALL, useFilter } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
-import { SORT_ENUM } from '@/constants/sort'
-import useActivityStatus from '../hooks/useActivityStatus'
+import { SORT_ENUM, SortMethods, SORT_METHODS } from '@/constants/sort'
+import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
-  const [deletedContents, setDeletedContents] = useState([])
+  const [deletedContents, setDeletedContents] = useState<NonNullable<typeof query.data>>([])
 
-  const [sortMethod, setSortMethod] = useState<keyof typeof SORT_ENUM>('DESC')
-  const [filterStatus, setFilterStatus] = useState<'ALL' | ReviewStatus>('ALL')
+  const [sortMethod, setSortMethod] = useState<SortMethods>('DESC')
+  const [filterStatus, setFilterStatus] = useState<ConditionsWithALL<ReviewStatus>>('ALL')
 
   const sortedArray = useSort({
     array: query.data,
@@ -34,12 +32,12 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     disabled: false,
   })
 
-  function sortValueMapper(status: 'ALL' | ReviewStatus) {
+  function sortValueMapper(status: ConditionsWithALL<ReviewStatus>) {
     switch (status) {
       case 'ALL':
         return '全て'
       default:
-        return useActivityStatus(status).label
+        return mapActivityStatus(status).label
     }
   }
 
@@ -51,11 +49,11 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
 
   if (query.isFetching && !query.isFetched) {
     const COUNT = 3
-    const DUMMIES = [...Array(COUNT).keys()]
+    const DUMMIES = Array(COUNT).fill(null)
 
     return (
       <div className='flex flex-col flex-1'>
-        {DUMMIES.map((v, i) => (
+        {DUMMIES.map((_v, i) => (
           <div
             className='bg-gh-l-gray max-h-24 flex-1 animate-pulse rounded-md m-4 mb-0'
             key={i}
@@ -87,7 +85,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
       <header className='flex gap-2'>
         <DropDown
-          menu={Object.keys(SORT_ENUM).map((v) => ({
+          menu={SORT_METHODS.map((v) => ({
             label: SORT_ENUM[v].label,
             onDropDownItemClick: () => setSortMethod(v),
           }))}
@@ -105,8 +103,8 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
         <DropDown
           menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
-            label: sortValueMapper(v as 'ALL' | ReviewStatus),
-            onDropDownItemClick: () => setFilterStatus(v),
+            label: sortValueMapper(v as ConditionsWithALL<ReviewStatus>),
+            onDropDownItemClick: () => setFilterStatus(v as ConditionsWithALL<ReviewStatus>),
           }))}
           controller={
             <Button
@@ -122,7 +120,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
       </header>
       {filteredArray
-        ?.filter((v) => !deletedContents.includes(v.id))
+        ?.filter((v) => !deletedContents.includes(v.id as keyof typeof query.data))
         .map((activity, index, original) => (
           <div className='flex gap-2 items-center justify-between' key={activity.id}>
             <RestaurantBoard
@@ -134,7 +132,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
             <ActivityDropDown
               activity={activity}
               onMutated={() => {
-                setDeletedContents((prev) => [...prev, activity.id])
+                setDeletedContents((prev) => [...prev, activity.id] as typeof deletedContents)
               }}
               direction={
                 original.length > 1 && index === original.length - 1 ? 'left-bottom' : 'bottom'
@@ -157,7 +155,7 @@ const ActivityPanel = () => {
   const query = useGetUserActivities()
 
   return (
-    <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>
+    <SlideInLayout isOpen={isPanelOpen} maxWidth={maxWidth}>
       <>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>

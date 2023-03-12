@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui'
-import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
@@ -7,6 +6,7 @@ import useGPS from '@/hooks/gps'
 import useMediaQuery from '@/hooks/mediaquery'
 import haversineDistance from '@/libs/haversine-distance'
 import { useState } from 'react'
+import useDetails from '../../hooks/useDetails'
 import DetailsSection from '../../layouts/DetailsSection'
 import KeyFeaturesSection from './KeyFeaturesSection'
 import ReviewsSection from './ReviewsSection'
@@ -15,7 +15,7 @@ const DetailsSectionGroup = ({
   data,
   isLoading,
 }: {
-  data: ReturnType<typeof useGetActivity>['data']
+  data: ReturnType<typeof useDetails>['data']
   isLoading: boolean
 }) => {
   const { onActivityClicked, mapBoxRef } = useMapBox()
@@ -34,10 +34,16 @@ const DetailsSectionGroup = ({
   const distanceDecoration = () => {
     if (isGPSFetching || isGPSError) return ''
 
-    const distance = haversineDistance(gps.coords, {
-      lat: data?.geometry?.location.lat,
-      lng: data?.geometry?.location.lng,
-    })
+    const distance = haversineDistance(
+      {
+        lat: gps.coords.latitude as number,
+        lng: gps.coords.longitude as number,
+      },
+      {
+        lat: data?.geometry?.location.lat as number,
+        lng: data?.geometry?.location.lng as number,
+      },
+    )
 
     return distance.auto
   }

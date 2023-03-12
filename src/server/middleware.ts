@@ -1,16 +1,8 @@
 import { REVALIDATION_THRESHOLD } from '@/config/env'
+import { isObject } from '@/utils/typeguards'
+import { Report } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { middleware } from './trpc'
-
-// config
-
-// Limiting
-// import LRU from 'lru-cache'
-
-// const tokenCache = new LRU<string, number>({
-//   max: 500, // Max 500 users per interval
-//   maxAge: 1000 * 60 * 5, // 5分,
-// })
 
 export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
   if (!ctx.session?.user?.email) {
@@ -28,48 +20,28 @@ export const isAuthedMiddleWare = middleware(({ next, ctx }) => {
 })
 
 export const shouldRevalidateMiddleWare = middleware(async ({ next, ctx, rawInput }) => {
-  const count = await ctx.prisma.report.count({
-    where: {
-      request_type: 'REVALIDATE',
-      body: {
-        equals: rawInput.body,
-      },
-    },
-  })
-
-  if (count + 1 >= REVALIDATION_THRESHOLD) {
-    await ctx.prisma.report.deleteMany({
+  if (isObject<Pick<Report, 'body'>>(rawInput)) {
+    const count = await ctx.prisma.report.count({
       where: {
+        request_type: 'REVALIDATE',
         body: {
           equals: rawInput.body,
         },
       },
     })
 
-    await ctx.res.revalidate(`/details/${rawInput.body}`)
+    if (count + 1 >= REVALIDATION_THRESHOLD) {
+      await ctx.prisma.report.deleteMany({
+        where: {
+          body: {
+            equals: rawInput.body,
+          },
+        },
+      })
+
+      await ctx.res.revalidate(`/details/${rawInput.body}`)
+    }
   }
-
-  return next()
-})
-
-export const isAPIRateLimited = middleware(async ({ next }) => {
-  // const { req, res } = ctx
-
-  // const ip = req.socket.remoteAddress
-
-  // const tokenCount = tokenCache.get(ip) || 0
-
-  // const currentUsage = tokenCount + 1
-  // tokenCache.set(ip, currentUsage)
-
-  // const isRateLimited = currentUsage > Number(API_RATE_LIMIT || 10)
-
-  // if (isRateLimited) {
-  //   throw new TRPCError({
-  //     code: 'TOO_MANY_REQUESTS',
-  //     message: 'API通信回数制限を超えました。',
-  //   })
-  // }
 
   return next()
 })

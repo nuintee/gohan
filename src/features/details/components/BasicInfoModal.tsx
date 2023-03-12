@@ -1,10 +1,11 @@
 import { PanelHeader, DetailsSummary } from '@/components/ui'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
+import { isNumber, isString } from '@/utils/typeguards'
 import { BASIC_INFO_KEYS } from '../constants'
 import formatTimeString from '../hooks/formatTimeString'
 import mapBasicInfoKeys from '../hooks/mapBasicInfoKeys'
-import useOpenHours from '../hooks/useOpenHours'
+import parseOpenHours from '../hooks/parseOpenHours'
 
 type Props = {
   isOpen: boolean
@@ -19,8 +20,8 @@ const BasicInfoModal = (props: Props) => {
     const isHours = modalKey === 'current_opening_hours'
     const hasNoHourDetails = !data.current_opening_hours?.periods?.length
 
-    const isString = typeof data[modalKey] === 'string'
-    const isNumber = typeof data[modalKey] === 'number'
+    const currentData = data[modalKey as keyof typeof data]
+    const allowCopy = isString(currentData) || isNumber(currentData)
 
     return (
       <div
@@ -29,26 +30,32 @@ const BasicInfoModal = (props: Props) => {
       >
         <DetailsSummary
           summaryTitle={mapBasicInfoKeys(modalKey)}
-          summaryValue={isHours ? useOpenHours(data.current_opening_hours).title : data[modalKey]}
+          summaryValue={
+            isHours ? parseOpenHours(data.current_opening_hours).title : String(currentData)
+          }
           ignored={!isHours || (isHours && hasNoHourDetails)}
-          allowCopy={isString || isNumber}
+          allowCopy={allowCopy}
         >
           <div className='py-2 flex flex-col gap-1'>
-            {data.current_opening_hours?.periods?.map((v) => (
-              <div
-                className='flex items-center justify-between w-full bg-white p-1 text-sm px-2 rounded-full'
-                key={v.open.day}
-              >
-                <p className='text-gh-gray'>
-                  {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
-                    weekday: 'long',
-                  })}
-                </p>
-                <p>
-                  {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
-                </p>
-              </div>
-            ))}
+            {data.current_opening_hours?.periods?.map((v) => {
+              if (!v.open?.date) return <></>
+
+              return (
+                <div
+                  className='flex items-center justify-between w-full bg-white p-1 text-sm px-2 rounded-full'
+                  key={v.open.day}
+                >
+                  <p className='text-gh-gray'>
+                    {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
+                      weekday: 'long',
+                    })}
+                  </p>
+                  <p>
+                    {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
+                  </p>
+                </div>
+              )
+            })}
           </div>
         </DetailsSummary>
       </div>
@@ -61,7 +68,11 @@ const BasicInfoModal = (props: Props) => {
         <PanelHeader title='基本的な情報' onClose={onClose} />
         <main className='flex flex-col'>
           {Object.keys(data)
-            .filter((v) => BASIC_INFO_KEYS.includes(v))
+            .filter((v) =>
+              BASIC_INFO_KEYS.includes(
+                v as keyof Pick<typeof data, typeof BASIC_INFO_KEYS[number]>,
+              ),
+            )
             .map((j) => ui(j))}
         </main>
       </section>

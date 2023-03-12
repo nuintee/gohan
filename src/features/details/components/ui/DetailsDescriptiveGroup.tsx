@@ -1,24 +1,24 @@
 import { Clock, Star, Price } from '@/components/icons'
 
 import DescriptiveChip from './DescriptiveChip/index'
-import useRatingLevel from '../../hooks/useRatingLevel'
-import useOpenHours from '../../hooks/useOpenHours'
-import usePriceLevel from '../../hooks/usePriceLevel'
-import useGetActivity from '@/features/activities/hooks/useGetActivity'
+import mapRatingLevel from '../../hooks/mapRatingLevel'
+import parseOpenHours from '../../hooks/parseOpenHours'
+import mapPriceLevel from '../../hooks/mapPriceLevel'
 import { useMemo } from 'react'
+import { DetailsAPI } from '@/features/restaurants/types'
 
 const DetailsDescriptiveGroup = ({
   data,
   isLoading = false,
 }: {
-  data: ReturnType<typeof useGetActivity>['data']
+  data: DetailsAPI['result']
   isLoading: boolean
 }) => {
   // memorized
   const memorizedData = useMemo(() => {
-    const priceLevel = usePriceLevel(data?.price_level)
-    const openHours = useOpenHours(data?.opening_hours)
-    const ratingLevel = useRatingLevel(data?.rating)
+    const priceLevel = mapPriceLevel(data?.price_level)
+    const openHours = parseOpenHours(data?.opening_hours)
+    const ratingLevel = mapRatingLevel(data?.rating)
     return { priceLevel, openHours, ratingLevel }
   }, [data])
 

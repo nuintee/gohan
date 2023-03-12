@@ -17,7 +17,6 @@ const HeaderSidebar = ({
   return (
     <SlideInLayout
       isOpen={isOpen}
-      onClose={onClose}
       contentBackgroundColor={colors['gh-dark']}
       maxWidth={'100%'}
       zIndex={'30'}

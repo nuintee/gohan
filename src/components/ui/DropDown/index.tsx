@@ -3,7 +3,7 @@ import DropDownLayout from '@/layouts/DropDownLayout'
 type DropDownMenu = {
   label: string
   onDropDownItemClick: () => void
-  ignored: boolean
+  ignored?: boolean
 }[]
 
 type Props = {

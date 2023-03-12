@@ -1,4 +1,5 @@
 import { Chevron } from '@/components/icons'
+import { MouseEventHandler } from 'react'
 import CopyButton from '../CopyButton'
 
 const DetailsSummary = ({
@@ -14,7 +15,7 @@ const DetailsSummary = ({
   children?: JSX.Element
   allowCopy?: boolean
 }) => {
-  const handleDetailsClick = (e) => {
+  const handleDetailsClick: MouseEventHandler<HTMLDetailsElement> = (e) => {
     if (ignored) {
       e.preventDefault()
     }

@@ -3,7 +3,6 @@ import { statusMapper } from '@/features/restaurants/utils/statusMapper'
 import { procedure } from '@/server/trpc'
 import { TRPCClientError } from '@trpc/client'
 import { z } from 'zod'
-import { getBareImageAPI } from '../hooks/getBareImageAPI'
 
 export const getDetails = procedure
   .input(
@@ -29,7 +28,7 @@ export const getImage = procedure
       photo_reference: z.string(),
     }),
   )
-  .query(async ({ input, ctx }) => {
+  .query(async ({ ctx }) => {
     // const image = getBareImageAPI(input.photo_reference)
     ctx.res.setHeader('Content-Type', 'image/png')
     const res = await fetch('http://localhost:3000/icon-512x512.png')

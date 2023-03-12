@@ -4,16 +4,15 @@ const TabPage = ({
   tabIndex = 0,
   children,
   disabled = false,
-}: {
+}: React.PropsWithChildren<{
   tabIndex: number
-  children?: JSX.Element | JSX.Element[]
   disabled?: boolean
-}) => {
-  if (disabled) return children
+}>) => {
+  if (disabled) return children as JSX.Element
 
   const childrenArray = Children.toArray(children)
 
-  return childrenArray.at(tabIndex)
+  return childrenArray.at(tabIndex) as JSX.Element
 }
 
 export default TabPage

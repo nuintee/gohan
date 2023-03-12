@@ -7,18 +7,14 @@ import { ReviewStatus } from '@prisma/client'
 import StatusRadioGroup from './StatusRadioGroup'
 
 // lib
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+import useGetActivity from '@/features/activities/hooks/useGetActivity'
 
 type Props = {
   isOpen: boolean
   onClose?: () => void
   onReviewSuccess?: () => void
-  data: {
-    memo: string
-    status: ReviewStatus
-    id: string
-    place_id: string
-  }
+  data: ReturnType<typeof useGetActivity>['data'] & { place_id: string }
 }
 
 const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
@@ -28,18 +24,19 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { isDirty },
   } = useForm<{
     reviewMemo?: string
     reviewStatus: ReviewStatus
   }>({
     defaultValues: {
-      reviewMemo: data.memo,
-      reviewStatus: data.status || 'NEW',
+      reviewMemo: data?.memo,
+      reviewStatus: data?.reviewStatus || 'NEW',
     },
     values: {
-      reviewStatus: data.status || 'NEW',
-      reviewMemo: data.memo,
+      reviewStatus: data?.reviewStatus || 'NEW',
+      reviewMemo: data?.memo,
     },
   })
 
@@ -53,7 +50,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
 
     updateActivity.mutate(
       {
-        activityId: data.id,
+        activityId: data?.id,
         payload: {
           reviewStatus,
           memo,
@@ -88,16 +85,15 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
         <form onSubmit={onSubmit} className='p-4 flex flex-col items-center gap-8 justify-center'>
           <h2 className='font-semibold sm:text-xl text-md'>この場所への評価を教えて下さい。</h2>
           <div className='flex items-center justify-center gap-4 sm:mb-10'>
-            <StatusRadioGroup status={data.status} register={register} />
+            <StatusRadioGroup register={register} name='reviewStatus' />
           </div>
           <footer className='flex w-full flex-col gap-4'>
-            <Input
-              type={'text'}
-              placeholder='この場所についてのメモを追加 (任意)'
-              defaultValue={data?.memo}
-              register={register}
-              registerName={'reviewMemo'}
-              required={false}
+            <Controller
+              control={control}
+              name='reviewMemo'
+              render={({ field }) => (
+                <Input placeholder='この場所についてのメモを追加 (任意)' {...field} />
+              )}
             />
             <Button text={'保存'} disabled={!isDirty} loading={updateActivity.isLoading} />
           </footer>

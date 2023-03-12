@@ -1,43 +1,72 @@
-import useGetUserActivities from '@/features/activities/hooks/useGetUserActivities'
+import { useSort } from '@/hooks/sort'
 import { useState } from 'react'
 
-import { useSort } from '@/hooks/sort'
-import { useFilter } from '@/hooks/filter'
-import { ReviewStatus } from '@prisma/client'
+const STRING_ARRAY = ['a', 'b', 'c', 'd', 'e', 'f']
+const OBJECT_ARRAY = [
+  {
+    label: 'a',
+  },
+  {
+    label: 'b',
+  },
+  {
+    label: 'c',
+  },
+  {
+    label: 'd',
+  },
+  {
+    label: 'e',
+  },
+  {
+    label: 'f',
+  },
+]
 
 const Experiment = () => {
-  const allActivities = useGetUserActivities()
+  const [strSort, setStrSort] = useState<'ASC' | 'DESC'>('ASC')
+  const [objSort, setObjSort] = useState<'ASC' | 'DESC'>('DESC')
 
-  const [method, setMethod] = useState<'ASC' | 'DESC'>('ASC')
-  const [filterKey, setFilterkey] = useState<boolean | ReviewStatus>(true)
-
-  const sortedArray = useSort({
-    array: allActivities.data,
-    sortMethod: method,
-    sortKey: 'name',
+  const strSorted = useSort({
+    array: STRING_ARRAY,
+    sortKey: '',
+    sortMethod: strSort,
     disabled: false,
   })
 
-  const filteredArray = useFilter({
-    array: sortedArray,
-    filterFn: (v) => true,
-    disabled: true,
+  const objSorted = useSort({
+    array: OBJECT_ARRAY,
+    sortKey: 'label',
+    sortMethod: objSort,
+    disabled: false,
   })
 
   return (
-    <div>
-      <div className='flex flex-col gap-4'>
-        {filteredArray?.map((v) => (
-          <div className='ring-2' key={v.id}>
-            <h1>{v?.name}</h1>
-            <p>STATUS: {v.reviewStatus}</p>
-          </div>
-        ))}
-        <button onClick={() => setMethod('ASC')}>ASC</button>
-        <button onClick={() => setMethod('DESC')}>DEC</button>
-        <button onClick={() => setFilterkey('NEW')}>FILTER</button>
-        <button onClick={() => setFilterkey(true)}>CLEAR FILTER</button>
-      </div>
+    <div className='flex flex-col gap-2'>
+      <section>
+        <header className='flex gap-2'>
+          <h1>STRING_ARRAY</h1>
+          <button onClick={() => setStrSort('ASC')}>ASC</button>
+          <button onClick={() => setStrSort('DESC')}>DESC</button>
+        </header>
+        <div>
+          {strSorted.map((v) => (
+            <p>{v}</p>
+          ))}
+        </div>
+      </section>
+      <section>
+        <header className='flex gap-2'>
+          <h1>OBJECT_ARRAY</h1>
+          <button onClick={() => setObjSort('ASC')}>ASC</button>
+          <button onClick={() => setObjSort('DESC')}>DESC</button>
+        </header>
+        <div>
+          {objSorted.map((v) => (
+            <p>{v.label}</p>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

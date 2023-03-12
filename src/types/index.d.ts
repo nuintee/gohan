@@ -11,7 +11,7 @@ declare module 'next-auth' {
       email: string
       image?: string
       registered_at?: Date
-    }
+    } & DefaultSession['user']
   }
 }
 
@@ -19,4 +19,6 @@ declare global {
   interface Array<T> {
     random(): T
   }
+
+  var prisma: PrismaClient
 }

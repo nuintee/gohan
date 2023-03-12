@@ -1,4 +1,3 @@
-import { Dots } from '@/components/icons'
 import { DropDown } from '@/components/ui'
 import useMediaQuery from '@/hooks/mediaquery'
 import { useRouter } from 'next/router'
@@ -106,15 +105,8 @@ const ActivityDropDown = ({
 
   return (
     <DropDown
-      text=''
       menu={menu}
-      square
-      outline
       direction={direction}
-      icon={{
-        position: 'after',
-        src: <Dots direction='vertical' />,
-      }}
       isLoading={deleteActivity.isLoading || sendReport.isLoading}
     />
   )

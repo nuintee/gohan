@@ -1,6 +1,6 @@
 import { colors } from '@/config/colors'
 
-function useRatingLevel<T>(rating: T) {
+function mapRatingLevel<T>(rating: T) {
   // rating is between 1.0 to 5.0
   switch (true) {
     case rating >= 1 && rating < 2:
@@ -31,4 +31,4 @@ function useRatingLevel<T>(rating: T) {
   }
 }
 
-export default useRatingLevel
+export default mapRatingLevel

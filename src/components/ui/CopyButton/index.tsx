@@ -1,6 +1,7 @@
 import { Copy } from '@/components/icons'
 import { colors } from '@/config/colors'
 import { copy } from '@/utils/copy'
+import { MouseEventHandler } from 'react'
 
 const CopyButton = ({
   copyValue = '',
@@ -9,7 +10,7 @@ const CopyButton = ({
   copyValue?: string
   copyColor?: string
 }) => {
-  const handleClick = (e) => {
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation()
     copy(copyValue)
   }

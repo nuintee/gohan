@@ -9,6 +9,7 @@ import BasicInfoModal from './BasicInfoModal'
 //data
 import { details } from '@/data/details'
 import { PERIODS } from '@/data/_openingHours'
+import { ResultsEntity } from '@/features/restaurants/types'
 
 const onlyOpenProp = PERIODS.map((v) => ({ open: v.open }))
 
@@ -25,21 +26,21 @@ export const NoCloseHours = Template.bind({})
 Default.args = {
   data: {
     ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
-    opening_hours: {
+    current_opening_hours: {
       periods: PERIODS,
     },
     website: 'https://localhost:3000',
     international_phone_number: '+00 00-0000-0000',
-  },
+  } as ResultsEntity,
 }
 
 NoCloseHours.args = {
   data: {
     ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
-    opening_hours: {
+    current_opening_hours: {
       periods: onlyOpenProp,
     },
     website: 'https://localhost:3000',
     international_phone_number: '+00 00-0000-0000',
-  },
+  } as ResultsEntity,
 }

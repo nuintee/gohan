@@ -29,6 +29,6 @@ export async function getBarePlacesAPI<
       html_attributions: [],
       results,
       status,
-    }
+    } as PlacesAPI
   }
 }

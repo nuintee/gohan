@@ -1,4 +1,9 @@
-import Map, { GeolocateControl, GeolocateControlRef } from 'react-map-gl'
+import Map, {
+  GeolocateControl,
+  GeolocateControlRef,
+  GeolocateErrorEvent,
+  GeolocateResultEvent,
+} from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 // config
@@ -26,15 +31,17 @@ const MapBox = () => {
     geoLocateRef?.current?.trigger()
   }
 
-  const handleError = (error) => {
-    console.dir(error)
+  function handleMapBoxError(e: mapboxgl.ErrorEvent) {
+    useToast.error(e.error.message)
+  }
 
+  function handleGeolocateError(error: GeolocateErrorEvent) {
     if (error?.TIMEOUT === 3 && error?.code === 3) return
 
     useToast.error(error.message)
   }
 
-  const handleGeolocate = (e) => {
+  const handleGeolocate = (e: GeolocateResultEvent) => {
     updateSafeGeolocation({
       coords: e.coords,
       isFetching: false,
@@ -54,7 +61,7 @@ const MapBox = () => {
         renderWorldCopies={false}
         pitchWithRotate={false}
         onClick={() => clearActivityFocus()}
-        onError={(e) => handleError(e.error)}
+        onError={handleMapBoxError}
         onLoad={handleLoad}
         ref={setMapBoxRef}
       >
@@ -64,7 +71,7 @@ const MapBox = () => {
           showUserLocation
           showUserHeading
           position='bottom-right'
-          onError={handleError}
+          onError={handleGeolocateError}
           onGeolocate={handleGeolocate}
           style={{
             padding: '0.5rem',
@@ -83,28 +90,6 @@ const MapBox = () => {
           />
         ))}
       </Map>
-      {/* <MapBoxCore
-        latitude={gps.coords.latitude}
-        longitude={gps.coords.longitude}
-        zoom={16}
-        onClick={() => clearActivityFocus()}
-        onError={(e) => handleError(e.message)}
-        onGeolocate={handleGeolocate}
-        onLoad={handleLoad}
-        dragPan={true}
-        geolocateRef={geoLocateRef}
-      >
-        {getUserAll.data?.map((activity) => (
-          <MarkerPin
-            latitude={activity?.geometry?.location?.lat}
-            longitude={activity?.geometry?.location?.lng}
-            focused={mapbox.focusedPlaceId === activity.place_id}
-            onClick={() => onActivityClicked(activity)}
-            data={activity}
-            key={activity.place_id}
-          />
-        ))}
-      </MapBoxCore> */}
     </div>
   )
 }

@@ -1,31 +1,16 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
 
-import { UseFormRegister, FieldValues } from 'react-hook-form'
-
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+type Props = {
   label?: string
   action?: {
     label: string
     onClick: React.MouseEventHandler<HTMLButtonElement>
   }
-  register?: UseFormRegister<FieldValues>
-  registerName: string
-  required: boolean
   errorMessage?: string
-}
+} & InputHTMLAttributes<HTMLInputElement>
 
-const Input = forwardRef((props: Props, ref) => {
-  const {
-    label,
-    type,
-    placeholder,
-    action,
-    errorMessage,
-    register = () => {},
-    registerName,
-    required,
-    ...rest
-  } = props
+const Input = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
+  const { label, type, placeholder, action, errorMessage, ...rest } = props
 
   return (
     <div className='flex flex-col gap-1 w-full'>
@@ -37,7 +22,6 @@ const Input = forwardRef((props: Props, ref) => {
           placeholder={placeholder}
           ref={ref}
           type={type}
-          {...register(registerName, { required })}
         />
         {action && (
           <button

@@ -1,5 +1,5 @@
 import { ReviewStatus } from '@prisma/client'
-import { UseFormRegister, FieldValues } from 'react-hook-form'
+import { UseFormRegister, Path } from 'react-hook-form'
 
 const statusTheme = (statusValue: ReviewStatus) => {
   const _grayScale = 'peer-checked:grayscale-0'
@@ -28,19 +28,19 @@ const statusTheme = (statusValue: ReviewStatus) => {
   }
 }
 
-const StatusRadioGroup = ({
-  status,
+const StatusRadioGroup = <T extends {}>({
   register,
+  name,
 }: {
-  status: ReviewStatus
-  register: UseFormRegister<FieldValues>
+  register: UseFormRegister<T>
+  name: Path<T>
 }) => {
   return (
     <div className='flex gap-6'>
       {[ReviewStatus.BAD, ReviewStatus.GOOD, ReviewStatus.OK].map((v) => (
         <div key={v}>
           <input
-            {...register('reviewStatus')}
+            {...register(name)}
             id={v}
             type='radio'
             value={v}

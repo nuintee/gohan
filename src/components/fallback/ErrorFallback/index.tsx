@@ -10,14 +10,14 @@ const ErrorFallBack = ({
   error,
   resetErrorBoundary,
 }: {
-  error: TRPCClientErrorBase<DefaultErrorShape> | Error
+  error: TRPCClientErrorBase<DefaultErrorShape> | Error | null
   resetErrorBoundary?: (_args: unknown) => void
 }) => {
   const router = useRouter()
 
   return (
     <div className='h-screen w-screen flex flex-col gap-10 items-center justify-center'>
-      <Texts main='エラー' sub={error.message} textAlign='center' size='large' />
+      <Texts main='エラー' sub={error?.message} textAlign='center' size='large' />
       <SuspenseImage
         src='/images/error_image.svg'
         disabled

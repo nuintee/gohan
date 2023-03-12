@@ -1,5 +1,5 @@
 import { Check } from '@/components/icons'
-import useGetActivity from '@/features/activities/hooks/useGetActivity'
+import { ResultsEntity } from '@/features/restaurants/types'
 import useKeyFeatures from '../../hooks/useKeyFeatures'
 import DetailsSection from '../../layouts/DetailsSection'
 
@@ -7,7 +7,7 @@ const KeyFeaturesSection = ({
   data,
   isLoading = false,
 }: {
-  data: ReturnType<typeof useGetActivity>['data']
+  data?: ResultsEntity
   isLoading?: boolean
 }) => {
   const keyFeatures = useKeyFeatures(data)

@@ -6,7 +6,7 @@ import { screens } from '@/config/screens'
 const useMediaQuery = (query: keyof typeof screens) => {
   const [targetReached, setTargetReached] = useState(false)
 
-  const updateTarget = useCallback((e) => {
+  const updateTarget = useCallback((e: MediaQueryListEvent) => {
     if (e.matches) {
       setTargetReached(true)
     } else {

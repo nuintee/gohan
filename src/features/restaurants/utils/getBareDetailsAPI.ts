@@ -14,7 +14,7 @@ export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
 }): Promise<DetailsAPI> {
   if (IS_PRODMODE) {
     const url = new URL('https://maps.googleapis.com/maps/api/place/details/json')
-    url.searchParams.append('place_id', place_id)
+    url.searchParams.append('place_id', place_id || '')
     url.searchParams.append('key', GCP_API_KEY)
     url.searchParams.append('fields', NEEDED_DETAIL_FIELDS.join(','))
 
@@ -23,7 +23,7 @@ export async function getBareDetailsAPI<T extends ResultsEntity['place_id']>({
     return data
   } else {
     await sleep(1000)
-    const result = details.result(place_id)
+    const result = details.result(place_id || '') as ResultsEntity
     const status = Object.keys(result).length ? 'OK' : 'ZERO_RESULTS'
 
     return {

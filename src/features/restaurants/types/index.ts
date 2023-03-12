@@ -70,6 +70,7 @@ export interface ResultsEntity {
   takeout?: boolean
   wheelchair_accessible_entrance?: boolean
   url?: string
+  international_phone_number?: string
 }
 
 export interface AddressComponent {
@@ -155,6 +156,6 @@ export type RestaurantProps = {
   data?: ActivityResolved // includes status
   distance?: string
   onLike?: MouseEventHandler<HTMLButtonElement>
-  onClick?: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLDivElement>
   onNavigate?: (_activity: ActivityResolved) => void
 }

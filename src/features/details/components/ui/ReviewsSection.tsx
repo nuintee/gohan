@@ -1,7 +1,7 @@
 import { SuspenseImage, Texts } from '@/components/ui'
 import DetailsSection from '@/features/details/layouts/DetailsSection'
 import useDetails from '../../hooks/useDetails'
-import useRatingLevel from '../../hooks/useRatingLevel'
+import mapRatingLevel from '../../hooks/mapRatingLevel'
 
 const ReviewsSection = ({
   data,
@@ -30,8 +30,8 @@ const ReviewsSection = ({
                   <span
                     className='p-1 rounded-md flex whitespace-nowrap'
                     style={{
-                      outline: `1px solid ${useRatingLevel(review.rating).color}`,
-                      color: useRatingLevel(review.rating).color,
+                      outline: `1px solid ${mapRatingLevel(review.rating).color}`,
+                      color: mapRatingLevel(review.rating).color,
                     }}
                   >
                     評価: {review.rating}

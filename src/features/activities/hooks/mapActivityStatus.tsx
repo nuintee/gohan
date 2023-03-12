@@ -1,7 +1,7 @@
 import { colors } from '@/config/colors'
 import { ReviewStatusType } from '../schemas/index.schema'
 
-function useActivityStatus(status: ReviewStatusType) {
+function mapActivityStatus(status: ReviewStatusType) {
   switch (status) {
     case 'GOOD':
       return {
@@ -29,4 +29,4 @@ function useActivityStatus(status: ReviewStatusType) {
   }
 }
 
-export default useActivityStatus
+export default mapActivityStatus

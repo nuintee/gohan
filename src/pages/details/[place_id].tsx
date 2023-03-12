@@ -13,7 +13,7 @@ import { appRouter } from '@/server/routers/_app'
 import superjson from 'superjson'
 import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
-import { GetStaticProps } from 'next/types'
+import { GetStaticProps, NextApiResponse } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
 import { MainLayout } from '@/layouts/layout'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
@@ -29,6 +29,10 @@ import { ROUTES } from '@/constants/routes'
 import Tab from '@/components/ui/Tab'
 import { useTab } from '@/hooks/tab'
 import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
+import { ActivityResolved } from '@/features/activities/types'
+import { ResolvedPlacePhoto } from '@/features/details/types/index.types'
+import { PrismaClient, ReviewStatus } from '@prisma/client'
+import { NextApiRequest } from 'next'
 
 const TAB_ITEMS = [
   {
@@ -53,8 +57,8 @@ const DetailsPage = ({ id }: { id: string }) => {
     return status === 'authenticated' && condition
   }
 
-  function openImageModal(photos) {
-    setImageModalData(photos)
+  function openImageModal(photo: ResolvedPlacePhoto | undefined) {
+    setImageModalData(photo)
     openLocalModal('IMAGE')
   }
 
@@ -63,7 +67,9 @@ const DetailsPage = ({ id }: { id: string }) => {
     return details.data?.photos?.map((v) => getPlacePhoto(v)) || [getPlacePhoto()]
   }, [details.data?.photos])
 
-  const [imageModalData, setImageModalData] = useState(memorizedPhotos?.at(0))
+  const [imageModalData, setImageModalData] = useState<ResolvedPlacePhoto | undefined>(
+    memorizedPhotos?.at(0),
+  )
 
   if (withAuth(activity.isLoading) || details.isLoading) return <DetailsLoadingFallback />
 
@@ -81,7 +87,7 @@ const DetailsPage = ({ id }: { id: string }) => {
       />
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
-          data={{ ...details.data, ...activity.data }}
+          data={{ ...details.data, ...activity.data } as ActivityResolved}
           isFetching={activity.isFetching}
           refetch={activity.refetch}
           memorizedImgURL={memorizedPhotos?.at(0)?.url}
@@ -136,10 +142,12 @@ const DetailsPage = ({ id }: { id: string }) => {
         onClose={clearLocalModal}
         onReviewSuccess={activity.refetch}
         data={{
-          memo: activity.data?.memo,
-          status: activity.data?.reviewStatus,
-          id: activity.data?.id,
+          discovered_at: activity.data?.discovered_at as Date,
+          id: activity.data?.id as string,
+          memo: activity.data?.memo as string,
           place_id: id,
+          userId: activity.data?.userId as string,
+          reviewStatus: activity.data?.reviewStatus as ReviewStatus,
         }}
       />
       <ImageModal isOpen={checkIsOpen('IMAGE')} data={imageModalData} onClose={clearLocalModal} />
@@ -155,9 +163,16 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const emptyCtx = {
+    session: null,
+    prisma: new PrismaClient(),
+    req: {} as NextApiRequest,
+    res: {} as NextApiResponse,
+  }
+
   const ssg = createProxySSGHelpers({
     router: appRouter,
-    ctx: {},
+    ctx: emptyCtx,
     transformer: superjson,
   })
 
