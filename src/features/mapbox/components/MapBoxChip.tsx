@@ -29,7 +29,7 @@ const MapBoxCore = forwardRef(
     onLoad?: () => void
     onError?: React.ComponentProps<typeof GeolocateControl>['onError']
     onGeolocate?: React.ComponentProps<typeof GeolocateControl>['onGeolocate']
-    style: CSSProperties
+    style?: CSSProperties
   }) => {
     const { setMapBoxRef } = useMapBox()
 
