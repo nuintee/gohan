@@ -120,7 +120,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
       </header>
       {filteredArray
-        ?.filter((v) => !deletedContents.includes(v.id))
+        ?.filter((v) => !deletedContents.includes(v.id as keyof typeof query.data))
         .map((activity, index, original) => (
           <div className='flex gap-2 items-center justify-between' key={activity.id}>
             <RestaurantBoard
