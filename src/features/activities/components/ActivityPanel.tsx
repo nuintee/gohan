@@ -17,7 +17,6 @@ import { ReviewStatus } from '@prisma/client'
 import { SORT_ENUM, SortMethods, SORT_METHODS } from '@/constants/sort'
 import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
-import { ResultsEntity } from '@/features/restaurants/types'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -105,7 +104,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         <DropDown
           menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
             label: sortValueMapper(v as ConditionsWithALL<ReviewStatus>),
-            onDropDownItemClick: () => setFilterStatus(v),
+            onDropDownItemClick: () => setFilterStatus(v as ConditionsWithALL<ReviewStatus>),
           }))}
           controller={
             <Button
@@ -133,7 +132,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
             <ActivityDropDown
               activity={activity}
               onMutated={() => {
-                setDeletedContents((prev) => [...prev, activity.id])
+                setDeletedContents((prev) => [...prev, activity.id] as typeof deletedContents)
               }}
               direction={
                 original.length > 1 && index === original.length - 1 ? 'left-bottom' : 'bottom'
