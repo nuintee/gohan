@@ -7,6 +7,7 @@ import useGPS from '@/hooks/gps'
 import useMediaQuery from '@/hooks/mediaquery'
 import haversineDistance from '@/libs/haversine-distance'
 import { useState } from 'react'
+import useDetails from '../../hooks/useDetails'
 import DetailsSection from '../../layouts/DetailsSection'
 import KeyFeaturesSection from './KeyFeaturesSection'
 import ReviewsSection from './ReviewsSection'
@@ -15,7 +16,7 @@ const DetailsSectionGroup = ({
   data,
   isLoading,
 }: {
-  data: ReturnType<typeof useGetActivity>['data']
+  data: ReturnType<typeof useDetails>['data']
   isLoading: boolean
 }) => {
   const { onActivityClicked, mapBoxRef } = useMapBox()
