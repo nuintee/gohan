@@ -157,7 +157,7 @@ const ActivityPanel = () => {
   const query = useGetUserActivities()
 
   return (
-    <SlideInLayout isOpen={isPanelOpen} onClose={closePanel} maxWidth={maxWidth}>
+    <SlideInLayout isOpen={isPanelOpen} maxWidth={maxWidth}>
       <>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>
