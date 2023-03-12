@@ -1,4 +1,5 @@
 import { useSort } from '@/hooks/sort'
+import useToast from '@/libs/react-toastify'
 import { useState } from 'react'
 
 const STRING_ARRAY = ['a', 'b', 'c', 'd', 'e', 'f']
@@ -45,7 +46,7 @@ const Experiment = () => {
     <div className='flex flex-col gap-2'>
       <section>
         <header className='flex gap-2'>
-          <h1>STRING_ARRAY</h1>
+          <h1 data-testId='strat'>STRING_ARRAY</h1>
           <button onClick={() => setStrSort('ASC')}>ASC</button>
           <button onClick={() => setStrSort('DESC')}>DESC</button>
         </header>
@@ -67,6 +68,8 @@ const Experiment = () => {
           ))}
         </div>
       </section>
+      <button onClick={() => useToast.success('Success Toast')}>Open Success Modal</button>
+      <button onClick={() => useToast.success('Error Toast')}>Open Error Modal</button>
     </div>
   )
 }

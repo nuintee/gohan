@@ -1,5 +1,4 @@
 const nextJest = require('next/jest')
-const path = require('path')
 
 const createJestConfig = nextJest({
   dir: './',
@@ -18,6 +17,8 @@ const customJestConfig = {
     '^@/config(.*)$': '<rootDir>/src/config$1',
     '^@/libs(.*)$': '<rootDir>/src/libs$1',
     '^@/mocks(.*)$': '<rootDir>/src/mocks$1',
+    '^@/components(.*)$': '<rootDir>/src/components$1',
+    '^@/pages(.*)$': '<rootDir>/src/pages$1',
   },
   setupFiles: ['dotenv/config'],
   setupFilesAfterEnv: ['<rootDir>/src/config/jest/setup.ts'],
