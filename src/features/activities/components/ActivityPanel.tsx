@@ -12,7 +12,7 @@ import SlideInLayout from '@/layouts/SlideInLayout'
 import useMediaQuery from '@/hooks/mediaquery'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { useSort } from '@/hooks/sort'
-import { useFilter } from '@/hooks/filter'
+import { ConditionsWithALL, useFilter } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
 import { SORT_ENUM } from '@/constants/sort'
 import mapActivityStatus from '../hooks/mapActivityStatus'
@@ -23,7 +23,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   const [deletedContents, setDeletedContents] = useState<NonNullable<typeof query.data>>([])
 
   const [sortMethod, setSortMethod] = useState<keyof typeof SORT_ENUM>('DESC')
-  const [filterStatus, setFilterStatus] = useState<'ALL' | ReviewStatus>('ALL')
+  const [filterStatus, setFilterStatus] = useState<ConditionsWithALL<ReviewStatus>>('ALL')
 
   const sortedArray = useSort({
     array: query.data,
@@ -32,7 +32,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     disabled: false,
   })
 
-  function sortValueMapper(status: 'ALL' | ReviewStatus) {
+  function sortValueMapper(status: ConditionsWithALL<ReviewStatus>) {
     switch (status) {
       case 'ALL':
         return '全て'
@@ -103,7 +103,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
         <DropDown
           menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
-            label: sortValueMapper(v as 'ALL' | ReviewStatus),
+            label: sortValueMapper(v as ConditionsWithALL<ReviewStatus>),
             onDropDownItemClick: () => setFilterStatus(v),
           }))}
           controller={

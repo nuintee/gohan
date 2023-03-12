@@ -1,3 +1,5 @@
+export type ConditionsWithALL<T extends string> = T | 'ALL'
+
 export function useFilter<T>({
   array,
   filterFn,
