@@ -6,12 +6,12 @@ export function useSort({
   sortKey,
   disabled = false,
 }: {
-  array: unknown[]
+  array: Object[]
   sortMethod: 'ASC' | 'DESC'
-  sortKey: unknown
+  sortKey: keyof Object
   disabled: boolean
 }) {
   if (disabled) return array
 
-  return array?.sort((a, b) => SORT_ENUM[sortMethod]?.sortFn(a, b, sortKey))
+  return array?.sort((a, b) => SORT_ENUM[sortMethod]?.sortFn(a, b, sortKey) || 1)
 }
