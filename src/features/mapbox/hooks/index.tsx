@@ -1,4 +1,3 @@
-import { ActivityResolved } from '@/features/activities/types'
 import { ResultsEntity } from '@/features/restaurants/types'
 import { useRecoilState } from 'recoil'
 
