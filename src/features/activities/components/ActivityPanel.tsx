@@ -20,7 +20,7 @@ import { Sort, Filter } from '@/components/icons'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
-  const [deletedContents, setDeletedContents] = useState([])
+  const [deletedContents, setDeletedContents] = useState<NonNullable<typeof query.data>>([])
 
   const [sortMethod, setSortMethod] = useState<keyof typeof SORT_ENUM>('DESC')
   const [filterStatus, setFilterStatus] = useState<'ALL' | ReviewStatus>('ALL')
