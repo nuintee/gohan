@@ -19,6 +19,7 @@ import { ReviewStatus } from '@prisma/client'
 import { SORT_ENUM } from '@/constants/sort'
 import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
+import { ResultsEntity } from '@/features/restaurants/types'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
@@ -27,7 +28,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   const [sortMethod, setSortMethod] = useState<keyof typeof SORT_ENUM>('DESC')
   const [filterStatus, setFilterStatus] = useState<'ALL' | ReviewStatus>('ALL')
 
-  const sortedArray = useSort({
+  const sortedArray = useSort<ResultsEntity[]>({
     array: query.data,
     sortMethod,
     sortKey: 'name',

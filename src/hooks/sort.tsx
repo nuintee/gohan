@@ -1,16 +1,18 @@
 import { SORT_ENUM } from '@/constants/sort'
 
-export function useSort({
+export function useSort<T extends unknown[]>({
   array,
   sortMethod,
   sortKey,
   disabled = false,
 }: {
-  array: Object[]
+  array?: T
   sortMethod: 'ASC' | 'DESC'
-  sortKey: keyof Object
+  sortKey: string
   disabled: boolean
 }) {
+  if (!array) return []
+
   if (disabled) return array
 
   return array?.sort((a, b) => SORT_ENUM[sortMethod]?.sortFn(a, b, sortKey) || 1)
