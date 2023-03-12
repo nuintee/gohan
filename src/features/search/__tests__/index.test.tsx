@@ -1,18 +1,26 @@
-import { render } from '@testing-library/react'
-import Experiment from '@/pages/_index'
+import { fireEvent, render, screen } from '@testing-library/react'
+import Index from '@/pages/index'
 import '@testing-library/jest-dom'
+import useToast from '@/libs/react-toastify'
 
-describe('Home', () => {
-  it('renders a heading', () => {
-    render(<Experiment />)
+const successToast = jest.spyOn(useToast, 'success')
+const errorToast = jest.spyOn(useToast, 'error')
 
-    // const heading = screen.getByRole('heading', {
-    //   name: /welcome to next\.js!/i,
-    // })
+describe('_Home', () => {
+  it('renders a success toast', () => {
+    render(<Index />)
 
-    // screen.getByTestId('strat')
+    const button = screen.getByTestId('success_modal_btn')
+    fireEvent.click(button)
 
-    // expect(heading).toBeInTheDocument()
-    expect(true).toBeTruthy()
+    expect(successToast).toBeCalled()
+  })
+  it('renders a error toast', () => {
+    render(<Index />)
+
+    const button = screen.getByTestId('error_modal_btn')
+    fireEvent.click(button)
+
+    expect(errorToast).toBeCalled()
   })
 })

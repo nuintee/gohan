@@ -46,7 +46,7 @@ const Experiment = () => {
     <div className='flex flex-col gap-2'>
       <section>
         <header className='flex gap-2'>
-          <h1 data-testId='strat'>STRING_ARRAY</h1>
+          <h1 data-testid='strat'>STRING_ARRAY</h1>
           <button onClick={() => setStrSort('ASC')}>ASC</button>
           <button onClick={() => setStrSort('DESC')}>DESC</button>
         </header>
@@ -68,8 +68,12 @@ const Experiment = () => {
           ))}
         </div>
       </section>
-      <button onClick={() => useToast.success('Success Toast')}>Open Success Modal</button>
-      <button onClick={() => useToast.success('Error Toast')}>Open Error Modal</button>
+      <button data-testid='success_modal_btn' onClick={() => useToast.success('Success Toast')}>
+        Open Success Modal
+      </button>
+      <button data-testid='error_modal_btn' onClick={() => useToast.error('Error Toast')}>
+        Open Error Modal
+      </button>
     </div>
   )
 }
