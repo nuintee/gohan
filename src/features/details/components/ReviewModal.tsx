@@ -84,7 +84,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
         <form onSubmit={onSubmit} className='p-4 flex flex-col items-center gap-8 justify-center'>
           <h2 className='font-semibold sm:text-xl text-md'>この場所への評価を教えて下さい。</h2>
           <div className='flex items-center justify-center gap-4 sm:mb-10'>
-            <StatusRadioGroup status={data?.reviewStatus || 'NEW'} register={register} />
+            <StatusRadioGroup register={register} name='reviewStatus' />
           </div>
           <footer className='flex w-full flex-col gap-4'>
             <Input
