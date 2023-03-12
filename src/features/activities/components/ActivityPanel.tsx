@@ -14,7 +14,7 @@ import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { useSort } from '@/hooks/sort'
 import { ConditionsWithALL, useFilter } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
-import { SORT_ENUM } from '@/constants/sort'
+import { SORT_ENUM, SORT_METHODS } from '@/constants/sort'
 import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
 
@@ -22,7 +22,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   const { onActivityClicked, mapbox } = useMapBox()
   const [deletedContents, setDeletedContents] = useState<NonNullable<typeof query.data>>([])
 
-  const [sortMethod, setSortMethod] = useState<keyof typeof SORT_ENUM>('DESC')
+  const [sortMethod, setSortMethod] = useState<SORT_METHODS>('DESC')
   const [filterStatus, setFilterStatus] = useState<ConditionsWithALL<ReviewStatus>>('ALL')
 
   const sortedArray = useSort({
@@ -86,8 +86,8 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
       <header className='flex gap-2'>
         <DropDown
           menu={Object.keys(SORT_ENUM).map((v) => ({
-            label: SORT_ENUM[v as keyof typeof SORT_ENUM].label,
-            onDropDownItemClick: () => setSortMethod(v as keyof typeof SORT_ENUM),
+            label: SORT_ENUM[v as SORT_METHODS].label,
+            onDropDownItemClick: () => setSortMethod(v as SORT_METHODS),
           }))}
           controller={
             <Button
