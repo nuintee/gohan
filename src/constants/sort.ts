@@ -2,7 +2,7 @@ import { isString, isNumber, isObject } from '@/utils/typeguards'
 
 type ObjectType = Record<string, string>
 
-export type SORT_METHODS = keyof typeof SORT_ENUM
+export type SortMethods = keyof typeof SORT_ENUM
 
 function sortASCFn<T>(a: T, b: T, sortKey: string) {
   if ((isString(a) || isNumber(a)) && (isString(b) || isNumber(b))) {
