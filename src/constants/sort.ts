@@ -1,24 +1,49 @@
+import { isString, isNumber, isObject } from '@/utils/typeguards'
+
+type ObjectType = Record<string, string>
+
+function sortASCFn<T>(a: T, b: T, sortKey: string) {
+  if ((isString(a) || isNumber(a)) && (isString(b) || isNumber(b))) {
+    if (a < b) {
+      return -1
+    }
+    if (a > b) {
+      return 1
+    }
+  } else if (isObject(a) && isObject(b)) {
+    if ((a as ObjectType)[sortKey] < (b as ObjectType)[sortKey]) {
+      return -1
+    }
+    if ((a as ObjectType)[sortKey] > (b as ObjectType)[sortKey]) {
+      return 1
+    }
+  }
+}
+function sortDESCFn<T>(a: T, b: T, sortKey: string) {
+  if ((isString(a) || isNumber(a)) && (isString(b) || isNumber(b))) {
+    if (a < b) {
+      return 1
+    }
+    if (a > b) {
+      return -1
+    }
+  } else if (isObject(a) && isObject(b)) {
+    if ((a as ObjectType)[sortKey] < (b as ObjectType)[sortKey]) {
+      return 1
+    }
+    if ((a as ObjectType)[sortKey] > (b as ObjectType)[sortKey]) {
+      return -1
+    }
+  }
+}
+
 export const SORT_ENUM = {
   ASC: {
     label: '昇順',
-    sortFn: <T extends Object, K extends keyof T>(a: T, b: T, sortKey: K) => {
-      if (a[sortKey] < b[sortKey]) {
-        return -1
-      }
-      if (a[sortKey] > b[sortKey]) {
-        return 1
-      }
-    },
+    sortFn: sortASCFn,
   },
   DESC: {
     label: '降順',
-    sortFn: <T extends Object, K extends keyof T>(a: T, b: T, sortKey: K) => {
-      if (a[sortKey] < b[sortKey]) {
-        return 1
-      }
-      if (a[sortKey] > b[sortKey]) {
-        return -1
-      }
-    },
+    sortFn: sortDESCFn,
   },
 }
