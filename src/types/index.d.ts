@@ -19,4 +19,6 @@ declare global {
   interface Array<T> {
     random(): T
   }
+
+  var prisma: PrismaClient
 }
