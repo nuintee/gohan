@@ -13,7 +13,7 @@ import { appRouter } from '@/server/routers/_app'
 import superjson from 'superjson'
 import { useSession } from 'next-auth/react'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
-import { GetStaticProps } from 'next/types'
+import { GetStaticProps, NextApiResponse } from 'next/types'
 import DetailsLoadingFallback from '@/features/details/components/DetailsLoadingFallback'
 import { MainLayout } from '@/layouts/layout'
 import DetailsDescriptiveGroup from '@/features/details/components/ui/DetailsDescriptiveGroup'
@@ -31,7 +31,8 @@ import { useTab } from '@/hooks/tab'
 import { getPlacePhoto } from '@/features/details/hooks/getPlacePhoto'
 import { ActivityResolved } from '@/features/activities/types'
 import { ResolvedPlacePhoto } from '@/features/details/types/index.types'
-import { ReviewStatus } from '@prisma/client'
+import { PrismaClient, ReviewStatus } from '@prisma/client'
+import { NextApiRequest } from 'next'
 
 const TAB_ITEMS = [
   {
@@ -162,9 +163,16 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const emptyCtx = {
+    session: null,
+    prisma: new PrismaClient(),
+    req: {} as NextApiRequest,
+    res: {} as NextApiResponse,
+  }
+
   const ssg = createProxySSGHelpers({
     router: appRouter,
-    ctx: {},
+    ctx: emptyCtx,
     transformer: superjson,
   })
 
