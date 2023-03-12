@@ -14,7 +14,7 @@ import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { useSort } from '@/hooks/sort'
 import { ConditionsWithALL, useFilter, withAll } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
-import { SORT_ENUM, SortMethods } from '@/constants/sort'
+import { SORT_ENUM, SortMethods, SORT_METHODS } from '@/constants/sort'
 import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
 
@@ -85,9 +85,9 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
       <header className='flex gap-2'>
         <DropDown
-          menu={Object.keys(SORT_ENUM).map((v) => ({
-            label: SORT_ENUM[v as SortMethods].label,
-            onDropDownItemClick: () => setSortMethod(v as SortMethods),
+          menu={SORT_METHODS.map((v) => ({
+            label: SORT_ENUM[v].label,
+            onDropDownItemClick: () => setSortMethod(v),
           }))}
           controller={
             <Button

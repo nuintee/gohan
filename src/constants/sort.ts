@@ -49,3 +49,5 @@ export const SORT_ENUM = {
     sortFn: sortDESCFn,
   },
 }
+
+export const SORT_METHODS = Object.keys(SORT_ENUM) as SortMethods[]
