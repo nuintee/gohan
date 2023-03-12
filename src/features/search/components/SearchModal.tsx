@@ -1,5 +1,5 @@
 import SlideInLayout from '@/layouts/SlideInLayout'
-import SearchLayout from './SearchLayout'
+import SearchLayout from '../layouts/SearchLayout'
 
 const SearchModal = ({
   isOpen,

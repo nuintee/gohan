@@ -3,7 +3,7 @@ import useRestaurants from '@/features/restaurants/hooks/useRestaurants'
 import useGPS from '@/hooks/gps'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import LocationLoader from './LocationLoader'
+import LocationLoader from '../components/LocationLoader'
 
 const SearchLayout = ({
   trigger = false,
