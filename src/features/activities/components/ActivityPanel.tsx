@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-// Function
-
 // Components
 import PanelHeader from '@/components/ui/PanelHeader'
 import useGetUserActivities from '../hooks/useGetUserActivities'

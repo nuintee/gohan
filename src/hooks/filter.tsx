@@ -1,10 +1,10 @@
-export function useFilter({
+export function useFilter<T>({
   array,
   filterFn,
   disabled = false,
 }: {
-  array: unknown[]
-  filterFn: (_v: unknown) => unknown[]
+  array: T[]
+  filterFn: (_v: T) => boolean
   disabled: boolean
 }) {
   if (disabled) return array
