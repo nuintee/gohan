@@ -86,8 +86,8 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
       <header className='flex gap-2'>
         <DropDown
           menu={Object.keys(SORT_ENUM).map((v) => ({
-            label: SORT_ENUM[v].label,
-            onDropDownItemClick: () => setSortMethod(v),
+            label: SORT_ENUM[v as keyof typeof SORT_ENUM].label,
+            onDropDownItemClick: () => setSortMethod(v as keyof typeof SORT_ENUM),
           }))}
           controller={
             <Button
