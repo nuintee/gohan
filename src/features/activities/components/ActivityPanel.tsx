@@ -50,8 +50,8 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   })
 
   if (query.isFetching && !query.isFetched) {
-    // const DUMMIES = [1, 2, 3]
-    const DUMMIES = Array(3).fill(null)
+    const COUNT = 3
+    const DUMMIES = Array(COUNT).fill(null)
 
     return (
       <div className='flex flex-col flex-1'>
