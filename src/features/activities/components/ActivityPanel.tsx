@@ -12,11 +12,12 @@ import SlideInLayout from '@/layouts/SlideInLayout'
 import useMediaQuery from '@/hooks/mediaquery'
 import ErrorFallBack from '@/components/fallback/ErrorFallback'
 import { useSort } from '@/hooks/sort'
-import { ConditionsWithALL, useFilter, withAll } from '@/hooks/filter'
+import { ConditionsWithALL, useFilter } from '@/hooks/filter'
 import { ReviewStatus } from '@prisma/client'
 import { SORT_ENUM, SortMethods, SORT_METHODS } from '@/constants/sort'
 import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
+import { ResultsEntity } from '@/features/restaurants/types'
 
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
