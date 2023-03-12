@@ -1,4 +1,3 @@
-import { useFilter } from '@/hooks/filter'
 import { useSort } from '@/hooks/sort'
 import { useState } from 'react'
 
