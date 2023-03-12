@@ -7,7 +7,7 @@ import { ReviewStatus } from '@prisma/client'
 import StatusRadioGroup from './StatusRadioGroup'
 
 // lib
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import useGetActivity from '@/features/activities/hooks/useGetActivity'
 
 type Props = {
@@ -24,6 +24,7 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { isDirty },
   } = useForm<{
     reviewMemo?: string
@@ -87,13 +88,12 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
             <StatusRadioGroup register={register} name='reviewStatus' />
           </div>
           <footer className='flex w-full flex-col gap-4'>
-            <Input
-              type={'text'}
-              placeholder='この場所についてのメモを追加 (任意)'
-              defaultValue={data?.memo}
-              register={register}
-              registerName={'reviewMemo'}
-              required={false}
+            <Controller
+              control={control}
+              name='reviewMemo'
+              render={({ field }) => (
+                <Input placeholder='この場所についてのメモを追加 (任意)' {...field} />
+              )}
             />
             <Button text={'保存'} disabled={!isDirty} loading={updateActivity.isLoading} />
           </footer>

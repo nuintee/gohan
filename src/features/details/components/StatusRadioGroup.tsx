@@ -1,5 +1,5 @@
 import { ReviewStatus } from '@prisma/client'
-import { UseFormRegister, FieldValues, Path } from 'react-hook-form'
+import { UseFormRegister, Path } from 'react-hook-form'
 
 const statusTheme = (statusValue: ReviewStatus) => {
   const _grayScale = 'peer-checked:grayscale-0'
@@ -29,7 +29,6 @@ const statusTheme = (statusValue: ReviewStatus) => {
 }
 
 const StatusRadioGroup = <T extends {}>({
-  // status,
   register,
   name,
 }: {
