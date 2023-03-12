@@ -1,4 +1,5 @@
 import { ActivityResolved } from '@/features/activities/types'
+import { ResultsEntity } from '@/features/restaurants/types'
 import { useRecoilState } from 'recoil'
 
 // types
@@ -16,8 +17,10 @@ const useMapBox = () => {
     setMapBox((prev) => ({ ...prev, focusedPlaceId: '' }))
   }
 
-  const onActivityClicked = (activity: ActivityResolved) => {
-    updateSafeMapBox({ focusedPlaceId: activity.place_id })
+  const onActivityClicked = (activity?: ResultsEntity) => {
+    if (!activity) return
+
+    updateSafeMapBox({ focusedPlaceId: activity.place_id || '' })
 
     if (activity.geometry?.location?.lat && activity.geometry?.location?.lng) {
       mapBoxRef?.flyTo({
