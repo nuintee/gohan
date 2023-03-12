@@ -7,7 +7,7 @@ const KeyFeaturesSection = ({
   data,
   isLoading = false,
 }: {
-  data: ResultsEntity
+  data?: ResultsEntity
   isLoading?: boolean
 }) => {
   const keyFeatures = useKeyFeatures(data)

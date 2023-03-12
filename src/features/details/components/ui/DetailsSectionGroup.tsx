@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui'
-import useGetActivity from '@/features/activities/hooks/useGetActivity'
 import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
