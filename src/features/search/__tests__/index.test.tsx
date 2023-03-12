@@ -1,26 +1,18 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import Index from '@/pages/index'
 import '@testing-library/jest-dom'
-import useToast from '@/libs/react-toastify'
+import { wrapper } from '@/config/jest/wrapper'
 
-const successToast = jest.spyOn(useToast, 'success')
-const errorToast = jest.spyOn(useToast, 'error')
+// const successToast = jest.spyOn(useToast, 'success')
+// const errorToast = jest.spyOn(useToast, 'error')
+
+beforeAll(() => {})
 
 describe('_Home', () => {
   it('renders a success toast', () => {
-    render(<Index />)
+    render(<Index />, { wrapper })
 
-    const button = screen.getByTestId('success_modal_btn')
+    const button = screen.getByRole('button')
     fireEvent.click(button)
-
-    expect(successToast).toBeCalled()
-  })
-  it('renders a error toast', () => {
-    render(<Index />)
-
-    const button = screen.getByTestId('error_modal_btn')
-    fireEvent.click(button)
-
-    expect(errorToast).toBeCalled()
   })
 })

@@ -4,6 +4,11 @@ import { RecoilRoot } from 'recoil'
 
 // data
 import { user } from '@/data/user'
+import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
+import { AppRouter } from '@/server/routers/_app'
+import { BASE_URL } from '../env'
+
+import superjson from 'superjson'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,6 +23,18 @@ const queryClient = new QueryClient({
   },
 })
 
+const mockedTrpc = createTRPCReact<AppRouter>()
+
+const trpcClient = mockedTrpc.createClient({
+  links: [
+    httpBatchLink({
+      url: `${BASE_URL}/api/trpc`,
+    }),
+  ],
+  // @ts-ignore
+  transformer: superjson,
+})
+
 export const wrapper = ({
   children,
   isAuthed = true,
@@ -26,24 +43,26 @@ export const wrapper = ({
   isAuthed?: boolean
 }) => (
   <RecoilRoot>
-    <QueryClientProvider client={queryClient}>
-      <SessionProvider
-        {...(isAuthed && {
-          session: {
-            expires: '',
-            user: {
-              email: user.email as string,
-              id: user.id as string,
-              name: user.name as string,
-              image: user.image as string,
-              registered_at: new Date(),
+    <mockedTrpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <SessionProvider
+          {...(isAuthed && {
+            session: {
+              expires: '',
+              user: {
+                email: user.email as string,
+                id: user.id as string,
+                name: user.name as string,
+                image: user.image as string,
+                registered_at: new Date(),
+              },
             },
-          },
-        })}
-      >
-        {children}
-      </SessionProvider>
-    </QueryClientProvider>
+          })}
+        >
+          {children}
+        </SessionProvider>
+      </QueryClientProvider>
+    </mockedTrpc.Provider>
   </RecoilRoot>
 )
 
