@@ -107,6 +107,7 @@
     "jest-environment-jsdom": "^29.2.0",
     "lint-staged": "^13.0.3",
     "msw": "^0.47.4",
+    "next-router-mock": "^0.9.2",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",
     "prisma": "^4.8.0",
