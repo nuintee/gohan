@@ -27,7 +27,7 @@ const LibraryPage = () => {
   return (
     <>
       <Head title={ROUTES.LIBRARY.label} url={ROUTES.DETAILS.label} />
-      <main className='relative flex-1 bg-gh-l-gray'>
+      <main className='relative flex-1 bg-gh-l-gray' data-testid='library__page'>
         <section className='absolute top-4 right-4 z-[1]'>
           <AcitvityButton />
         </section>

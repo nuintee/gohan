@@ -46,18 +46,20 @@ export const wrapper = ({
     <mockedTrpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <SessionProvider
-          {...(isAuthed && {
-            session: {
-              expires: '',
-              user: {
-                email: user.email as string,
-                id: user.id as string,
-                name: user.name as string,
-                image: user.image as string,
-                registered_at: new Date(),
-              },
-            },
-          })}
+          session={
+            isAuthed
+              ? {
+                  expires: '',
+                  user: {
+                    email: user.email as string,
+                    id: user.id as string,
+                    name: user.name as string,
+                    image: user.image as string,
+                    registered_at: new Date(),
+                  },
+                }
+              : null
+          }
         >
           {children}
         </SessionProvider>

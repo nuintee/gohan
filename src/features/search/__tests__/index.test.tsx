@@ -34,7 +34,7 @@ beforeAll(() => {
   global.navigator.geolocation = mockGeolocation
 })
 
-describe('_Home', () => {
+describe('/<index>', () => {
   it('renders a error toast', async () => {
     render(<Index />, { wrapper })
 
