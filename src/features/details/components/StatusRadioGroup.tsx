@@ -37,7 +37,7 @@ const StatusRadioGroup = <T extends {}>({
 }) => {
   return (
     <div className='flex gap-6'>
-      {[ReviewStatus.BAD, ReviewStatus.GOOD, ReviewStatus.OK].map((v) => (
+      {[ReviewStatus.BAD, ReviewStatus.OK, ReviewStatus.GOOD].map((v) => (
         <div key={v}>
           <input
             {...register(name)}
