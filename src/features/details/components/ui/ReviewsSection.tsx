@@ -26,7 +26,11 @@ const ReviewsSection = ({
                     className={'w-12 h-12 aspect-square rounded-full'}
                     alt={`${review.author_name}'s image`}
                   />
-                  <Texts main={review.author_name} sub={review.time.toString()} size='small' />
+                  <Texts
+                    main={review.author_name}
+                    sub={new Date(review.time * 1000).toString()}
+                    size='small'
+                  />
                   <span
                     className='p-1 rounded-md flex whitespace-nowrap'
                     style={{
