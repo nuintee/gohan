@@ -3,6 +3,14 @@ import DetailsSection from '@/features/details/layouts/DetailsSection'
 import useDetails from '../../hooks/useDetails'
 import mapRatingLevel from '../../hooks/mapRatingLevel'
 
+// lib
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/ja'
+
+dayjs.extend(relativeTime)
+dayjs.locale(`ja`)
+
 const ReviewsSection = ({
   data,
   isLoading = false,
@@ -28,7 +36,7 @@ const ReviewsSection = ({
                   />
                   <Texts
                     main={review.author_name}
-                    sub={new Date(review.time * 1000).toString()}
+                    sub={dayjs(new Date(review.time * 1000)).fromNow()}
                     size='small'
                   />
                   <span
