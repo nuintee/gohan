@@ -18,17 +18,36 @@ import { SORT_ENUM, SortMethods, SORT_METHODS } from '@/constants/sort'
 import mapActivityStatus from '../hooks/mapActivityStatus'
 import { Sort, Filter } from '@/components/icons'
 
+const SORT_MENU = [
+  {
+    label: '名前',
+    key: 'name',
+    options: SORT_METHODS,
+  },
+  {
+    label: '追加日時',
+    key: 'discovered_at',
+    options: SORT_METHODS,
+  },
+]
+
 const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivities> }) => {
   const { onActivityClicked, mapbox } = useMapBox()
   const [deletedContents, setDeletedContents] = useState<NonNullable<typeof query.data>>([])
 
-  const [sortMethod, setSortMethod] = useState<SortMethods>('DESC')
+  const [sortOptions, setSortOptions] = useState<{
+    sortKey: keyof NonNullable<typeof query.data>[number]
+    sortMethod: SortMethods
+  }>({
+    sortKey: 'discovered_at',
+    sortMethod: 'ASC',
+  })
   const [filterStatus, setFilterStatus] = useState<ConditionsWithALL<ReviewStatus>>('ALL')
 
   const sortedArray = useSort({
     array: query.data,
-    sortMethod,
-    sortKey: 'name',
+    sortMethod: sortOptions.sortMethod,
+    sortKey: sortOptions.sortKey,
     disabled: false,
   })
 
@@ -85,13 +104,21 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
       <header className='flex gap-2'>
         <DropDown
-          menu={SORT_METHODS.map((v) => ({
-            label: SORT_ENUM[v].label,
-            onDropDownItemClick: () => setSortMethod(v),
-          }))}
+          menu={SORT_MENU.flatMap((v) =>
+            v.options.map((method) => ({
+              label: `${v.label}: ${SORT_ENUM[method].label}`,
+              onDropDownItemClick: () =>
+                setSortOptions((_prev) => ({
+                  sortKey: v.key as typeof sortOptions.sortKey,
+                  sortMethod: method,
+                })),
+            })),
+          )}
           controller={
             <Button
-              text={`名前: ${SORT_ENUM[sortMethod].label}`}
+              text={`${SORT_MENU.find((v) => v.key === sortOptions.sortKey)?.label || ''}: ${
+                SORT_ENUM[sortOptions.sortMethod].label
+              }`}
               outline
               icon={{
                 position: 'before',
