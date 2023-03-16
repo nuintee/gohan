@@ -21,4 +21,11 @@ describe('/library', () => {
     const viewport = page.getByTestId('auth__fallback')
     expect(viewport).toBeInTheDocument()
   })
+
+  it('6ffea: show error on invalid geolocation', () => {})
+
+  it('f8767: open ActivityPanel on first render', () => {
+    const page = render(<LibraryPage />, { wrapper: authedWrapper })
+    page.debug()
+  })
 })

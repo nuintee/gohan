@@ -25,6 +25,7 @@ const SlideInLayout = ({
   maxWidth = '30rem',
   zIndex = '20',
   direction = 'x',
+  testId,
 }: {
   isOpen?: boolean
   children: JSX.Element
@@ -32,6 +33,7 @@ const SlideInLayout = ({
   maxWidth?: string
   zIndex?: string
   direction?: 'x' | 'y'
+  testId?: string
 }) => {
   const position = direction === 'y' ? 'fixed' : 'absolute'
   const content = `${position} top-0 flex flex-col right-0 h-screen w-screen duration-700 overflow-y-hidden`
@@ -47,6 +49,7 @@ const SlideInLayout = ({
         backgroundColor: contentBackgroundColor,
         maxWidth,
       }}
+      data-testid={testId}
     >
       {children}
     </motion.aside>
