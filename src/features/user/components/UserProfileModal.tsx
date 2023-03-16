@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 
 import { signOut, useSession } from 'next-auth/react'
 
-const UserSettingsModal = () => {
+const UserProfileModal = () => {
   const { data: session } = useSession()
   const { isOpen, open, close } = useModals()
 
@@ -61,4 +61,4 @@ const UserSettingsModal = () => {
   )
 }
 
-export default UserSettingsModal
+export default UserProfileModal

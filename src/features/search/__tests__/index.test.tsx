@@ -124,7 +124,6 @@ describe('<SearchLayout />', () => {
     mockCtx.prisma.activity.create.mockResolvedValue(mockedActivityValue)
 
     await waitFor(() => {
-      page.debug()
       expect(mockCtx.prisma.activity.create({ data: mockedActivityValue })).resolves.toEqual(
         mockedActivityValue,
       )
