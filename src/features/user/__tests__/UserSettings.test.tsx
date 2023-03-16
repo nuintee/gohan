@@ -29,4 +29,10 @@ describe('<UserSettings />', () => {
       page.getByText(dayjs(user.registered_at).format('MMMM D, YYYY h:mm A')),
     ).toBeInTheDocument()
   })
+
+  it('02643: opens <Cancelation /> modal on cancelation button click', async () => {
+    const page = render(<UserProfileModal />, {
+      wrapper,
+    })
+  })
 })

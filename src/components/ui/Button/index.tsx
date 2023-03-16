@@ -16,6 +16,7 @@ type Props = {
   square?: boolean
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
+  testId?: string
 }
 
 const Button = (props: Props) => {
@@ -28,6 +29,7 @@ const Button = (props: Props) => {
     square = false,
     onClick,
     disabled = false,
+    testId,
   } = props
 
   const iconColor = () => {
@@ -60,6 +62,7 @@ const Button = (props: Props) => {
       style={{
         ...(square && { aspectRatio: '1/1', padding: '0' }),
       }}
+      data-testid={testId}
     >
       {icon?.position === 'before' && !loading && icon.src}
       {loading ? (

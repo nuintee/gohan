@@ -52,7 +52,12 @@ const UserProfileModal = () => {
           ))}
           <div className='w-full p-4 border-t-[1px]'>
             <DetailsSummary summaryTitle='高度な設定'>
-              <Button text='退会' danger onClick={handleDeleteAccount} />
+              <Button
+                text='退会'
+                danger
+                onClick={handleDeleteAccount}
+                testId='cancelation__button'
+              />
             </DetailsSummary>
           </div>
         </main>
