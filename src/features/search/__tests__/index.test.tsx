@@ -20,7 +20,7 @@ const mockGeolocation = {
 global.navigator.geolocation = mockGeolocation
 
 describe('<SearchLayout />', () => {
-  it('renders screen without error', async () => {
+  it('ec512: renders screen without error', async () => {
     const page = render(<SearchLayout />, { wrapper })
 
     expect(page.getByTestId('search__layout')).toBeInTheDocument()
