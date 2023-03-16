@@ -70,7 +70,6 @@ export const wrapper = ({
   </RecoilRoot>
 )
 
-export const setUpWrapper = (options?: { isAuthed: boolean }) => {
-  return ({ children }: { children: JSX.Element }) =>
-    wrapper({ children, isAuthed: options?.isAuthed })
+export const setUpWrapper = (options?: Parameters<typeof wrapper>[0]) => {
+  return ({ children }: { children: JSX.Element }) => wrapper({ children, ...options })
 }
