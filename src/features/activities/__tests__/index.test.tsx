@@ -4,6 +4,7 @@ import '@testing-library/jest-dom'
 import LibraryPage from '@/pages/library'
 import { render } from '@testing-library/react'
 import { setUpWrapper } from '@/config/jest/wrapper'
+import useToast from '@/libs/react-toastify'
 
 const authedWrapper = setUpWrapper({ isAuthed: true })
 const unauthedWrapper = setUpWrapper({ isAuthed: false })
@@ -17,15 +18,13 @@ describe('/library', () => {
 
   it('e6eb4: renders Auth Fallback when not authed', () => {
     const page = render(<LibraryPage />, { wrapper: unauthedWrapper })
-
     const viewport = page.getByTestId('auth__fallback')
     expect(viewport).toBeInTheDocument()
   })
 
-  it('6ffea: show error on invalid geolocation', () => {})
-
   it('f8767: open ActivityPanel on first render', () => {
     const page = render(<LibraryPage />, { wrapper: authedWrapper })
-    page.debug()
+    const activityPanel = page.getByTestId('activity__panel_is_true')
+    expect(activityPanel).toBeInTheDocument()
   })
 })
