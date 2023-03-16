@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import Index from '@/pages/index'
+import SearchLayout from '../layouts/SearchLayout'
 import '@testing-library/jest-dom'
 import { wrapper } from '@/config/jest/wrapper'
 import useToast from '@/libs/react-toastify'
@@ -20,7 +20,13 @@ const mockGeolocation = {
 global.navigator.geolocation = mockGeolocation
 
 describe('<SearchLayout />', () => {
-  it('1c628: renders a error toast, on invalid geolocation Gohan search', async () => {
+  it('renders screen without error', async () => {
+    const page = render(<SearchLayout />, { wrapper })
+
+    expect(page.getByTestId('search__layout')).toBeInTheDocument()
+  })
+
+  it('55755: renders a error toast and auto closes, on invalid geolocation Gohan search', async () => {
     mockGeolocation.watchPosition.mockImplementation(
       (_successCallback, errorCallback, _options) => {
         errorCallback({
@@ -29,13 +35,18 @@ describe('<SearchLayout />', () => {
         })
       },
     )
-    render(<Index />, { wrapper })
+
+    const spyOnClose = jest.fn()
+    render(<SearchLayout onClose={spyOnClose} />, { wrapper })
 
     const button = screen.getByTestId('gohan__button')
     fireEvent.click(button)
 
     await waitFor(() => {
       expect(errorToast).toBeCalledWith('Please allow user geolocaiton tracking')
+      expect(spyOnClose).toHaveBeenCalled()
+
+      spyOnClose.mockRestore()
     })
   })
 
@@ -56,7 +67,7 @@ describe('<SearchLayout />', () => {
         })
       },
     )
-    const page = render(<Index />, { wrapper })
+    const page = render(<SearchLayout />, { wrapper })
     const invalid_text = await page.findByText('現在地の取得に失敗')
     expect(invalid_text).toBeInTheDocument()
   })
@@ -65,7 +76,7 @@ describe('<SearchLayout />', () => {
     mockGeolocation.watchPosition.mockImplementation(
       (_successCallback, _errorCallback, _options) => {},
     )
-    const page = render(<Index />, { wrapper })
+    const page = render(<SearchLayout />, { wrapper })
     const invalid_text = await page.findByText('現在地を取得中')
     expect(invalid_text).toBeInTheDocument()
   })
@@ -76,7 +87,7 @@ describe('<SearchLayout />', () => {
         _successCallback(GEOLOCATION)
       },
     )
-    const page = render(<Index />, { wrapper })
+    const page = render(<SearchLayout />, { wrapper })
     const invalid_text = await page.findByText('現在地取得済み')
     expect(invalid_text).toBeInTheDocument()
   })
