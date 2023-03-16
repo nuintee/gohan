@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
-import { RecoilRoot } from 'recoil'
+import { MutableSnapshot, RecoilRoot } from 'recoil'
 
 // data
 import { user } from '@/data/user'
@@ -38,11 +38,13 @@ const trpcClient = mockedTrpc.createClient({
 export const wrapper = ({
   children,
   isAuthed = true,
+  initializeRecoilState,
 }: {
   children: JSX.Element
   isAuthed?: boolean
+  initializeRecoilState?: ((mutableSnapshot: MutableSnapshot) => void) | undefined
 }) => (
-  <RecoilRoot>
+  <RecoilRoot initializeState={initializeRecoilState}>
     <mockedTrpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <SessionProvider
