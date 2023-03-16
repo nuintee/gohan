@@ -7,35 +7,28 @@ import useToast from '@/libs/react-toastify'
 jest.mock('next/router', () => require('next-router-mock'))
 const errorToast = jest.spyOn(useToast, 'error')
 
-beforeAll(() => {
-  const mockGeolocation = {
-    getCurrentPosition: jest.fn(),
-    watchPosition: jest.fn(),
-    clearWatch: jest.fn(),
-  }
+// data
+import GEOLOCATION from '@/data/geolocation.json'
 
-  mockGeolocation.getCurrentPosition.mockImplementation(
-    (successCallback, errorCallback, options) => {
-      errorCallback({
-        code: 1,
-        message: 'User denied Geolocation',
-      })
-    },
-  )
+const mockGeolocation = {
+  getCurrentPosition: jest.fn(),
+  watchPosition: jest.fn(),
+  clearWatch: jest.fn(),
+}
 
-  mockGeolocation.watchPosition.mockImplementation((successCallback, errorCallback, options) => {
-    errorCallback({
-      code: 1,
-      message: 'User denied Geolocation',
-    })
-  })
+// @ts-ignore
+global.navigator.geolocation = mockGeolocation
 
-  // @ts-ignore
-  global.navigator.geolocation = mockGeolocation
-})
-
-describe('/<index>', () => {
-  it('renders a error toast', async () => {
+describe('<SearchLayout />', () => {
+  it('1c628: renders a error toast, on invalid geolocation Gohan search', async () => {
+    mockGeolocation.watchPosition.mockImplementation(
+      (_successCallback, errorCallback, _options) => {
+        errorCallback({
+          code: 1,
+          message: 'User denied Geolocation',
+        })
+      },
+    )
     render(<Index />, { wrapper })
 
     const button = screen.getByTestId('gohan__button')
@@ -44,5 +37,47 @@ describe('/<index>', () => {
     await waitFor(() => {
       expect(errorToast).toBeCalledWith('Please allow user geolocaiton tracking')
     })
+  })
+
+  it('4089b: renders 現在地の取得に失敗, when geolocation is denied', async () => {
+    mockGeolocation.getCurrentPosition.mockImplementation(
+      (_successCallback, errorCallback, _options) => {
+        errorCallback({
+          code: 1,
+          message: 'User denied Geolocation',
+        })
+      },
+    )
+    mockGeolocation.watchPosition.mockImplementation(
+      (_successCallback, errorCallback, _options) => {
+        errorCallback({
+          code: 1,
+          message: 'User denied Geolocation',
+        })
+      },
+    )
+    const page = render(<Index />, { wrapper })
+    const invalid_text = await page.findByText('現在地の取得に失敗')
+    expect(invalid_text).toBeInTheDocument()
+  })
+
+  it('ddc5e: renders 現在地を取得中です, when geolocation is being fetching', async () => {
+    mockGeolocation.watchPosition.mockImplementation(
+      (_successCallback, _errorCallback, _options) => {},
+    )
+    const page = render(<Index />, { wrapper })
+    const invalid_text = await page.findByText('現在地を取得中')
+    expect(invalid_text).toBeInTheDocument()
+  })
+
+  it('fb3da: renders 現在地取得済みです, when geolocation is being fetched successfully', async () => {
+    mockGeolocation.watchPosition.mockImplementation(
+      (_successCallback, _errorCallback, _options) => {
+        _successCallback(GEOLOCATION)
+      },
+    )
+    const page = render(<Index />, { wrapper })
+    const invalid_text = await page.findByText('現在地取得済み')
+    expect(invalid_text).toBeInTheDocument()
   })
 })
