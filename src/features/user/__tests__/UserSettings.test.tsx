@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { setUpWrapper } from '@/config/jest/wrapper'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import UserProfileModal from '../components/UserProfileModal'
 import { modalState } from '@/stores/modals'
 import { user } from '@/data/user'

@@ -63,7 +63,7 @@ const UserProfileModal = () => {
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
-          <Button text='ログアウト' onClick={() => signOut()} />
+          <Button text='ログアウト' onClick={() => signOut()} testId='signout__button' />
         </footer>
       </section>
     </ModalLayout>
