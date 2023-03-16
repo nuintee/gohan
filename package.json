@@ -49,6 +49,7 @@
     "framer-motion": "^9.0.4",
     "haversine-distance": "^1.2.1",
     "install": "^0.13.0",
+    "jest-mock-extended": "^2.0.4",
     "lru-cache": "^7.17.0",
     "mapbox-gl": "^2.10.0",
     "next": "^13.1.6",
