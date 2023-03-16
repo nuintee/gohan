@@ -3,7 +3,6 @@ import SearchLayout from '../layouts/SearchLayout'
 import '@testing-library/jest-dom'
 import { wrapper } from '@/config/jest/wrapper'
 import useToast from '@/libs/react-toastify'
-import { Router } from 'next/router'
 
 // data
 import GEOLOCATION from '@/data/geolocation.json'
