@@ -40,7 +40,7 @@ export const wrapper = ({
   isAuthed = true,
   initializeRecoilState,
 }: {
-  children: JSX.Element
+  children?: JSX.Element
   isAuthed?: boolean
   initializeRecoilState?: ((mutableSnapshot: MutableSnapshot) => void) | undefined
 }) => (
