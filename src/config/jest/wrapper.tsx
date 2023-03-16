@@ -23,9 +23,9 @@ const queryClient = new QueryClient({
   },
 })
 
-const mockedTrpc = createTRPCReact<AppRouter>()
+export const mockedTrpc = createTRPCReact<AppRouter>()
 
-const trpcClient = mockedTrpc.createClient({
+export const mockedTRPCClient = mockedTrpc.createClient({
   links: [
     httpBatchLink({
       url: `${BASE_URL}/api/trpc`,
@@ -45,7 +45,7 @@ export const wrapper = ({
   initializeRecoilState?: ((mutableSnapshot: MutableSnapshot) => void) | undefined
 }) => (
   <RecoilRoot initializeState={initializeRecoilState}>
-    <mockedTrpc.Provider client={trpcClient} queryClient={queryClient}>
+    <mockedTrpc.Provider client={mockedTRPCClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <SessionProvider
           session={
