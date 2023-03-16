@@ -22,7 +22,7 @@ const UserDeletionModal = () => {
   }
 
   return (
-    <ModalLayout isOpen={isOpen('deactivation')}>
+    <ModalLayout isOpen={isOpen('deactivation')} testId='cancelation__modal'>
       <section className='bg-white sm:p-10 p-4 flex flex-col gap-10 border-t-4 border-gh-red  w-[90vw] max-w-[30rem] sm:text-base text-sm'>
         <div className='flex flex-col gap-4'>
           <Texts
