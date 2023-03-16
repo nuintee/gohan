@@ -4,7 +4,6 @@ import '@testing-library/jest-dom'
 import LibraryPage from '@/pages/library'
 import { render } from '@testing-library/react'
 import { setUpWrapper } from '@/config/jest/wrapper'
-import useToast from '@/libs/react-toastify'
 
 const authedWrapper = setUpWrapper({ isAuthed: true })
 const unauthedWrapper = setUpWrapper({ isAuthed: false })
