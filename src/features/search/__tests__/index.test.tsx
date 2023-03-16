@@ -4,11 +4,14 @@ import '@testing-library/jest-dom'
 import { wrapper } from '@/config/jest/wrapper'
 import useToast from '@/libs/react-toastify'
 
+import { MockContext, Context, createMockContext } from '@/mocks/prisma/context'
+
 jest.mock('next/router', () => require('next-router-mock'))
 const errorToast = jest.spyOn(useToast, 'error')
 
 // data
 import GEOLOCATION from '@/data/geolocation.json'
+import { _testActivity } from '@/data/activities'
 
 const mockGeolocation = {
   getCurrentPosition: jest.fn(),
@@ -18,6 +21,14 @@ const mockGeolocation = {
 
 // @ts-ignore
 global.navigator.geolocation = mockGeolocation
+
+let mockCtx: MockContext
+let ctx: Context
+
+beforeEach(() => {
+  mockCtx = createMockContext()
+  ctx = mockCtx as unknown as Context
+})
 
 describe('<SearchLayout />', () => {
   it('ec512: renders screen without error', async () => {
@@ -90,5 +101,33 @@ describe('<SearchLayout />', () => {
     const page = render(<SearchLayout />, { wrapper })
     const invalid_text = await page.findByText('現在地取得済み')
     expect(invalid_text).toBeInTheDocument()
+  })
+
+  it('2ac4b: saves activity on query success when authed', async () => {
+    mockGeolocation.watchPosition.mockImplementation(
+      (_successCallback, _errorCallback, _options) => {
+        _successCallback(GEOLOCATION)
+      },
+    )
+
+    const page = render(<SearchLayout />, { wrapper })
+
+    const DATE = new Date()
+    const mockedActivityValue = {
+      ..._testActivity,
+      discovered_at: DATE,
+    }
+
+    const button = screen.getByTestId('gohan__button')
+    fireEvent.click(button)
+
+    mockCtx.prisma.activity.create.mockResolvedValue(mockedActivityValue)
+
+    await waitFor(() => {
+      page.debug()
+      expect(mockCtx.prisma.activity.create({ data: mockedActivityValue })).resolves.toEqual(
+        mockedActivityValue,
+      )
+    })
   })
 })
