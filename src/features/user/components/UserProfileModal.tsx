@@ -34,7 +34,11 @@ const UserProfileModal = () => {
   if (!session?.user) return <></>
 
   return (
-    <ModalLayout isOpen={isOpen('usersettings')} onRequestClose={() => close('usersettings')}>
+    <ModalLayout
+      isOpen={isOpen('usersettings')}
+      onRequestClose={() => close('usersettings')}
+      testId={'userprofile__modal'}
+    >
       <section className='w-[80vw] max-w-[30rem] bg-white'>
         <PanelHeader title='ユーザー情報' onClose={() => close('usersettings')} />
         <main className='flex flex-col'>
