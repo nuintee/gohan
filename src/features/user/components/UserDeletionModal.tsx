@@ -35,6 +35,7 @@ const UserDeletionModal = () => {
               type='checkbox'
               onChange={(e) => setIsChecked(e.target.checked)}
               className='bg-red-200'
+              data-testid='deactivation_confirmation__checkbox'
             />
             <label className='flex gap-2 text-gh-gray'>理解しました。</label>
           </div>
@@ -47,6 +48,7 @@ const UserDeletionModal = () => {
             outline={false}
             disabled={!isChecked}
             onClick={handleAccountDeletion}
+            testId='deactivation_action__button'
           />
         </footer>
       </section>
