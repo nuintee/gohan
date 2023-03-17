@@ -83,7 +83,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   }
 
   if (query.isError) {
-    return <ErrorFallBack error={query.error} />
+    return <ErrorFallBack error={query.error} fullScreen={false} backToHome={false} />
   }
 
   if ((query.data && query.data?.length <= 0) || deletedContents.length === query.data?.length) {
@@ -101,7 +101,10 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   }
 
   return (
-    <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
+    <div
+      className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'
+      data-testid='activity__panel_contents'
+    >
       <header className='flex gap-2'>
         <DropDown
           menu={SORT_MENU.flatMap((v) =>

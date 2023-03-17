@@ -10,7 +10,7 @@ import { BASE_URL } from '../env'
 
 import superjson from 'superjson'
 
-const queryClient = new QueryClient({
+export const mockedQueryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
@@ -45,8 +45,8 @@ export const wrapper = ({
   initializeRecoilState?: ((mutableSnapshot: MutableSnapshot) => void) | undefined
 }) => (
   <RecoilRoot initializeState={initializeRecoilState}>
-    <mockedTrpc.Provider client={mockedTRPCClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
+    <mockedTrpc.Provider client={mockedTRPCClient} queryClient={mockedQueryClient}>
+      <QueryClientProvider client={mockedQueryClient}>
         <SessionProvider
           session={
             isAuthed
