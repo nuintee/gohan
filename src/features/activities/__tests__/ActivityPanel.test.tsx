@@ -1,4 +1,4 @@
-import { mockedTrpc, wrapper, mockedTRPCClient, mockedQueryClient } from '@/config/jest/wrapper'
+import { wrapper, mockedTRPCClient, mockedQueryClient } from '@/config/jest/wrapper'
 import '@testing-library/jest-dom'
 import { render, renderHook, waitFor } from '@testing-library/react'
 import ActivityPanel from '../components/ActivityPanel'

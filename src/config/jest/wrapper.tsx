@@ -23,7 +23,7 @@ export const mockedQueryClient = new QueryClient({
   },
 })
 
-export const mockedTrpc = createTRPCReact<AppRouter>()
+const mockedTrpc = createTRPCReact<AppRouter>()
 
 export const mockedTRPCClient = mockedTrpc.createClient({
   links: [
