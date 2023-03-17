@@ -12,7 +12,7 @@ const DetailsLoadingFallback = () => {
 
   return (
     <>
-      <div className='flex flex-1 flex-col relative'>
+      <div className='flex flex-1 flex-col relative' data-testid='details_loading__fallback'>
         <Cover />
         <div className={heroClassName}>
           <ImageChip isLoading={true} />
