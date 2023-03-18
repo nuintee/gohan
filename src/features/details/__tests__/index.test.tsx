@@ -17,17 +17,17 @@ const mockGetActivity = useGetActivity as jest.Mock
 const mockGetDetails = useDetails as jest.Mock
 
 describe('/details', () => {
+  const PLACE_ID = 'ChIJyfjNbFU-xxQR80zJBtL_kko'
   it('10a2c: not showing add / update review and delete review from library when unauthed', async () => {
     // mock
     mockGetActivity.mockReturnValue({ isLoading: false, data: _testActivity })
     mockGetDetails.mockReturnValue({
       isLoading: false,
-      data: details.result('ChIJyfjNbFU-xxQR80zJBtL_kko'),
+      data: details.result(PLACE_ID),
     })
 
     const page = render(<DetailsPage id={''} />, { wrapper: setUpWrapper({ isAuthed: false }) })
 
-    page.debug()
     const activityMutationButton = page.queryByTestId('activity_mutation__button')
     const deleteFromLibraryDropDownItem = page.queryByText('ライブラリから削除')
 
@@ -38,12 +38,11 @@ describe('/details', () => {
     mockGetActivity.mockReturnValue({ isLoading: false, data: _testActivity })
     mockGetDetails.mockReturnValue({
       isLoading: false,
-      data: details.result('ChIJyfjNbFU-xxQR80zJBtL_kko'),
+      data: details.result(PLACE_ID),
     })
 
     const page = render(<DetailsPage id={''} />, { wrapper })
 
-    page.debug()
     const activityMutationButton = page.queryByTestId('activity_mutation__button')
     const deleteFromLibraryDropDownItem = page.queryByText('ライブラリから削除')
 
@@ -54,12 +53,11 @@ describe('/details', () => {
     mockGetActivity.mockReturnValue({ isLoading: false, data: _testActivity })
     mockGetDetails.mockReturnValue({
       isLoading: false,
-      data: { ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'), photos: [] },
+      data: { ...details.result(PLACE_ID), photos: [] },
     })
 
     const page = render(<DetailsPage id={''} />, { wrapper })
 
-    page.debug()
     const tabPagination = page.queryByTestId('tab__navigation')
 
     expect(tabPagination).not.toBeInTheDocument()
@@ -68,12 +66,11 @@ describe('/details', () => {
     mockGetActivity.mockReturnValue({ isLoading: false, data: _testActivity })
     mockGetDetails.mockReturnValue({
       isLoading: false,
-      data: details.result('ChIJyfjNbFU-xxQR80zJBtL_kko'),
+      data: details.result(PLACE_ID),
     })
 
     const page = render(<DetailsPage id={''} />, { wrapper })
 
-    page.debug()
     const tabPagination = page.queryByTestId('tab__navigation')
 
     expect(tabPagination).toBeInTheDocument()
@@ -90,7 +87,6 @@ describe('/details', () => {
 
     const page = render(<DetailsPage id={''} />, { wrapper })
 
-    page.debug()
     const errorFallback = page.queryByTestId('error__fallback')
     const errorText = page.queryByText(ERROR_TEXT)
 
@@ -112,11 +108,23 @@ describe('/details', () => {
 
     const page = render(<DetailsPage id={''} />, { wrapper })
 
-    page.debug()
     const errorFallback = page.queryByTestId('error__fallback')
     const errorText = page.queryByText(ERROR_TEXT)
 
     expect(errorFallback).toBeInTheDocument()
     expect(errorText).toBeInTheDocument()
+  })
+  it('890f6: show `評価を追加✨` when reviewStatus is saved as NEW', () => {
+    mockGetActivity.mockReturnValue({
+      isLoading: false,
+      data: _testActivity,
+    })
+    mockGetDetails.mockReturnValue({
+      isLoading: false,
+      data: details.result(PLACE_ID),
+    })
+
+    const page = render(<DetailsPage id={''} />, { wrapper })
+    page.debug()
   })
 })
