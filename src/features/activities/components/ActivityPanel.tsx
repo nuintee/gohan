@@ -112,6 +112,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         <DropDown
           menu={SORT_MENU.flatMap((v) =>
             v.options.map((method) => ({
+              testId: `dropdown_item_${v.key}_${method}`,
               label: `${v.label}: ${SORT_ENUM[method].label}`,
               onDropDownItemClick: () =>
                 setSortOptions((_prev) => ({
@@ -155,7 +156,11 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
       {filteredArray
         ?.filter((v) => !deletedContents.includes(v.id as keyof typeof query.data))
         .map((activity, index, original) => (
-          <div className='flex gap-2 items-center justify-between' key={activity.id}>
+          <div
+            className='flex gap-2 items-center justify-between'
+            key={activity.id}
+            data-testid={`activity_panel__content_order_${index}`}
+          >
             <RestaurantBoard
               data={activity}
               onClick={() => onActivityClicked(activity)}

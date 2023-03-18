@@ -50,4 +50,32 @@ describe('<ActivityPanel />', () => {
 
     expect(errorFallback).toBeInTheDocument()
   })
+  it('c2e8a: sort order function result is correct', () => {
+    const ORDER_DATA = [
+      {
+        id: 'a',
+        place_id: 'TEST_PLACE_ID_0',
+        name: 'a',
+      },
+      {
+        id: 'b',
+        place_id: 'TEST_PLACE_ID_1',
+        name: 'b',
+      },
+      {
+        id: 'c',
+        place_id: 'TEST_PLACE_ID_2',
+        name: 'c',
+      },
+    ]
+
+    mockedUserActivities.mockReturnValue({
+      data: ORDER_DATA,
+      isFetching: false,
+      isFetched: true,
+    })
+
+    const page = render(<ActivityPanel />, { wrapper })
+    page.debug(page.baseElement, 200000)
+  })
 })
