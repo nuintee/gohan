@@ -18,6 +18,7 @@ const mockGetDetails = useDetails as jest.Mock
 
 describe('/details', () => {
   const PLACE_ID = 'ChIJyfjNbFU-xxQR80zJBtL_kko'
+
   it('10a2c: not showing add / update review and delete review from library when unauthed', async () => {
     // mock
     mockGetActivity.mockReturnValue({ isLoading: false, data: _testActivity })
@@ -114,10 +115,11 @@ describe('/details', () => {
     expect(errorFallback).toBeInTheDocument()
     expect(errorText).toBeInTheDocument()
   })
-  it('890f6: show `評価を追加✨` when reviewStatus is saved as NEW', () => {
+  it('890f6: show `評価を追加✨` when reviewStatus is NEW or not saved', () => {
+    const ACTIVITY_MUTATION_TEXT = '評価を追加 ✨'
     mockGetActivity.mockReturnValue({
       isLoading: false,
-      data: _testActivity,
+      data: { ..._testActivity, reviewStatus: 'NEW' },
     })
     mockGetDetails.mockReturnValue({
       isLoading: false,
@@ -125,6 +127,8 @@ describe('/details', () => {
     })
 
     const page = render(<DetailsPage id={''} />, { wrapper })
-    page.debug()
+    const mutationButton = page.getByTestId('activity_mutation__button')
+
+    expect(mutationButton.innerHTML).toBe(ACTIVITY_MUTATION_TEXT)
   })
 })
