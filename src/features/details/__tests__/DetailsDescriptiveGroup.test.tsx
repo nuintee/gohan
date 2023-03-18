@@ -1,6 +1,6 @@
 import { wrapper } from '@/config/jest/wrapper'
 import { details } from '@/data/details'
-import { DetailsAPI } from '@/features/restaurants/types'
+import { ResultsEntity } from '@/features/restaurants/types'
 import '@testing-library/jest-dom'
 import { render } from '@testing-library/react'
 
@@ -11,12 +11,15 @@ describe('<DetailsDescriptiveGroup />', () => {
   it('7cc65: [KEY_FEATURES] All Key features chips will be renderd when there are all defined', () => {
     const page = render(
       <DetailsDescriptiveGroup
-        data={{
-          ...details.result(PLACE_ID),
-          price_level: 3,
-          opening_hours: [],
-          user_ratings_total: 10,
-        }}
+        data={
+          {
+            ...details.result(PLACE_ID),
+            price_level: 3,
+            opening_hours: [],
+            user_ratings_total: 10,
+          } as ResultsEntity
+        }
+        isLoading={false}
       />,
       { wrapper },
     )
@@ -31,10 +34,13 @@ describe('<DetailsDescriptiveGroup />', () => {
   it('528fd: [KEY_FEATURES] price_level will not be rendered when undefined', () => {
     const page = render(
       <DetailsDescriptiveGroup
-        data={{
-          ...details.result(PLACE_ID),
-          price_level: undefined,
-        }}
+        data={
+          {
+            ...details.result(PLACE_ID),
+            price_level: undefined,
+          } as ResultsEntity
+        }
+        isLoading={false}
       />,
       { wrapper },
     )
@@ -45,10 +51,13 @@ describe('<DetailsDescriptiveGroup />', () => {
   it('09657: [KEY_FEATURES] opening_hours will not be rendered when undefined', () => {
     const page = render(
       <DetailsDescriptiveGroup
-        data={{
-          ...details.result(PLACE_ID),
-          opening_hours: undefined,
-        }}
+        data={
+          {
+            ...details.result(PLACE_ID),
+            opening_hours: undefined,
+          } as ResultsEntity
+        }
+        isLoading={false}
       />,
       { wrapper },
     )
@@ -63,7 +72,7 @@ describe('<DetailsDescriptiveGroup />', () => {
           {
             ...details.result(PLACE_ID),
             user_ratings_total: undefined,
-          } as DetailsAPI['result']
+          } as ResultsEntity
         }
         isLoading={false}
       />,
