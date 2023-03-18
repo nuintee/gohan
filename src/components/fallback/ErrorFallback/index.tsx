@@ -22,7 +22,10 @@ const ErrorFallBack = ({
   const screenSize = fullScreen ? 'h-screen w-screen' : 'h-full w-full'
 
   return (
-    <div className={`${screenSize} flex flex-col gap-10 items-center justify-center`}>
+    <div
+      className={`${screenSize} flex flex-col gap-10 items-center justify-center`}
+      data-testid='error__fallback'
+    >
       <Texts main='エラー' sub={error?.message} textAlign='center' size='large' />
       <SuspenseImage
         src='/images/error_image.svg'

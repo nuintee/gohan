@@ -78,4 +78,23 @@ describe('/details', () => {
 
     expect(tabPagination).toBeInTheDocument()
   })
+  it('8f9a4: show error Fallback on activity or details error', async () => {
+    const ERROR_TEXT = 'Invalid Details ID'
+    mockGetActivity.mockReturnValue({ isLoading: false, data: _testActivity })
+    mockGetDetails.mockReturnValue({
+      isLoading: false,
+      isError: true,
+      error: new Error(ERROR_TEXT),
+      data: details.result(''),
+    })
+
+    const page = render(<DetailsPage id={''} />, { wrapper })
+
+    page.debug()
+    const errorFallback = page.queryByTestId('error__fallback')
+    const errorText = page.queryByText(ERROR_TEXT)
+
+    expect(errorFallback).toBeInTheDocument()
+    expect(errorText).toBeInTheDocument()
+  })
 })
