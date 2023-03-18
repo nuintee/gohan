@@ -42,7 +42,6 @@ describe('<LocationSection />', () => {
       { wrapper },
     )
     const distanceCalculation = calculateDistance(GEOLOCATION_DATA.coords, GEOMETRY)
-    page.debug()
 
     const distance = page.queryByTestId('distance__decoration')
     const distanceText = page.getByText(distanceCalculation.auto)
@@ -75,7 +74,6 @@ describe('<LocationSection />', () => {
       />,
       { wrapper },
     )
-    page.debug()
 
     const distance = page.queryByTestId('distance__decoration')
     expect(distance).not.toBeInTheDocument()
