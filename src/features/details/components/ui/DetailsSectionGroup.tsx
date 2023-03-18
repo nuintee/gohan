@@ -2,13 +2,11 @@ import { Button } from '@/components/ui'
 import MapBoxChip from '@/features/mapbox/components/MapBoxChip'
 import Pin from '@/features/mapbox/components/MarkerPin'
 import useMapBox from '@/features/mapbox/hooks'
-import useGPS from '@/hooks/gps'
 import useMediaQuery from '@/hooks/mediaquery'
-import haversineDistance from '@/libs/haversine-distance'
 import { useState } from 'react'
 import useDetails from '../../hooks/useDetails'
-import DetailsSection from '../../layouts/DetailsSection'
 import KeyFeaturesSection from './KeyFeaturesSection'
+import LocationSection from './LocationSection'
 import ReviewsSection from './ReviewsSection'
 
 const DetailsSectionGroup = ({
@@ -18,82 +16,21 @@ const DetailsSectionGroup = ({
   data: ReturnType<typeof useDetails>['data']
   isLoading: boolean
 }) => {
-  const { onActivityClicked, mapBoxRef } = useMapBox()
-  const { gps, isGPSFetching, isGPSError } = useGPS()
+  const { onActivityClicked } = useMapBox()
   const isOverMedium = useMediaQuery('md')
 
   // local state
   const [showFullMap, setShowFullMap] = useState(false)
 
-  function handleMapBoxClick() {
-    if (!isOverMedium) {
-      setShowFullMap(true)
-    }
-  }
-
-  const distanceDecoration = () => {
-    if (isGPSFetching || isGPSError) return ''
-
-    const distance = haversineDistance(
-      {
-        lat: gps.coords.latitude as number,
-        lng: gps.coords.longitude as number,
-      },
-      {
-        lat: data?.geometry?.location.lat as number,
-        lng: data?.geometry?.location.lng as number,
-      },
-    )
-
-    return distance.auto
-  }
-
   return (
     <>
       <KeyFeaturesSection data={data} isLoading={isLoading} />
-      <DetailsSection
-        margin='5rem'
-        main='ロケーション'
-        sub={data?.vicinity}
+      <LocationSection
+        data={data}
         isLoading={isLoading}
-        allowCopy
-        copyValue={data?.vicinity}
-        mainDecoration={
-          distanceDecoration() && <p className='text-gh-gray'>{distanceDecoration()}</p>
-        }
-      >
-        <div className='flex-1 aspect-video w-full relative' onClick={handleMapBoxClick}>
-          {!Boolean(showFullMap && !isOverMedium) && (
-            <MapBoxChip
-              latitude={data?.geometry?.location.lat}
-              longitude={data?.geometry?.location.lng}
-              dragPan={isOverMedium}
-              scrollZoom={false}
-              trackUserLocation={isOverMedium}
-            >
-              <Pin
-                latitude={data?.geometry?.location.lat}
-                longitude={data?.geometry?.location.lng}
-                data={data}
-                focused={false}
-              />
-            </MapBoxChip>
-          )}
-          {isOverMedium && (
-            <div className={`absolute right-4 top-4 text-xs flex flex-col gap-2`}>
-              <Button text='地点をフォーカス' onClick={() => onActivityClicked(data)} />
-              <Button
-                text='+ ズームイン'
-                onClick={() => mapBoxRef?.zoomTo(mapBoxRef.getZoom() + 1)}
-              />
-              <Button
-                text='- ズームアウト'
-                onClick={() => mapBoxRef?.zoomTo(mapBoxRef.getZoom() - 1)}
-              />
-            </div>
-          )}
-        </div>
-      </DetailsSection>
+        showFullMap={showFullMap}
+        setShowFullMap={setShowFullMap}
+      />
       <ReviewsSection data={data} isLoading={isLoading} />
       {showFullMap && !isOverMedium && (
         <div className='flex-1 relative'>
