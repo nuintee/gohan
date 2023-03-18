@@ -44,7 +44,40 @@ describe('<LocationSection />', () => {
     const distanceCalculation = calculateDistance(GEOLOCATION_DATA.coords, GEOMETRY)
     page.debug()
 
+    const distance = page.queryByTestId('distance__decoration')
     const distanceText = page.getByText(distanceCalculation.auto)
+    expect(distance).toBeInTheDocument()
     expect(distanceText).toBeInTheDocument()
+  })
+  it('808da: not renders distance gps is valid', () => {
+    mockedGPS.mockImplementation(() => ({
+      gps: {
+        coords: {},
+      },
+      isGPSFetching: false,
+      isGPSError: false,
+    }))
+    const page = render(
+      <LocationSection
+        data={{
+          vicinity: 'TEST_VICINITY',
+          geometry: {
+            location: GEOMETRY,
+            viewport: {
+              northeast: GEOMETRY,
+              southwest: GEOMETRY,
+            },
+          },
+        }}
+        isLoading={false}
+        showFullMap={false}
+        onMapClick={() => {}}
+      />,
+      { wrapper },
+    )
+    page.debug()
+
+    const distance = page.queryByTestId('distance__decoration')
+    expect(distance).not.toBeInTheDocument()
   })
 })

@@ -51,7 +51,11 @@ const LocationSection = ({
       allowCopy
       copyValue={data?.vicinity}
       mainDecoration={
-        distanceDecoration() && <p className='text-gh-gray'>{distanceDecoration()}</p>
+        distanceDecoration() && (
+          <p className='text-gh-gray' data-testid='distance__decoration'>
+            {distanceDecoration()}
+          </p>
+        )
       }
     >
       <div className='flex-1 aspect-video w-full relative' onClick={onMapClick}>
