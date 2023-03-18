@@ -147,7 +147,31 @@ describe('/details', () => {
 
     expect(mutationButton.innerHTML).toMatch(ACTIVITY_MUTATION_TEXT)
   })
-  it('c7b49: show `評価を変更` when reviewStatus is saved and not `NEW`', () => {
+  it('7cc65: [KEY_FEATURES] All Key features chips will be renderd when there are all defined', () => {
+    mockGetActivity.mockReturnValue({
+      isLoading: false,
+      data: { ..._testActivity, reviewStatus: 'BAD' },
+    })
+    mockGetDetails.mockReturnValue({
+      isLoading: false,
+      data: {
+        ...details.result(PLACE_ID),
+        price_level: 3,
+        opening_hours: [],
+        user_ratings_total: 10,
+      },
+    })
+
+    const page = render(<DetailsPage id={PLACE_ID} />, { wrapper })
+    const priceLevelChip = page.queryByTestId('descriptive_price_level__chip')
+    const openingHoursChip = page.queryByTestId('descriptive_opening_hours__chip')
+    const userRatingsTotal = page.queryByTestId('descriptive_user_ratings_total__chip')
+
+    expect(priceLevelChip).toBeInTheDocument()
+    expect(openingHoursChip).toBeInTheDocument()
+    expect(userRatingsTotal).toBeInTheDocument()
+  })
+  it('528fd: [KEY_FEATURES] price_level will not be rendered when undefined', () => {
     mockGetActivity.mockReturnValue({
       isLoading: false,
       data: { ..._testActivity, reviewStatus: 'BAD' },
@@ -157,16 +181,12 @@ describe('/details', () => {
       data: {
         ...details.result(PLACE_ID),
         price_level: undefined,
-        opening_hours: undefined,
-        user_ratings_total: undefined,
       },
     })
 
     const page = render(<DetailsPage id={PLACE_ID} />, { wrapper })
-    const descriptiveSection = page.queryByTestId('details_descriptive__group')
+    const priceLevelChip = page.queryByTestId('descriptive_price_level__chip')
 
-    page.debug()
-
-    expect(descriptiveSection).toBeInTheDocument()
+    expect(priceLevelChip).not.toBeInTheDocument()
   })
 })

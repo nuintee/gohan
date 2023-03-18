@@ -24,7 +24,7 @@ const DescriptiveChip = ({
   return (
     <div
       className='flex gap-4 items-center w-full bg-gh-pale p-4 select-none rounded-md'
-      data-testit={testId}
+      data-testid={testId}
     >
       <section
         className='bg-white p-4 rounded-full'

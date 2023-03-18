@@ -34,6 +34,7 @@ const DetailsDescriptiveGroup = ({
           icon={<Price />}
           isLoading={isLoading}
           circleBackgroundColor={memorizedData.priceLevel.color}
+          testId='descriptive_price_level__chip'
         />
       )}
       {data?.opening_hours && (
@@ -43,6 +44,7 @@ const DetailsDescriptiveGroup = ({
           icon={<Clock />}
           isLoading={isLoading}
           circleBackgroundColor={memorizedData.openHours.color}
+          testId='descriptive_opening_hours__chip'
         />
       )}
       {data?.user_ratings_total && data?.user_ratings_total > 0 && (
@@ -52,6 +54,7 @@ const DetailsDescriptiveGroup = ({
           icon={<Star />}
           isLoading={isLoading}
           circleBackgroundColor={memorizedData.ratingLevel.color}
+          testId='descriptive_user_ratings_total__chip'
         />
       )}
     </section>
