@@ -5,7 +5,6 @@ import useMapBox from '@/features/mapbox/hooks'
 import useGPS from '@/hooks/gps'
 import useMediaQuery from '@/hooks/mediaquery'
 import haversineDistance from '@/libs/haversine-distance'
-import { Dispatch, SetStateAction } from 'react'
 import useDetails from '../../hooks/useDetails'
 import DetailsSection from '../../layouts/DetailsSection'
 
@@ -13,22 +12,16 @@ const LocationSection = ({
   data,
   isLoading = false,
   showFullMap,
-  setShowFullMap,
+  onMapClick,
 }: {
   data: ReturnType<typeof useDetails>['data']
   isLoading?: boolean
   showFullMap: boolean
-  setShowFullMap: Dispatch<SetStateAction<boolean>>
+  onMapClick: () => void
 }) => {
   const { onActivityClicked, mapBoxRef } = useMapBox()
   const { gps, isGPSFetching, isGPSError } = useGPS()
   const isOverMedium = useMediaQuery('md')
-
-  function handleMapBoxClick() {
-    if (!isOverMedium) {
-      setShowFullMap(true)
-    }
-  }
 
   const distanceDecoration = () => {
     if (isGPSFetching || isGPSError) return ''
@@ -59,7 +52,7 @@ const LocationSection = ({
         distanceDecoration() && <p className='text-gh-gray'>{distanceDecoration()}</p>
       }
     >
-      <div className='flex-1 aspect-video w-full relative' onClick={handleMapBoxClick}>
+      <div className='flex-1 aspect-video w-full relative' onClick={onMapClick}>
         {!Boolean(showFullMap && !isOverMedium) && (
           <MapBoxChip
             latitude={data?.geometry?.location.lat}

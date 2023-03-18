@@ -22,6 +22,12 @@ const DetailsSectionGroup = ({
   // local state
   const [showFullMap, setShowFullMap] = useState(false)
 
+  function handleMapBoxClick() {
+    if (!isOverMedium) {
+      setShowFullMap(true)
+    }
+  }
+
   return (
     <>
       <KeyFeaturesSection data={data} isLoading={isLoading} />
@@ -29,7 +35,7 @@ const DetailsSectionGroup = ({
         data={data}
         isLoading={isLoading}
         showFullMap={showFullMap}
-        setShowFullMap={setShowFullMap}
+        onMapClick={handleMapBoxClick}
       />
       <ReviewsSection data={data} isLoading={isLoading} />
       {showFullMap && !isOverMedium && (
