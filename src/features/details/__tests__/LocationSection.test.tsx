@@ -6,6 +6,7 @@ import useGPS from '@/hooks/gps'
 
 // data
 import GEOLOCATION_DATA from '@/data/geolocation.json'
+import calculateDistance from '@/libs/haversine-distance'
 const GEOMETRY = {
   lat: 20,
   lng: 20,
@@ -40,7 +41,10 @@ describe('<LocationSection />', () => {
       />,
       { wrapper },
     )
-
+    const distanceCalculation = calculateDistance(GEOLOCATION_DATA.coords, GEOMETRY)
     page.debug()
+
+    const distanceText = page.getByText(distanceCalculation.auto)
+    expect(distanceText).toBeInTheDocument()
   })
 })
