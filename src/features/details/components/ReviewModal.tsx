@@ -18,8 +18,6 @@ type Props = {
 }
 
 const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
-  console.log('DATA', data)
-
   const {
     register,
     handleSubmit,

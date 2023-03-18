@@ -35,8 +35,6 @@ const ActivityDropDown = ({
     return status === 'authenticated' ? condition : true
   }
 
-  console.log('ROUTER', router)
-
   const menu = [
     {
       label: '公式ホームページを表示',

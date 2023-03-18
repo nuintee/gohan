@@ -37,6 +37,8 @@ const LocationSection = ({
       },
     )
 
+    if (!distance || Number.isNaN(distance)) return ''
+
     return distance.auto
   }
 

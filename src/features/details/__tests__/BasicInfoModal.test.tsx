@@ -7,7 +7,6 @@ import { BASIC_INFO_KEYS } from '../constants'
 describe('<BasicInfoModal />', () => {
   it('4fff8: do not show all fields when invalid', () => {
     const page = render(<BasicInfoModal isOpen={true} data={{}} />)
-    page.debug()
     const main = page.getByTestId('basic_info__modal_main')
     expect(main.innerHTML).toBe('') // not a single field gets render
   })
@@ -25,7 +24,6 @@ describe('<BasicInfoModal />', () => {
         }}
       />,
     )
-    page.debug()
 
     BASIC_INFO_KEYS.forEach((info_key) => {
       expect(page.getByTestId(`basic_info__modal_key_${info_key}`))
