@@ -71,7 +71,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     const DUMMIES = Array(COUNT).fill(null)
 
     return (
-      <div className='flex flex-col flex-1'>
+      <div className='flex flex-col flex-1' data-testid='activity_panel_loading__fallback'>
         {DUMMIES.map((_v, i) => (
           <div
             className='bg-gh-l-gray max-h-24 flex-1 animate-pulse rounded-md m-4 mb-0'
