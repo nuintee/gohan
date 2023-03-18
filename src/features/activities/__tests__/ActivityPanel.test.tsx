@@ -11,7 +11,7 @@ jest.mock('../hooks/useGetUserActivities', () => jest.fn())
 const mockedUserActivities = useGetUserActivities as jest.Mock
 
 describe('<ActivityPanel />', () => {
-  it('b39f3: show NoDataFallback on data length 0', () => {
+  it('b39f3: show NoDataFallback when data length is 0', () => {
     mockedUserActivities.mockReturnValue({
       data: [],
       isFetching: false,
@@ -36,5 +36,18 @@ describe('<ActivityPanel />', () => {
     const nodataFallback = page.getByTestId('activity_panel_loading__fallback')
 
     expect(nodataFallback).toBeInTheDocument()
+  })
+  it('2d272: show ErrorFallback on error', () => {
+    mockedUserActivities.mockReturnValue({
+      data: [],
+      isError: true,
+      error: new Error('TEST_ACTIVITY_ERROR'),
+    })
+
+    const page = render(<ActivityPanel />, { wrapper })
+
+    const errorFallback = page.getByTestId('error__fallback')
+
+    expect(errorFallback).toBeInTheDocument()
   })
 })
