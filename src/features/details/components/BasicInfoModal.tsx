@@ -27,6 +27,7 @@ const BasicInfoModal = (props: Props) => {
       <div
         className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
         key={modalKey}
+        data-testid={`basic_info__modal_key_${modalKey}`}
       >
         <DetailsSummary
           summaryTitle={mapBasicInfoKeys(modalKey)}
@@ -66,7 +67,7 @@ const BasicInfoModal = (props: Props) => {
     <ModalLayout isOpen={isOpen} onRequestClose={onClose}>
       <section className='w-[80vw] max-w-[30rem]'>
         <PanelHeader title='基本的な情報' onClose={onClose} />
-        <main className='flex flex-col'>
+        <main className='flex flex-col' data-testid='basic_info__modal_main'>
           {Object.keys(data)
             .filter((v) =>
               BASIC_INFO_KEYS.includes(
