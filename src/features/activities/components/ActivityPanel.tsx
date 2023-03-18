@@ -89,7 +89,10 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   if ((query.data && query.data?.length <= 0) || deletedContents.length === query.data?.length) {
     console.log({ deletedContents })
     return (
-      <div className='flex-1 p-4 flex items-center justify-center'>
+      <div
+        className='flex-1 p-4 flex items-center justify-center'
+        data-testid='activity_panel_nodata__fallback'
+      >
         <Texts
           main='データがありません。'
           sub={'Gohanをして、早速新しい場所を発見しましょう。'}
