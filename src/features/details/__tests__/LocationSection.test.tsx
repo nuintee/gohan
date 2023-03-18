@@ -2,10 +2,14 @@ import { wrapper } from '@/config/jest/wrapper'
 import '@testing-library/jest-dom'
 import { render } from '@testing-library/react'
 import LocationSection from '../components/ui/LocationSection'
+import useGPS from '@/hooks/gps'
 
 // data
 import GEOLOCATION_DATA from '@/data/geolocation.json'
-import useGPS from '@/hooks/gps'
+const GEOMETRY = {
+  lat: 20,
+  lng: 20,
+}
 
 jest.mock('@/hooks/gps', () => jest.fn())
 
@@ -23,19 +27,10 @@ describe('<LocationSection />', () => {
         data={{
           vicinity: 'TEST_VICINITY',
           geometry: {
-            location: {
-              lat: 20,
-              lng: 20,
-            },
+            location: GEOMETRY,
             viewport: {
-              northeast: {
-                lat: 20,
-                lng: 20,
-              },
-              southwest: {
-                lat: 20,
-                lng: 20,
-              },
+              northeast: GEOMETRY,
+              southwest: GEOMETRY,
             },
           },
         }}
