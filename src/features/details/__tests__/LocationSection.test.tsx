@@ -5,21 +5,19 @@ import LocationSection from '../components/ui/LocationSection'
 
 // data
 import GEOLOCATION_DATA from '@/data/geolocation.json'
+import useGPS from '@/hooks/gps'
 
-// mock useGPS
-jest.mock('@/hooks/gps', () =>
-  jest.fn().mockImplementation(() => ({
-    // gps: GEOLOCATION_DATA,
-    gps: {
-      coords: {},
-    },
-    isGPSFetching: false,
-    isGPSError: false,
-  })),
-)
+jest.mock('@/hooks/gps', () => jest.fn())
+
+const mockedGPS = useGPS as jest.Mock
 
 describe('<LocationSection />', () => {
-  it('459e5:', () => {
+  mockedGPS.mockImplementation(() => ({
+    gps: GEOLOCATION_DATA,
+    isGPSFetching: false,
+    isGPSError: false,
+  }))
+  it('459e5: renders distance in metric when haversine results are valid', () => {
     const page = render(
       <LocationSection
         data={{
