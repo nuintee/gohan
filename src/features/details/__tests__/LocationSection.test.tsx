@@ -9,7 +9,10 @@ import GEOLOCATION_DATA from '@/data/geolocation.json'
 // mock useGPS
 jest.mock('@/hooks/gps', () =>
   jest.fn().mockImplementation(() => ({
-    gps: GEOLOCATION_DATA,
+    // gps: GEOLOCATION_DATA,
+    gps: {
+      coords: {},
+    },
     isGPSFetching: false,
     isGPSError: false,
   })),
