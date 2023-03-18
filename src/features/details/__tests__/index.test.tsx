@@ -115,7 +115,7 @@ describe('/details', () => {
     expect(errorFallback).toBeInTheDocument()
     expect(errorText).toBeInTheDocument()
   })
-  it('890f6: show `評価を追加✨` when reviewStatus is NEW or not saved', () => {
+  it('890f6: show `評価を追加 ✨` when reviewStatus is NEW or not saved', () => {
     const ACTIVITY_MUTATION_TEXT = '評価を追加 ✨'
     mockGetActivity.mockReturnValue({
       isLoading: false,
@@ -129,6 +129,22 @@ describe('/details', () => {
     const page = render(<DetailsPage id={''} />, { wrapper })
     const mutationButton = page.getByTestId('activity_mutation__button')
 
-    expect(mutationButton.innerHTML).toBe(ACTIVITY_MUTATION_TEXT)
+    expect(mutationButton.innerHTML).toMatch(ACTIVITY_MUTATION_TEXT)
+  })
+  it('c7b49: show `評価を変更` when reviewStatus is saved and not `NEW`', () => {
+    const ACTIVITY_MUTATION_TEXT = '評価を変更'
+    mockGetActivity.mockReturnValue({
+      isLoading: false,
+      data: { ..._testActivity, reviewStatus: 'BAD' },
+    })
+    mockGetDetails.mockReturnValue({
+      isLoading: false,
+      data: details.result(PLACE_ID),
+    })
+
+    const page = render(<DetailsPage id={''} />, { wrapper })
+    const mutationButton = page.getByTestId('activity_mutation__button')
+
+    expect(mutationButton.innerHTML).toMatch(ACTIVITY_MUTATION_TEXT)
   })
 })
