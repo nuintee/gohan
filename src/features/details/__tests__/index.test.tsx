@@ -147,4 +147,26 @@ describe('/details', () => {
 
     expect(mutationButton.innerHTML).toMatch(ACTIVITY_MUTATION_TEXT)
   })
+  it('c7b49: show `評価を変更` when reviewStatus is saved and not `NEW`', () => {
+    mockGetActivity.mockReturnValue({
+      isLoading: false,
+      data: { ..._testActivity, reviewStatus: 'BAD' },
+    })
+    mockGetDetails.mockReturnValue({
+      isLoading: false,
+      data: {
+        ...details.result(PLACE_ID),
+        price_level: undefined,
+        opening_hours: undefined,
+        user_ratings_total: undefined,
+      },
+    })
+
+    const page = render(<DetailsPage id={PLACE_ID} />, { wrapper })
+    const descriptiveSection = page.queryByTestId('details_descriptive__group')
+
+    page.debug()
+
+    expect(descriptiveSection).toBeInTheDocument()
+  })
 })

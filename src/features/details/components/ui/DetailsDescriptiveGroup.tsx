@@ -23,7 +23,10 @@ const DetailsDescriptiveGroup = ({
   }, [data])
 
   return (
-    <section className='flex items-center justify-between gap-4 my-8 md:flex-row flex-col overflow-x-auto'>
+    <section
+      className='flex items-center justify-between gap-4 my-8 md:flex-row flex-col overflow-x-auto'
+      data-testid='details_descriptive__group'
+    >
       {data?.price_level && (
         <DescriptiveChip
           title={memorizedData.priceLevel.label}
