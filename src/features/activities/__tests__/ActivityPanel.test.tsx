@@ -1,6 +1,7 @@
 import { wrapper } from '@/config/jest/wrapper'
+import { SORT_ENUM } from '@/constants/sort'
 import '@testing-library/jest-dom'
-import { render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import ActivityPanel from '../components/ActivityPanel'
 import useGetUserActivities from '../hooks/useGetUserActivities'
 
@@ -9,6 +10,24 @@ jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('../hooks/useGetUserActivities', () => jest.fn())
 
 const mockedUserActivities = useGetUserActivities as jest.Mock
+
+const ORDER_DATA = [
+  {
+    id: 'TEST_ID_A',
+    place_id: 'TEST_PLACE_ID_0',
+    name: 'TEST_NAME_A',
+  },
+  {
+    id: 'TEST_ID_B',
+    place_id: 'TEST_PLACE_ID_1',
+    name: 'TEST_NAME_B',
+  },
+  {
+    id: 'TEST_ID_C',
+    place_id: 'TEST_PLACE_ID_2',
+    name: 'TEST_NAME_C',
+  },
+]
 
 describe('<ActivityPanel />', () => {
   it('b39f3: show NoDataFallback when data length is 0', () => {
@@ -50,25 +69,7 @@ describe('<ActivityPanel />', () => {
 
     expect(errorFallback).toBeInTheDocument()
   })
-  it('c2e8a: sort order function result is correct', () => {
-    const ORDER_DATA = [
-      {
-        id: 'a',
-        place_id: 'TEST_PLACE_ID_0',
-        name: 'a',
-      },
-      {
-        id: 'b',
-        place_id: 'TEST_PLACE_ID_1',
-        name: 'b',
-      },
-      {
-        id: 'c',
-        place_id: 'TEST_PLACE_ID_2',
-        name: 'c',
-      },
-    ]
-
+  it('c2e8a: sort order function result is correct', async () => {
     mockedUserActivities.mockReturnValue({
       data: ORDER_DATA,
       isFetching: false,
@@ -76,6 +77,39 @@ describe('<ActivityPanel />', () => {
     })
 
     const page = render(<ActivityPanel />, { wrapper })
-    page.debug(page.baseElement, 200000)
+
+    const nameSortButtonASC = page.getByTestId('dropdown_item_name_ASC')
+    const nameSortButtonDESC = page.getByTestId('dropdown_item_name_DESC')
+
+    // ASC
+    ORDER_DATA.sort((a, b) => SORT_ENUM.ASC.sortFn(a, b, 'name') || 1).forEach((data, index) => {
+      const target = page.getByTestId(`activity_panel__content_order_${index}`)
+      const text = target.querySelector('h1')?.innerHTML
+      expect(text).toBe(data.name)
+    })
+
+    // Triggers DESC sort
+    fireEvent.click(nameSortButtonDESC)
+
+    await waitFor(() => {
+      // DESC
+      ORDER_DATA.sort((a, b) => SORT_ENUM.DESC.sortFn(a, b, 'name') || 1).forEach((data, index) => {
+        const target = page.getByTestId(`activity_panel__content_order_${index}`)
+        const text = target.querySelector('h1')?.innerHTML
+        expect(text).toBe(data.name)
+      })
+    })
+
+    // Triggers ASC sort
+    fireEvent.click(nameSortButtonASC)
+
+    await waitFor(() => {
+      // DESC
+      ORDER_DATA.sort((a, b) => SORT_ENUM.ASC.sortFn(a, b, 'name') || 1).forEach((data, index) => {
+        const target = page.getByTestId(`activity_panel__content_order_${index}`)
+        const text = target.querySelector('h1')?.innerHTML
+        expect(text).toBe(data.name)
+      })
+    })
   })
 })
