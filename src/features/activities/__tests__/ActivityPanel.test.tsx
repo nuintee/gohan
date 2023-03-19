@@ -16,16 +16,19 @@ const ORDER_DATA = [
     id: 'TEST_ID_A',
     place_id: 'TEST_PLACE_ID_0',
     name: 'TEST_NAME_A',
+    reviewStatus: 'NEW',
   },
   {
     id: 'TEST_ID_B',
     place_id: 'TEST_PLACE_ID_1',
     name: 'TEST_NAME_B',
+    reviewStatus: 'GOOD',
   },
   {
     id: 'TEST_ID_C',
     place_id: 'TEST_PLACE_ID_2',
     name: 'TEST_NAME_C',
+    reviewStatus: 'OK',
   },
 ]
 
@@ -109,6 +112,74 @@ describe('<ActivityPanel />', () => {
         const target = page.getByTestId(`activity_panel__content_order_${index}`)
         const text = target.querySelector('h1')?.innerHTML
         expect(text).toBe(data.name)
+      })
+    })
+  })
+  it('c32ec: filter function result is correct', async () => {
+    mockedUserActivities.mockReturnValue({
+      data: ORDER_DATA,
+      isFetching: false,
+      isFetched: true,
+    })
+
+    const page = render(<ActivityPanel />, { wrapper })
+
+    // All data contents are rendered
+    ORDER_DATA.forEach((_data, index) => {
+      const target = page.getByTestId(`activity_panel__content_order_${index}`)
+      expect(target).toBeInTheDocument()
+    })
+
+    const allSortButton = page.getByTestId('dropdown_item_filter_ALL')
+    const goodSortButton = page.getByTestId('dropdown_item_filter_GOOD')
+    const okSortButton = page.getByTestId('dropdown_item_filter_OK')
+    const badSortButton = page.getByTestId('dropdown_item_filter_BAD')
+
+    // triggers GOOD sort
+    fireEvent.click(goodSortButton)
+
+    await waitFor(() => {
+      ORDER_DATA.forEach((v) => {
+        if (v.reviewStatus === 'GOOD') {
+          expect(page.queryByText(v.name)).toBeInTheDocument()
+        } else {
+          expect(page.queryByText(v.name)).not.toBeInTheDocument()
+        }
+      })
+    })
+
+    // triggers OK sort
+    fireEvent.click(okSortButton)
+
+    await waitFor(() => {
+      ORDER_DATA.forEach((v) => {
+        if (v.reviewStatus === 'OK') {
+          expect(page.queryByText(v.name)).toBeInTheDocument()
+        } else {
+          expect(page.queryByText(v.name)).not.toBeInTheDocument()
+        }
+      })
+    })
+
+    // triggers OK sort
+    fireEvent.click(badSortButton)
+
+    await waitFor(() => {
+      ORDER_DATA.forEach((v) => {
+        if (v.reviewStatus === 'BAD') {
+          expect(page.queryByText(v.name)).toBeInTheDocument()
+        } else {
+          expect(page.queryByText(v.name)).not.toBeInTheDocument()
+        }
+      })
+    })
+
+    // triggers ALL sort
+    fireEvent.click(allSortButton)
+
+    await waitFor(() => {
+      ORDER_DATA.forEach((v) => {
+        expect(page.queryByText(v.name)).toBeInTheDocument()
       })
     })
   })

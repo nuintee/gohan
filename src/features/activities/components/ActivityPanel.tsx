@@ -137,6 +137,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
         <DropDown
           menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
+            testId: `dropdown_item_filter_${v}`,
             label: sortValueMapper(v as ConditionsWithALL<ReviewStatus>),
             onDropDownItemClick: () => setFilterStatus(v as ConditionsWithALL<ReviewStatus>),
           }))}
