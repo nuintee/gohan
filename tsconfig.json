@@ -28,8 +28,7 @@
     "src/pages/api/auth/[...auth0.ts",
     "changelog.config.js",
     "src/pages/api/v1/user/.DEPRECATED_index.ts",
-    "src/config/colors.js",
-    "cypress/e2e/signout.cy.js"
+    "src/config/colors.js"
   ],
   "exclude": ["node_modules"]
 }
