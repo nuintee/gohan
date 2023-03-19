@@ -44,7 +44,7 @@ describe('<SearchLayout />', () => {
     fireEvent.click(button)
 
     await waitFor(() => {
-      expect(errorToast).toBeCalledWith('Please allow user geolocaiton tracking')
+      expect(errorToast).toBeCalledWith('位置情報を有効化して下さい。')
       expect(spyOnClose).toHaveBeenCalled()
 
       spyOnClose.mockRestore()
