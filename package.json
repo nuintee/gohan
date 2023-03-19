@@ -24,8 +24,7 @@
     "prisma:studio": "npx prisma studio",
     "prisma:all": "npm run prisma:push && npm run prisma:gen && npm run prisma:studio",
     "deadcode": "ts-prune -e",
-    "deadcode:count": "ts-prune | wc -l",
-    "cypress": "cypress open"
+    "deadcode:count": "ts-prune | wc -l"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
@@ -96,7 +95,6 @@
     "@types/request-ip": "^0.0.37",
     "autoprefixer": "^10.4.12",
     "babel-loader": "^8.2.5",
-    "cypress": "^12.8.1",
     "eslint": "8.25.0",
     "eslint-config-next": "^13.1.6",
     "eslint-config-prettier": "^8.5.0",
