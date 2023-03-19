@@ -30,9 +30,9 @@ const useRestaurants = ({
 
       if (error instanceof Error) {
         if (isGPSFetching) {
-          useToast.info('Loading user location, please wait')
+          useToast.info('現在地を取得中です。')
         } else {
-          const message = isGPSError ? `Please allow user geolocaiton tracking` : error.message
+          const message = isGPSError ? `位置情報を有効化して下さい。` : error.message
 
           useToast.error(message)
           rest.errorCallback && rest.errorCallback(error)
