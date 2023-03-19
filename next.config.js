@@ -10,11 +10,13 @@ const withPWA = require('next-pwa')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  compiler: {
-    reactRemoveProperties: {
-      properties: process.env.NODE_ENV === 'production' ? ['^data-testid$'] : [],
+  ...(process.env.NODE_ENV === 'production' && {
+    compiler: {
+      reactRemoveProperties: {
+        properties: ['^data-testid$'],
+      },
     },
-  },
+  }),
   reactStrictMode: true,
   swcMinify: true,
   eslint: {
