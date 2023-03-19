@@ -38,7 +38,17 @@ const MapBox = () => {
   function handleGeolocateError(error: GeolocateErrorEvent) {
     if (error?.TIMEOUT === 3 && error?.code === 3) return
 
-    useToast.error(error.message)
+    switch (error.code) {
+      case 1:
+        useToast.error('位置情報を有効化して下さい。')
+        break
+      case 2:
+        useToast.error('現在地の取得に失敗')
+        break
+      default:
+        useToast.error(error.message)
+        break
+    }
   }
 
   const handleGeolocate = (e: GeolocateResultEvent) => {
