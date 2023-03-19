@@ -50,7 +50,7 @@ const User = (props: UserProps) => {
       : `h-10 sm:min-w-[6rem] w-fit rounded-md sm:p-4 p-1 whitespace-nowrap flex items-center justify-center border-[1px] bg-white text-gh-dark ${feedBack}`
 
   return (
-    <button className={theme} onClick={onClick}>
+    <button className={theme} onClick={onClick} data-testid={`user_${status}__button`}>
       {status === 'authenticated' ? (
         <SuspenseImage
           src={

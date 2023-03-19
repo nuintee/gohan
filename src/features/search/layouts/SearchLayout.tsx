@@ -65,6 +65,7 @@ const SearchLayout = ({
   return (
     <div
       className={`flex flex-1 flex-col gap-4 items-center justify-center bg-white duration-700 ease-in-out ${absoluteStyle}`}
+      data-testid='search__layout'
     >
       {/* Layout */}
       <div className='flex flex-col gap-2 items-center justify-center'>

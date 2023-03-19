@@ -17,8 +17,13 @@ describe('/library', () => {
 
   it('e6eb4: renders Auth Fallback when not authed', () => {
     const page = render(<LibraryPage />, { wrapper: unauthedWrapper })
-
     const viewport = page.getByTestId('auth__fallback')
     expect(viewport).toBeInTheDocument()
+  })
+
+  it('f8767: open ActivityPanel on first render', () => {
+    const page = render(<LibraryPage />, { wrapper: authedWrapper })
+    const activityPanel = page.getByTestId('activity__panel_is_true')
+    expect(activityPanel).toBeInTheDocument()
   })
 })

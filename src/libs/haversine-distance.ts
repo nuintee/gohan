@@ -10,6 +10,7 @@ const calculateDistance = (a: Point, b: Point, withUnit?: boolean) => {
       killo: '',
       yard: '',
       auto: '',
+      raw: '',
     }
 
   const meter = h(a, b)
@@ -19,6 +20,7 @@ const calculateDistance = (a: Point, b: Point, withUnit?: boolean) => {
   const auto = meter >= 1000 ? Math.round(killo) : Math.round(meter)
 
   const out = {
+    raw: meter,
     meter: `${meter} ${withUnit && 'm'}`,
     mile: `${mile} ${withUnit && 'miles'}`,
     killo: `${killo} ${withUnit && 'km'}`,

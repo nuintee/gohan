@@ -24,6 +24,7 @@ const customJestConfig = {
     '^@/utils(.*)$': '<rootDir>/src/utils$1',
     '^@/layouts(.*)$': '<rootDir>/src/layouts$1',
     '^@/stores(.*)$': '<rootDir>/src/stores$1',
+    '^@/server(.*)$': '<rootDir>/src/server$1',
   },
   setupFiles: ['dotenv/config'],
   setupFilesAfterEnv: ['<rootDir>/src/config/jest/setup.ts'],

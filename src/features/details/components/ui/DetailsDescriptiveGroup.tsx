@@ -23,7 +23,10 @@ const DetailsDescriptiveGroup = ({
   }, [data])
 
   return (
-    <section className='flex items-center justify-between gap-4 my-8 md:flex-row flex-col overflow-x-auto'>
+    <section
+      className='flex items-center justify-between gap-4 my-8 md:flex-row flex-col overflow-x-auto'
+      data-testid='details_descriptive__group'
+    >
       {data?.price_level && (
         <DescriptiveChip
           title={memorizedData.priceLevel.label}
@@ -31,6 +34,7 @@ const DetailsDescriptiveGroup = ({
           icon={<Price />}
           isLoading={isLoading}
           circleBackgroundColor={memorizedData.priceLevel.color}
+          testId='descriptive_price_level__chip'
         />
       )}
       {data?.opening_hours && (
@@ -40,6 +44,7 @@ const DetailsDescriptiveGroup = ({
           icon={<Clock />}
           isLoading={isLoading}
           circleBackgroundColor={memorizedData.openHours.color}
+          testId='descriptive_opening_hours__chip'
         />
       )}
       {data?.user_ratings_total && data?.user_ratings_total > 0 && (
@@ -49,6 +54,7 @@ const DetailsDescriptiveGroup = ({
           icon={<Star />}
           isLoading={isLoading}
           circleBackgroundColor={memorizedData.ratingLevel.color}
+          testId='descriptive_user_ratings_total__chip'
         />
       )}
     </section>

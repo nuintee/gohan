@@ -53,6 +53,7 @@ const DetailsActionGroup = ({
                 <Chevron direction='bottom' />
               ),
           }}
+          testId='activity_mutation__button'
         />
       )}
       {(isOverLarge || status === 'unauthenticated') && (

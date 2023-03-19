@@ -12,7 +12,7 @@ const TabNavigation = ({
   if (disabled) return <></>
 
   return (
-    <div className='mt-8'>
+    <div className='mt-8' data-testid='tab__navigation'>
       {tabItems?.map((v, i) => (
         <button
           onClick={() => onSelect(i)}

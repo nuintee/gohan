@@ -4,6 +4,7 @@ type DropDownMenu = {
   label: string
   onDropDownItemClick: () => void
   ignored?: boolean
+  testId?: string
 }[]
 
 type Props = {
@@ -25,6 +26,7 @@ const DropDown = ({ menu, direction = 'bottom', isLoading = false, ...rest }: Pr
             className='text-left whitespace-nowrap p-2 rounded-md hover:bg-gray-200  hover:text-gh-dark text-gh-gray text-sm'
             onClick={() => v.onDropDownItemClick()}
             key={v.label}
+            data-testId={v.testId}
           >
             {v.label}
           </button>

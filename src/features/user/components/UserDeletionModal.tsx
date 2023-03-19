@@ -22,7 +22,7 @@ const UserDeletionModal = () => {
   }
 
   return (
-    <ModalLayout isOpen={isOpen('deactivation')}>
+    <ModalLayout isOpen={isOpen('deactivation')} testId='cancelation__modal'>
       <section className='bg-white sm:p-10 p-4 flex flex-col gap-10 border-t-4 border-gh-red  w-[90vw] max-w-[30rem] sm:text-base text-sm'>
         <div className='flex flex-col gap-4'>
           <Texts
@@ -35,6 +35,7 @@ const UserDeletionModal = () => {
               type='checkbox'
               onChange={(e) => setIsChecked(e.target.checked)}
               className='bg-red-200'
+              data-testid='deactivation_confirmation__checkbox'
             />
             <label className='flex gap-2 text-gh-gray'>理解しました。</label>
           </div>
@@ -47,6 +48,7 @@ const UserDeletionModal = () => {
             outline={false}
             disabled={!isChecked}
             onClick={handleAccountDeletion}
+            testId='deactivation_action__button'
           />
         </footer>
       </section>

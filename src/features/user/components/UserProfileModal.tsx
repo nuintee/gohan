@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 
 import { signOut, useSession } from 'next-auth/react'
 
-const UserSettingsModal = () => {
+const UserProfileModal = () => {
   const { data: session } = useSession()
   const { isOpen, open, close } = useModals()
 
@@ -34,7 +34,11 @@ const UserSettingsModal = () => {
   if (!session?.user) return <></>
 
   return (
-    <ModalLayout isOpen={isOpen('usersettings')} onRequestClose={() => close('usersettings')}>
+    <ModalLayout
+      isOpen={isOpen('usersettings')}
+      onRequestClose={() => close('usersettings')}
+      testId={'userprofile__modal'}
+    >
       <section className='w-[80vw] max-w-[30rem] bg-white'>
         <PanelHeader title='ユーザー情報' onClose={() => close('usersettings')} />
         <main className='flex flex-col'>
@@ -48,17 +52,22 @@ const UserSettingsModal = () => {
           ))}
           <div className='w-full p-4 border-t-[1px]'>
             <DetailsSummary summaryTitle='高度な設定'>
-              <Button text='退会' danger onClick={handleDeleteAccount} />
+              <Button
+                text='退会'
+                danger
+                onClick={handleDeleteAccount}
+                testId='cancelation__button'
+              />
             </DetailsSummary>
           </div>
         </main>
         <hr></hr>
         <footer className='p-4 flex flex-col gap-2'>
-          <Button text='ログアウト' onClick={() => signOut()} />
+          <Button text='ログアウト' onClick={() => signOut()} testId='signout__button' />
         </footer>
       </section>
     </ModalLayout>
   )
 }
 
-export default UserSettingsModal
+export default UserProfileModal

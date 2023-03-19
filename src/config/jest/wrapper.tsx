@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
-import { RecoilRoot } from 'recoil'
+import { MutableSnapshot, RecoilRoot } from 'recoil'
 
 // data
 import { user } from '@/data/user'
@@ -10,7 +10,7 @@ import { BASE_URL } from '../env'
 
 import superjson from 'superjson'
 
-const queryClient = new QueryClient({
+export const mockedQueryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
@@ -25,7 +25,7 @@ const queryClient = new QueryClient({
 
 const mockedTrpc = createTRPCReact<AppRouter>()
 
-const trpcClient = mockedTrpc.createClient({
+export const mockedTRPCClient = mockedTrpc.createClient({
   links: [
     httpBatchLink({
       url: `${BASE_URL}/api/trpc`,
@@ -38,13 +38,15 @@ const trpcClient = mockedTrpc.createClient({
 export const wrapper = ({
   children,
   isAuthed = true,
+  initializeRecoilState,
 }: {
-  children: JSX.Element
+  children?: JSX.Element
   isAuthed?: boolean
+  initializeRecoilState?: ((mutableSnapshot: MutableSnapshot) => void) | undefined
 }) => (
-  <RecoilRoot>
-    <mockedTrpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
+  <RecoilRoot initializeState={initializeRecoilState}>
+    <mockedTrpc.Provider client={mockedTRPCClient} queryClient={mockedQueryClient}>
+      <QueryClientProvider client={mockedQueryClient}>
         <SessionProvider
           session={
             isAuthed
@@ -68,7 +70,6 @@ export const wrapper = ({
   </RecoilRoot>
 )
 
-export const setUpWrapper = (options?: { isAuthed: boolean }) => {
-  return ({ children }: { children: JSX.Element }) =>
-    wrapper({ children, isAuthed: options?.isAuthed })
+export const setUpWrapper = (options?: Parameters<typeof wrapper>[0]) => {
+  return ({ children }: { children: JSX.Element }) => wrapper({ children, ...options })
 }

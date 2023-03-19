@@ -71,7 +71,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
     const DUMMIES = Array(COUNT).fill(null)
 
     return (
-      <div className='flex flex-col flex-1'>
+      <div className='flex flex-col flex-1' data-testid='activity_panel_loading__fallback'>
         {DUMMIES.map((_v, i) => (
           <div
             className='bg-gh-l-gray max-h-24 flex-1 animate-pulse rounded-md m-4 mb-0'
@@ -83,13 +83,16 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   }
 
   if (query.isError) {
-    return <ErrorFallBack error={query.error} />
+    return <ErrorFallBack error={query.error} fullScreen={false} backToHome={false} />
   }
 
   if ((query.data && query.data?.length <= 0) || deletedContents.length === query.data?.length) {
     console.log({ deletedContents })
     return (
-      <div className='flex-1 p-4 flex items-center justify-center'>
+      <div
+        className='flex-1 p-4 flex items-center justify-center'
+        data-testid='activity_panel_nodata__fallback'
+      >
         <Texts
           main='データがありません。'
           sub={'Gohanをして、早速新しい場所を発見しましょう。'}
@@ -101,11 +104,15 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
   }
 
   return (
-    <div className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'>
+    <div
+      className='flex-1 flex flex-col gap-2  overflow-auto p-2 pb-20'
+      data-testid='activity__panel_contents'
+    >
       <header className='flex gap-2'>
         <DropDown
           menu={SORT_MENU.flatMap((v) =>
             v.options.map((method) => ({
+              testId: `dropdown_item_${v.key}_${method}`,
               label: `${v.label}: ${SORT_ENUM[method].label}`,
               onDropDownItemClick: () =>
                 setSortOptions((_prev) => ({
@@ -130,6 +137,7 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
         />
         <DropDown
           menu={Object.keys({ ...ReviewStatus, ALL: 'ALL' }).map((v) => ({
+            testId: `dropdown_item_filter_${v}`,
             label: sortValueMapper(v as ConditionsWithALL<ReviewStatus>),
             onDropDownItemClick: () => setFilterStatus(v as ConditionsWithALL<ReviewStatus>),
           }))}
@@ -149,7 +157,11 @@ const ContentsRenderer = ({ query }: { query: ReturnType<typeof useGetUserActivi
       {filteredArray
         ?.filter((v) => !deletedContents.includes(v.id as keyof typeof query.data))
         .map((activity, index, original) => (
-          <div className='flex gap-2 items-center justify-between' key={activity.id}>
+          <div
+            className='flex gap-2 items-center justify-between'
+            key={activity.id}
+            data-testid={`activity_panel__content_order_${index}`}
+          >
             <RestaurantBoard
               data={activity}
               onClick={() => onActivityClicked(activity)}
@@ -182,7 +194,11 @@ const ActivityPanel = () => {
   const query = useGetUserActivities()
 
   return (
-    <SlideInLayout isOpen={isPanelOpen} maxWidth={maxWidth}>
+    <SlideInLayout
+      isOpen={isPanelOpen}
+      maxWidth={maxWidth}
+      testId={`activity__panel_is_${isPanelOpen}`}
+    >
       <>
         <PanelHeader title='ライブラリ' onClose={closePanel} />
         <hr></hr>

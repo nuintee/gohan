@@ -12,7 +12,7 @@ import Modal from 'react-modal'
 
 const childrenMapper: any = {
   UserAuthModal: <p>Auth</p>,
-  UserSettingsModal: <p>Settings</p>,
+  UserProfileModal: <p>Settings</p>,
   UserSignoutDialog: <p>SignoutDialog</p>,
   UserSigninConsentDialog: <p>SigninConsentDialog</p>,
   RestaurantDiscoverModal: <p>RestaurantDiscoverModal</p>,
@@ -29,7 +29,7 @@ export default {
     children: {
       options: [
         'UserAuthModal',
-        'UserSettingsModal',
+        'UserProfileModal',
         'UserSignoutDialog',
         'UserSigninConsentDialog',
         'RestaurantDiscoverModal',

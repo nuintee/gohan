@@ -18,8 +18,6 @@ type Props = {
 }
 
 const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
-  console.log('DATA', data)
-
   const {
     register,
     handleSubmit,
@@ -95,7 +93,12 @@ const ReviewModal = ({ isOpen, onClose, data, onReviewSuccess }: Props) => {
                 <Input placeholder='この場所についてのメモを追加 (任意)' {...field} />
               )}
             />
-            <Button text={'保存'} disabled={!isDirty} loading={updateActivity.isLoading} />
+            <Button
+              text={'保存'}
+              disabled={!isDirty}
+              loading={updateActivity.isLoading}
+              testId={'save_review_status__button'}
+            />
           </footer>
         </form>
       </section>
