@@ -23,6 +23,8 @@ const User = (props: UserProps) => {
 
   const { open } = useModals()
 
+  console.log(session)
+
   const handleOnClick = async () => {
     if (status === 'authenticated') {
       open('usersettings')
