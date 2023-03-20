@@ -3,7 +3,7 @@ import { ActivityResolved } from '@/features/activities/types'
 
 function parseOpenHours<T extends ActivityResolved['opening_hours']>(
   opening_hours: T,
-  business_status?: ActivityResolved['business_status'],
+  business_status: ActivityResolved['business_status'],
 ) {
   if (!opening_hours)
     return {

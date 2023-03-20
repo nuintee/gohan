@@ -17,7 +17,7 @@ const DetailsDescriptiveGroup = ({
   // memorized
   const memorizedData = useMemo(() => {
     const priceLevel = mapPriceLevel(data?.price_level)
-    const openHours = parseOpenHours(data?.opening_hours)
+    const openHours = parseOpenHours(data?.opening_hours, data?.business_status)
     const ratingLevel = mapRatingLevel(data?.rating)
     return { priceLevel, openHours, ratingLevel }
   }, [data])

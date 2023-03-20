@@ -42,7 +42,9 @@ const BasicInfoModal = (props: Props) => {
         <DetailsSummary
           summaryTitle={mapBasicInfoKeys(modalKey)}
           summaryValue={
-            isHours ? parseOpenHours(data.current_opening_hours).title : String(currentData)
+            isHours
+              ? parseOpenHours(data.current_opening_hours, data.business_status).title
+              : String(currentData)
           }
           ignored={!isHours || (isHours && hasNoHourDetails)}
           allowCopy={allowCopy}
