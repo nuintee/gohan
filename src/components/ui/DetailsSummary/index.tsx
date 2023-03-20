@@ -35,7 +35,7 @@ const DetailsSummary = ({
         </div>
         <h2>{summaryValue}</h2>
       </summary>
-      <div className='py-2 divide-y flex flex-col gap-1'>{children}</div>
+      <div className='py-2 flex flex-col gap-1'>{children}</div>
     </details>
   )
 }

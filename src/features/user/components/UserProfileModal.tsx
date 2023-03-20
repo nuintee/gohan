@@ -52,13 +52,20 @@ const UserProfileModal = () => {
           ))}
           <div className='w-full p-4 border-t-[1px]'>
             <DetailsSummary summaryTitle='高度な設定'>
-              <Button
-                text='退会'
-                danger
-                onClick={handleDeleteAccount}
-                testId='cancelation__button'
-                disabled={session.user?.isGuest}
-              />
+              <>
+                <Button
+                  text='退会'
+                  danger
+                  onClick={handleDeleteAccount}
+                  testId='cancelation__button'
+                  disabled={session.user?.isGuest}
+                />
+                {session.user?.isGuest && (
+                  <p className='text-center text-sm text-gh-gray'>
+                    ゲストモードでは退会機能はご利用できません。
+                  </p>
+                )}
+              </>
             </DetailsSummary>
           </div>
         </main>
