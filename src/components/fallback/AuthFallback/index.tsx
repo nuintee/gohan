@@ -13,11 +13,13 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
     switch (provider.id) {
       case 'credentials':
         return (
-          <Button
-            text='ゲストログイン'
-            onClick={() => signIn(provider.id)}
-            icon={{ position: 'before', src: <></> }}
-          />
+          <div className='w-full'>
+            <Button
+              text='ゲストログイン'
+              onClick={() => signIn(provider.id)}
+              icon={{ position: 'before', src: <></> }}
+            />
+          </div>
         )
       case 'google':
         return (
@@ -50,7 +52,7 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
       <div className='flex flex-col gap-8 items-center p-2 w-full max-w-[20rem]'>
         {providers &&
           Object.keys(providers)
-            ?.sort((_a, _b) => -1)
+            ?.sort((_a, _b) => 1)
             .map((v) => authUI(providers[v]))}
       </div>
     </div>
