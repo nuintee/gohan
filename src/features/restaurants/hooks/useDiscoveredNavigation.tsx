@@ -17,7 +17,7 @@ const useDiscoveredNavigation = () => {
       url.searchParams.append('color', encodeURIComponent(data.color))
       url.searchParams.append(
         'sub',
-        encodeURIComponent(data?.editorial_summary?.overview as string),
+        encodeURIComponent(data?.editorial_summary?.overview || ('' as string)),
       )
       router.push(url.toString())
     }
