@@ -7,6 +7,7 @@ import prisma from '@/libs/prisma'
 import { IS_DEVMODE, GCP_CLIENT_ID, GCP_CLIENT_SECRET, APP_SECRET } from '@/config/env'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import Credentials from 'next-auth/providers/credentials'
 
 export const authOptions: NextAuthOptions = {
   debug: IS_DEVMODE,
@@ -15,6 +16,22 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: GCP_CLIENT_ID,
       clientSecret: GCP_CLIENT_SECRET,
+    }),
+    Credentials({
+      name: 'Credentials',
+      credentials: {
+        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials, req) {
+        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
+
+        if (user) {
+          return user
+        } else {
+          return null
+        }
+      },
     }),
   ],
   callbacks: {

@@ -43,14 +43,24 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
     switch (provider.id) {
       case 'credentials':
         return (
-          <form className='p-4 flex flex-col gap-4 min-w-[25rem] max-w-full rounded-md'>
+          <form className='flex flex-col gap-4 min-w-[25rem] max-w-full rounded-md'>
             <Input label='メールアドレス' />
             <Input label='パスワード' />
-            <Button text='ログイン' />
+            <Button text='ログイン' onClick={() => signIn(provider.id)} />
           </form>
         )
       case 'google':
-        return <GoogleButton onClick={() => signIn(provider.id)} lang='ja' />
+        return (
+          <GoogleButton
+            onClick={() => signIn(provider.id)}
+            lang='ja'
+            type='light'
+            label='Googleアカウントでログイン'
+            style={{
+              width: '100%',
+            }}
+          />
+        )
       default:
         return <button>Signin with {provider.id}</button>
     }
@@ -67,11 +77,11 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
         textAlign={'center'}
         size='large'
       />
-      <div className='flex flex-col gap-2 items-center'>
+      <div className='flex flex-col gap-8 items-center p-2'>
         {providers &&
-          Object.keys(pro)
+          Object.keys(providers)
             ?.sort((a, b) => -1)
-            .map((v) => authUI(pro[v]))}
+            .map((v) => authUI(providers[v]))}
       </div>
     </div>
   )
