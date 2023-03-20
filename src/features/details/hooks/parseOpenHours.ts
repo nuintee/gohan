@@ -1,5 +1,8 @@
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
+import dayjs from 'dayjs'
+import isBetween from 'dayjs/plugin/isBetween'
+dayjs.extend(isBetween)
 
 function parseOpenHours<T extends ActivityResolved['opening_hours']>(
   opening_hours: T,
@@ -12,23 +15,23 @@ function parseOpenHours<T extends ActivityResolved['opening_hours']>(
       description: '',
     }
 
-  const hasHoursPeriods = opening_hours.periods && opening_hours?.periods[0].open.date
+  function _isOpeningNow() {
+    const hasHoursPeriods = opening_hours?.periods && opening_hours?.periods[0].open.date
 
-  function _getTodayWorkingHour() {
-    if (!hasHoursPeriods) return ''
+    const today = dayjs()
+    const currentDay = opening_hours?.periods?.find((v) => v.open.day === new Date().getDay())
+    const currentHour = today.format('HH:mm')
 
-    const currentDay = opening_hours.periods?.find((v) => v.open.day === new Date().getDay())
+    if (!currentDay || hasHoursPeriods) return opening_hours?.open_now
 
-    if (!currentDay) return ''
+    // since comparing only hours, date is not important
+    const ANY_DATE = '2022-01-01T'
 
-    const open = currentDay.open
-    const close = currentDay.close
+    const startTime = dayjs(ANY_DATE + currentDay?.open?.time).format('YYYY-MM-DDTHH:mm')
+    const endTime = dayjs(ANY_DATE + currentDay?.close?.time).format('YYYY-MM-DDTHH:mm')
+    const targetTime = ANY_DATE + currentHour
 
-    const _formatted = (str: string) => {
-      return str.match(/.{1,2}/g)?.join(':')
-    }
-
-    return `${_formatted(open.time)} - ${close && _formatted(close.time)}`
+    return dayjs(targetTime).isBetween(startTime, endTime, null, '[]')
   }
 
   const out = () => {
@@ -47,9 +50,9 @@ function parseOpenHours<T extends ActivityResolved['opening_hours']>(
         }
       default:
         return {
-          title: opening_hours.open_now ? '営業中' : '準備中',
-          color: opening_hours.open_now ? colors['gh-green'] : colors['gh-red'],
-          description: _getTodayWorkingHour(),
+          title: _isOpeningNow() ? '営業中' : '準備中',
+          color: _isOpeningNow() ? colors['gh-green'] : colors['gh-red'],
+          description: _isOpeningNow(),
         }
     }
   }
