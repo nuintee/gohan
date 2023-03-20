@@ -52,7 +52,7 @@ function parseOpenHours<T extends ActivityResolved['opening_hours']>(
         return {
           title: _isOpeningNow() ? '営業中' : '準備中',
           color: _isOpeningNow() ? colors['gh-green'] : colors['gh-red'],
-          description: _isOpeningNow(),
+          description: '',
         }
     }
   }
