@@ -1,9 +1,10 @@
 import AuthFallback from '@/components/fallback/AuthFallback'
 import { MainLayout } from '@/layouts/layout'
+import { Providers } from '@/types/index.type'
 import { getProviders } from 'next-auth/react'
 import { ReactElement } from 'react'
 
-const SignInPage = ({ providers }: { providers?: Awaited<ReturnType<typeof getProviders>> }) => {
+const SignInPage = ({ providers }: { providers: Providers }) => {
   return <AuthFallback providers={providers} />
 }
 

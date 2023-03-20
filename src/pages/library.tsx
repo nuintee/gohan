@@ -10,6 +10,7 @@ import MapBox from '@/features/mapbox/components/MapBox'
 import { Router } from 'next/router'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
+import { Providers } from '@/types/index.type'
 
 Router.events.on('routeChangeStart', () => {
   console.time('start')
@@ -19,7 +20,7 @@ Router.events.on('routeChangeComplete', () => {
   console.timeEnd('start')
 })
 
-const LibraryPage = ({ providers }: { providers: Awaited<ReturnType<typeof getProviders>> }) => {
+const LibraryPage = ({ providers }: { providers: Providers }) => {
   const { status } = useSession()
 
   if (status === 'unauthenticated') return <AuthFallback providers={providers} />

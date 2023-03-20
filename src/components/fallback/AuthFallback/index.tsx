@@ -1,8 +1,8 @@
 import { SuspenseImage, Texts } from '@/components/ui'
 import User from '@/features/user/components/User'
-import { getProviders } from 'next-auth/react'
+import { Providers } from '@/types/index.type'
 
-const AuthFallback = ({ providers }: { providers?: Awaited<ReturnType<typeof getProviders>> }) => {
+const AuthFallback = ({ providers }: { providers: Providers }) => {
   return (
     <>
       <div

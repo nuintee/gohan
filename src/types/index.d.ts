@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth'
+import { getProviders } from 'next-auth/react'
 
 declare module 'next-auth' {
   /**
