@@ -44,7 +44,7 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
             <Texts
               sub={'ゲストログインとは?'}
               subDecoration={
-                <ToolTip text={`とりあえず使ってみるのに最適な共通アカウントです。`} />
+                <ToolTip text={`とりあえず使ってみるのに最適な体験用アカウントです。`} />
               }
               subJustify='justify-center'
             />
