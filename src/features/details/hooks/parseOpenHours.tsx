@@ -1,7 +1,10 @@
 import { colors } from '@/config/colors'
 import { ActivityResolved } from '@/features/activities/types'
 
-function parseOpenHours<T extends ActivityResolved['opening_hours']>(opening_hours: T) {
+function parseOpenHours<T extends ActivityResolved['opening_hours']>(
+  opening_hours: T,
+  business_status?: ActivityResolved['business_status'],
+) {
   if (!opening_hours)
     return {
       title: '',
@@ -28,11 +31,41 @@ function parseOpenHours<T extends ActivityResolved['opening_hours']>(opening_hou
     return `${_formatted(open.time)} - ${close && _formatted(close.time)}`
   }
 
-  return {
-    title: opening_hours.open_now ? '営業中' : '準備中',
-    color: opening_hours.open_now ? colors['gh-green'] : colors['gh-red'],
-    description: _getTodayWorkingHour(),
+  const title = () => {
+    switch (business_status) {
+      case 'CLOSED_PERMANENTLY':
+        return '営業停止済み'
+      case 'CLOSED_TEMPORARILY':
+        return '一時休業中'
+      default:
+        return opening_hours.open_now ? '営業中' : '準備中'
+    }
   }
+
+  const out = () => {
+    switch (business_status) {
+      case 'CLOSED_PERMANENTLY':
+        return {
+          title: '営業停止済み',
+          color: colors['gh-red'],
+          description: '',
+        }
+      case 'CLOSED_TEMPORARILY':
+        return {
+          title: '一時休業中',
+          color: colors['gh-yellow'],
+          description: '',
+        }
+      default:
+        return {
+          title: title(),
+          color: opening_hours.open_now ? colors['gh-green'] : colors['gh-red'],
+          description: _getTodayWorkingHour(),
+        }
+    }
+  }
+
+  return out()
 }
 
 export default parseOpenHours
