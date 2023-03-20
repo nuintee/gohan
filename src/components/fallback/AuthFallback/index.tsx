@@ -34,6 +34,7 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
               icon={{ position: 'before', src: <></> }}
               loading={isSignInProccess}
             />
+            <Texts sub={'とりあえず使ってみたい方に最適です。'} />
           </div>
         )
       case 'google':

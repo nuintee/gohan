@@ -70,7 +70,7 @@ const Texts = (props: Props) => {
               ...(textAlign === 'center' && { width: '100%' }),
             }}
           >
-            {main || 'Name'}
+            {main}
           </h1>
 
           {mainDecoration}
