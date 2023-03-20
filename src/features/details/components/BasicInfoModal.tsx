@@ -1,4 +1,5 @@
 import { PanelHeader, DetailsSummary } from '@/components/ui'
+import { SORT_ENUM } from '@/constants/sort'
 import { ResultsEntity } from '@/features/restaurants/types'
 import ModalLayout from '@/layouts/ModalLayout'
 import { isNumber, isString } from '@/utils/typeguards'
@@ -38,25 +39,27 @@ const BasicInfoModal = (props: Props) => {
           allowCopy={allowCopy}
         >
           <div className='py-2 flex flex-col gap-1'>
-            {data.current_opening_hours?.periods?.map((v) => {
-              if (!v.open?.date) return <></>
+            {data.current_opening_hours?.periods
+              ?.sort((a, b) => SORT_ENUM.ASC.sortFn(a.open, b.open, 'day') || 1)
+              .map((v) => {
+                if (!v.open?.date) return <></>
 
-              return (
-                <div
-                  className='flex items-center justify-between w-full bg-white p-1 text-sm px-2 rounded-full'
-                  key={v.open.day}
-                >
-                  <p className='text-gh-gray'>
-                    {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
-                      weekday: 'long',
-                    })}
-                  </p>
-                  <p>
-                    {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
-                  </p>
-                </div>
-              )
-            })}
+                return (
+                  <div
+                    className='flex items-center justify-between w-full bg-white p-1 text-sm px-2 rounded-full'
+                    key={v.open.day}
+                  >
+                    <p className='text-gh-gray'>
+                      {new Date(v?.open?.date).toLocaleString('ja-JP-u-ca-japanese', {
+                        weekday: 'long',
+                      })}
+                    </p>
+                    <p>
+                      {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
+                    </p>
+                  </div>
+                )
+              })}
           </div>
         </DetailsSummary>
       </div>

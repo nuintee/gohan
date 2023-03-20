@@ -22,6 +22,7 @@ const Template: ComponentStory<typeof BasicInfoModal> = (args) => <BasicInfoModa
 
 export const Default = Template.bind({})
 export const NoCloseHours = Template.bind({})
+export const ExtraHoursPerDay = Template.bind({})
 
 Default.args = {
   data: {
@@ -39,6 +40,33 @@ NoCloseHours.args = {
     ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
     current_opening_hours: {
       periods: onlyOpenProp,
+    },
+    website: 'https://localhost:3000',
+    international_phone_number: '+00 00-0000-0000',
+  } as ResultsEntity,
+}
+
+ExtraHoursPerDay.args = {
+  data: {
+    ...details.result('ChIJBTBBRKiaqkARRgOZXBkrduI'),
+    current_opening_hours: {
+      periods: [
+        ...PERIODS,
+        {
+          open: {
+            day: 0,
+            time: '0900',
+            date: '2023-02-05',
+            truncated: true,
+          },
+          close: {
+            day: 0,
+            time: '1000',
+            date: '2023-02-05',
+            truncated: true,
+          },
+        },
+      ],
     },
     website: 'https://localhost:3000',
     international_phone_number: '+00 00-0000-0000',
