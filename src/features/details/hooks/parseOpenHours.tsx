@@ -31,17 +31,6 @@ function parseOpenHours<T extends ActivityResolved['opening_hours']>(
     return `${_formatted(open.time)} - ${close && _formatted(close.time)}`
   }
 
-  const title = () => {
-    switch (business_status) {
-      case 'CLOSED_PERMANENTLY':
-        return '営業停止済み'
-      case 'CLOSED_TEMPORARILY':
-        return '一時休業中'
-      default:
-        return opening_hours.open_now ? '営業中' : '準備中'
-    }
-  }
-
   const out = () => {
     switch (business_status) {
       case 'CLOSED_PERMANENTLY':
@@ -58,7 +47,7 @@ function parseOpenHours<T extends ActivityResolved['opening_hours']>(
         }
       default:
         return {
-          title: title(),
+          title: opening_hours.open_now ? '営業中' : '準備中',
           color: opening_hours.open_now ? colors['gh-green'] : colors['gh-red'],
           description: _getTodayWorkingHour(),
         }
