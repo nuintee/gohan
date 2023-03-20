@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
+        const user = { id: 'X', name: 'Guest', email: 'guestemail@example.com' }
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -38,25 +38,22 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  adapter: PrismaAdapter(prisma),
   callbacks: {
-    async jwt({ token }) {
-      return token
+    async jwt({ token, user }) {
+      return { ...token, ...user }
     },
-    async redirect({ url, baseUrl }) {
-      if (url === `${baseUrl}/cancelation`) {
-        return baseUrl
-      } else {
-        return url
-      }
-    },
-    async session({ session, user }) {
-      session.user = user
+    async session({ session, token, user }) {
+      session.user = token
+
       return session
     },
   },
-  adapter: PrismaAdapter(prisma),
   pages: {
     signIn: '/signin',
+  },
+  session: {
+    strategy: 'jwt',
   },
 }
 

@@ -15,12 +15,11 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
         return (
           <form
             className='flex flex-col gap-4 w-full rounded-md'
-            method='post'
-            action='/api/auth/callback/credentials'
+            onSubmit={(e) => e.preventDefault()}
           >
             <Input label='メールアドレス' />
             <Input label='パスワード' />
-            <Button text='ログイン' />
+            <Button text='ログイン' onClick={() => signIn(provider.id)} />
           </form>
         )
       case 'google':
