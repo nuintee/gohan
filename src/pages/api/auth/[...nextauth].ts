@@ -34,6 +34,9 @@ export const authOptions: NextAuthOptions = {
     },
   },
   adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: '/signin',
+  },
 }
 
 export default NextAuth(authOptions)

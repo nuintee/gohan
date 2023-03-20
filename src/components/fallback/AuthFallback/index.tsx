@@ -1,7 +1,7 @@
 import { SuspenseImage, Texts } from '@/components/ui'
 import User from '@/features/user/components/User'
 
-const AuthFallback = () => {
+const AuthFallback = ({ providers }: { providers?: any }) => {
   return (
     <>
       <div
@@ -23,6 +23,7 @@ const AuthFallback = () => {
         />
         <User />
       </div>
+      <pre>{JSON.stringify(providers)}</pre>
     </>
   )
 }

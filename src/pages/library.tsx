@@ -4,7 +4,7 @@ import ActivityPanel from '@/features/activities/components/ActivityPanel'
 // data
 import { ReactElement } from 'react'
 import { MainLayout } from '@/layouts/layout'
-import { useSession } from 'next-auth/react'
+import { getProviders, useSession } from 'next-auth/react'
 import AuthFallback from '@/components/fallback/AuthFallback'
 import MapBox from '@/features/mapbox/components/MapBox'
 import { Router } from 'next/router'
@@ -19,10 +19,10 @@ Router.events.on('routeChangeComplete', () => {
   console.timeEnd('start')
 })
 
-const LibraryPage = () => {
+const LibraryPage = ({ providers }) => {
   const { status } = useSession()
 
-  if (status === 'unauthenticated') return <AuthFallback />
+  if (status === 'unauthenticated') return <AuthFallback providers={providers} />
 
   return (
     <>
@@ -40,6 +40,14 @@ const LibraryPage = () => {
 
 LibraryPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout searchButtonPosition='bottom-center'>{page}</MainLayout>
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      providers: await getProviders(),
+    },
+  }
 }
 
 export default LibraryPage
