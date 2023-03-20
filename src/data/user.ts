@@ -11,7 +11,7 @@ export const user: User = {
 
 export const guestUser: User = {
   id: '13ba7b27-76d1-4f9c-b701-11ee930d70d9',
-  email: 'guestuser@example.com',
+  email: 'guest@example.com',
   name: 'guestuser',
   emailVerified: new Date(),
   registered_at: new Date(),
