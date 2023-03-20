@@ -9,36 +9,18 @@ import useMediaQuery from '@/hooks/mediaquery'
 const AuthFallback = ({ providers }: { providers: Providers }) => {
   const isOverSmall = useMediaQuery('sm')
 
-  // return (
-  //   <div
-  //     className='flex-1 flex flex-col items-center justify-center gap-6'
-  //     data-testid='auth__fallback'
-  //   >
-  //     <SuspenseImage
-  //       src='/images/auth_image.svg'
-  //       disabled
-  //       height={250}
-  //       width={250}
-  //       draggable={false}
-  //     />
-  //     <Texts
-  //       main='GOHANした場所を全て保存'
-  //       sub={'ログインして下さい'}
-  //       textAlign={'center'}
-  //       size='large'
-  //     />
-  //     <User />
-  //   </div>
-  // )
-
   const authUI = (provider: NonNullable<Providers>[string]) => {
     switch (provider.id) {
       case 'credentials':
         return (
-          <form className='flex flex-col gap-4 w-full rounded-md'>
+          <form
+            className='flex flex-col gap-4 w-full rounded-md'
+            method='post'
+            action='/api/auth/callback/credentials'
+          >
             <Input label='メールアドレス' />
             <Input label='パスワード' />
-            <Button text='ログイン' onClick={() => signIn(provider.id)} />
+            <Button text='ログイン' />
           </form>
         )
       case 'google':
