@@ -1,7 +1,7 @@
 import AuthFallback from '@/components/fallback/AuthFallback'
 import { MainLayout } from '@/layouts/layout'
 import { Providers } from '@/types/index.type'
-import { getProviders } from 'next-auth/react'
+import { getProviders, getSession, GetSessionParams } from 'next-auth/react'
 import { ReactElement } from 'react'
 
 const SignInPage = ({ providers }: { providers: Providers }) => {
@@ -12,7 +12,18 @@ SignInPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout searchButtonPosition='bottom-center'>{page}</MainLayout>
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: GetSessionParams | undefined) {
+  const session = await getSession(ctx)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
   return {
     props: {
       providers: await getProviders(),
