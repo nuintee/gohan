@@ -57,6 +57,7 @@ const UserProfileModal = () => {
                 danger
                 onClick={handleDeleteAccount}
                 testId='cancelation__button'
+                disabled={session.user?.isGuest}
               />
             </DetailsSummary>
           </div>
