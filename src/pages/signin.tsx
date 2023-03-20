@@ -3,7 +3,7 @@ import { MainLayout } from '@/layouts/layout'
 import { getProviders } from 'next-auth/react'
 import { ReactElement } from 'react'
 
-const SignInPage = ({ providers }: { providers?: any }) => {
+const SignInPage = ({ providers }: { providers?: Awaited<ReturnType<typeof getProviders>> }) => {
   return <AuthFallback providers={providers} />
 }
 

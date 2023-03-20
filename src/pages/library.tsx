@@ -19,7 +19,7 @@ Router.events.on('routeChangeComplete', () => {
   console.timeEnd('start')
 })
 
-const LibraryPage = ({ providers }) => {
+const LibraryPage = ({ providers }: { providers: Awaited<ReturnType<typeof getProviders>> }) => {
   const { status } = useSession()
 
   if (status === 'unauthenticated') return <AuthFallback providers={providers} />
