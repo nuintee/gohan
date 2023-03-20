@@ -15,10 +15,7 @@ const useDiscoveredNavigation = () => {
       url.searchParams.append('place_id', encodeURIComponent(data.place_id))
       url.searchParams.append('main', encodeURIComponent(data.name))
       url.searchParams.append('color', encodeURIComponent(data.color))
-      url.searchParams.append(
-        'sub',
-        encodeURIComponent(data?.editorial_summary?.overview || ('' as string)),
-      )
+      url.searchParams.append('sub', encodeURIComponent(data?.editorial_summary?.overview || ''))
       router.push(url.toString())
     }
   }
