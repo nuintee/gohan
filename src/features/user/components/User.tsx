@@ -8,6 +8,8 @@ import { MouseEventHandler, useState } from 'react'
 import useModals from '@/hooks/modals'
 import useToast from '@/libs/react-toastify'
 import SuspenseImage from '@/components/ui/SuspenseImage'
+import { useRouter } from 'next/router'
+import { ROUTES } from '@/constants/routes'
 
 type UserProps = {
   isLoading?: boolean
@@ -18,6 +20,7 @@ const User = (props: UserProps) => {
   // Contexts
   const { status, data: session } = useSession()
   const [isSignInProccess, setIsSignInProccess] = useState(false)
+  const router = useRouter()
   const { open } = useModals()
 
   const handleOnClick = async () => {
@@ -25,15 +28,16 @@ const User = (props: UserProps) => {
       // navigate to profile page
       open('usersettings')
     } else if (status === 'unauthenticated') {
-      setIsSignInProccess(true)
+      // setIsSignInProccess(true)
+      router.push(ROUTES.SIGNIN.path)
 
-      const signinResult = await signIn('google')
+      // const signinResult = await signIn('google')
 
-      if (signinResult?.ok) {
-        setIsSignInProccess(false)
-      } else if (signinResult?.error) {
-        useToast.error('ログインに失敗しました。')
-      }
+      // if (signinResult?.ok) {
+      //   setIsSignInProccess(false)
+      // } else if (signinResult?.error) {
+      //   useToast.error('ログインに失敗しました。')
+      // }
     }
   }
 

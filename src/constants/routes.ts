@@ -15,4 +15,8 @@ export const ROUTES = {
     path: '/discover',
     label: '発見',
   },
+  SIGNIN: {
+    path: '/signin',
+    label: 'ログイン',
+  },
 } as const
