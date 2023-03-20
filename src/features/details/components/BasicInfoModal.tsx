@@ -24,6 +24,15 @@ const BasicInfoModal = (props: Props) => {
     const currentData = data[modalKey as keyof typeof data]
     const allowCopy = isString(currentData) || isNumber(currentData)
 
+    const uniqueOpeningHours = Array.from(
+      new Map(
+        data.current_opening_hours?.periods?.map((opening_hour) => [
+          opening_hour.open.day,
+          opening_hour,
+        ]),
+      ).values(),
+    )
+
     return (
       <div
         className='even:bg-gh-pale bg-white p-4 flex gap-2 items-start justify-between'
@@ -39,9 +48,9 @@ const BasicInfoModal = (props: Props) => {
           allowCopy={allowCopy}
         >
           <div className='py-2 flex flex-col gap-1'>
-            {data.current_opening_hours?.periods
+            {uniqueOpeningHours
               ?.sort((a, b) => SORT_ENUM.ASC.sortFn(a.open, b.open, 'day') || 1)
-              .map((v, index, arr) => {
+              .map((v) => {
                 if (!v.open?.date) return <></>
 
                 return (
@@ -55,14 +64,16 @@ const BasicInfoModal = (props: Props) => {
                       })}
                     </p>
                     <div>
-                      {arr
-                        .filter((item) => item.open.day === v.open.day)
-                        .map((item) => (
-                          <p>
-                            {formatTimeString(item?.open?.time)} -{' '}
-                            {formatTimeString(v?.close?.time)}
-                          </p>
-                        ))}
+                      {data.current_opening_hours?.periods?.length
+                        ? data.current_opening_hours?.periods
+                            .filter((item) => item.open.day === v.open.day)
+                            .map((item, index) => (
+                              <p key={index}>
+                                {formatTimeString(item?.open?.time)} -{' '}
+                                {formatTimeString(v?.close?.time)}
+                              </p>
+                            ))
+                        : []}
                     </div>
                   </div>
                 )
