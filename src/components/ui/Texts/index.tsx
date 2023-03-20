@@ -29,6 +29,7 @@ type Props = {
   isLoading?: boolean
   textAlign?: 'center' | 'left' | 'right'
   allowCopy?: boolean
+  subJustify?: 'justify-center' | 'justify-between' | 'justify-around'
 } & React.ComponentProps<typeof CopyButton>
 
 const Texts = (props: Props) => {
@@ -46,6 +47,7 @@ const Texts = (props: Props) => {
     allowCopy = false,
     copyValue,
     copyColor,
+    subJustify = 'justify-between',
   } = props
 
   const textSize = sizes[size || 'normal']
@@ -76,7 +78,7 @@ const Texts = (props: Props) => {
           {mainDecoration}
           {allowCopy && <CopyButton copyColor={copyColor} copyValue={copyValue} />}
         </div>
-        <div className='flex gap-4'>
+        <div className={`flex gap-4 ${subJustify}`}>
           <p
             className={`${textSize.sub} truncate whitespace-nowrap`}
             style={{

@@ -7,6 +7,7 @@ import { signIn } from 'next-auth/react'
 import useMediaQuery from '@/hooks/mediaquery'
 import useToast from '@/libs/react-toastify'
 import { useState } from 'react'
+import ToolTip from '@/components/ui/Tootltip'
 
 const AuthFallback = ({ providers }: { providers: Providers }) => {
   const isOverSmall = useMediaQuery('sm')
@@ -27,14 +28,20 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
     switch (provider.id) {
       case 'credentials':
         return (
-          <div className='w-full'>
+          <div className='w-full flex flex-col gap-2'>
             <Button
               text='ゲストログイン'
               onClick={() => handleLogin(provider.id)}
               icon={{ position: 'before', src: <></> }}
               loading={isSignInProccess}
             />
-            <Texts sub={'とりあえず使ってみたい方に最適です。'} />
+            <Texts
+              sub={'ゲストログインとは?'}
+              subDecoration={
+                <ToolTip text={`とりあえず使ってみるのに最適な共通アカウントです。`} />
+              }
+              subJustify='justify-center'
+            />
           </div>
         )
       case 'google':
