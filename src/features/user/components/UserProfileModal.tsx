@@ -12,6 +12,7 @@ const UserProfileModal = () => {
   const { isOpen, open, close } = useModals()
 
   const handleDeleteAccount = () => {
+    if (session?.user.isGuest) return
     close('usersettings')
     open('deactivation')
   }
@@ -39,7 +40,7 @@ const UserProfileModal = () => {
       onRequestClose={() => close('usersettings')}
       testId={'userprofile__modal'}
     >
-      <section className='w-[80vw] max-w-[30rem] bg-white'>
+      <section className='w-[85vw] max-w-[30rem] bg-white'>
         <PanelHeader title='ユーザー情報' onClose={() => close('usersettings')} />
         <main className='flex flex-col'>
           {profile.map((v) => (
