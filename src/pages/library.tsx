@@ -4,25 +4,20 @@ import ActivityPanel from '@/features/activities/components/ActivityPanel'
 // data
 import { ReactElement } from 'react'
 import { MainLayout } from '@/layouts/layout'
-import { useSession } from 'next-auth/react'
+import { getProviders, useSession } from 'next-auth/react'
 import AuthFallback from '@/components/fallback/AuthFallback'
 import MapBox from '@/features/mapbox/components/MapBox'
-import { Router } from 'next/router'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
+import { Providers } from '@/types/index.type'
+import LoadingFallback from '@/components/fallback/LoadingFallback'
 
-Router.events.on('routeChangeStart', () => {
-  console.time('start')
-})
-
-Router.events.on('routeChangeComplete', () => {
-  console.timeEnd('start')
-})
-
-const LibraryPage = () => {
+const LibraryPage = ({ providers }: { providers?: Providers }) => {
   const { status } = useSession()
 
-  if (status === 'unauthenticated') return <AuthFallback />
+  if (status === 'loading') return <LoadingFallback />
+
+  if (status === 'unauthenticated') return <AuthFallback providers={providers} />
 
   return (
     <>
@@ -40,6 +35,15 @@ const LibraryPage = () => {
 
 LibraryPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout searchButtonPosition='bottom-center'>{page}</MainLayout>
+}
+
+export async function getServerSideProps() {
+  const providers = await getProviders()
+  return {
+    props: {
+      providers,
+    },
+  }
 }
 
 export default LibraryPage

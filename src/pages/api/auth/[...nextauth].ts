@@ -7,6 +7,8 @@ import prisma from '@/libs/prisma'
 import { IS_DEVMODE, GCP_CLIENT_ID, GCP_CLIENT_SECRET, APP_SECRET } from '@/config/env'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import Credentials from 'next-auth/providers/credentials'
+import { guestUser } from '@/data/user'
 
 export const authOptions: NextAuthOptions = {
   debug: IS_DEVMODE,
@@ -16,24 +18,48 @@ export const authOptions: NextAuthOptions = {
       clientId: GCP_CLIENT_ID,
       clientSecret: GCP_CLIENT_SECRET,
     }),
+    Credentials({
+      name: 'Guest',
+      credentials: {
+        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize() {
+        const user = await prisma.user.upsert({
+          where: {
+            email: guestUser.email as string,
+          },
+          create: guestUser,
+          update: guestUser,
+        })
+
+        if (user) {
+          return user
+        } else {
+          return null
+        }
+      },
+    }),
   ],
+  adapter: PrismaAdapter(prisma),
   callbacks: {
-    async jwt({ token }) {
-      return token
+    async jwt({ token, user }) {
+      console.log({ uEmail: token, gEmail: guestUser.email })
+      const isGuest = token?.id === guestUser.id
+      return { ...token, ...user, isGuest }
     },
-    async redirect({ url, baseUrl }) {
-      if (url === `${baseUrl}/cancelation`) {
-        return baseUrl
-      } else {
-        return url
-      }
-    },
-    async session({ session, user }) {
-      session.user = user
+    async session({ session, token }) {
+      session.user = token
+
       return session
     },
   },
-  adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: '/signin',
+  },
+  session: {
+    strategy: 'jwt',
+  },
 }
 
 export default NextAuth(authOptions)

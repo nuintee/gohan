@@ -12,7 +12,7 @@ const ToolTip = ({ text }: { text?: string }) => {
       direction={'top'}
     >
       <>
-        <p className='text-sm text-gh-white'>{text}</p>
+        <p className='text-sm text-gh-white break-all whitespace-pre-wrap w-[13.5rem]'>{text}</p>
         <div className='absolute bottom-0 right-0 bg-gh-gray h-3 w-3 rotate-45 translate-y-1/2 -translate-x-full'></div>
       </>
     </DropDownLayout>

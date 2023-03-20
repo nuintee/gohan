@@ -12,6 +12,7 @@ const UserProfileModal = () => {
   const { isOpen, open, close } = useModals()
 
   const handleDeleteAccount = () => {
+    if (session?.user.isGuest) return
     close('usersettings')
     open('deactivation')
   }
@@ -39,7 +40,7 @@ const UserProfileModal = () => {
       onRequestClose={() => close('usersettings')}
       testId={'userprofile__modal'}
     >
-      <section className='w-[80vw] max-w-[30rem] bg-white'>
+      <section className='w-[85vw] max-w-[30rem] bg-white'>
         <PanelHeader title='ユーザー情報' onClose={() => close('usersettings')} />
         <main className='flex flex-col'>
           {profile.map((v) => (
@@ -52,12 +53,18 @@ const UserProfileModal = () => {
           ))}
           <div className='w-full p-4 border-t-[1px]'>
             <DetailsSummary summaryTitle='高度な設定'>
-              <Button
-                text='退会'
-                danger
-                onClick={handleDeleteAccount}
-                testId='cancelation__button'
-              />
+              <>
+                <Button
+                  text='退会'
+                  danger
+                  onClick={handleDeleteAccount}
+                  testId='cancelation__button'
+                  disabled={session.user?.isGuest}
+                />
+                {session.user?.isGuest && (
+                  <p className=' text-sm text-gh-gray mt-2'>ゲストモード上ではご利用できません。</p>
+                )}
+              </>
             </DetailsSummary>
           </div>
         </main>
