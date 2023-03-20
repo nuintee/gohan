@@ -19,32 +19,18 @@ type UserProps = {
 const User = (props: UserProps) => {
   // Contexts
   const { status, data: session } = useSession()
-  const [isSignInProccess, setIsSignInProccess] = useState(false)
   const router = useRouter()
   const { open } = useModals()
 
   const handleOnClick = async () => {
     if (status === 'authenticated') {
-      // navigate to profile page
       open('usersettings')
     } else if (status === 'unauthenticated') {
-      // setIsSignInProccess(true)
       router.push(ROUTES.SIGNIN.path)
-
-      // const signinResult = await signIn('google')
-
-      // if (signinResult?.ok) {
-      //   setIsSignInProccess(false)
-      // } else if (signinResult?.error) {
-      //   useToast.error('ログインに失敗しました。')
-      // }
     }
   }
 
-  const {
-    isLoading = (status === 'loading' || isSignInProccess) ?? false,
-    onClick = handleOnClick,
-  } = props
+  const { isLoading = status === 'loading' ?? false, onClick = handleOnClick } = props
 
   const feedBack = !isLoading && 'active:scale-90 cursor-pointer active:opacity-90'
 
