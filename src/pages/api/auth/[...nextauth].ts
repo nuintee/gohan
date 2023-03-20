@@ -8,6 +8,7 @@ import { IS_DEVMODE, GCP_CLIENT_ID, GCP_CLIENT_SECRET, APP_SECRET } from '@/conf
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import Credentials from 'next-auth/providers/credentials'
+import { guestUser } from '@/data/user'
 
 export const authOptions: NextAuthOptions = {
   debug: IS_DEVMODE,
@@ -23,17 +24,19 @@ export const authOptions: NextAuthOptions = {
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        const user = { id: 'X', name: 'Guest', email: 'guestemail@example.com' }
+      async authorize() {
+        const user = await prisma.user.upsert({
+          where: {
+            email: guestUser.email as string,
+          },
+          create: guestUser,
+          update: guestUser,
+        })
 
         if (user) {
-          // Any object returned will be saved in `user` property of the JWT
           return user
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       },
     }),
@@ -43,7 +46,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       return { ...token, ...user }
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user = token
 
       return session

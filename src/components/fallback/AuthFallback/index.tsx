@@ -1,4 +1,4 @@
-import { Button, Input, Texts } from '@/components/ui'
+import { Button, Texts } from '@/components/ui'
 
 import GoogleButton from 'react-google-button'
 
@@ -13,14 +13,11 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
     switch (provider.id) {
       case 'credentials':
         return (
-          <form
-            className='flex flex-col gap-4 w-full rounded-md'
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <Input label='メールアドレス' />
-            <Input label='パスワード' />
-            <Button text='ログイン' onClick={() => signIn(provider.id)} />
-          </form>
+          <Button
+            text='ゲストログイン'
+            onClick={() => signIn(provider.id)}
+            icon={{ position: 'before', src: <></> }}
+          />
         )
       case 'google':
         return (
