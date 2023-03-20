@@ -11,6 +11,7 @@ import { Router } from 'next/router'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 import { Providers } from '@/types/index.type'
+import LoadingFallback from '@/components/fallback/LoadingFallback'
 
 Router.events.on('routeChangeStart', () => {
   console.time('start')
@@ -22,6 +23,8 @@ Router.events.on('routeChangeComplete', () => {
 
 const LibraryPage = ({ providers }: { providers: Providers }) => {
   const { status } = useSession()
+
+  if (status === 'loading') return <LoadingFallback />
 
   if (status === 'unauthenticated') return <AuthFallback providers={providers} />
 
@@ -44,9 +47,10 @@ LibraryPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
+  const providers = await getProviders()
   return {
     props: {
-      providers: await getProviders(),
+      providers,
     },
   }
 }
