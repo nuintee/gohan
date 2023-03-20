@@ -3,10 +3,9 @@ import { colors } from '@/config/colors'
 
 // Icons
 import { PulseLoader } from '@/components/icons'
-import { signIn, useSession } from 'next-auth/react'
-import { MouseEventHandler, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import { MouseEventHandler } from 'react'
 import useModals from '@/hooks/modals'
-import useToast from '@/libs/react-toastify'
 import SuspenseImage from '@/components/ui/SuspenseImage'
 import { useRouter } from 'next/router'
 import { ROUTES } from '@/constants/routes'
