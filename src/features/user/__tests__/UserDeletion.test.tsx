@@ -3,7 +3,7 @@ import { setUpWrapper } from '@/config/jest/wrapper'
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import UserDeletionModal from '../components/UserDeletionModal'
 import { modalState } from '@/stores/modals'
-import { MockContext, Context, createMockContext } from '@/mocks/prisma/context'
+import { MockContext, createMockContext } from '@/mocks/prisma/context'
 import { user } from '@/data/user'
 
 const wrapper = setUpWrapper({
@@ -14,11 +14,9 @@ const wrapper = setUpWrapper({
 })
 
 let mockCtx: MockContext
-let ctx: Context
 
 beforeAll(async () => {
   mockCtx = createMockContext()
-  ctx = mockCtx as unknown as Context
 
   await mockCtx.prisma.user.create({
     data: user,
