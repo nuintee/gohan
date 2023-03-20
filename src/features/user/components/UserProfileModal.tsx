@@ -62,9 +62,8 @@ const UserProfileModal = () => {
                   disabled={session.user?.isGuest}
                 />
                 {session.user?.isGuest && (
-                  <p className='text-center text-sm text-gh-gray'>
-                    ゲストモードでは退会機能はご利用できません。
-                  </p>
+                  // <p className='text-center text-sm text-gh-gray mt-2'>
+                  <p className=' text-sm text-gh-gray mt-2'>ゲストモード上ではご利用できません。</p>
                 )}
               </>
             </DetailsSummary>
