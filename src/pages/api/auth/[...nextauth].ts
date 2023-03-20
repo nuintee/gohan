@@ -18,18 +18,23 @@ export const authOptions: NextAuthOptions = {
       clientSecret: GCP_CLIENT_SECRET,
     }),
     Credentials({
-      name: 'Credentials',
+      name: 'Guest',
       credentials: {
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
+        const user = await prisma.user.findUnique({
+          where: {
+            email: 'testuser@example.com',
+          },
+        })
 
-        if (user) {
-          return user
+        // ユーザーが存在しない場合はエラーをスローする
+        if (!user) {
+          throw new Error('Invalid email or password')
         } else {
-          return null
+          return user
         }
       },
     }),
