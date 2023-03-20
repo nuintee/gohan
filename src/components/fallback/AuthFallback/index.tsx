@@ -8,14 +8,20 @@ import useMediaQuery from '@/hooks/mediaquery'
 import useToast from '@/libs/react-toastify'
 import { useState } from 'react'
 import ToolTip from '@/components/ui/Tootltip'
+import { useRouter } from 'next/router'
+import { BASE_URL } from '@/config/env'
 
 const AuthFallback = ({ providers }: { providers: Providers }) => {
   const isOverSmall = useMediaQuery('sm')
   const [isSignInProccess, setIsSignInProccess] = useState(false)
+  const router = useRouter()
+  const referer = router.query?.referer || ''
 
   const handleLogin = async (id: keyof NonNullable<Providers>) => {
     setIsSignInProccess(true)
-    const signinResult = await signIn(id)
+    const signinResult = await signIn(id, {
+      callbackUrl: `${BASE_URL}/${referer}`,
+    })
 
     if (signinResult?.ok) {
       setIsSignInProccess(false)

@@ -19,13 +19,15 @@ const User = (props: UserProps) => {
   // Contexts
   const { status, data: session } = useSession()
   const router = useRouter()
+  const referer = (router.query?.referer as string) || router.asPath
+
   const { open } = useModals()
 
   const handleOnClick = async () => {
     if (status === 'authenticated') {
       open('usersettings')
     } else if (status === 'unauthenticated') {
-      router.push(ROUTES.SIGNIN.path)
+      router.push(`${ROUTES.SIGNIN.path}?referer=${encodeURIComponent(referer)}`)
     }
   }
 
