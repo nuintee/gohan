@@ -8,6 +8,8 @@ import { setUpWrapper } from '@/config/jest/wrapper'
 const authedWrapper = setUpWrapper({ isAuthed: true })
 const unauthedWrapper = setUpWrapper({ isAuthed: false })
 
+jest.mock('next/router', () => require('next-router-mock'))
+
 describe('/library', () => {
   it('13bff: renders Library page without Error when authed', () => {
     const page = render(<LibraryPage />, { wrapper: authedWrapper })

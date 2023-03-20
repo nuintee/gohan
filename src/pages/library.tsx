@@ -12,7 +12,7 @@ import { ROUTES } from '@/constants/routes'
 import { Providers } from '@/types/index.type'
 import LoadingFallback from '@/components/fallback/LoadingFallback'
 
-const LibraryPage = ({ providers }: { providers: Providers }) => {
+const LibraryPage = ({ providers }: { providers?: Providers }) => {
   const { status } = useSession()
 
   if (status === 'loading') return <LoadingFallback />
