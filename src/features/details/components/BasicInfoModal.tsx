@@ -41,7 +41,7 @@ const BasicInfoModal = (props: Props) => {
           <div className='py-2 flex flex-col gap-1'>
             {data.current_opening_hours?.periods
               ?.sort((a, b) => SORT_ENUM.ASC.sortFn(a.open, b.open, 'day') || 1)
-              .map((v) => {
+              .map((v, index, arr) => {
                 if (!v.open?.date) return <></>
 
                 return (
@@ -54,9 +54,16 @@ const BasicInfoModal = (props: Props) => {
                         weekday: 'long',
                       })}
                     </p>
-                    <p>
-                      {formatTimeString(v?.open?.time)} - {formatTimeString(v?.close?.time)}
-                    </p>
+                    <div>
+                      {arr
+                        .filter((item) => item.open.day === v.open.day)
+                        .map((item) => (
+                          <p>
+                            {formatTimeString(item?.open?.time)} -{' '}
+                            {formatTimeString(v?.close?.time)}
+                          </p>
+                        ))}
+                    </div>
                   </div>
                 )
               })}
