@@ -1,4 +1,5 @@
 import { Button, Texts } from '@/components/ui'
+import useMediaQuery from '@/hooks/mediaquery'
 import useModals from '@/hooks/modals'
 import ModalLayout from '@/layouts/ModalLayout'
 import useToast from '@/libs/react-toastify'
@@ -8,6 +9,7 @@ import useDeleteUser from '../hooks/useDeleteUser'
 const UserDeletionModal = () => {
   const { close, isOpen } = useModals()
   const [isChecked, setIsChecked] = useState(false)
+  const isOverSmall = useMediaQuery('sm')
 
   const deleteQuery = useDeleteUser()
 
@@ -23,11 +25,12 @@ const UserDeletionModal = () => {
 
   return (
     <ModalLayout isOpen={isOpen('deactivation')} testId='cancelation__modal'>
-      <section className='bg-white sm:p-10 p-4 flex flex-col gap-10 border-t-4 border-gh-red  w-[90vw] max-w-[30rem] sm:text-base text-sm'>
+      <section className='bg-white sm:p-10 p-4 flex flex-col gap-10 border-t-4 border-gh-red  w-[90vw] max-w-[35rem] sm:text-base text-sm'>
         <div className='flex flex-col gap-4'>
           <Texts
-            main='アカウントを削除して本当によろしいですか？'
+            main='アカウントを削除しますか？'
             sub={'保存されているデータは全て削除されます。'}
+            size={isOverSmall ? 'normal' : 'small'}
           />
           <hr className=' fill-red-200 border-gh-white'></hr>
           <div className='flex gap-2 h-fit'>
