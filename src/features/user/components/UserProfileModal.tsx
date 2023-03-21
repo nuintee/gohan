@@ -19,11 +19,11 @@ const UserProfileModal = () => {
   const profile = [
     {
       label: 'ユーザー名',
-      value: session?.user.name,
+      value: session?.user.name as string,
     },
     {
       label: 'Email',
-      value: session?.user.email,
+      value: session?.user.email as string,
     },
     {
       label: '登録日',
@@ -31,7 +31,7 @@ const UserProfileModal = () => {
     },
   ]
 
-  if (session?.user.isGuest) {
+  if (session?.user?.isGuest) {
     profile.push({ label: 'ゲストモード', value: '有効' })
   }
 

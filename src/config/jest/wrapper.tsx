@@ -53,11 +53,12 @@ export const wrapper = ({
               ? {
                   expires: '',
                   user: {
-                    email: user.email as string,
-                    id: user.id as string,
-                    name: user.name as string,
-                    image: user.image as string,
-                    registered_at: new Date(),
+                    email: user.email,
+                    id: user.id,
+                    name: user.name,
+                    image: user.image,
+                    registered_at: user.registered_at,
+                    emailVerified: user.emailVerified,
                   },
                 }
               : null
