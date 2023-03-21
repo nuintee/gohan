@@ -12,7 +12,6 @@ const UserProfileModal = () => {
   const { isOpen, open, close } = useModals()
 
   const handleDeleteAccount = () => {
-    if (session?.user.isGuest) return
     close('usersettings')
     open('deactivation')
   }
@@ -31,6 +30,10 @@ const UserProfileModal = () => {
       value: dayjs(session?.user?.registered_at).format('MMMM D, YYYY h:mm A'),
     },
   ]
+
+  if (session?.user.isGuest) {
+    profile.push({ label: 'ゲストモード', value: '有効' })
+  }
 
   if (!session?.user) return <></>
 
@@ -59,11 +62,7 @@ const UserProfileModal = () => {
                   danger
                   onClick={handleDeleteAccount}
                   testId='cancelation__button'
-                  disabled={session.user?.isGuest}
                 />
-                {session.user?.isGuest && (
-                  <p className=' text-sm text-gh-gray mt-2'>ゲストモード上ではご利用できません。</p>
-                )}
               </>
             </DetailsSummary>
           </div>
