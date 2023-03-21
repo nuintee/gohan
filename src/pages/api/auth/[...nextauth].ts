@@ -11,63 +11,12 @@ import Credentials from 'next-auth/providers/credentials'
 import { guestUser } from '@/data/user'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next'
+import { getCookie, setCookie } from 'cookies-next'
 import { randomUUID } from 'crypto'
-
-// export const authOptions: NextAuthOptions = {
-//   debug: IS_DEVMODE,
-//   secret: APP_SECRET,
-//   providers: [
-//     GoogleProvider({
-//       clientId: GCP_CLIENT_ID,
-//       clientSecret: GCP_CLIENT_SECRET,
-//     }),
-//     Credentials({
-//       name: 'Guest',
-//       credentials: {},
-//       async authorize() {
-//         const user = await prisma.user.upsert({
-//           where: {
-//             email: guestUser.email as string,
-//           },
-//           create: guestUser,
-//           update: {},
-//         })
-
-//         if (user) {
-//           return user
-//         } else {
-//           return null
-//         }
-//       },
-//     }),
-//   ],
-//   adapter: PrismaAdapter(prisma),
-//   callbacks: {
-//     async jwt({ token, user }) {
-//       const isGuest = token?.id === guestUser.id
-//       return { ...token, ...user, isGuest }
-//     },
-//     async session({ session, token }) {
-//       session.user = token
-
-//       return session
-//     },
-//   },
-//   pages: {
-//     signIn: '/signin',
-//     error: '/error',
-//   },
-//   session: {
-//     strategy: 'jwt',
-//   },
-// }
-
-// export default NextAuth(authOptions)
 
 type NextAuthOptionsCallback = (req: NextApiRequest, res: NextApiResponse) => NextAuthOptions
 
-const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
+export const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
   return {
     debug: IS_DEVMODE,
     secret: APP_SECRET,
@@ -89,7 +38,7 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
             create: {
               ...guestUser,
               id: deviceId,
-              email: `guest.${deviceId.slice(0, 5)}@example.com`,
+              email: `guest${deviceId.slice(0, 5)}@example.com`,
             },
             update: {},
           })
@@ -108,8 +57,8 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
         const isGuest = token?.id === guestUser.id
         return { ...token, ...user, isGuest }
       },
-      async session({ session, token }) {
-        session.user = token
+      async session({ session, token, user }) {
+        session.user = { ...token, ...user }
 
         return session
       },

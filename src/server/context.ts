@@ -1,6 +1,6 @@
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { nextAuthOptions } from '@/pages/api/auth/[...nextauth]'
 import { CreateNextContextOptions } from '@trpc/server/adapters/next'
-import { GetServerSidePropsContext } from 'next'
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 
 // lib
@@ -10,7 +10,11 @@ const getServerAuthSession = (ctx: {
   req: GetServerSidePropsContext['req']
   res: GetServerSidePropsContext['res']
 }) => {
-  return getServerSession(ctx.req, ctx.res, authOptions)
+  return getServerSession(
+    ctx.req,
+    ctx.res,
+    nextAuthOptions(ctx.req as NextApiRequest, ctx.res as NextApiResponse),
+  )
 }
 
 export async function createContext(opts: CreateNextContextOptions) {
