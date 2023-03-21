@@ -4,22 +4,18 @@ import ActivityPanel from '@/features/activities/components/ActivityPanel'
 // data
 import { ReactElement } from 'react'
 import { MainLayout } from '@/layouts/layout'
-import { useSession } from 'next-auth/react'
-import AuthFallback from '@/components/fallback/AuthFallback'
+import { getSession, useSession } from 'next-auth/react'
 import MapBox from '@/features/mapbox/components/MapBox'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
-import { Providers } from '@/types/index.type'
 import LoadingFallback from '@/components/fallback/LoadingFallback'
 import { nextAuthOptions } from './api/auth/[...nextauth]'
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next'
 
-const LibraryPage = ({ providers }: { providers?: Providers }) => {
+const LibraryPage = () => {
   const { status } = useSession()
 
   if (status === 'loading') return <LoadingFallback />
-
-  if (status === 'unauthenticated') return <AuthFallback providers={providers} />
 
   return (
     <>
@@ -40,10 +36,20 @@ LibraryPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const session = await getSession(ctx)
   const providers =
     nextAuthOptions(ctx.req as NextApiRequest, ctx.res as NextApiResponse).providers || []
 
   const onlyBasic = providers.map((v) => ({ id: v.id, name: v.name }))
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/signin?referer=${ctx.resolvedUrl}`,
+        permanent: false,
+      },
+    }
+  }
 
   return {
     props: {
