@@ -9,7 +9,6 @@ import { IS_DEVMODE, GCP_CLIENT_ID, GCP_CLIENT_SECRET, APP_SECRET } from '@/conf
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import Credentials from 'next-auth/providers/credentials'
 import { guestUser } from '@/data/user'
-import { randomUUID } from 'crypto'
 
 export const authOptions: NextAuthOptions = {
   debug: IS_DEVMODE,
