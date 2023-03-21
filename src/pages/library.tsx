@@ -9,8 +9,7 @@ import MapBox from '@/features/mapbox/components/MapBox'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
 import LoadingFallback from '@/components/fallback/LoadingFallback'
-import { nextAuthOptions } from './api/auth/[...nextauth]'
-import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next'
+import { GetServerSidePropsContext } from 'next'
 
 const LibraryPage = () => {
   const { status } = useSession()
