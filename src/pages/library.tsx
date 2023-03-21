@@ -40,11 +40,14 @@ LibraryPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const providers = nextAuthOptions(ctx.req as NextApiRequest, ctx.res as NextApiResponse).providers
+  const providers =
+    nextAuthOptions(ctx.req as NextApiRequest, ctx.res as NextApiResponse).providers || []
+
+  const onlyBasic = providers.map((v) => ({ id: v.id, name: v.name }))
 
   return {
     props: {
-      providers,
+      providers: onlyBasic,
     },
   }
 }

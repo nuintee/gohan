@@ -21,6 +21,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     ctx?.res as NextApiResponse,
   ).providers
 
+  const onlyBasic = providers.map((v) => ({ id: v.id, name: v.name }))
+
   if (session) {
     return {
       redirect: {
@@ -32,7 +34,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
   return {
     props: {
-      providers,
+      providers: onlyBasic,
     },
   }
 }
