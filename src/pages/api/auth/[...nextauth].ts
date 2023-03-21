@@ -20,10 +20,7 @@ export const authOptions: NextAuthOptions = {
     }),
     Credentials({
       name: 'Guest',
-      credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
-        password: { label: 'Password', type: 'password' },
-      },
+      credentials: {},
       async authorize() {
         const user = await prisma.user.upsert({
           where: {
