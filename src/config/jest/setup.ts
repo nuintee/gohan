@@ -11,6 +11,11 @@ global.console = {
   error: jest.fn(),
 }
 
+jest.mock('src/pages/api/auth/[...nextauth].ts', () => ({
+  __esModule: true,
+  default: {},
+}))
+
 window.matchMedia =
   window.matchMedia ||
   function () {
@@ -21,15 +26,7 @@ window.matchMedia =
     }
   }
 
-beforeAll(() => {
-  server.listen()
-
-  // mock api auth due to solving cookie issue
-  jest.mock('src/pages/api/auth/[...nextauth].ts', () => ({
-    __esModule: true,
-    default: {},
-  }))
-})
+beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
