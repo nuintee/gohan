@@ -30,15 +30,23 @@ export const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
         credentials: {},
         async authorize() {
           const deviceId = getCookie('deviceId', { req, res })?.toString() || guestUser.id
-
+          const guestCount = await prisma.user.count({
+            where: {
+              email: {
+                contains: '@example.com',
+              },
+            },
+          })
+          const guestIndex = guestCount + 1 || deviceId.slice(0, 5)
           const user = await prisma.user.upsert({
             where: {
               id: deviceId as string,
             },
             create: {
               ...guestUser,
+              name: `guest${guestIndex}`,
               id: deviceId,
-              email: `guest${deviceId.slice(0, 5)}@example.com`,
+              email: `guest${guestIndex}@example.com`,
             },
             update: {},
           })
