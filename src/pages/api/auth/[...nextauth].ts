@@ -26,17 +26,12 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize() {
-        const LOCALSTORATE_KEY = 'device_id'
-        let id = randomUUID()
-
-        localStorage.setItem(LOCALSTORATE_KEY, id)
-
         const user = await prisma.user.upsert({
           where: {
             email: guestUser.email as string,
           },
-          create: { ...guestUser, id },
-          update: { ...guestUser, id },
+          create: guestUser,
+          update: guestUser,
         })
 
         if (user) {
@@ -50,7 +45,6 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     async jwt({ token, user }) {
-      console.log({ uEmail: token, gEmail: guestUser.email })
       const isGuest = token?.id === guestUser.id
       return { ...token, ...user, isGuest }
     },
