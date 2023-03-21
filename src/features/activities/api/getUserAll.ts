@@ -3,7 +3,6 @@ import { procedure } from '@/server/trpc'
 import { getBareDetailsAPI } from '@/features/restaurants/utils/getBareDetailsAPI'
 
 export const getUserActivities = procedure.query(async ({ ctx }) => {
-  console.log('SESSION', ctx.session)
   const data = await ctx.prisma.activity.findMany({ where: { userId: ctx.session?.user.id } })
 
   const details = await Promise.all(
