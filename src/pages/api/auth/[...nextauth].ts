@@ -9,6 +9,7 @@ import { IS_DEVMODE, GCP_CLIENT_ID, GCP_CLIENT_SECRET, APP_SECRET } from '@/conf
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import Credentials from 'next-auth/providers/credentials'
 import { guestUser } from '@/data/user'
+import { randomUUID } from 'crypto'
 
 export const authOptions: NextAuthOptions = {
   debug: IS_DEVMODE,
@@ -25,12 +26,17 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize() {
+        const LOCALSTORATE_KEY = 'device_id'
+        let id = randomUUID()
+
+        localStorage.setItem(LOCALSTORATE_KEY, id)
+
         const user = await prisma.user.upsert({
           where: {
             email: guestUser.email as string,
           },
-          create: guestUser,
-          update: guestUser,
+          create: { ...guestUser, id },
+          update: { ...guestUser, id },
         })
 
         if (user) {
@@ -56,6 +62,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/signin',
+    error: '/error',
   },
   session: {
     strategy: 'jwt',
