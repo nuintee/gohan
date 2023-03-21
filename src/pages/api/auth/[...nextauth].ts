@@ -62,7 +62,8 @@ export const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
     adapter: PrismaAdapter(prisma),
     callbacks: {
       async jwt({ token, user }) {
-        const isGuest = token?.id === guestUser.id
+        const guestRegexp = new RegExp(/guest.+example\.com/g)
+        const isGuest = guestRegexp.test(token.email as string)
         return { ...token, ...user, isGuest }
       },
       async session({ session, token, user }) {
