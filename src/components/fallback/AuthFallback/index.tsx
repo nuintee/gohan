@@ -20,7 +20,7 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
   const handleLogin = async (id: keyof NonNullable<Providers>) => {
     setIsSignInProccess(true)
     const signinResult = await signIn(id, {
-      callbackUrl: `${BASE_URL}/${referer}`,
+      ...(referer && { callbackUrl: `${BASE_URL}/${referer}` }),
     })
 
     if (signinResult?.ok) {
@@ -79,6 +79,8 @@ const AuthFallback = ({ providers }: { providers: Providers }) => {
         size={isOverSmall ? 'large' : 'normal'}
       />
       <div className='flex flex-col gap-8 items-center p-2 w-full max-w-[20rem]'>
+        <Button text='コードでログイン' outline />
+        <hr className=' border-gh-white w-full h-[1px]'></hr>
         {providers &&
           Object.keys(providers)
             ?.sort((_a, _b) => 1)
