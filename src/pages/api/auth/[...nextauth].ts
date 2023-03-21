@@ -13,6 +13,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { getCookie, setCookie } from 'cookies-next'
 import { randomUUID } from 'crypto'
+import { User } from '@prisma/client'
 
 type NextAuthOptionsCallback = (req: NextApiRequest, res: NextApiResponse) => NextAuthOptions
 
@@ -67,7 +68,8 @@ export const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
         return { ...token, ...user, isGuest }
       },
       async session({ session, token, user }) {
-        session.user = { ...token, ...user }
+        const { iat = '', exp = '', jti = '', sub = '', picture = '', ...restToken } = token
+        session.user = { ...user, ...restToken } as User
 
         return session
       },
