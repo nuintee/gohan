@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth'
+import { DefaultJWT } from 'next-auth/jwt'
 import { getProviders } from 'next-auth/react'
 
 declare module 'next-auth' {
@@ -13,6 +14,16 @@ declare module 'next-auth' {
       image?: string
       registered_at?: Date
     } & DefaultSession['user']
+  }
+
+  interface JWT {
+    user: {
+      name: string
+      id: string
+      email: string
+      image?: string
+      registered_at?: Date
+    } & DefaultJWT
   }
 }
 
