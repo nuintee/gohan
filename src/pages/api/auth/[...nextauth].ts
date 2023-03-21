@@ -80,11 +80,17 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
         name: 'Guest',
         credentials: {},
         async authorize() {
+          const deviceId = getCookie('deviceId', { req, res })?.toString() || guestUser.id
+
           const user = await prisma.user.upsert({
             where: {
-              email: guestUser.email as string,
+              id: deviceId as string,
             },
-            create: guestUser,
+            create: {
+              ...guestUser,
+              id: deviceId,
+              email: `guest.${deviceId.slice(0, 5)}@example.com`,
+            },
             update: {},
           })
 
@@ -119,9 +125,22 @@ const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
 }
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  setCookie('deviceId', randomUUID(), {
+  const deviceId = getCookie('deviceId', {
     req,
     res,
   })
+
+  if (!deviceId) {
+    setCookie('deviceId', randomUUID(), {
+      req,
+      res,
+    })
+  } else {
+    setCookie('deviceId', deviceId, {
+      req,
+      res,
+    })
+  }
+
   return NextAuth(req, res, nextAuthOptions(req, res))
 }
