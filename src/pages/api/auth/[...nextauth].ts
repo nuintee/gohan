@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
             email: guestUser.email as string,
           },
           create: guestUser,
-          update: guestUser,
+          update: {},
         })
 
         if (user) {
