@@ -17,7 +17,7 @@ describe('/library', () => {
     expect(viewport).toBeInTheDocument()
   })
 
-  it('e6eb4: renders Auth Fallback when not authed', () => {
+  it('e6eb4: renders Auth Fallback when not authed', async () => {
     const page = render(<LibraryPage />, { wrapper: unauthedWrapper })
     const viewport = page.getByTestId('auth__fallback')
     expect(viewport).toBeInTheDocument()
