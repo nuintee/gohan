@@ -4,7 +4,7 @@ import ActivityPanel from '@/features/activities/components/ActivityPanel'
 // data
 import { ReactElement } from 'react'
 import { MainLayout } from '@/layouts/layout'
-import { getSession, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import AuthFallback from '@/components/fallback/AuthFallback'
 import MapBox from '@/features/mapbox/components/MapBox'
 import Head from '@/components/meta/Head'

@@ -11,7 +11,19 @@ import ToolTip from '@/components/ui/Tootltip'
 import { useRouter } from 'next/router'
 import { BASE_URL } from '@/config/env'
 
-const AuthFallback = ({ providers }: { providers: Providers }) => {
+// data
+const PROVIDERS_FALLBACK: Providers = {
+  google: {
+    id: 'google',
+    name: 'Google',
+  },
+  credentials: {
+    id: 'credentials',
+    name: 'Guest',
+  },
+} as Providers
+
+const AuthFallback = ({ providers = PROVIDERS_FALLBACK }: { providers: Providers }) => {
   const isOverSmall = useMediaQuery('sm')
   const [isSignInProccess, setIsSignInProccess] = useState(false)
   const router = useRouter()
