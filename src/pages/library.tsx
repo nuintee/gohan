@@ -40,20 +40,10 @@ LibraryPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const session = await getSession(ctx)
   const providers =
     nextAuthOptions(ctx.req as NextApiRequest, ctx.res as NextApiResponse).providers || []
 
   const onlyBasic = providers.map((v) => ({ id: v.id, name: v.name }))
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/signin?referer=${ctx.resolvedUrl}`,
-        permanent: false,
-      },
-    }
-  }
 
   return {
     props: {
