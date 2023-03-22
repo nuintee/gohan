@@ -23,7 +23,7 @@ const PROVIDERS_FALLBACK: Providers = {
   },
 } as Providers
 
-const AuthFallback = ({ providers = PROVIDERS_FALLBACK }: { providers: Providers }) => {
+const AuthFallback = ({ providers = PROVIDERS_FALLBACK }: { providers?: Providers }) => {
   const isOverSmall = useMediaQuery('sm')
   const [isSignInProccess, setIsSignInProccess] = useState(false)
   const router = useRouter()

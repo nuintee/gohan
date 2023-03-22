@@ -9,17 +9,14 @@ import AuthFallback from '@/components/fallback/AuthFallback'
 import MapBox from '@/features/mapbox/components/MapBox'
 import Head from '@/components/meta/Head'
 import { ROUTES } from '@/constants/routes'
-import { Providers } from '@/types/index.type'
 import LoadingFallback from '@/components/fallback/LoadingFallback'
-import { nextAuthOptions } from './api/auth/[...nextauth]'
-import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next'
 
-const LibraryPage = ({ providers }: { providers?: Providers }) => {
+const LibraryPage = () => {
   const { status } = useSession()
 
   if (status === 'loading') return <LoadingFallback />
 
-  if (status === 'unauthenticated') return <AuthFallback providers={providers} />
+  if (status === 'unauthenticated') return <AuthFallback />
 
   return (
     <>
@@ -37,19 +34,6 @@ const LibraryPage = ({ providers }: { providers?: Providers }) => {
 
 LibraryPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout searchButtonPosition='bottom-center'>{page}</MainLayout>
-}
-
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const providers =
-    nextAuthOptions(ctx.req as NextApiRequest, ctx.res as NextApiResponse).providers || []
-
-  const onlyBasic = providers.map((v) => ({ id: v.id, name: v.name }))
-
-  return {
-    props: {
-      providers: onlyBasic,
-    },
-  }
 }
 
 export default LibraryPage

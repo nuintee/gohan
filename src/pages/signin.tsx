@@ -1,31 +1,13 @@
 import AuthFallback from '@/components/fallback/AuthFallback'
 import { MainLayout } from '@/layouts/layout'
-import { Providers } from '@/types/index.type'
-import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next'
 import { ReactElement } from 'react'
-import { nextAuthOptions } from './api/auth/[...nextauth]'
 
-const SignInPage = ({ providers }: { providers: Providers }) => {
-  return <AuthFallback providers={providers} />
+const SignInPage = () => {
+  return <AuthFallback />
 }
 
 SignInPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout searchButtonPosition='bottom-center'>{page}</MainLayout>
-}
-
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const providers = nextAuthOptions(
-    ctx?.req as NextApiRequest,
-    ctx?.res as NextApiResponse,
-  ).providers
-
-  const onlyBasic = providers.map((v) => ({ id: v.id, name: v.name }))
-
-  return {
-    props: {
-      providers: onlyBasic,
-    },
-  }
 }
 
 export default SignInPage
