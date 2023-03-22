@@ -45,7 +45,7 @@ export const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
             const out = matched ? matched.join('') : ''
             return out
           }
-          const lastIndex = Math.max(...guestAll.map((v) => Number(parseGuest(v.name || ''))))
+          const lastIndex = Math.max(...guestAll?.map((v) => Number(parseGuest(v.name || ''))))
 
           const guestIndex = lastIndex + 1 || deviceId.slice(0, 5)
           const user = await prisma.user.upsert({
