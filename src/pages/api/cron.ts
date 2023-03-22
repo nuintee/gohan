@@ -15,5 +15,5 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
     },
   )
 
-  res.status(pingRequest.status).json(pingRequest.data)
+  res.status(pingRequest.status).end(pingRequest.statusText)
 }
