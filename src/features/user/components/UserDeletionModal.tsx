@@ -50,7 +50,7 @@ const UserDeletionModal = () => {
             danger
             outline={false}
             disabled={!isChecked}
-            loading={deleteQuery.isLoading}
+            loading={deleteQuery.isLoading || deleteQuery.isSuccess}
             onClick={handleAccountDeletion}
             testId='deactivation_action__button'
           />
