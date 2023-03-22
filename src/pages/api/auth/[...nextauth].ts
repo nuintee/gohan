@@ -31,14 +31,23 @@ export const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
         credentials: {},
         async authorize() {
           const deviceId = getCookie('deviceId', { req, res })?.toString() || guestUser.id
-          const guestCount = await prisma.user.count({
+
+          const guestAll = await prisma.user.findMany({
             where: {
               email: {
                 contains: '@example.com',
               },
             },
           })
-          const guestIndex = guestCount + 1 || deviceId.slice(0, 5)
+
+          function parseGuest(str: string) {
+            const matched = str.match(/\d/g)
+            const out = matched ? matched.join('') : ''
+            return out
+          }
+          const lastIndex = Math.max(...guestAll.map((v) => Number(parseGuest(v.name || ''))))
+
+          const guestIndex = lastIndex + 1 || deviceId.slice(0, 5)
           const user = await prisma.user.upsert({
             where: {
               id: deviceId as string,
