@@ -49,8 +49,8 @@ const UserDeletionModal = () => {
             text='アカウント削除'
             danger
             outline={false}
-            disabled={!isChecked}
-            loading={deleteQuery.isLoading || deleteQuery.isSuccess}
+            disabled={!isChecked || deleteQuery.isSuccess}
+            loading={deleteQuery.isLoading}
             onClick={handleAccountDeletion}
             testId='deactivation_action__button'
           />
