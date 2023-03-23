@@ -1,7 +1,7 @@
 import { ROUTES } from '@/constants/routes'
 import { useRouter } from 'next/router'
 
-const Promotion = ({ onClick }: { onClick: () => void }) => {
+const Promotion = ({ onClick = () => {} }: { onClick?: () => void }) => {
   const router = useRouter()
   const referer = (router.query?.referer as string) || router.asPath
 
