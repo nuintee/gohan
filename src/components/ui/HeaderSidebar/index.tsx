@@ -47,7 +47,7 @@ const HeaderSidebar = ({
         </div>
         {status === 'unauthenticated' && (
           <footer className='mt-auto p-4'>
-            <Promotion />
+            <Promotion onClick={onClose} />
           </footer>
         )}
       </>

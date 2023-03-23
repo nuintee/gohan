@@ -1,12 +1,13 @@
 import { ROUTES } from '@/constants/routes'
 import { useRouter } from 'next/router'
 
-const Promotion = () => {
+const Promotion = ({ onClick }: { onClick: () => void }) => {
   const router = useRouter()
   const referer = (router.query?.referer as string) || router.asPath
 
   function handleClick() {
     router.push(`${ROUTES.SIGNIN.path}?referer=${encodeURIComponent(referer)}`)
+    onClick && onClick()
   }
 
   return (
