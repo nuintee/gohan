@@ -16,7 +16,7 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const navBarsUI = () => {
-    if (IS_MAINTENANCE) return <></>
+    if (IS_MAINTENANCE == 'true') return <></>
 
     return (
       <>
@@ -36,7 +36,7 @@ const Header = () => {
   return (
     <>
       <div className='flex gap-4 bg-gh-brown justify-between sm:px-[10%] px-4 w-full items-center sm:items-stretch'>
-        <Brand margin={true} href={IS_MAINTENANCE && '/maintenance'} />
+        <Brand margin={true} href={IS_MAINTENANCE == 'true' ? '/maintenance' : ROUTES.HOME.path} />
         {navBarsUI()}
       </div>
       {!isOverSmall && <HeaderSidebar isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
