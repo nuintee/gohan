@@ -1,78 +1,113 @@
-# ReadMe
+# **はじめに**
 
----
+本サービス"Gohan"はユーザーの位置情報を元に、周辺のレストランをランダムで紹介するものです。<br>
+ログイン時は履歴の確認・マイ評価の追加をしてレストランを管理する事ができます。
 
-# **GoHan**
+## 開発について
 
-This is a simple UI/UX based random restaurant selection application. Based on the user's location, restaurants within a 3km radius as a default are displayed. 
+###開発の経緯
+Gohan v1 (レガシー版) の改善を目的として、本プロダクト Gohan v2 を開発しました。v1 の問題点であった日本国内のレストランに限られた検索機能とシンプルすぎる UI/UX を改善し、より使いやすく友人にも広く使ってもらえるようなアプリケーションを目指しました。
 
-## Why Developing this?
+###v1 開発の背景
+v1 開発当初はデート等でレストランを探す際に時間がかかる事が度々あり、より効率的に食事を探せるアプリケーションがあれば便利だと感じ、Gohan v1 を開発しました。
 
-I wanted to create an app that would choose a restaurant on its own for me when I have trouble deciding on a restaurant for dinner with friends or a date with my girlfriend.
+###今後の発展
 
-## How to use
+## ご利用方法
 
-### Home
+### ホーム
 
-[https://camo.githubusercontent.com/a3d8170c2f4acd8583e32a8de11d25f03cddaaa282e8551d56e2809d08f7b3c4/68747470733a2f2f64726976652e676f6f676c652e636f6d2f75633f6578706f72743d766965772669643d3177503557656f4b6d6d756d2d5f68366e4d62546f623472375846522d366e5a71](https://camo.githubusercontent.com/a3d8170c2f4acd8583e32a8de11d25f03cddaaa282e8551d56e2809d08f7b3c4/68747470733a2f2f64726976652e676f6f676c652e636f6d2f75633f6578706f72743d766965772669643d3177503557656f4b6d6d756d2d5f68366e4d62546f623472375846522d366e5a71)
+![ホームの画像](Home.jpg)
 
-### Results
+### ディスカバリー (検索後自動遷移)
 
-[https://camo.githubusercontent.com/e8034e6e9e0ff65aca4a52846a7adf48b1d5fef2fbec818ebc42a0d6e531866f/68747470733a2f2f64726976652e676f6f676c652e636f6d2f75633f6578706f72743d766965772669643d31704a6a66724848545355774c356846304b6c4161754564636a336b796970364d](https://camo.githubusercontent.com/e8034e6e9e0ff65aca4a52846a7adf48b1d5fef2fbec818ebc42a0d6e531866f/68747470733a2f2f64726976652e676f6f676c652e636f6d2f75633f6578706f72743d766965772669643d31704a6a66724848545355774c356846304b6c4161754564636a336b796970364d)
+ランダム検索後、自動で遷移されるページです。<br>
+また、数秒経過後にレストラン詳細ページへ自動遷移します。
 
-## Tech stacks
+![ディスカバリーページの画像](Discover.jpg)
 
-- Frontend
-    
-    
-    - HTML / CSS
-    - Tailwind CSS / Headless UI
-    - Next.js
-    - Typescript
-    - React Context - Since the app is not that complicated
-    - SWR
-- Backend
-    
-    
-    - API Routes ( Next.js )
-    - Firestore (DB)
-- DevOps
-    
-    
-    - Docker
-    - Github Actions
-- Tools
-    
-    
-    - tRPC
-    - ESLint
-    - Prettier
+### レストラン詳細
+
+未認証時
+
+![未認証レストラン詳細ページの画像](DetailsUnauthed.jpg)
+
+認証時
+
+![認証済みレストラン詳細ページの画像](DetailsAuthed.jpg)
+
+スクロール後 <br>
+※全体を写すために画像のサイズは調整してあります。
+![レストラン詳細ページの写真 - その2](DetailsRest.png)
+
+### ライブラリ
+
+未認証時
+
+![未認証ライブラリページの画像](Library-Unauthed.jpg)
+
+認証時
+
+パネルを閉じた場合
+![認証済みライブラリページの画像](LibraryClosedPanel.jpg)
+有効なデータの場合
+![認証済みライブラリページの画像 - 有効なデータの場合](LibraryContents.jpg)
+データが存在しない場合
+![認証済みライブラリページの画像](LibraryNoData.jpg)
+
+## 使用技術
+
+- フロントエンド
+  - HTML / CSS
+  - Tailwind CSS
+  - React.js
+  - Next.js
+  - Typescript
+  - TanStackQuery (react-query)
+  - tRPC (client)
+- バックエンド
+  - Next.js API Routes
+  - Supabase Database
+  - tRPC (server)
+- ORM
+  - Prisma
+- 認証
+  - Next Auth
+    - Credentials Provider (ゲスト)
+    - Google Provider
+- CI/CD
+  - Vercel Workflow
+  - Husky
+    - ( ESLint
+    - ( Prettier
+    - ( Jest
+- ホスティング
+  - Vercel
+- テスト
+  - Jest
+  - React Testing Library
+- Lint ツール
+  - Prettier
+  - ESLint
+- その他ツール
+  - Docker (ローカル DB)
     - Storybook
-    - Jest
-    - json-server
-    - SWR
-    - Auth0
-    - Husky
-- Infrastructure
-    
-    
-    - Vercel
+    - OpenAPI (Swagger)
 
-## Features
+## 機能一覧
 
-- Simple UI/UX
-- Searchable random restaurant
-- User login and signup
-- Favorites and histories
-- Sharable result restaurant through Social media and URL (Web Share API)
-- Restaurants (Google Locations API )
-- Map Display anRoute navigation (Map Box API)
-- PWA
-- Store states in url
-- UI icons API
+- ユーザー登録、ログイン機能 (Next auth)
+- ランダム検索機能 (Places API)
+- ライブラリ一覧表示 (Prisma x TRPC)
+- 自分用評価追加機能 (React hook form)
+- 保存済みレストランのマップ表示 (Mapbox)
 
-## **URLs**
+## **URL 等**
 
-APP : [https://gohan-location.web.app](https://gohan-location.web.app/)
+**最新バージョン (v2)** : [https://gohan.place](https://gohan.place)
 
-Notion : [https://spangle-erica-897.notion.site/Gohan-v2-0-defac4e40cac4e4188307cd75fe4ea40](https://www.notion.so/Gohan-v2-0-defac4e40cac4e4188307cd75fe4ea40)
+過去バージョン (v1) : [https://gohan-location.web.app]()
+
+管理用 Notion : [https://spangle-erica-897.notion.site/Gohan-v2-0-defac4e40cac4e4188307cd75fe4ea40]()
+
+Figma : [https://www.figma.com/file/KiRAjbAZa2uvjuMI8xiuE2/Gohan?node-id=1199%3A3733&t=KWZY5dWN5LulObol-1]()
