@@ -39,7 +39,7 @@ v1 開発当初はデート等でレストランを探す際に時間がかか�
 
 認証時
 
-![認証済みレストラン詳細ページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/details/DetailsUnauthed.jpg?t=2023-03-23T03%3A51%3A39.016Z)
+![認証済みレストラン詳細ページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/details/DetailsAuthed.jpg?t=2023-03-23T03%3A51%3A39.016Z)
 
 スクロール後 <br>
 ※全体を写すために画像のサイズは調整してあります。
