@@ -1,9 +1,17 @@
-import { signIn } from 'next-auth/react'
+import { ROUTES } from '@/constants/routes'
+import { useRouter } from 'next/router'
 
 const Promotion = () => {
+  const router = useRouter()
+  const referer = (router.query?.referer as string) || router.asPath
+
+  function handleClick() {
+    router.push(`${ROUTES.SIGNIN.path}?referer=${encodeURIComponent(referer)}`)
+  }
+
   return (
     <button
-      onClick={() => signIn('google')}
+      onClick={handleClick}
       className='p-4 flex items-center w-full justify-center bg-gradient-to-r from-pink-500 via-gh-red to-gh-orange rounded-md h-[7.5rem] shadow-md duration-700 hover:scale-105 cursor-pointer font-semibold select-none text-white'
     >
       簡単にアカウントを作成してお気に入りの場所を保存しよう。
