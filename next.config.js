@@ -58,7 +58,7 @@ const nextConfig = {
       ? [
           {
             source: '/((?!maintenance$).*$)',
-            statusCode: 303,
+            statusCode: 302,
             destination: '/maintenance',
             permanent: false,
           },
