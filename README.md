@@ -49,10 +49,15 @@ v1 開発当初はデート等でレストランを探す際に時間がかか�
 認証時
 
 パネルを閉じた場合
+
 ![認証済みライブラリページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/library/LibraryClosedPanel.jpg?t=2023-03-23T03%3A52%3A17.112Z)
+
 有効なデータの場合
+
 ![認証済みライブラリページの画像 - 有効なデータの場合](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/library/LibraryContents.jpg?t=2023-03-23T03%3A52%3A24.926Z)
+
 データが存在しない場合
+
 ![認証済みライブラリページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/library/LibraryNoData.jpg?t=2023-03-23T03%3A52%3A32.468Z)
 
 ## 使用技術
