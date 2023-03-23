@@ -8,16 +8,18 @@ import NavLink from '../NavLink'
 
 // constans
 import { ROUTES } from '@/constants/routes'
+import { IS_MAINTENANCE } from '@/config/env'
 
 const Header = () => {
   const isOverSmall = useMediaQuery('sm')
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  return (
-    <>
-      <div className='flex gap-4 bg-gh-brown justify-between sm:px-[10%] px-4 w-full items-center sm:items-stretch'>
-        <Brand margin={true} />
+  const navBarsUI = () => {
+    if (IS_MAINTENANCE) return <></>
+
+    return (
+      <>
         {isOverSmall && <NavLink href={ROUTES.LIBRARY.path} label={ROUTES.LIBRARY.label} />}
         <div className={`flex items-center ${!isOverSmall && 'ml-auto'}`}>
           <User />
@@ -27,6 +29,15 @@ const Header = () => {
             <Hamburger height={20} width={20} />
           </button>
         )}
+      </>
+    )
+  }
+
+  return (
+    <>
+      <div className='flex gap-4 bg-gh-brown justify-between sm:px-[10%] px-4 w-full items-center sm:items-stretch'>
+        <Brand margin={true} href={IS_MAINTENANCE && '/maintenance'} />
+        {navBarsUI()}
       </div>
       {!isOverSmall && <HeaderSidebar isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
     </>

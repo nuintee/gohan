@@ -9,13 +9,15 @@ import { ROUTES } from '@/constants/routes'
 const Brand = ({
   margin = false,
   allowNavigation = true,
+  href = ROUTES.HOME.path,
 }: {
   margin?: boolean
   allowNavigation?: boolean
+  href?: string
 }) => {
   return (
     <Link
-      href={ROUTES.HOME.path}
+      href={href}
       className={`flex gap-2 items-center ${margin && 'm-2'}`}
       style={{
         ...(!allowNavigation && { pointerEvents: 'none' }),

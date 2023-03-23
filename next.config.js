@@ -53,6 +53,18 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return process.env.NEXT_PUBLIC_IS_MAINTENANCE == 'true'
+      ? [
+          {
+            source: '/((?!maintenance$).*$)',
+            statusCode: 303,
+            destination: '/maintenance',
+            permanent: false,
+          },
+        ]
+      : []
+  },
 }
 
 module.exports = withPWA(nextConfig)
