@@ -17,43 +17,43 @@ v1 開発当初はデート等でレストランを探す際に時間がかか�
 
 ### ホーム
 
-![ホームの画像](Home.jpg)
+![ホームの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/home/Home.jpg)
 
 ### ディスカバリー (検索後自動遷移)
 
 ランダム検索後、自動で遷移されるページです。<br>
 また、数秒経過後にレストラン詳細ページへ自動遷移します。
 
-![ディスカバリーページの画像](Discover.jpg)
+![ディスカバリーページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/discover/Discover.jpg?t=2023-03-23T03%3A50%3A43.210Z)
 
 ### レストラン詳細
 
 未認証時
 
-![未認証レストラン詳細ページの画像](DetailsUnauthed.jpg)
+![未認証レストラン詳細ページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/details/DetailsUnauthed.jpg?t=2023-03-23T03%3A51%3A39.016Z)
 
 認証時
 
-![認証済みレストラン詳細ページの画像](DetailsAuthed.jpg)
+![認証済みレストラン詳細ページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/details/DetailsUnauthed.jpg?t=2023-03-23T03%3A51%3A39.016Z)
 
 スクロール後 <br>
 ※全体を写すために画像のサイズは調整してあります。
-![レストラン詳細ページの写真 - その2](DetailsRest.png)
+![レストラン詳細ページの写真 - その2](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/details/DetailsRest.png?t=2023-03-23T03%3A52%3A03.006Z)
 
 ### ライブラリ
 
 未認証時
 
-![未認証ライブラリページの画像](Library-Unauthed.jpg)
+![未認証ライブラリページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/library/LibraryUnauthed.jpg?t=2023-03-23T03%3A48%3A20.071Z)
 
 認証時
 
 パネルを閉じた場合
-![認証済みライブラリページの画像](LibraryClosedPanel.jpg)
+![認証済みライブラリページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/library/LibraryClosedPanel.jpg?t=2023-03-23T03%3A52%3A17.112Z)
 有効なデータの場合
-![認証済みライブラリページの画像 - 有効なデータの場合](LibraryContents.jpg)
+![認証済みライブラリページの画像 - 有効なデータの場合](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/library/LibraryContents.jpg?t=2023-03-23T03%3A52%3A24.926Z)
 データが存在しない場合
-![認証済みライブラリページの画像](LibraryNoData.jpg)
+![認証済みライブラリページの画像](https://dnjrvsrsqllhmmdvvuac.supabase.co/storage/v1/object/public/gohan-doc-images/library/LibraryNoData.jpg?t=2023-03-23T03%3A52%3A32.468Z)
 
 ## 使用技術
 
