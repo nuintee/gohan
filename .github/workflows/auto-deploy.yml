@@ -37,13 +37,15 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
-        run:  vercel pull --yes --environment=production --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
       - name: Check IS_STAGING mode to be false
-        run:  if grep -q '^IS_STAGING="false"$' .vercel/.env.production.local; then echo "OK"; else exit 1; fi
+        run: if grep -q '^IS_STAGING="false"$' .vercel/.env.production.local; then echo "OK"; else exit 1; fi
       - name: Check NEXT_PUBLIC_IS_MAINTENANCE mode to be false
-        run:  if grep -q '^NEXT_PUBLIC_IS_MAINTENANCE="false"$' .vercel/.env.production.local; then echo "OK"; else exit 1; fi
+        run: if grep -q '^NEXT_PUBLIC_IS_MAINTENANCE="false"$' .vercel/.env.production.local; then echo "OK"; else exit 1; fi
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+      - name: Prisma build for linux
+        run: npx prisma generate --binary-target=linux
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
       - name: Update package version
