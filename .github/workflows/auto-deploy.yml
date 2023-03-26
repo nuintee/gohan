@@ -1,0 +1,66 @@
+name: Vercel Production Deployment
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+jobs:
+  Deploy-Production:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: get git log no merge
+        run: git log --no-merges --format=%B -n 1
+      - name: Get package version
+        id: get_version
+        run: echo ::set-output name=version::$(npm pkg get version | tr -d '\n' | tr -d '"')
+      - name: Audit Dependencies
+        run: |
+          audit=$(npm audit --omit=dev --json)
+          if [ $(echo "$audit" | jq '.metadata.vulnerabilities."low" + .metadata.vulnerabilities."moderate" + .metadata.vulnerabilities."high"') -gt 0 ]; then
+            echo "$audit" | jq
+            exit 1
+          fi
+      - name: Create Release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          release_name: v${{ steps.get_version.outputs.version }}
+          body: ${{ github.event.pull_request.body }}
+          draft: false
+          prerelease: false
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run:  vercel pull --yes --environment=production --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+      - name: Check IS_STAGING mode to be false
+        run:  if grep -q '^IS_STAGING="false"$' .vercel/.env.production.local; then echo "OK"; else exit 1; fi
+      - name: Check NEXT_PUBLIC_IS_MAINTENANCE mode to be false
+        run:  if grep -q '^NEXT_PUBLIC_IS_MAINTENANCE="false"$' .vercel/.env.production.local; then echo "OK"; else exit 1; fi
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+      - name: Update package version
+        run: |
+          message=$(git log --no-merges --format=%B -n 1)
+          if echo "$message" | grep -Eq '^BREAKING CHANGE:'; then
+            npm --no-git-tag-version version major
+          elif echo "$message" | grep -Eq '^fix:|bug:'; then
+            npm --no-git-tag-version version patch
+          else
+            npm --no-git-tag-version version minor 
+          fi
+      - name: Commit version change
+        run: |
+          version="$(npm pkg get version)"
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add package.json
+          git commit -m "Bump version to $version"
+          git push
