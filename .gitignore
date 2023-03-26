@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-package-lock.json
 
 # testing
 /coverage
@@ -27,6 +26,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
+.env*
 .env*.local
 
 # vercel
@@ -38,3 +38,12 @@ next-env.d.ts
 
 # storybook
 storybook-static
+
+# PWA files
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+**/public/fallback-*.js

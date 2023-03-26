@@ -1,36 +1,13 @@
 import { rest } from 'msw'
 
+import { googlePhotosAPIHandler } from './handlers/googlePhotosAPIHandlers'
+import { googleDetailsAPIHandlers } from './handlers/googleDetailsAPIHandlers'
+import { googlePlacesHandlers } from './handlers/googlePlacesHandlers'
+
 export const handlers = [
-  rest.post('/login', (req, res, ctx) => {
-    // Persist user's authentication in the session
-    sessionStorage.setItem('is-authenticated', 'true')
-
-    return res(
-      // Respond with a 200 status code
-      ctx.status(200),
-    )
-  }),
-
-  rest.get('/user', (req, res, ctx) => {
-    // Check if the user is authenticated in this session
-    const isAuthenticated = sessionStorage.getItem('is-authenticated')
-
-    if (!isAuthenticated) {
-      // If not authenticated, respond with a 403 error
-      return res(
-        ctx.status(403),
-        ctx.json({
-          errorMessage: 'Not authorized',
-        }),
-      )
-    }
-
-    // If authenticated, return a mocked user details
-    return res(
-      ctx.status(200),
-      ctx.json({
-        username: 'admin',
-      }),
-    )
-  }),
+  rest.get(`https://maps.googleapis.com/maps/api/place/photo`, googlePhotosAPIHandler),
+  rest.get(`http://localhost:3000/api/image`, googlePhotosAPIHandler),
+  rest.get(`https://maps.googleapis.com/maps/api/place/details/json`, googleDetailsAPIHandlers),
+  rest.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json`, googlePlacesHandlers),
+  rest.get(`https://jsonplaceholder.typicode.com/todos/1`, googlePlacesHandlers),
 ]

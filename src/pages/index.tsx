@@ -1,25 +1,20 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import { MainLayout } from '@/layouts/layout'
+import SearchLayout from '@/features/search/layouts/SearchLayout'
+import { ReactElement } from 'react'
+import Head from '@/components/meta/Head'
+import { ROUTES } from '@/constants/routes'
 
-// Components
-import MapBox from '@/components/MapBox'
-
-const Home: NextPage = () => {
+const Index = () => {
   return (
-    <div className='relative'>
-      <header className='absolute top-0 left-0 w-full flex justify-between p-4'>
-        <button className='bg-gh-white px-4 py-2 rounded-md'>Auth</button>
-        <button className='bg-gh-white px-4 py-2 rounded-md'>Lib</button>
-      </header>
-      <MapBox />
-      <footer className='absolute bottom-0 left-0 w-full flex justify-center gap-4 p-4'>
-        <button className='bg-gh-dark text-gh-white px-4 py-2 rounded-md active:bg-opacity-90'>
-          Find
-        </button>
-      </footer>
-    </div>
+    <>
+      <Head title={ROUTES.HOME.label} />
+      <SearchLayout />
+    </>
   )
 }
 
-export default Home
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout disableSearch={true}>{page}</MainLayout>
+}
+
+export default Index
