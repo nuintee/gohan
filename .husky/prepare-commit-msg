@@ -6,4 +6,4 @@ branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
 escaped=$(echo $branch | sed 's/\//\\\//g')
 
-sed -i '' -e "s/\[branch-name\]/$escaped/g" $1
+sed -i '' -e "s/\[branch-name\]/$escaped/g" $1 || exit 0
