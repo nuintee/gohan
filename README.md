@@ -114,7 +114,7 @@ v1 開発当初はデート等でレストランを探す際に時間がかか�
 
 ## **URL 等**
 
-**最新バージョン (v2)** : https://gohan.place](https://gohan.place
+**最新バージョン (v2)** : https://gohan.place
 
 過去バージョン (v1) : https://gohan-location.web.app
 
