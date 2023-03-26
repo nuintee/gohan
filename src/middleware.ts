@@ -2,13 +2,14 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { IS_STAGING } from './config/env'
 
+import { Buffer } from 'buffer'
+
 const BASIC_AUTH_USER = 'USER'
 const BASIC_AUTH_PASSWORD = 'PSSWRD'
 
 export const middleware = (req: NextRequest) => {
   if (IS_STAGING !== 'true') return NextResponse.next()
 
-  
   const authorizationHeader = req.headers.get('authorization')
 
   if (authorizationHeader) {

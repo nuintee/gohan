@@ -26,7 +26,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack: (config) => {
+  webpack: (config, { nextRuntime }) => {
+    if (nextRuntime !== 'nodejs') return config
     config.module.rules.push({
       test: /\.svg$/,
       use: [
