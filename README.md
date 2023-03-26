@@ -114,10 +114,10 @@ v1 開発当初はデート等でレストランを探す際に時間がかか�
 
 ## **URL 等**
 
-**最新バージョン (v2)** : [https://gohan.place](https://gohan.place)
+**最新バージョン (v2)** : https://gohan.place](https://gohan.place
 
-過去バージョン (v1) : [https://gohan-location.web.app]()
+過去バージョン (v1) : https://gohan-location.web.app
 
-管理用 Notion : [https://spangle-erica-897.notion.site/Gohan-v2-0-defac4e40cac4e4188307cd75fe4ea40]()
+管理用 Notion : https://spangle-erica-897.notion.site/Gohan-v2-0-defac4e40cac4e4188307cd75fe4ea40
 
-Figma : [https://www.figma.com/file/KiRAjbAZa2uvjuMI8xiuE2/Gohan?node-id=1199%3A3733&t=KWZY5dWN5LulObol-1]()
+Figma : https://www.figma.com/file/KiRAjbAZa2uvjuMI8xiuE2/Gohan?node-id=1199%3A3733&t=KWZY5dWN5LulObol-1
