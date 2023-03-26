@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-if [ -f "package.jsone" ]; then
+if [ -f "package.json" ]; then
   echo "found package.json"
 else
   exit 0
