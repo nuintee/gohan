@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: get git log no merge
-        run: git log --no-merges --format=%B -n 1
       - name: Get package version
         id: get_version
         run: echo ::set-output name=version::$(npm pkg get version | tr -d '\n' | tr -d '"')
