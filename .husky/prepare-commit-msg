@@ -1,14 +1,8 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# #!/usr/bin/env sh
+# . "$(dirname -- "$0")/_/husky.sh"
 
-if [ -f "package.json" ]; then
-  echo "found package.json"
-else
-  exit 0
-fi
+# branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
-branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+# escaped=$(echo $branch | sed 's/\//\\\//g')
 
-escaped=$(echo $branch | sed 's/\//\\\//g')
-
-sed -i '' -e "s/\[branch-name\]/$escaped/g" $1
+# sed -i '' -e "s/\[branch-name\]/$escaped/g" $1
