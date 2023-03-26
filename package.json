@@ -1,6 +1,6 @@
 {
   "name": "gohan",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
@@ -24,7 +24,8 @@
     "prisma:studio": "npx prisma studio",
     "prisma:all": "npm run prisma:push && npm run prisma:gen && npm run prisma:studio",
     "deadcode": "ts-prune -e",
-    "deadcode:count": "ts-prune | wc -l"
+    "deadcode:count": "ts-prune | wc -l",
+    "postinstall": "prisma generate || true"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
