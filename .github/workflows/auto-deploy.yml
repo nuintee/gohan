@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: get git log no merge
-        run: git log --no-merges --format=%B -n 1
       - name: Get package version
         id: get_version
         run: echo ::set-output name=version::$(npm pkg get version | tr -d '\n' | tr -d '"')
@@ -44,8 +42,6 @@ jobs:
         run: if grep -q '^NEXT_PUBLIC_IS_MAINTENANCE="false"$' .vercel/.env.production.local; then echo "OK"; else exit 1; fi
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
-      - name: Prisma build for linux
-        run: npx prisma generate
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
       - name: Update package version
@@ -64,5 +60,5 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git add package.json
-          git commit -m "Bump version to $version"
+          git commit --no-verify -m "Bump version to $version"
           git push
