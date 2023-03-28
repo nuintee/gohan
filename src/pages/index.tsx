@@ -7,7 +7,7 @@ import { ROUTES } from '@/constants/routes'
 const Index = () => {
   return (
     <>
-      <Head title={ROUTES.HOME.label} />
+      <Head url={ROUTES.HOME.path} />
       <SearchLayout />
     </>
   )
