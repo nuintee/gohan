@@ -13,7 +13,7 @@ type Props = {
 
 const Head = ({
   title = 'Gohan',
-  description = 'Gohanはユーザーの位置情報を元に、周辺のレストランをランダムで紹介するものです。ログイン時は履歴の確認・マイ評価の追加をしてレストランを管理する事ができます。',
+  description = 'Gohanはユーザーの位置情報を元に、周辺のレストランをランダムで紹介するサービスです。ログイン時は履歴の確認・マイ評価の追加をしてレストランを管理する事ができます。',
   keyword = '',
   image = '/ogp-image.png',
   locale = 'ja_JP',
