@@ -8,7 +8,13 @@ type Props = {
   url?: string
 }
 
-const Head = ({ title = '', description = '', keyword = '', image = '', url = '' }: Props) => {
+const Head = ({
+  title = 'Gohan',
+  description = '本サービス"Gohan"はユーザーの位置情報を元に、周辺のレストランをランダムで紹介するものです。ログイン時は履歴の確認・マイ評価の追加をしてレストランを管理する事ができます。',
+  keyword = '',
+  image = '/icon-512x512.png',
+  url = '',
+}: Props) => {
   return (
     <H>
       <title>Gohan {title && `| ${title}`}</title>
