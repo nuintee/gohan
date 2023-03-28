@@ -1,4 +1,6 @@
+import { BASE_URL } from '@/config/env'
 import H from 'next/head'
+import { useRouter } from 'next/router'
 
 type Props = {
   title?: string
@@ -14,9 +16,11 @@ const Head = ({
   description = '本サービス"Gohan"はユーザーの位置情報を元に、周辺のレストランをランダムで紹介するものです。ログイン時は履歴の確認・マイ評価の追加をしてレストランを管理する事ができます。',
   keyword = '',
   image = '/ogp-image.png',
-  url = '/',
   locale = 'ja_JP',
 }: Props) => {
+  const router = useRouter()
+  const url = `${BASE_URL}${router.asPath}`
+
   return (
     <H>
       <title>{title}</title>
