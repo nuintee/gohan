@@ -79,11 +79,9 @@ const DetailsPage = ({ id }: { id: string }) => {
   return (
     <>
       <Head
-        title={details.data?.name || ROUTES.DETAILS.label}
-        description={details.data?.editorial_summary?.overview}
+        title={`Gohan | ${details.data?.name || ROUTES.DETAILS.label}`}
         keyword={details.data?.types?.join(',')}
         image={memorizedPhotos?.at(0)?.url}
-        url={ROUTES.DETAILS.path}
       />
       <div className='flex flex-1 flex-col relative overflow-auto'>
         <DetailsHero
