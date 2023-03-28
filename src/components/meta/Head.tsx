@@ -6,6 +6,7 @@ type Props = {
   keyword?: string
   image?: string
   url?: string
+  locale?: string
 }
 
 const Head = ({
@@ -14,6 +15,7 @@ const Head = ({
   keyword = '',
   image = '/icon-512x512.png',
   url = '/',
+  locale = 'ja_JP',
 }: Props) => {
   return (
     <H>
@@ -22,6 +24,7 @@ const Head = ({
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta name='keywords' content={keyword} />
+      <meta property='og:locale' content={locale} />
       <meta property='og:url' content={url} />
       <meta property='og:image' content={image} />
       <meta property='og:site_name' content={title} />
