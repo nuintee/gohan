@@ -25,7 +25,7 @@ class MyDocument extends Document {
           <meta name='theme-color' content='#fff' />
           <meta name='twitter:card' content='summary' />
           <meta name='twitter:site' content='@tcr_jp' />
-          <meta property='og:type' content='blog' />
+          <meta property='og:type' content='website' />
           <meta
             name='viewport'
             content='initial-scale=1, maximum-scale=1, width=device-width, user-scalable=no, viewport-fit=cover'
