@@ -23,7 +23,8 @@ const Head = ({
 
   return (
     <H>
-      <title>{title}</title>
+      {/* Due to HTML comment in title issue */}
+      <title>{typeof location !== 'undefined' ? title : 'Gohan'}</title>
       <meta name='description' content={description} />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
