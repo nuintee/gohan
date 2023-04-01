@@ -10,6 +10,7 @@ const Close = (props: Props) => {
       viewBox='0 0 15 15'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      aria-hidden='true'
       {...rest}
     >
       <path
