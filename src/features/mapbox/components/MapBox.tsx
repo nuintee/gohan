@@ -59,7 +59,7 @@ const MapBox = () => {
   }
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full' aria-hidden='true'>
       <Map
         initialViewState={{
           latitude: gps.coords.latitude,
