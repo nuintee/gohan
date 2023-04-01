@@ -11,6 +11,8 @@ import { trpc } from '@/libs/trpc'
 import { ToastCatcher } from '@/components/ui'
 import { AnimatePresence } from 'framer-motion'
 
+import { Analytics } from '@vercel/analytics/react'
+
 // Override
 import '@/utils/__arrayOverride__'
 import { NextPage } from 'next'
@@ -35,21 +37,24 @@ function App({ Component, pageProps, router }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
-    <ErrorBoundary>
-      <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <SessionProvider session={pageProps.session}>
-            <main className={`font-poppins h-screen w-screen overflow-hidden`}>
-              <AnimatePresence mode='wait' initial={false}>
-                {getLayout(<Component {...pageProps} key={router.pathname} />)}
-              </AnimatePresence>
-              <ToastCatcher position='top-center' />
-            </main>
-            <ReactQueryDevtools />
-          </SessionProvider>
-        </QueryClientProvider>
-      </RecoilRoot>
-    </ErrorBoundary>
+    <>
+      <ErrorBoundary>
+        <RecoilRoot>
+          <QueryClientProvider client={queryClient}>
+            <SessionProvider session={pageProps.session}>
+              <main className={`font-poppins h-screen w-screen overflow-hidden`}>
+                <AnimatePresence mode='wait' initial={false}>
+                  {getLayout(<Component {...pageProps} key={router.pathname} />)}
+                </AnimatePresence>
+                <ToastCatcher position='top-center' />
+              </main>
+              <ReactQueryDevtools />
+            </SessionProvider>
+          </QueryClientProvider>
+        </RecoilRoot>
+      </ErrorBoundary>
+      <Analytics />
+    </>
   )
 }
 
