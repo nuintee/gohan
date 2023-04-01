@@ -46,7 +46,7 @@ const User = (props: UserProps) => {
         <SuspenseImage
           src={
             session.user?.image ||
-            `https://ui-avatars.com/api/?name=${session.user?.name}&background=random`
+            `https://ui-avatars.com/api/?name=${session.user?.name}&background=random&size=96`
           }
           alt='Profile Image'
           className='h-full w-full'
