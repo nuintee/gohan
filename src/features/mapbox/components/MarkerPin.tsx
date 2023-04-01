@@ -67,6 +67,7 @@ const Pin = ({
             src={memorizedImage.url}
             className='aspect-square rounded-full object-cover z-10'
             disabled
+            alt={`${data?.name}のマップ表示`}
           />
         </div>
       </section>
