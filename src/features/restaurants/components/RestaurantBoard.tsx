@@ -31,6 +31,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
       <SuspenseImage
         src={memorizedPhoto.url}
         alt={data?.name}
+        draggable={false}
         className={'aspect-square object-cover h-full rounded-md'}
       />
       <div className='flex-1 flex flex-col justify-between truncate'>
