@@ -37,7 +37,7 @@ const RestaurantBoard = (props: RestaurantProps) => {
       <div className='flex-1 flex flex-col justify-between truncate'>
         <Texts
           main={cardConfig.textsMain(data?.name)}
-          sub={cardConfig.textsSub(data?.editorial_summary?.overview)}
+          sub={cardConfig.textsSub(data?.memo || data?.editorial_summary?.overview)}
           size={'small'}
         />
         <ActivityStatus status={data?.reviewStatus} />
