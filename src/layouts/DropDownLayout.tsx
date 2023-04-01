@@ -98,6 +98,7 @@ const DropDownLayout = ({
           icon={{ position: 'after', src: <Dots direction='vertical' /> }}
           square
           loading={isLoading}
+          ariaLabel='ドロップダウンを開く'
         />
       )
     }
