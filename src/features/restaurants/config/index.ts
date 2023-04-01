@@ -18,7 +18,7 @@ export const cardConfig = {
   labelDistance: (distance?: string) => distance,
   labelIcon: RouteArrow(),
   textsMain: (main?: string) => main || 'Restaurant Name',
-  textsSub: (sub?: string) => sub || 'Restaurant・Types',
+  textsSub: (sub?: string) => sub || '-',
   textSize: 'small' as const,
   buttonText: (isNavigating?: boolean) => (isNavigating ? 'Stop Navigation' : 'Navigate'),
 }

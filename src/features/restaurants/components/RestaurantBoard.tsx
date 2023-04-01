@@ -31,12 +31,13 @@ const RestaurantBoard = (props: RestaurantProps) => {
       <SuspenseImage
         src={memorizedPhoto.url}
         alt={data?.name}
+        draggable={false}
         className={'aspect-square object-cover h-full rounded-md'}
       />
       <div className='flex-1 flex flex-col justify-between truncate'>
         <Texts
           main={cardConfig.textsMain(data?.name)}
-          sub={cardConfig.textsSub(data?.editorial_summary?.overview)}
+          sub={cardConfig.textsSub(data?.memo || data?.editorial_summary?.overview)}
           size={'small'}
         />
         <ActivityStatus status={data?.reviewStatus} />
