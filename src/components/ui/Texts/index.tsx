@@ -38,7 +38,7 @@ const Texts = (props: Props) => {
     sub,
     size,
     mainColor = '#000',
-    subColor = colors['gh-l-gray'],
+    subColor = colors['gh-d-gray'],
     mainDecoration,
     subDecoration,
     gap = false,

@@ -23,7 +23,7 @@ function mapActivityStatus(status: ReviewStatusType) {
     default: {
       return {
         label: 'NEW',
-        color: colors['gh-gray'],
+        color: colors['gh-d-gray'],
       }
     }
   }

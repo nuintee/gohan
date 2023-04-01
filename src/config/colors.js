@@ -7,7 +7,7 @@ module.exports = {
     'gh-red': '#ef5d5d',
     'gh-dark': '#232020',
     'gh-brown': '#3A3535',
-    'gh-gray': '#898989',
+    'gh-gray': '#757575',
     'gh-l-gray': '#C7C3C3',
     'gh-green': '#00D160',
     'gh-l-green': '#ACE5C7',

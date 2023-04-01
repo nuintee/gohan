@@ -29,7 +29,7 @@ const PanelHeader = (props: Props) => {
       style={{ background: background || '#FFF' }}
     >
       {textUI()}
-      <button onClick={onClose}>
+      <button onClick={onClose} aria-label={`${title}を閉じる`}>
         <Close fill={colors['gh-gray']} />
       </button>
     </header>

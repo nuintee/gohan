@@ -18,6 +18,7 @@ const nextConfig = {
       removeConsole: true,
     },
   }),
+  productionBrowserSourceMaps: true,
   reactStrictMode: true,
   swcMinify: true,
   eslint: {

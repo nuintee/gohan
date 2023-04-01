@@ -48,7 +48,7 @@ const Pin = ({
         ...(focused && { zIndex: '10' }),
       }}
     >
-      <section>
+      <section role={'button'} aria-label={`${data?.name}のマップ表示`}>
         <div
           className={`absolute group  bg-white p-2 rounded-md duration-700 shadow-sm top-0 left-1/2 -translate-x-1/2 -translate-y-full -my-4 ${
             focused ? 'scale-100' : 'scale-0'
@@ -67,6 +67,7 @@ const Pin = ({
             src={memorizedImage.url}
             className='aspect-square rounded-full object-cover z-10'
             disabled
+            alt={`${data?.name}のマップ表示`}
           />
         </div>
       </section>

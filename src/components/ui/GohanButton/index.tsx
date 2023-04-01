@@ -36,6 +36,7 @@ const GohanButton = (props: Props) => {
         height: size ? `${size / 5}em` : '5em',
         width: size ? `${size / 5}em` : '5em',
       }}
+      aria-label='Gohan検索'
       data-testid='gohan__button'
     >
       {ui()}
